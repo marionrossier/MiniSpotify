@@ -1,0 +1,65 @@
+# ========================
+# OS-specific ignores
+# ========================
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ========================
+# IntelliJ IDEA / Rider
+# ========================
+.idea/
+*.iml
+*.sln.iml
+
+# ========================
+# VS Code
+# ========================
+.vscode/
+
+# ========================
+# Build output
+# ========================
+bin/
+obj/
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+# ========================
+# .NET / C#
+# ========================
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ========================
+# Eclipse (par précaution)
+# ========================
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# ========================
+# NetBeans (par précaution)
+# ========================
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
