@@ -2,6 +2,67 @@
 skinparam classAttributeIconSize 0
 
 class MiniSpotify {
+      + void startApp()
+      + void populateDb()
+    }
+
+package "Template Pattern"{
+    class AbstractMenuPage {
+        - int index
+        + abstract void displayPage ()
+        + final void switch ()
+        + void button0 ()
+        + void button1 ()
+        + void button2 ()
+        + void button3 ()
+        + void button4 ()
+        + void button5 ()
+        + void button6 ()
+        + void button7 ()
+    }
+
+    class HomePage {}
+    class Search{}
+    class Login{
+     - String pseudonyme
+     - String password
+    }
+    class HomePagePlaylist{}
+    class ChoseYourPlaylist{}
+    class OnPlaylist{}
+    class SongPlayer{}
+    class EditPlaylist {}
+    class DeletePlaylist {}
+    class CreatePlaylist {
+     - String playlistName
+    }
+    class SearchSong{
+     - String songName
+    }
+    class SearchArtist{
+     - String artistName
+    }
+    class SearchGender{
+     - String songGenderName
+    }
+}
+
+    HomePage ..|> AbstractMenuPage
+    Search ..|> AbstractMenuPage
+    Login ..|> AbstractMenuPage
+    HomePagePlaylist ..|> AbstractMenuPage
+    ChoseYourPlaylist ..|> AbstractMenuPage
+    OnPlaylist ..|> AbstractMenuPage
+    SongPlayer ..|> AbstractMenuPage
+    EditPlaylist ..|> AbstractMenuPage
+    DeletePlaylist ..|> AbstractMenuPage
+    CreatePlaylist ..|> AbstractMenuPage
+    SearchSong ..|> AbstractMenuPage
+    SearchArtist ..|> AbstractMenuPage
+    SearchGender ..|> AbstractMenuPage
+
+
+class ApplicationDb {
   - LinkedList<Playlist> playlists
   - LinkedList<Song> songs
   - List<User> users
@@ -10,6 +71,7 @@ class MiniSpotify {
   + void searchSongTitle(String title)
   + void searchSongArtist(String artist)
   + void searchSongGender(String gender)
+  + void searchUser(String pseudonyme, String password)
 }
 
 class Client {
@@ -102,7 +164,7 @@ package "CommandPattern" {
     - String button
     - List<Map<String,Command>> buttonAndCommand
     - String undo
-    - List<String> historic
+    - Stack historic
     + Getter()
     + Setter()
     + void pushButton(String button)
