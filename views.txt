@@ -1,0 +1,106 @@
+#Login
+-Please give your pseudonyme:
+-Please enter your password:
+
+--> Homepage
+
+#Homepage
+
+0) Exit					--> End app
+1) Go to playlists
+2) Search
+
+#Search
+0) Exit
+1) Search a song
+2) Search an artist
+3) Search a song gender
+
+
+1) Go to playlists
+	#Hompage - Playlist
+
+	0) Exit					--> Homepage
+	1) Choose your playlist
+	2) Create a playlist
+
+
+	#Choose your playlist
+
+		0) Exit					--> Homepage
+		Choose your playlist:
+		1) Playlist1
+		2) Playlist2
+		3) Playlist3
+		.
+		.
+		.
+
+		#On playlist
+
+		0) Exit					--> Choose your playlist
+		1) Play the playlist  --> songplayer
+		2) Edit the playlist  --> Edit playlist
+		3) Delete the playlist --> Delete the playlist
+
+
+		#Songplayer >> Command pattern
+
+		0) Exit			--> Homepage
+		1) Shuffle
+		2) Previous
+		3) Play
+		4) Next
+		5) Repeat
+		6) Play back  >> State pattern
+
+		#Edit playlist
+
+		0) Exit			--> On playlist
+		1) Add song		--> Search a song
+		2) Remove song  --> Delete the playlist
+		3) Reorder song --> move a song to a certain place
+
+		#Delete the playlist
+
+		0) Exit				--> On playlist
+		1) Are you sure?	--> Choose your playlist
+
+
+	#Create a playlist
+		-Enter the name of the new playlist:
+		--> Search a song
+
+
+2) Search a song
+	#Homepage - song
+	-Enter the name of the song:
+
+	0) Exit
+	Songs:
+	1) ...  --> Songplayer
+
+
+
+
+3) Search an artist
+	#Homepage - artist
+	-Enter the name of the artist:
+
+	0) Exit
+	Songs:
+	1) ... --> Songplayer
+
+
+4) Search a song gender
+	#Homepage - Song gender
+	-Enter the name of the song gender:
+
+	0) Exit
+	Songs:
+	1) ...		--> Songplayer
+
+
+
+
+
