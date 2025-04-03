@@ -1,0 +1,189 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class MiniSpotify {
+  - LinkedList<Playlist> playlists
+  - LinkedList<Song> songs
+  - List<User> users
+  + Getter()
+  + Setter()
+  + void searchSongTitle(String title)
+  + void searchSongArtist(String artist)
+  + void searchSongGender(String gender)
+}
+
+class Client {
+  - User user
+  + User createAccount()
+  + User updateAccount()
+  + void followUser()
+  + void unfollowUser()
+  + LinkedList<Playlist> getSharedPlaylist(User followedUser)
+  + Song searchSong()
+  + void createPlaylist(String playlistName)
+  + void addSongToPlaylist(String playlistName)
+  + void editPlayList(String playlistName)
+  + void removeSongFromPlaylist(String playlistName)
+  + void deletePlaylist(String playlistName)
+  + void reorderSongsInPlaylist(String playlistName)
+}
+
+class TransversCode {
+  + String setGuId(return guID)
+}
+
+enum PlanEnum {
+  FREE
+  PREMIUM
+}
+
+class User {
+  - String pseudonyme
+  - String userGuId
+  - String email
+  - String password
+  - List<User> followedUsers
+  - PlanEnum planEnum
+  - LinkedList<Playlist> playlists
+  + Getter()
+  + Setter()
+}
+
+class Playlist {
+  - String playlistName
+  - String playlistGuId
+  - LinkedList<Song> playlistSongs
+  - double playlistDuration
+  + Getter()
+  + Setter()
+  + void addSong()
+  + void removeSong()
+  + void reorderSongs()
+}
+
+class Song {
+  - String title
+  - String artist
+  - String album
+  - double duration
+  - String gender
+  + Getter()
+  + Setter()
+}
+
+MiniSpotify --> Playlist : contains linkedlist of
+MiniSpotify --> Song : contains linkedlist of
+MiniSpotify --> User : contains linkedlist of
+Client --> Playlist : creates linkedlist of
+User --> Playlist : contains linkedlist of
+User --> PlanEnum : has
+Playlist --> Song : contains linkedlist of
+
+package "CommandPattern" {
+  interface IReceiver {
+    + void Play()
+    + void Pause()
+    + void Next()
+    + void Previous()
+    + void Shuffle()
+    + void Repeat()
+    + void Playback()
+  }
+
+  class ReceiverMusic
+  class ReceiverPlaylist
+
+  interface ICommand {
+    + void execute(String button)
+    + void undo(String undo)
+  }
+
+  class Invoker {
+    - String button
+    - List<Map<String,Command>> buttonAndCommand
+    - String undo
+    - List<String> historic
+    + Getter()
+    + Setter()
+    + void pushButton(String button)
+    + void pushUndo(String undo)
+  }
+
+  class CommandPlay {
+    - Receiver receiver
+  }
+  class CommandPause {
+    - Receiver receiver
+  }
+  class CommandNext {
+    - Receiver receiver
+  }
+  class CommandPrevious {
+    - Receiver receiver
+  }
+  class CommandShuffle {
+    - Receiver receiver
+  }
+  class CommandRepeat {
+    - Receiver receiver
+  }
+  class CommandPlayback {
+    - Receiver receiver
+  }
+
+  CommandPlay ..|> ICommand : implements
+  CommandPlay --> IReceiver : contain
+  CommandPause ..|> ICommand : implements
+  CommandPause --> IReceiver : contain
+  CommandNext ..|> ICommand : implements
+  CommandNext --> IReceiver : contain
+  CommandPrevious ..|> ICommand : implements
+  CommandPrevious --> IReceiver : contain
+  CommandShuffle ..|> ICommand : implements
+  CommandShuffle --> IReceiver : contain
+  CommandRepeat ..|> ICommand : implements
+  CommandRepeat --> IReceiver : contain
+  CommandPlayback ..|> ICommand : implements
+  CommandPlayback --> IReceiver : contain
+
+  ReceiverMusic ..|> IReceiver : implements
+  ReceiverPlaylist ..|> IReceiver : implements
+}
+
+package "State Pattern" {
+  interface IState {
+    + void playback()
+  }
+
+  class Sequential {
+    - Context context
+  }
+
+  class Shuffle {
+    - Context context
+  }
+
+  class Repeat {
+    - Context context
+  }
+
+  class Context {
+    - IState currentState
+    - IState sequential
+    - IState shuffle
+    - IState repeat
+    + void stateInitiation(Context context)
+    + void setCurrentState(IState currentState)
+    + void playback()
+    + Getter()
+  }
+
+  Sequential ..|> IState : implements
+  Sequential --> Context : contain
+  Shuffle ..|> IState : implements
+  Shuffle --> Context : contain
+  Repeat ..|> IState : implements
+  Repeat --> Context : contain
+  Context --> IState : contain
+}
+@enduml
