@@ -7,11 +7,6 @@ public class CommandPlay implements ICommand {
 
     @Override
     public void execute(String button) {
-        /*TODO*/
-    }
-
-    @Override
-    public void undo(String undo) {
-        /*TODO*/
+        /*TODO : IReceiver.play*/
     }
 }

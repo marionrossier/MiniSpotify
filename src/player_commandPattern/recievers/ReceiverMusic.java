@@ -9,31 +9,39 @@ public class ReceiverMusic implements IReceiver {
 
     @Override
     public void Pause() {
-        /*TODO*/
+        /*TODO:Direct implem*/
     }
 
     @Override
     public void Next() {
-        /*TODO*/
+        /*TODO:Delegate to Context
+        *Context.next*/
+
     }
 
     @Override
     public void Previous() {
-        /*TODO*/
+        /*TODO : Context.previous*/
     }
 
     @Override
     public void Shuffle() {
-        /*TODO*/
+        /*
+        TODO : Context.setcurrentstate(context.getshuffle())
+        if (Context.getCurrentState() == Context.getShuffle)
+            set sequential
+        else
+            set shuffle
+        */
     }
 
     @Override
     public void Repeat() {
-        /*TODO*/
+        /*TODO : Context.setcurrentstate(context.getRepeat())*/
     }
 
     @Override
     public void Playback() {
-        /*TODO*/
+        /*TODO : recommencer la chanson*/
     }
 }
