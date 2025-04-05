@@ -1,12 +1,12 @@
 package player_commandPattern.commands;
 
-import player_commandPattern.recievers.IReceiver;
+import player_commandPattern.recievers.SpotifyService;
 
 public class CommandRepeat implements ICommand{
-    private IReceiver receiver;
+    private SpotifyService spotifyService;
 
     @Override
     public void execute(String button) {
-        /*TODO : IReceiver.repeat*/
+        spotifyService.repeat();
     }
 }

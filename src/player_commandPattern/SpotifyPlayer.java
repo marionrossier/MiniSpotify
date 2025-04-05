@@ -4,11 +4,10 @@ import player_commandPattern.commands.ICommand;
 
 import java.util.*;
 
-public class Invoker {
+public class SpotifyPlayer {
     private String button;
     private List<Map<String, ICommand>> buttonAndCommand;
     private Stack<ICommand> commandHistoric;
-    private Stack<String> songHistoric;
 
     public String getButton() {
         return button;
@@ -32,14 +31,6 @@ public class Invoker {
 
     public void setCommandHistoric(Stack<ICommand> commandHistoric) {
         this.commandHistoric = commandHistoric;
-    }
-
-    public Stack<String> getSongHistoric() {
-        return songHistoric;
-    }
-
-    public void setSongHistoric(Stack<String> songHistoric) {
-        this.songHistoric = songHistoric;
     }
 
     public void pushNext(String button) {/*TODO*/}

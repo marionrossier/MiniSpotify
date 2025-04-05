@@ -1,12 +1,12 @@
 package player_commandPattern.commands;
 
-import player_commandPattern.recievers.IReceiver;
+import player_commandPattern.recievers.SpotifyService;
 
 public class CommandNext implements ICommand {
-    private IReceiver receiver;
+    private SpotifyService spotifyService;
 
     @Override
     public void execute(String button) {
-        /*TODO : IReceiver.next()*/
+        spotifyService.next();
     }
 }
