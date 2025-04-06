@@ -1,17 +1,12 @@
 package player_commandPattern.commands;
 
-import player_commandPattern.recievers.IReceiver;
+import player_commandPattern.recievers.SpotifyService;
 
 public class CommandPrevious implements ICommand{
-    private IReceiver receiver;
+    private SpotifyService spotifyService;
 
     @Override
     public void execute(String button) {
-        /*TODO*/
-    }
-
-    @Override
-    public void undo(String undo) {
-        /*TODO*/
+        spotifyService.previous();
     }
 }

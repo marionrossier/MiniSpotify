@@ -1,17 +1,16 @@
 package player_commandPattern.commands;
 
-import player_commandPattern.recievers.IReceiver;
+import player_commandPattern.recievers.SpotifyService;
 
 public class CommandPlay implements ICommand {
-    private IReceiver receiver;
+    private SpotifyService spotifyService;
+    int songIndex = spotifyService
+            .getCurrentPlaylist()
+            .getPlaylistSongs()
+            .indexOf(spotifyService.getCurrentSong());
 
     @Override
     public void execute(String button) {
-        /*TODO*/
-    }
-
-    @Override
-    public void undo(String undo) {
-        /*TODO*/
+        spotifyService.play(songIndex);
     }
 }
