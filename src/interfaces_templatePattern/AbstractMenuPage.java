@@ -1,7 +1,16 @@
 package interfaces_templatePattern;
 
+import player_commandPattern.SpotifyPlayer;
+
 abstract class AbstractMenuPage {
     private int index;
+
+    public AbstractMenuPage(SpotifyPlayer spotifyPlayer) {
+        this.spotifyPlayer = spotifyPlayer;
+    }
+
+    //SpotifyPlayer created to be accessible in every "interface/vue".
+    public SpotifyPlayer spotifyPlayer;
 
     final void templateMethode (){
         displayPage();

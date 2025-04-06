@@ -10,22 +10,28 @@ public class SpotifyService {
     private Stack<Integer> songHistoricByIndex;
     private Playlist currentPlaylist;
     private Song currentSong;
-
     public Stack<Integer> getSongHistoricByIndex() {
         return songHistoricByIndex;
     }
-    public void setSongHistoricByIndex(Stack<Integer> songHistoricByIndex) {
-        this.songHistoricByIndex = songHistoricByIndex;
-    }
+
     public Playlist getCurrentPlaylist() {
         return currentPlaylist;
     }
+
     public void setCurrentPlaylist(Playlist currentPlaylist) {
         this.currentPlaylist = currentPlaylist;
     }
+
     public Song getCurrentSong() {
         return currentSong;
     }
+
+    public int getIndexCurrentSong()  {
+        return currentPlaylist
+                .getPlaylistSongs()
+                .indexOf(currentSong);
+    }
+
     public void setCurrentSong(Song currentSong) {
         this.currentSong = currentSong;
     }
@@ -39,11 +45,11 @@ public class SpotifyService {
     public Playlist playlist;
 
     public SpotifyService(Song currentSong, Playlist currentPlaylist) {
+        this.currentSong = currentSong;
+        this.currentPlaylist = currentPlaylist;
         this.sequentialState = new Sequential(this);
         this.shuffleState = new Shuffle(this);
         this.repeatState = new Repeat(this);
-        this.currentSong = currentSong;
-        this.currentPlaylist = currentPlaylist;
     }
 
     public void stateInitiation(SpotifyService spotifyService) {
@@ -70,11 +76,10 @@ public class SpotifyService {
         return repeatState;
     }
 
-
     //COMMAND PATTERN
     public void play(int songIndex) {
         //Change of the currentSong
-        currentSong = playlist.getPlaylistSongs().get(songIndex);
+        setCurrentSong(playlist.getPlaylistSongs().get(songIndex));
         //addition of the currentSong index in the sonHistoricByIndex
         songHistoricByIndex.push(playlist.getPlaylistSongs().indexOf(currentSong));
 

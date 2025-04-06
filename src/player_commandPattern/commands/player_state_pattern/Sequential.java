@@ -1,26 +1,18 @@
 package player_commandPattern.commands.player_state_pattern;
 
-import entities.*;
 import player_commandPattern.recievers.SpotifyService;
 
 public class Sequential implements IState{
-    private SpotifyService spotifyService;
-    private Playlist currentPlaylist;
-    private Song currentSong;
-    int indexCurrentSong = currentPlaylist
-                                .getPlaylistSongs()
-                                .indexOf(currentSong);
+    private final SpotifyService spotifyService;
 
     public Sequential(SpotifyService spotifyService) {
         this.spotifyService = spotifyService;
-        this.currentPlaylist = spotifyService.getCurrentPlaylist();
-        this.currentSong = spotifyService.getCurrentSong();
     }
 
     @Override
     public void next() {
-        int nextIndex = indexCurrentSong+1;
-        if (nextIndex > currentPlaylist.getPlaylistSongs().size()-1){
+        int nextIndex = spotifyService.getIndexCurrentSong()+1;
+        if (nextIndex > spotifyService.getCurrentPlaylist().getPlaylistSongs().size()-1){
             nextIndex = 0;
         }
         else {
@@ -31,9 +23,9 @@ public class Sequential implements IState{
 
     @Override
     public void previous() {
-        int previousIndex = indexCurrentSong-1;
+        int previousIndex = spotifyService.getIndexCurrentSong()-1;
         if (previousIndex<0){
-            previousIndex = currentPlaylist.getPlaylistSongs().size()-1;
+            previousIndex = spotifyService.getCurrentPlaylist().getPlaylistSongs().size()-1;
         }
         else {
             spotifyService.play(previousIndex);
@@ -43,6 +35,6 @@ public class Sequential implements IState{
 
     @Override
     public void playback() {
-        spotifyService.play(indexCurrentSong);
+        spotifyService.play(spotifyService.getIndexCurrentSong());
     }
 }
