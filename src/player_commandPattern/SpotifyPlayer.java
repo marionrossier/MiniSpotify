@@ -1,44 +1,36 @@
 package player_commandPattern;
 
-import player_commandPattern.commands.ICommand;
+import player_commandPattern.commands.*;
+import player_commandPattern.recievers.SpotifyService;
 
 import java.util.*;
 
 public class SpotifyPlayer {
-    private String button;
-    private List<Map<String, ICommand>> buttonAndCommand;
-    private Stack<ICommand> commandHistoric;
+    private final SpotifyService spotifyService;
 
-    public String getButton() {
-        return button;
+    public void selectNext() {
+        spotifyService.next();
+    }
+    public void selectPause() {
+        spotifyService.pause();
+    }
+    public void selectPlay(int songIndex) {
+        spotifyService.play(songIndex);
+    }
+    public void selectPlayback() {
+        spotifyService.playback();
+    }
+    public void selectPrevious() {
+        spotifyService.previous();
+    }
+    public void selectRepeat() {
+        spotifyService.repeat();
+    }
+    public void selectShuffle() {
+        spotifyService.shuffle();
     }
 
-    public void setButton(String button) {
-        this.button = button;
+    public SpotifyPlayer(SpotifyService spotifyService, Stack<ICommand> commandHistoric) {
+        this.spotifyService = spotifyService;
     }
-
-    public List<Map<String, ICommand>> getButtonAndCommand() {
-        return buttonAndCommand;
-    }
-
-    public void setButtonAndCommand(List<Map<String, ICommand>> buttonAndCommand) {
-        this.buttonAndCommand = buttonAndCommand;
-    }
-
-    public Stack<ICommand> getCommandHistoric() {
-        return commandHistoric;
-    }
-
-    public void setCommandHistoric(Stack<ICommand> commandHistoric) {
-        this.commandHistoric = commandHistoric;
-    }
-
-    public void pushNext(String button) {/*TODO*/}
-    public void pushPause(String button) {/*TODO*/}
-    public void pushPlay(String button) {/*TODO*/}
-    public void pushPlayback(String button) {/*TODO*/}
-    public void pushPrevious(String button) {/*TODO*/}
-    public void pushRepeat(String button) {/*TODO*/}
-    public void pushShuffle(String button) {/*TODO*/}
-
-}
+ }

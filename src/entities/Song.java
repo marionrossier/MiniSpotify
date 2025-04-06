@@ -8,6 +8,15 @@ public class Song {
     private String gender;
     private String songGuId;
 
+    public Song(String title, String artist, String album, double duration, String gender, String songGuId) {
+        this.title = title;
+        this.artist = artist;
+        this.album = album;
+        this.duration = duration;
+        this.gender = gender;
+        this.songGuId = songGuId;
+    }
+
     public String getTitle() {
         return title;
     }

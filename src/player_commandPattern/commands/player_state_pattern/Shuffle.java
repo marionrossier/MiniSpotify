@@ -1,29 +1,20 @@
 package player_commandPattern.commands.player_state_pattern;
 
-import entities.Playlist;
-import entities.Song;
 import player_commandPattern.recievers.SpotifyService;
 
 public class Shuffle implements IState {
     private SpotifyService spotifyService;
-    private Playlist currentPlaylist;
-    private Song currentSong;
-    int indexCurrentSong = currentPlaylist
-            .getPlaylistSongs()
-            .indexOf(currentSong);
 
     public Shuffle(SpotifyService spotifyService) {
         this.spotifyService = spotifyService;
-        this.currentPlaylist = spotifyService.getCurrentPlaylist();
-        this.currentSong = spotifyService.getCurrentSong();
     }
 
     @Override
     public void next() {
-        int nextIndex = indexCurrentSong;
+        int nextIndex = spotifyService.getIndexCurrentSong();
 
-        while (nextIndex==indexCurrentSong){
-            nextIndex = (int) (Math.random()*currentPlaylist.getPlaylistSongs().size()-1);
+        while (nextIndex==spotifyService.getIndexCurrentSong()){
+            nextIndex = (int) (Math.random()*spotifyService.getCurrentPlaylist().getPlaylistSongs().size()-1);
         }
         spotifyService.play(nextIndex);
     }
@@ -40,6 +31,6 @@ public class Shuffle implements IState {
 
     @Override
     public void playback() {
-        spotifyService.play(indexCurrentSong);
+        spotifyService.play(spotifyService.getIndexCurrentSong());
     }
 }

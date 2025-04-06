@@ -8,6 +8,11 @@ public class Playlist {
     private LinkedList<Song> playlistSongs;
     private double playlistDuration;
 
+    public Playlist(String playlistName, String playlistGuId) {
+        this.playlistName = playlistName;
+        this.playlistGuId = playlistGuId;
+    }
+
     public String getPlaylistName() {
         return playlistName;
     }
@@ -40,7 +45,7 @@ public class Playlist {
         this.playlistDuration = playlistDuration;
     }
 
-    public void addSong() {/*TODO*/}
+    public void addSong(Song currentSong) {/*TODO*/}
     public void removeSong() {/*TODO*/}
     public void reorderSongs() {/*TODO*/}
 }
