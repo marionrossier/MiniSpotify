@@ -1,5 +1,8 @@
 import entities.Playlist;
 import entities.Song;
+import interfaces_templatePattern.AbstractMenuPage;
+import interfaces_templatePattern.Login;
+import interfaces_templatePattern.PageFactory;
 import interfaces_templatePattern.SongPlayer;
 import player_commandPattern.SpotifyPlayer;
 import player_commandPattern.commands.ICommand;
@@ -10,23 +13,27 @@ import java.util.Stack;
 public class Main {
     public static void main(String[] args) {
 
-        // Initialisation
-        Song song1 = new Song("SongTitle1", "SongArtist",
-                "SongAlbum", 3.5, "Classical","1");
-        Song song2 = new Song("SongTitle2", "SongArtist",
-                "SongAlbum", 3, "Classical","2");
-        Playlist allSongs = new Playlist("AllSongs", "1");
-        allSongs.addSong(song1);
-        allSongs.addSong(song2);
+//        // Initialisation
+//        Song song1 = new Song("SongTitle1", "SongArtist",
+//                "SongAlbum", 3.5, "Classical","1");
+//        Song song2 = new Song("SongTitle2", "SongArtist",
+//                "SongAlbum", 3, "Classical","2");
+//        Playlist allSongs = new Playlist("AllSongs", "1");
+//        allSongs.addSong(song1);
+//        allSongs.addSong(song2);
+//
+//        SongPlayer songPlayer = new SongPlayer(
+//                new SpotifyPlayer(
+//                        new SpotifyService(song1, allSongs),
+//                        new Stack<ICommand>()));
+//
+//
+//        //Partie test!
+//
+//        songPlayer.button0();
 
-        SongPlayer songPlayer = new SongPlayer(
-                new SpotifyPlayer(
-                        new SpotifyService(song1, allSongs),
-                        new Stack<ICommand>()));
-
-
-        //Partie test!
-
-        songPlayer.button0();
+        PageFactory pages = new PageFactory();
+        pages.setUpPages();
+        pages.startLogin();
     }
 }

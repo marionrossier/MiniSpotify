@@ -2,22 +2,27 @@ package interfaces_templatePattern;
 
 import player_commandPattern.SpotifyPlayer;
 
-abstract class AbstractMenuPage {
-    private int index;
+import java.util.Scanner;
 
-    public AbstractMenuPage(SpotifyPlayer spotifyPlayer) {
-        this.spotifyPlayer = spotifyPlayer;
-    }
-
-    //SpotifyPlayer created to be accessible in every "interface/vue".
+public abstract class AbstractMenuPage {
+    int index;
     public SpotifyPlayer spotifyPlayer;
+    PageFactory pageFactory;
+    Scanner in = new Scanner(System.in);
+
+    public AbstractMenuPage(PageFactory pageFactory) {
+        this.pageFactory = pageFactory;
+    }
 
     final void templateMethode (){
         displayPage();
         switchPage();
     }
 
-    abstract void displayPage();
+    void displayPage(){
+        index = in.nextInt();
+        switchPage();
+    };
 
     public final void switchPage() {
         switch (index){
@@ -51,12 +56,15 @@ abstract class AbstractMenuPage {
         }
     }
 
-    public void button0() {/*TODO*/}
-    public void button1() {/*TODO*/}
-    public void button2() {/*TODO*/}
-    public void button3() {/*TODO*/}
-    public void button4() {/*TODO*/}
-    public void button5() {/*TODO*/}
-    public void button6() {/*TODO*/}
-    public void button7() {/*TODO*/}
+    void button0() {
+        pageFactory.homePage.displayPage();
+    }
+    abstract void button1();
+    abstract void button2();
+    abstract void button3();
+    abstract void button4();
+    abstract void button5();
+    abstract void button6();
+    abstract void button7();
+
 }
