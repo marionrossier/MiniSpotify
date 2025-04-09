@@ -14,6 +14,7 @@ public class ChoseYourPlaylist extends AbstractMenuPage {
         System.out.print("0) Exit\n");
         //implement loop for all playlists
         super.displayPage();
+
     }
 
     @Override

@@ -3,9 +3,9 @@ package entities;
 import java.util.*;
 
 public class ApplicationDb {
-    private LinkedList<Playlist> playlists;
-    private LinkedList<Song> songs;
-    private List<User> users;
+    private LinkedList<Playlist> playlists = new LinkedList<>();
+    private LinkedList<Song> songs = new LinkedList<>();
+    private List<User> users = new ArrayList<>();
 
     public void searchSongTitle(String title) {/*TODO*/}
     public void searchSongArtist(String artist) {/*TODO*/}

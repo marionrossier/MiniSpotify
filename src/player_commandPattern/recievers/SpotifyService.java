@@ -91,8 +91,6 @@ public class SpotifyService {
         //addition of the currentSong index in the sonHistoricByIndex
         songHistoricByIndex.push(playlist.getPlaylistSongs().indexOf(currentSong));
 
-        //Miss play action of the song.
-        /*TODO:Direct implementation*/
         try {
             FileInputStream audioFile = new FileInputStream("src/ressources/boneyM_Sunny.mp3"); // TODO : sera a changer pour currentSong
             player = new Player(audioFile);
@@ -113,22 +111,26 @@ public class SpotifyService {
         } catch (JavaLayerException e) {
             e.printStackTrace();
         }
-
-        System.out.println("Playbutton pushed.");
     }
 
     public void pause() {
-        System.out.println("Pausebutton pushed.");
+        //TODO : Pause the player
+    }
+
+    public void stop (){
         if (player != null) {
             player.close();
             playerThread.interrupt();
             isPlaying = false;
+            System.out.println("Lecture arrêtée.");
         }
     }
 
     public void playback() {
         currentState.playback();
         System.out.println("Playbackbutton pushed.");
+        stop();
+        play(getIndexCurrentSong());
     }
 
     public void next() {

@@ -32,7 +32,7 @@ public class SpotifyPlayer {
         spotifyService.shuffle();
     }
 
-    public SpotifyPlayer(SpotifyService spotifyService, Stack<ICommand> commandHistoric, Song currentSong) {
+    public SpotifyPlayer(SpotifyService spotifyService, Stack<ICommand> commandHistoric) {
         this.spotifyService = spotifyService;
         this.currentSongIndex = spotifyService.getIndexCurrentSong();
     }

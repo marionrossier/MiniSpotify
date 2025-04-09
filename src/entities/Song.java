@@ -7,14 +7,25 @@ public class Song {
     private double duration;
     private String gender;
     private String songGuId;
+    private String audioFilePath;
 
-    public Song(String title, String artist, String album, double duration, String gender, String songGuId) {
+    public String getAudioFilePath() {
+        return audioFilePath;
+    }
+
+    public void setAudioFilePath(String audioFilePath) {
+        this.audioFilePath = audioFilePath;
+    }
+
+    public Song(String title, String artist, String album, double duration, String gender, String songGuId,
+                String audioFilePath) {
         this.title = title;
         this.artist = artist;
         this.album = album;
         this.duration = duration;
         this.gender = gender;
         this.songGuId = songGuId;
+        this.audioFilePath = audioFilePath;
     }
 
     public String getTitle() {

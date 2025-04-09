@@ -4,6 +4,7 @@ import player_commandPattern.SpotifyPlayer;
 
 public class SongPlayer extends AbstractMenuPage {
 
+
     public SongPlayer(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
         super(pageFactory, spotifyPlayer);
     }
@@ -35,7 +36,7 @@ public class SongPlayer extends AbstractMenuPage {
 
     @Override
     void button3() {
-//        spotifyPlayer.selectPlay(spotifyPlayer.getCurrentSong());
+        spotifyPlayer.selectPlay(1);//TODO : a changer une fois l'interface SearchSong terminée
     }
 
     @Override

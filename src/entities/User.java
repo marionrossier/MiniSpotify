@@ -9,7 +9,7 @@ public class User {
     private String password;
     private List<User> followedUsers;
     private PlanEnum planEnum;
-    private LinkedList<Playlist> playlists;
+    private LinkedList<Playlist> playlists = new LinkedList<>();
 
     public void Getter() {/*TODO*/}
     public void Setter() {/*TODO*/}
