@@ -5,8 +5,8 @@ import player_commandPattern.SpotifyPlayer;
 public class SearchArtist extends AbstractMenuPage {
     private String artistName;
 
-    public SearchArtist(PageFactory pageFactory) {
-        super(pageFactory);
+    public SearchArtist(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
+        super(pageFactory, spotifyPlayer);
     }
     @Override
     void displayPage() {

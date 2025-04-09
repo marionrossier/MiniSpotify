@@ -10,8 +10,13 @@ public abstract class AbstractMenuPage {
     PageFactory pageFactory;
     Scanner in = new Scanner(System.in);
 
-    public AbstractMenuPage(PageFactory pageFactory) {
+//    public AbstractMenuPage(PageFactory pageFactory) {
+//        this.pageFactory = pageFactory;
+//    }
+
+    public AbstractMenuPage(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
         this.pageFactory = pageFactory;
+        this.spotifyPlayer = spotifyPlayer;
     }
 
     final void templateMethode (){

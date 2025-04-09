@@ -1,8 +1,12 @@
 package player_commandPattern.recievers;
 
 import entities.*;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 import player_commandPattern.commands.player_state_pattern.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Stack;
 
 public class SpotifyService {
@@ -10,6 +14,10 @@ public class SpotifyService {
     private Stack<Integer> songHistoricByIndex;
     private Playlist currentPlaylist;
     private Song currentSong;
+    private static Player player;
+    private static Thread playerThread;
+    private static boolean isPlaying = false;
+
     public Stack<Integer> getSongHistoricByIndex() {
         return songHistoricByIndex;
     }
@@ -85,13 +93,37 @@ public class SpotifyService {
 
         //Miss play action of the song.
         /*TODO:Direct implementation*/
+        try {
+            FileInputStream audioFile = new FileInputStream("src/ressources/boneyM_Sunny.mp3"); // TODO : sera a changer pour currentSong
+            player = new Player(audioFile);
+
+            playerThread = new Thread(() -> {
+                try {
+                    isPlaying = true;
+                    player.play();
+                } catch (JavaLayerException e) {
+                    e.printStackTrace();
+                } finally {
+                    isPlaying = false;
+                }
+            });
+            playerThread.start();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (JavaLayerException e) {
+            e.printStackTrace();
+        }
 
         System.out.println("Playbutton pushed.");
     }
 
     public void pause() {
-        /*TODO:Direct implementation*/
         System.out.println("Pausebutton pushed.");
+        if (player != null) {
+            player.close();
+            playerThread.interrupt();
+            isPlaying = false;
+        }
     }
 
     public void playback() {

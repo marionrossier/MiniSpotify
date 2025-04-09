@@ -4,8 +4,8 @@ import player_commandPattern.SpotifyPlayer;
 
 public class DeletePlaylist extends AbstractMenuPage {
 
-    public DeletePlaylist(PageFactory pageFactory) {
-        super(pageFactory);
+    public DeletePlaylist(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
+        super(pageFactory, spotifyPlayer);
     }
     @Override
     void displayPage() {

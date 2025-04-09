@@ -7,8 +7,8 @@ import javax.sound.midi.Soundbank;
 public class SearchGender extends AbstractMenuPage{
     private String songGenderName;
 
-    public SearchGender(PageFactory pageFactory) {
-        super(pageFactory);
+    public SearchGender(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
+        super(pageFactory, spotifyPlayer);
     }
     @Override
     void displayPage() {

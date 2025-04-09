@@ -4,9 +4,10 @@ import player_commandPattern.SpotifyPlayer;
 
 public class OnPlaylist extends AbstractMenuPage{
 
-    public OnPlaylist(PageFactory pageFactory) {
-        super(pageFactory);
+    public OnPlaylist(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
+        super(pageFactory, spotifyPlayer);
     }
+
     @Override
     void displayPage() {
         System.out.println("On Playlist");

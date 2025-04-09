@@ -4,9 +4,10 @@ import player_commandPattern.SpotifyPlayer;
 
 public class Search extends AbstractMenuPage {
 
-    public Search(PageFactory pageFactory) {
-        super(pageFactory);
+    public Search(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
+        super(pageFactory, spotifyPlayer);
     }
+
     @Override
     void displayPage() {
         System.out.println("Search Page");

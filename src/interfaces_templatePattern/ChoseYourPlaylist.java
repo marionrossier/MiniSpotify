@@ -4,8 +4,8 @@ import player_commandPattern.SpotifyPlayer;
 
 public class ChoseYourPlaylist extends AbstractMenuPage {
 
-    public ChoseYourPlaylist(PageFactory pageFactory) {
-        super(pageFactory);
+    public ChoseYourPlaylist(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
+        super(pageFactory, spotifyPlayer);
     }
 
     @Override

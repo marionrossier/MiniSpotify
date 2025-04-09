@@ -5,9 +5,10 @@ import player_commandPattern.SpotifyPlayer;
 public class HomePagePlaylist extends AbstractMenuPage {
 
 
-    public HomePagePlaylist(PageFactory pageFactory) {
-        super(pageFactory);
+    public HomePagePlaylist(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
+        super(pageFactory, spotifyPlayer);
     }
+
     @Override
     void displayPage() {
         System.out.println("Home Page Playlist");

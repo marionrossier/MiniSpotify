@@ -7,9 +7,10 @@ public class Login extends AbstractMenuPage {
     private String password;
 
 
-    public Login(PageFactory pageFactory) {
-        super(pageFactory);
+    public Login(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
+        super(pageFactory, spotifyPlayer);
     }
+
     @Override
     void displayPage() {
         System.out.println("Login Page");
