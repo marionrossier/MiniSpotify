@@ -60,6 +60,7 @@ public class CreateUser {
             newUser.setPassword(hashedPassword);
             newUser.setSalt(salt);
             newUser.setPlanEnum(plan);
+            newUser.setPlaylists(new LinkedList<>());
 
             // Add user to the users' list
             users.add(newUser);
