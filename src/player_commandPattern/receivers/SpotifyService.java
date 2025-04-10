@@ -1,4 +1,4 @@
-package player_commandPattern.recievers;
+package player_commandPattern.receivers;
 
 import entities.*;
 import javazoom.jl.decoder.JavaLayerException;

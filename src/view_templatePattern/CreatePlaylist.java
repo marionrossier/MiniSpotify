@@ -1,23 +1,21 @@
-package interfaces_templatePattern;
+package view_templatePattern;
 
 import player_commandPattern.SpotifyPlayer;
 
-public class SearchArtist extends AbstractMenuPage {
-    private String artistName;
+public class CreatePlaylist extends AbstractMenuPage{
+    private String playlistName;
 
-    public SearchArtist(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
+    public CreatePlaylist(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
         super(pageFactory, spotifyPlayer);
     }
+
     @Override
     void displayPage() {
-        System.out.println("Search Artist Page");
-        System.out.println("Enter the name of the artist:");
-        artistName = in.nextLine();
+        System.out.println("Create Playlist Page");
+        System.out.println("Enter the name of the playlist:");
+        playlistName = in.nextLine();
         //search a song...
-//        0) Exit
-//        Songs:
-//        1) ... --> Songplayer
-        super.displayPage();
+
     }
 
     @Override

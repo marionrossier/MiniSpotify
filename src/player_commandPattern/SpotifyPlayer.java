@@ -1,8 +1,7 @@
 package player_commandPattern;
 
-import entities.Song;
 import player_commandPattern.commands.*;
-import player_commandPattern.recievers.SpotifyService;
+import player_commandPattern.receivers.SpotifyService;
 
 import java.util.*;
 

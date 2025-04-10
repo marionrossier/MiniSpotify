@@ -1,4 +1,4 @@
-package interfaces_templatePattern;
+package view_templatePattern;
 
 import player_commandPattern.SpotifyPlayer;
 
@@ -9,10 +9,6 @@ public abstract class AbstractMenuPage {
     public SpotifyPlayer spotifyPlayer;
     PageFactory pageFactory;
     Scanner in = new Scanner(System.in);
-
-//    public AbstractMenuPage(PageFactory pageFactory) {
-//        this.pageFactory = pageFactory;
-//    }
 
     public AbstractMenuPage(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
         this.pageFactory = pageFactory;

@@ -1,30 +1,31 @@
-package interfaces_templatePattern;
+package view_templatePattern;
 
 import player_commandPattern.SpotifyPlayer;
 
-public class ChoseYourPlaylist extends AbstractMenuPage {
+public class HomePagePlaylist extends AbstractMenuPage {
 
-    public ChoseYourPlaylist(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
+
+    public HomePagePlaylist(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
         super(pageFactory, spotifyPlayer);
     }
 
     @Override
     void displayPage() {
-        System.out.println("Chose your playlist");
-        System.out.print("0) Exit\n");
-        //implement loop for all playlists
+        System.out.println("Home Page Playlist");
+        System.out.print("0) Exit\n" +
+                "1) Choose your playlist\n" +
+                "2) Create a playlist\n");
         super.displayPage();
-
     }
 
     @Override
     void button1() {
-
+        pageFactory.choseYourPlaylist.displayPage();
     }
 
     @Override
     void button2() {
-
+        pageFactory.createPlaylist.displayPage();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package player_commandPattern.commands.player_state_pattern;
 
-import player_commandPattern.recievers.SpotifyService;
+import player_commandPattern.receivers.SpotifyService;
 
 public class Sequential implements IState{
     private final SpotifyService spotifyService;

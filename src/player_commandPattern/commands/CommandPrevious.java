@@ -1,6 +1,6 @@
 package player_commandPattern.commands;
 
-import player_commandPattern.recievers.SpotifyService;
+import player_commandPattern.receivers.SpotifyService;
 
 public class CommandPrevious implements ICommand{
     private SpotifyService spotifyService;

@@ -1,14 +1,11 @@
 import entities.Playlist;
 import entities.Song;
-import interfaces_templatePattern.AbstractMenuPage;
-import interfaces_templatePattern.Login;
-import interfaces_templatePattern.PageFactory;
-import interfaces_templatePattern.SongPlayer;
+import view_templatePattern.PageFactory;
+import view_templatePattern.SongPlayer;
 import player_commandPattern.SpotifyPlayer;
 import player_commandPattern.commands.ICommand;
-import player_commandPattern.recievers.SpotifyService;
+import player_commandPattern.receivers.SpotifyService;
 
-import java.io.FileInputStream;
 import java.util.Stack;
 
 public class Main {

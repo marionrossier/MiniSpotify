@@ -1,4 +1,4 @@
-package interfaces_templatePattern;
+package view_templatePattern;
 
 import player_commandPattern.SpotifyPlayer;
 
