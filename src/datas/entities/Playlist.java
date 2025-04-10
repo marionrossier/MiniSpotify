@@ -44,7 +44,6 @@ public class Playlist {
     public void setPlaylistDuration(double playlistDuration) {
         this.playlistDuration = playlistDuration;
     }
-
     public void addSong(Song currentSong) {
         playlistSongs.add(currentSong);
         playlistDuration += currentSong.getDuration();
@@ -55,5 +54,10 @@ public class Playlist {
         playlistDuration -= currentSong.getDuration();
     }
 
-    public void reorderSongs() {/*TODO*/}
+    public void reorderSong(int songIndex) {
+        Song memory = playlistSongs.get(songIndex);
+        playlistSongs.remove(songIndex);
+        playlistSongs.add(songIndex, memory);
+    }
+
 }
