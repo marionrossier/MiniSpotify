@@ -37,5 +37,6 @@ public class Main {
 
         PageFactory pages = new PageFactory();
         pages.setUpPages();
+        pages.startLogin();
     }
 }
