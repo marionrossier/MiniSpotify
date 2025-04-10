@@ -1,6 +1,6 @@
 package view_templatePattern;
 
-import player_commandPattern.SpotifyPlayer;
+import services.player_commandPattern.SpotifyPlayer;
 
 public class SearchArtist extends AbstractMenuPage {
     private String artistName;

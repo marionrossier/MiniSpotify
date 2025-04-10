@@ -1,4 +1,4 @@
-package entities;
+package datas.entities;
 
 public enum PlanEnum {
     FREE,

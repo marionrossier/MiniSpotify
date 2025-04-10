@@ -1,6 +1,6 @@
-package player_commandPattern.commands;
+package services.player_commandPattern.commands;
 
-import player_commandPattern.receivers.SpotifyService;
+import services.player_commandPattern.receivers.SpotifyService;
 
 public class CommandShuffle implements ICommand{
     private SpotifyService spotifyService;

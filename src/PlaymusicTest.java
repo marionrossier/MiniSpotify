@@ -47,7 +47,7 @@ public class PlaymusicTest {
 
     private static void startMusic() {
         try {
-         FileInputStream audioFile = new FileInputStream("src/ressources/boneyM_Sunny.mp3");
+         FileInputStream audioFile = new FileInputStream("src/datas/songsfiles/boneyM_Sunny.mp3");
             player = new Player(audioFile);
 
             playerThread = new Thread(() -> {

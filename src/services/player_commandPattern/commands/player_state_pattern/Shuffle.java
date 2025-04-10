@@ -1,6 +1,6 @@
-package player_commandPattern.commands.player_state_pattern;
+package services.player_commandPattern.commands.player_state_pattern;
 
-import player_commandPattern.receivers.SpotifyService;
+import services.player_commandPattern.receivers.SpotifyService;
 
 public class Shuffle implements IState {
     private SpotifyService spotifyService;
