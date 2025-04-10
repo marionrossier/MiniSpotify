@@ -21,7 +21,14 @@ public abstract class AbstractMenuPage {
     }
 
     void displayPage(){
-        index = in.nextInt();
+        try{
+            index = in.nextInt();
+            in.nextLine(); // Clear the newline character
+        }catch (Exception e){
+            System.out.println("Invalid input, try again.");
+            in.nextLine(); // Clear the invalid input
+            displayPage();
+        }
         switchPage();
     };
 
