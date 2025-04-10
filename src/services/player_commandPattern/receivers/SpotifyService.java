@@ -1,9 +1,10 @@
-package player_commandPattern.receivers;
+package services.player_commandPattern.receivers;
 
-import entities.*;
+import datas.entities.Playlist;
+import datas.entities.Song;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
-import player_commandPattern.commands.player_state_pattern.*;
+import services.player_commandPattern.commands.player_state_pattern.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -92,7 +93,7 @@ public class SpotifyService {
         songHistoricByIndex.push(playlist.getPlaylistSongs().indexOf(currentSong));
 
         try {
-            FileInputStream audioFile = new FileInputStream("src/ressources/boneyM_Sunny.mp3"); // TODO : sera a changer pour currentSong
+            FileInputStream audioFile = new FileInputStream("src/datas/songsfiles/boneyM_Sunny.mp3"); // TODO : sera a changer pour currentSong
             player = new Player(audioFile);
 
             playerThread = new Thread(() -> {
