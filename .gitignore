@@ -28,6 +28,7 @@ Desktop.ini
 bin/
 obj/
 out/
+target/
 !**/src/main/**/out/
 !**/src/test/**/out/
 !**/src/main/**/bin/
