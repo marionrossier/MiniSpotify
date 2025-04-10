@@ -5,7 +5,7 @@ import java.util.*;
 public class Playlist {
     private String playlistName;
     private String playlistGuId;
-    private LinkedList<Song> playlistSongs;
+    private LinkedList<Song> playlistSongs = new LinkedList<>();
     private double playlistDuration;
 
     public Playlist(String playlistName, String playlistGuId) {
@@ -45,7 +45,15 @@ public class Playlist {
         this.playlistDuration = playlistDuration;
     }
 
-    public void addSong(Song currentSong) {/*TODO*/}
-    public void removeSong() {/*TODO*/}
+    public void addSong(Song currentSong) {
+        playlistSongs.add(currentSong);
+        playlistDuration += currentSong.getDuration();
+    }
+
+    public void removeSong(Song currentSong) {
+        playlistSongs.remove(currentSong);
+        playlistDuration -= currentSong.getDuration();
+    }
+
     public void reorderSongs() {/*TODO*/}
 }

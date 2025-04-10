@@ -1,12 +1,13 @@
 package player_commandPattern;
 
 import player_commandPattern.commands.*;
-import player_commandPattern.recievers.SpotifyService;
+import player_commandPattern.receivers.SpotifyService;
 
 import java.util.*;
 
 public class SpotifyPlayer {
     private final SpotifyService spotifyService;
+    private int currentSongIndex;
 
     public void selectNext() {
         spotifyService.next();
@@ -32,5 +33,6 @@ public class SpotifyPlayer {
 
     public SpotifyPlayer(SpotifyService spotifyService, Stack<ICommand> commandHistoric) {
         this.spotifyService = spotifyService;
+        this.currentSongIndex = spotifyService.getIndexCurrentSong();
     }
  }
