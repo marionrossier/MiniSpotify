@@ -60,7 +60,7 @@ public class CreateUser {
             newUser.setPassword(hashedPassword);
             newUser.setSalt(salt);
             newUser.setPlanEnum(plan);
-            newUser.setPlaylists(new int[0]); // Initialize with an empty array
+            newUser.setPlaylists(null);
 
             // Add user to the users' list
             users.add(newUser);

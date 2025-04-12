@@ -3,13 +3,14 @@ package ressources;
 import datas.entities.PlanEnum;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Cookies {
     private final int GUID;
     private final PlanEnum PLANENUM;
-    private final int[] PLAYLISTSLIST;
+    private final List<Integer> PLAYLISTSLIST;
 
-    public Cookies(int GUID, PlanEnum PLANENUM, int[] PLAYLISTSLIST) {
+    public Cookies(int GUID, PlanEnum PLANENUM, List<Integer> PLAYLISTSLIST) {
         this.GUID = GUID;
         this.PLANENUM = PLANENUM;
         this.PLAYLISTSLIST = PLAYLISTSLIST;
@@ -20,7 +21,7 @@ public class Cookies {
         return "Cookies{" +
                 "GUID=" + GUID +
                 ", PLANENUM='" + PLANENUM + '\'' +
-                ", PLAYLISTSLIST=" + Arrays.toString(PLAYLISTSLIST) +
+                ", PLAYLISTSLIST=" + PLAYLISTSLIST +
                 '}';
     }
 }
