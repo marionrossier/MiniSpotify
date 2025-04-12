@@ -33,23 +33,4 @@ public class Search extends AbstractMenuPage {
         pageFactory.searchGender.displayPage();
     }
 
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
-    }
 }

@@ -28,28 +28,4 @@ public class HomePagePlaylist extends AbstractMenuPage {
         pageFactory.createPlaylist.displayPage();
     }
 
-    @Override
-    void button3() {
-
-    }
-
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
-    }
 }

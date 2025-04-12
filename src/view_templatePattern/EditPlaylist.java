@@ -33,23 +33,4 @@ public class EditPlaylist extends AbstractMenuPage {
         //implement logic to move a song to a certain place
     }
 
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
-    }
 }

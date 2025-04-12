@@ -34,25 +34,6 @@ public class HomePage extends AbstractMenuPage {
 
     @Override
     void button3() {
-    }
-
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
+        pageFactory.friendsHomePage.displayPage();
     }
 }

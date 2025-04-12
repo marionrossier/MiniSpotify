@@ -21,36 +21,21 @@ public class FriendsHomePage extends AbstractMenuPage{
 
     @Override
     void button1() {
-
+        pageFactory.friendsDisplayFriends.displayPage();
     }
 
     @Override
     void button2() {
-
+        pageFactory.friendsCommunePlaylists.displayPage();
     }
 
     @Override
     void button3() {
-
+        pageFactory.friendsAddFriend.displayPage();
     }
 
     @Override
     void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
+        pageFactory.friendsLinkPlaylistFriend.displayPage();
     }
 }

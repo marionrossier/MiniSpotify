@@ -78,29 +78,4 @@ public class Login extends AbstractMenuPage {
         CreateUser.addUser(pseudonym,email,password, planEnum);
         displayPage();
     }
-
-    @Override
-    void button3() {
-
-    }
-
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
-    }
 }

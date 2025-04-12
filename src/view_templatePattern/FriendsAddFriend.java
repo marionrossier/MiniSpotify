@@ -14,38 +14,4 @@ public class FriendsAddFriend extends AbstractMenuPage{
 
     }
 
-    @Override
-    void button1() {
-
-    }
-
-    @Override
-    void button2() {
-
-    }
-
-    @Override
-    void button3() {
-
-    }
-
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
-    }
 }
