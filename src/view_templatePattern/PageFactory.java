@@ -10,6 +10,11 @@ public class PageFactory {
     CreatePlaylist createPlaylist;
     DeletePlaylist deletePlaylist;
     EditPlaylist editPlaylist;
+    FriendsAddFriend friendsAddFriend;
+    FriendsCommunePlaylists friendsCommunePlaylists;
+    FriendsDisplayFriends friendsDisplayFriends;
+    FriendsHomePage friendsHomePage;
+    FriendsLinkPlaylistFriend friendsLinkPlaylistFriend;
     HomePage homePage;
     HomePagePlaylist homePagePlaylist;
     Login login;
@@ -26,6 +31,11 @@ public class PageFactory {
         this.createPlaylist = new CreatePlaylist(this, spotifyPlayer);
         this.deletePlaylist = new DeletePlaylist(this, spotifyPlayer);
         this.editPlaylist = new EditPlaylist(this, spotifyPlayer);
+        this.friendsAddFriend = new FriendsAddFriend(this, spotifyPlayer);
+        this.friendsCommunePlaylists = new FriendsCommunePlaylists(this, spotifyPlayer);
+        this.friendsDisplayFriends = new FriendsDisplayFriends(this, spotifyPlayer);
+        this.friendsHomePage = new FriendsHomePage(this, spotifyPlayer);
+        this.friendsLinkPlaylistFriend = new FriendsLinkPlaylistFriend(this, spotifyPlayer);
         this.homePage = new HomePage(this, spotifyPlayer);
         this.homePagePlaylist = new HomePagePlaylist(this, spotifyPlayer);
         this.login = new Login(this, spotifyPlayer);

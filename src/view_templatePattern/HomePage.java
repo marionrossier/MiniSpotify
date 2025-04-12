@@ -13,7 +13,8 @@ public class HomePage extends AbstractMenuPage {
         System.out.println("Home Page");
         System.out.print("0) Exit\n" +
                 "1) Go to playlists\n" +
-                "2) Search\n");
+                "2) Search\n" +
+                "3) Friends\n");
         super.displayPage();
     }
 
@@ -34,25 +35,6 @@ public class HomePage extends AbstractMenuPage {
 
     @Override
     void button3() {
-    }
-
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
+        pageFactory.friendsHomePage.displayPage();
     }
 }

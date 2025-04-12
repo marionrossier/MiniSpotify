@@ -37,24 +37,4 @@ public class OnPlaylist extends AbstractMenuPage{
     void button3() {
         pageFactory.deletePlaylist.displayPage();
     }
-
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
-    }
 }
