@@ -2,38 +2,36 @@ package view_templatePattern;
 
 import services.player_commandPattern.SpotifyPlayer;
 
-public class HomePage extends AbstractMenuPage {
+public class FriendsHomePage extends AbstractMenuPage{
 
-    public HomePage(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
+    public FriendsHomePage(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
         super(pageFactory, spotifyPlayer);
     }
 
     @Override
     void displayPage() {
-        System.out.println("Home Page");
+        System.out.println("Friends");
         System.out.print("0) Exit\n" +
-                "1) Go to playlists\n" +
-                "2) Search\n" +
-                "3) Friends\n");
+                "1) display friends\n" +
+                "2) see commune playlists\n" +
+                "3) add a friend\n" +
+                "4) link a playlist to a friend\n");
         super.displayPage();
     }
 
     @Override
-    void button0() {
-        System.out.println("Exiting...");
-    }
-    @Override
     void button1() {
-        pageFactory.homePagePlaylist.displayPage();
+
     }
 
     @Override
     void button2() {
-        pageFactory.search.displayPage();
+
     }
 
     @Override
     void button3() {
+
     }
 
     @Override
