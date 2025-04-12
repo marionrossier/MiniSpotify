@@ -12,7 +12,7 @@ public class User {
     private String password;
     private byte[] salt;
     private PlanEnum planEnum;
-    private List<String> playlists;
+    private List<Integer> playlists;
 
     // Getters et setters publics
     public int getUserGuId() {
@@ -63,11 +63,12 @@ public class User {
         this.planEnum = planEnum;
     }
 
-    public List<String> getPlaylists() {
+    public List<Integer> getPlaylists() {
         return playlists;
     }
 
-    public void setPlaylists(List<String> playlists) {
+    public void setPlaylists(List<Integer> playlists) {
         this.playlists = playlists;
     }
+
 }

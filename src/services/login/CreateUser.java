@@ -60,7 +60,7 @@ public class CreateUser {
             newUser.setPassword(hashedPassword);
             newUser.setSalt(salt);
             newUser.setPlanEnum(plan);
-            newUser.setPlaylists(new LinkedList<>());
+            newUser.setPlaylists(null);
 
             // Add user to the users' list
             users.add(newUser);
@@ -88,7 +88,7 @@ public class CreateUser {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-        md.update(salt); // Ajouter le sel au hachage
+        md.update(salt); // Add salt to hash
         byte[] hashedPassword = md.digest(password.getBytes());
         return Base64.getEncoder().encodeToString(hashedPassword); // Encodage in Base64
     }
