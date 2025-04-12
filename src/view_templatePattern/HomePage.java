@@ -20,6 +20,7 @@ public class HomePage extends AbstractMenuPage {
     @Override
     void button0() {
         System.out.println("Exiting...");
+        pageFactory.login.displayPage();
     }
     @Override
     void button1() {
