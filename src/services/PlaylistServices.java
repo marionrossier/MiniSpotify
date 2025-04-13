@@ -1,7 +1,7 @@
 package services;
 
-import datas.entities.Playlist;
-import datas.entities.Song;
+import data.entities.Playlist;
+import data.entities.Song;
 import java.util.*;
 
 public class PlaylistServices {

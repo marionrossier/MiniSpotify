@@ -1,12 +1,16 @@
-import datas.entities.PlanEnum;
-import services.login.CreateUser;
-import services.login.VerifyUser;
+import data.entities.PlanEnum;
+import services.user.CreateUser;
+import services.user.VerifyUser;
 
 public class TestServices {
     public static void main(String[] args) {
+
+        VerifyUser verifyUser = new VerifyUser();
+        CreateUser createUser = new CreateUser();
+
         PlanEnum planEnum = PlanEnum.FREE;
-        CreateUser.addUser("testUsers", "email", "password", planEnum);
-        if(VerifyUser.verifyUser("testUsers", "password"))
+        createUser.addUser("testUsers", "email", "password", planEnum);
+        if(verifyUser.verifyUser("testUsers", "password"))
             System.out.println("User verified");
         else
             System.out.println("User not verified");

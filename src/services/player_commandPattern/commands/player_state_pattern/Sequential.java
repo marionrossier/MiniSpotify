@@ -1,9 +1,13 @@
 package services.player_commandPattern.commands.player_state_pattern;
 
+import data.entities.Playlist;
+import data.storage.PlaylistRepository;
 import services.player_commandPattern.receivers.SpotifyService;
 
 public class Sequential implements IState{
     private final SpotifyService spotifyService;
+    private final PlaylistRepository playlistRepository = new PlaylistRepository();
+
 
     public Sequential(SpotifyService spotifyService) {
         this.spotifyService = spotifyService;
@@ -11,24 +15,20 @@ public class Sequential implements IState{
 
     @Override
     public void next() {
-        int nextIndex = spotifyService.getIndexCurrentSong()+1;
-        if (nextIndex > spotifyService.getCurrentPlaylist().getPlaylistSongs().size()-1){
+        Playlist currentPlaylist = playlistRepository.findPlaylistById(spotifyService.getCurrentPlaylistId());
+        int nextIndex = spotifyService.getIndexCurrentSong() + 1;
+        if (nextIndex > currentPlaylist.getPlaylistSongs().size() - 1) {
             nextIndex = 0;
-        }
-        else {
-            spotifyService.play(nextIndex);
         }
         spotifyService.play(nextIndex);
     }
 
     @Override
     public void previous() {
-        int previousIndex = spotifyService.getIndexCurrentSong()-1;
-        if (previousIndex<0){
-            previousIndex = spotifyService.getCurrentPlaylist().getPlaylistSongs().size()-1;
-        }
-        else {
-            spotifyService.play(previousIndex);
+        Playlist currentPlaylist = playlistRepository.findPlaylistById(spotifyService.getCurrentPlaylistId());
+        int previousIndex = spotifyService.getIndexCurrentSong() - 1;
+        if (previousIndex < 0) {
+            previousIndex = currentPlaylist.getPlaylistSongs().size() - 1;
         }
         spotifyService.play(previousIndex);
     }

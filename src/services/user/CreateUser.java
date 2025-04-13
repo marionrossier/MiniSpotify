@@ -1,21 +1,18 @@
-package services.login;
+package services.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
-import datas.entities.User;
-import datas.entities.PlanEnum;
-import ressources.Routing;
+import data.entities.User;
+import data.entities.PlanEnum;
+import data.storage.UserRepository;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Base64;
 
 /*
 This class add a new user to user.json with as parameters the pseudo, email, password and plan.
@@ -24,9 +21,10 @@ The user receive automatically a guid and has no playlist at the beginning.
 
 public class CreateUser {
 
-    private static final String USER_FILE_PATH = Routing.USER_FILE_PATH;
+    private final UserRepository userRepository = new UserRepository();
+    private final String USER_FILE_PATH = userRepository.getFilePath();
 
-    public static void addUser(String pseudonym, String email, String password, PlanEnum plan) {
+    public void addUser(String pseudonym, String email, String password, PlanEnum plan) {
         ObjectMapper objectMapper = new ObjectMapper();
         File userFile = new File(USER_FILE_PATH);
 
@@ -38,7 +36,7 @@ public class CreateUser {
 
             // Check if the pseudonym already exists
             if (isPseudonymExists(pseudonym)) {
-                System.err.println("The pseudonym already exists.");
+                System.err.println("The pseudonym \""+pseudonym+ "\" already exists.");
                 return;
             }
 
@@ -53,14 +51,17 @@ public class CreateUser {
 
 
             // Create new user
+            //TODO : merci d'employer le constructeur avec variables dans la classe User.
+            // Un constructeur est fait pour cela...
             User newUser = new User();
-            newUser.setUserGuId(userId);
+            newUser.setUserId(userId);
             newUser.setPseudonym(pseudonym);
             newUser.setEmail(email);
             newUser.setPassword(hashedPassword);
             newUser.setSalt(salt);
             newUser.setPlanEnum(plan);
-            newUser.setPlaylists(new LinkedList<>());
+            newUser.setPlaylists(new ArrayList<>());
+            newUser.setFriends(new ArrayList<>());
 
             // Add user to the users' list
             users.add(newUser);
@@ -74,26 +75,26 @@ public class CreateUser {
         }
     }
 
-    private static byte[] generateSalt() {
+    private byte[] generateSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);
         return salt;
     }
 
-    private static String hashPassword(String password, byte[] salt){
+    private String hashPassword(String password, byte[] salt){
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-        md.update(salt); // Ajouter le sel au hachage
+        md.update(salt); // Add salt to hash
         byte[] hashedPassword = md.digest(password.getBytes());
         return Base64.getEncoder().encodeToString(hashedPassword); // Encodage in Base64
     }
 
-    public static boolean isPseudonymExists(String pseudonym) {
+    public boolean isPseudonymExists(String pseudonym) {
         ObjectMapper objectMapper = new ObjectMapper();
         File userFile = new File(USER_FILE_PATH);
 

@@ -4,20 +4,23 @@ import services.player_commandPattern.SpotifyPlayer;
 
 import java.util.Scanner;
 
-public class PageFactory {
-    Scanner in = new Scanner(System.in);
+public class SpotifyPageFactory {
+//    Scanner in = new Scanner(System.in);
     ChoseYourPlaylist choseYourPlaylist;
     CreatePlaylist createPlaylist;
     DeletePlaylist deletePlaylist;
     EditPlaylist editPlaylist;
+    FriendsFollowFriend friendsFollowFriend;
+    FriendsCommunePlaylists friendsCommunePlaylists;
+    FriendsDisplayFriends friendsDisplayFriends;
+    FriendsHomePage friendsHomePage;
+    FriendsLinkPlaylistFriend friendsLinkPlaylistFriend;
     HomePage homePage;
     HomePagePlaylist homePagePlaylist;
     Login login;
+    CreateAccount createAccount;
     OnPlaylist onPlaylist;
     Search search;
-    SearchArtist searchArtist;
-    SearchGender searchGender;
-    SearchSong searchSong;
     SongPlayer songPlayer;
     SpotifyPlayer spotifyPlayer;
 
@@ -26,18 +29,21 @@ public class PageFactory {
         this.createPlaylist = new CreatePlaylist(this, spotifyPlayer);
         this.deletePlaylist = new DeletePlaylist(this, spotifyPlayer);
         this.editPlaylist = new EditPlaylist(this, spotifyPlayer);
+        this.friendsFollowFriend = new FriendsFollowFriend(this, spotifyPlayer);
+        this.friendsCommunePlaylists = new FriendsCommunePlaylists(this, spotifyPlayer);
+        this.friendsDisplayFriends = new FriendsDisplayFriends(this, spotifyPlayer);
+        this.friendsHomePage = new FriendsHomePage(this, spotifyPlayer);
+        this.friendsLinkPlaylistFriend = new FriendsLinkPlaylistFriend(this, spotifyPlayer);
         this.homePage = new HomePage(this, spotifyPlayer);
         this.homePagePlaylist = new HomePagePlaylist(this, spotifyPlayer);
         this.login = new Login(this, spotifyPlayer);
+        this.createAccount = new CreateAccount(this, spotifyPlayer);
         this.onPlaylist = new OnPlaylist(this, spotifyPlayer);
         this.search = new Search(this, spotifyPlayer);
-        this.searchArtist = new SearchArtist(this, spotifyPlayer);
-        this.searchGender = new SearchGender(this, spotifyPlayer);
-        this.searchSong = new SearchSong(this, spotifyPlayer);
         this.songPlayer = new SongPlayer(this, spotifyPlayer);
     }
 
     public void startLogin(){
-        login.displayPage();
+        login.templateMethode();
     }
 }

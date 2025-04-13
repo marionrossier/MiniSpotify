@@ -1,9 +1,9 @@
-package services.login;
+package services.user;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import datas.entities.User;
-import ressources.Routing;
+import data.entities.User;
+import data.storage.UserRepository;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,10 +18,11 @@ according to the hash and salt.
  */
 public class VerifyUser {
 
-    private static final String USER_FILE_PATH = Routing.USER_FILE_PATH;
+    private final UserRepository userRepository = new UserRepository();
+    private final String USER_FILE_PATH = userRepository.getFilePath();
 
     //this method verify if the user exist in the user.json file with as parameters the pseudo and password
-    public static boolean verifyUser(String pseudonym, String password) {
+    public boolean verifyUser(String pseudonym, String password) {
         ObjectMapper objectMapper = new ObjectMapper();
         File userFile = new File(USER_FILE_PATH);
 
@@ -50,7 +51,7 @@ public class VerifyUser {
     }
 
     // Method to generate a unique salt
-    private static String hashPassword(String password, byte[] salt) throws NoSuchAlgorithmException {
+    private String hashPassword(String password, byte[] salt) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(salt); // Add sel to hash
         byte[] hashedPassword = md.digest(password.getBytes());

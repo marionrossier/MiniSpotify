@@ -4,66 +4,29 @@ import services.player_commandPattern.SpotifyPlayer;
 
 public class DeletePlaylist extends AbstractMenuPage {
 
-    public DeletePlaylist(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
-        super(pageFactory, spotifyPlayer);
-    }
-    @Override
-    void displayPage() {
-        System.out.println("Delete Playlist");
-        System.out.print("0) Exit\n" +
-                "1) Are you sure?\n");
-        super.displayPage();
+    public DeletePlaylist(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+        super(spotifyPageFactory, spotifyPlayer);
+        this.pageTitle = "Delete Playlist Page";
+        this.pageContent = backLineWith0 + lineBreak +
+                "Are you sure you want to delete this playlist?" + lineBreak +
+                nb1 + "YES" + lineBreak +
+                nb2 + "NO";
     }
 
     @Override
     void button0() {
-        pageFactory.onPlaylist.displayPage();
+        spotifyPageFactory.onPlaylist.templateMethode();
     }
 
     @Override
     void button1() {
-        System.out.println("Are you sure you want to delete this playlist? (y/n)");
-        String input = in.nextLine();
-        if (input.equals("y")) {
-            System.out.println("Playlist deleted");
-            pageFactory.onPlaylist.displayPage();
-        } else if (input.equals("n")) {
-            System.out.println("Playlist not deleted");
-            pageFactory.onPlaylist.displayPage();
-        } else {
-            System.out.println("Invalid input");
-            displayPage();
-        }
-
+        System.out.println("Playlist deleted !");
+        spotifyPageFactory.onPlaylist.templateMethode();
     }
 
     @Override
     void button2() {
-
-    }
-
-    @Override
-    void button3() {
-
-    }
-
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
+        System.out.println("Playlist not deleted !");
+        spotifyPageFactory.onPlaylist.templateMethode();
     }
 }

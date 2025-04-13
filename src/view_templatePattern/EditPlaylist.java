@@ -4,52 +4,33 @@ import services.player_commandPattern.SpotifyPlayer;
 
 public class EditPlaylist extends AbstractMenuPage {
 
-    public EditPlaylist(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
-        super(pageFactory, spotifyPlayer);
+    public EditPlaylist(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+        super(spotifyPageFactory, spotifyPlayer);
+        this.pageTitle = "Edit Playlist Page";
+        this.pageContent = backLineWith0 + lineBreak +
+                nb1 + "Add song" + lineBreak +
+                nb2 + "Remove song" + lineBreak +
+                nb3 + "Reorder song";
     }
 
     @Override
-    void displayPage() {
-        System.out.println("Edit Playlist");
-        System.out.print("0) Exit\n" +
-                "1) Add song\n" +
-                "2) Remove song\n" +
-                "3) Reorder song\n");
-        super.displayPage();
+    void button0() {
+        spotifyPageFactory.onPlaylist.templateMethode();
     }
 
     @Override
     void button1() {
-        pageFactory.searchSong.displayPage();
+        spotifyPageFactory.search.templateMethode();
     }
 
     @Override
     void button2() {
-        pageFactory.deletePlaylist.displayPage();
+        spotifyPageFactory.deletePlaylist.templateMethode();
     }
 
     @Override
     void button3() {
-        //implement logic to move a song to a certain place
+        //TODO : implement logic to move a song to a certain place
     }
 
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
-    }
 }

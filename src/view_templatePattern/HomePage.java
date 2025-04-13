@@ -4,54 +4,34 @@ import services.player_commandPattern.SpotifyPlayer;
 
 public class HomePage extends AbstractMenuPage {
 
-    public HomePage(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
-        super(pageFactory, spotifyPlayer);
-    }
-
-    @Override
-    void displayPage() {
-        System.out.println("Home Page");
-        System.out.print("0) Exit\n" +
-                "1) Go to playlists\n" +
-                "2) Search\n");
-        super.displayPage();
+    public HomePage(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+        super(spotifyPageFactory, spotifyPlayer);
+        this.pageTitle = "Home Page";
+        this.pageContent =
+                logoutLineWith0 + lineBreak +
+                nb1 + "Go to playlists" + lineBreak +
+                nb2 + "Search" + lineBreak +
+                nb3 + "Friends";
     }
 
     @Override
     void button0() {
-        System.out.println("Exiting...");
+        System.out.println("Logging you out ...");
+        spotifyPageFactory.login.templateMethode();
     }
+
     @Override
     void button1() {
-        pageFactory.homePagePlaylist.displayPage();
+        spotifyPageFactory.homePagePlaylist.templateMethode();
     }
 
     @Override
     void button2() {
-        pageFactory.search.displayPage();
+        spotifyPageFactory.search.templateMethode();
     }
 
     @Override
     void button3() {
-    }
-
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
+        spotifyPageFactory.friendsHomePage.templateMethode();
     }
 }

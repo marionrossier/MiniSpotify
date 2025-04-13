@@ -9,6 +9,7 @@
 0) Exit					--> End app
 1) Go to playlists
 2) Search
+3) Friends
 
 #Search
 0) Exit
@@ -99,6 +100,54 @@
 	0) Exit
 	Songs:
 	1) ...		--> Songplayer
+
+#Friends
+0) Exit
+1) display friends
+2) see commune playlists
+3) add a friend
+4) link a playlist to a friend
+
+    #1) display friends
+    0) Exit
+    Tip the friend's number to add him a playlist
+    1)....
+    2)...
+    .
+    .
+    .
+
+    -Choose a playlists
+
+    #2) see commune playlists
+    0) Exit
+    Tip the playlist's number to play it
+    a) friend a
+    1)...
+    2)...
+    b) friend b
+    1)...
+    2)...
+    .
+    .
+    .
+
+
+    #3) add a friend
+    -Tip pseudo of your friend you want to add
+
+
+    #4) link a playlist to a friend
+    -Tip the playlist you would like to link:
+
+
+    0) Exit
+    Tip the friend's number to add him a playlist
+    1)....
+    2)...
+    .
+    .
+    .
 
 
 

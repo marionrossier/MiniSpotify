@@ -4,52 +4,38 @@ import services.player_commandPattern.SpotifyPlayer;
 
 public class Search extends AbstractMenuPage {
 
-    public Search(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
-        super(pageFactory, spotifyPlayer);
-    }
-
-    @Override
-    void displayPage() {
-        System.out.println("Search Page");
-        System.out.print("0) Exit\n" +
-                "1) Search a song\n" +
-                "2) Search an artist\n" +
-                "3) Search a song gender\n");
-        super.displayPage();
+    public Search(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+        super(spotifyPageFactory, spotifyPlayer);
+        this.pageTitle = "Search Page";
+        this.pageContent = backLineWith0 + lineBreak +
+                nb1 + "Search a song" + lineBreak +
+                nb2 + "Search an artist" + lineBreak +
+                nb3 + "Search a song gender";
     }
 
     @Override
     void button1() {
-        pageFactory.searchSong.displayPage();
+        System.out.println(search + "Search Song Page");
+        System.out.print(lineBreak + "Enter the name of the song : ");
+        String songName = in.nextLine();
+        // TODO : comment tu veux faire pour la suite ?
     }
 
     @Override
     void button2() {
-        pageFactory.searchArtist.displayPage();
+        System.out.println(search + "Search Artist Page");
+        System.out.print(lineBreak + "Enter the name of the artist : ");
+        String artistName = in.nextLine();
+        // TODO : comment tu veux faire pour la suite ?
     }
 
     @Override
     void button3() {
-        pageFactory.searchGender.displayPage();
+        System.out.println(search + "Search Gender");
+        System.out.print(lineBreak + "Enter the name of the song gender : ");
+        String songGenderName = in.nextLine();
+        // TODO : comment tu veux faire pour la suite ? Peut être afficher d'office une liste pour choisir ?
+        //  Dans ce cas en effet une classe SearchGender serait plus appropriée.
     }
 
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
-    }
 }

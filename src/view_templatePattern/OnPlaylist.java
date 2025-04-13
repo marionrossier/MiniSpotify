@@ -4,57 +4,32 @@ import services.player_commandPattern.SpotifyPlayer;
 
 public class OnPlaylist extends AbstractMenuPage{
 
-    public OnPlaylist(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
-        super(pageFactory, spotifyPlayer);
-    }
-
-    @Override
-    void displayPage() {
-        System.out.println("On Playlist");
-        System.out.print("0) Exit\n" +
-                "1) Play the playlist\n" +
-                "2) Edit the playlist\n" +
-                "3) Delete the playlist\n");
-        super.displayPage();
+    public OnPlaylist(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+        super(spotifyPageFactory, spotifyPlayer);
+        this.pageTitle = "Playlist Page";
+        this.pageContent = backLineWith0 + lineBreak +
+                nb1 + "Play the playlist" + lineBreak +
+                nb2 + "Edit the playlist" + lineBreak +
+                nb3 + "Delete the playlist";
     }
 
     @Override
     void button0() {
-        pageFactory.choseYourPlaylist.displayPage();
+        spotifyPageFactory.choseYourPlaylist.templateMethode();
     }
 
     @Override
     void button1() {
-        //play the playlist
+        //TODO : play the playlist
     }
 
     @Override
     void button2() {
-        pageFactory.editPlaylist.displayPage();
+        spotifyPageFactory.editPlaylist.templateMethode();
     }
 
     @Override
     void button3() {
-        pageFactory.deletePlaylist.displayPage();
-    }
-
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
+        spotifyPageFactory.deletePlaylist.templateMethode();
     }
 }

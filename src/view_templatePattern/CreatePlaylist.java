@@ -1,55 +1,31 @@
 package view_templatePattern;
 
+import data.entities.Playlist;
+import data.storage.PlaylistRepository;
 import services.player_commandPattern.SpotifyPlayer;
 
 public class CreatePlaylist extends AbstractMenuPage{
-    private String playlistName;
+    private final Playlist playlist = new Playlist();
+    private final PlaylistRepository playlistRepository = new PlaylistRepository();
 
-    public CreatePlaylist(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
-        super(pageFactory, spotifyPlayer);
+    public CreatePlaylist(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+        super(spotifyPageFactory, spotifyPlayer);
+        this.pageTitle = "Create Playlist Page";
+        this.pageContent = "Enter the name of the playlist : ";
     }
-
     @Override
-    void displayPage() {
-        System.out.println("Create Playlist Page");
-        System.out.println("Enter the name of the playlist:");
-        playlistName = in.nextLine();
+    void displayContent(String pageContent) {
+        System.out.print(pageContent);
+        String playlistName = in.nextLine();
+
+        playlist.setPlaylistName(playlistName);
+        playlistRepository.addPlaylist(playlist);
+
+        System.out.println(ok + "Playlist saved successfully !");
+
+        //TODO : comment tu veux faire pour la suite ?
         //search a song...
-
+        //TODO : add back to the menu "backLineWith0 + lineBreak"
     }
 
-    @Override
-    void button1() {
-
-    }
-
-    @Override
-    void button2() {
-
-    }
-
-    @Override
-    void button3() {
-
-    }
-
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
-    }
 }

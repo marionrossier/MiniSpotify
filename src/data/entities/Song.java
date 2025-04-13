@@ -1,13 +1,20 @@
-package datas.entities;
+package data.entities;
+
+import services.TransverseCode;
 
 public class Song {
     private String title;
+    //TODO : est-ce qu'on ferait pas une classe séparé our l'artiste ? Comme ça on limite les
+    // doublons et on peut sortir une liste des artistes dans le search...
     private String artist;
+    //TODO : idem que pour les artistes mais pour les albums
     private String album;
     private double duration;
+    //TODO : est-ce qu'on fait un enum pour le genre ? Comme ça on peut faire un switch pour la page Search...
     private String gender;
-    private String songGuId;
+    private int songId;
     private String audioFilePath;
+    private TransverseCode transverseCode = new TransverseCode();
 
     public String getAudioFilePath() {
         return audioFilePath;
@@ -17,14 +24,16 @@ public class Song {
         this.audioFilePath = audioFilePath;
     }
 
-    public Song(String title, String artist, String album, double duration, String gender, String songGuId,
+    public Song (){}
+
+    public Song(String title, String artist, String album, double duration, String gender,
                 String audioFilePath) {
         this.title = title;
         this.artist = artist;
         this.album = album;
         this.duration = duration;
         this.gender = gender;
-        this.songGuId = songGuId;
+        this.songId = transverseCode.setUniqueId();
         this.audioFilePath = audioFilePath;
     }
 
@@ -68,11 +77,11 @@ public class Song {
         this.gender = gender;
     }
 
-    public String getSongGuId() {
-        return songGuId;
+    public int getSongId() {
+        return songId;
     }
 
-    public void setSongGuId(String songGuId) {
-        this.songGuId = songGuId;
+    public void setSongId(int songId) {
+        this.songId = songId;
     }
 }

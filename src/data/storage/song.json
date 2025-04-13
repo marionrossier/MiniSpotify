@@ -1,0 +1,20 @@
+[
+  {
+    "songId": 1,
+    "title": "SongTitle1",
+    "artist": "SongArtist",
+    "album": "SongAlbum",
+    "duration": 3.5,
+    "gender": "Classical",
+    "audioFilePath": "src/data/songsfiles/boneyM_Sunny.mp3"
+  },
+  {
+    "songId": 2,
+    "title": "SongTitle2",
+    "artist": "SongArtist",
+    "album": "SongAlbum",
+    "duration": 3,
+    "gender": "Classical",
+    "audioFilePath": "src/data/songsfiles/Old Nokia Tune Original Classic [Nokia 3310].mp3"
+  }
+]
