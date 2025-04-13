@@ -1,4 +1,4 @@
-package datas.entities;
+package data.entities;
 
 public class Song {
     private String title;
@@ -6,7 +6,7 @@ public class Song {
     private String album;
     private double duration;
     private String gender;
-    private String songGuId;
+    private int songId;
     private String audioFilePath;
 
     public String getAudioFilePath() {
@@ -17,14 +17,16 @@ public class Song {
         this.audioFilePath = audioFilePath;
     }
 
-    public Song(String title, String artist, String album, double duration, String gender, String songGuId,
+    public Song (){}
+
+    public Song(String title, String artist, String album, double duration, String gender, int songId,
                 String audioFilePath) {
         this.title = title;
         this.artist = artist;
         this.album = album;
         this.duration = duration;
         this.gender = gender;
-        this.songGuId = songGuId;
+        this.songId = songId;
         this.audioFilePath = audioFilePath;
     }
 
@@ -68,11 +70,11 @@ public class Song {
         this.gender = gender;
     }
 
-    public String getSongGuId() {
-        return songGuId;
+    public int getSongId() {
+        return songId;
     }
 
-    public void setSongGuId(String songGuId) {
-        this.songGuId = songGuId;
+    public void setSongId(int songId) {
+        this.songId = songId;
     }
 }

@@ -1,7 +1,7 @@
 package services.player_commandPattern.receivers;
 
-import datas.entities.Playlist;
-import datas.entities.Song;
+import data.entities.Playlist;
+import data.storage.PlaylistRepository;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 import services.player_commandPattern.commands.player_state_pattern.*;
@@ -13,8 +13,8 @@ import java.util.Stack;
 public class SpotifyService {
 
     private Stack<Integer> songHistoricByIndex;
-    private Playlist currentPlaylist;
-    private Song currentSong;
+    private int currentPlaylist;
+    private int currentSong;
     private static Player player;
     private static Thread playerThread;
     private static boolean isPlaying = false;
@@ -23,25 +23,31 @@ public class SpotifyService {
         return songHistoricByIndex;
     }
 
-    public Playlist getCurrentPlaylist() {
+    public int getCurrentPlaylist() {
         return currentPlaylist;
     }
 
-    public void setCurrentPlaylist(Playlist currentPlaylist) {
+    public void setCurrentPlaylist(int currentPlaylist) {
         this.currentPlaylist = currentPlaylist;
     }
 
-    public Song getCurrentSong() {
+    public int getCurrentSong() {
         return currentSong;
     }
 
-    public int getIndexCurrentSong()  {
-        return currentPlaylist
-                .getPlaylistSongs()
-                .indexOf(currentSong);
+    public int getIndexCurrentSong() {
+        PlaylistRepository playlistRepository = new PlaylistRepository();
+        Playlist playlist = playlistRepository.findPlaylistById(currentPlaylist);
+        if (playlist != null) {
+            return playlist.getPlaylistSongs().indexOf(currentSong);
+        }
+        else {
+            System.err.println("Pas de Playlist trouvé.");
+        }
+        return -1; // Retourne -1 si la playlist n'est pas trouvée
     }
 
-    public void setCurrentSong(Song currentSong) {
+    public void setCurrentSong(int currentSong) {
         this.currentSong = currentSong;
     }
 
@@ -53,7 +59,7 @@ public class SpotifyService {
 
     public Playlist playlist;
 
-    public SpotifyService(Song currentSong, Playlist currentPlaylist) {
+    public SpotifyService(int currentSong, int currentPlaylist) {
         this.currentSong = currentSong;
         this.currentPlaylist = currentPlaylist;
         this.sequentialState = new Sequential(this);

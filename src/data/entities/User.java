@@ -1,4 +1,4 @@
-package datas.entities;
+package data.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -6,21 +6,22 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL) // Inclut uniquement les champs non nuls
 public class User {
-    private int userGuId;
+    private int userId;
     private String pseudonym;
     private String email;
     private String password;
     private byte[] salt;
     private PlanEnum planEnum;
-    private List<String> playlists;
+    private List<Integer> playlists;
+    private List<Integer> friends;
 
     // Getters et setters publics
-    public int getUserGuId() {
-        return userGuId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserGuId(int userGuId) {
-        this.userGuId = userGuId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getPseudonym() {
@@ -63,11 +64,20 @@ public class User {
         this.planEnum = planEnum;
     }
 
-    public List<String> getPlaylists() {
+    public List<Integer> getPlaylists() {
         return playlists;
     }
 
-    public void setPlaylists(List<String> playlists) {
+    public void setPlaylists(List<Integer> playlists) {
         this.playlists = playlists;
     }
+
+    public List<Integer> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Integer> friends) {
+        this.friends = friends;
+    }
+
 }

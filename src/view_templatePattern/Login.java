@@ -1,18 +1,21 @@
 package view_templatePattern;
 
 
-import datas.entities.PlanEnum;
+import data.entities.PlanEnum;
+import data.entities.User;
+import ressources.Cookies;
 import services.login.CreateUser;
 import services.login.VerifyUser;
 import services.player_commandPattern.SpotifyPlayer;
+import services.user.SearchUser;
 
-import static services.login.CreateUser.addUser;
 
 public class Login extends AbstractMenuPage {
     private String pseudonym;
     private String password;
     private String email;
     private PlanEnum planEnum;
+    public Cookies cookies;
 
 
     public Login(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
@@ -21,11 +24,16 @@ public class Login extends AbstractMenuPage {
 
     @Override
     void displayPage() {
+        cookies = null;
         System.out.println("Login Page");
         System.out.print("0) Exit\n" +
                 "1) Sign in\n" +
                 "2) Create an account\n");
         super.displayPage();
+    }
+
+    void button0() {
+        System.out.println("Goodbye");
     }
 
     @Override
@@ -36,6 +44,8 @@ public class Login extends AbstractMenuPage {
         password = in.nextLine();
         //Check to password...
         if(VerifyUser.verifyUser(pseudonym, password)) {
+            User user = SearchUser.searchUserByPseudo(pseudonym);
+            cookies = new Cookies(user.getUserId(), user.getPlanEnum(), user.getPlaylists());
             System.out.println("Login successful");
             pageFactory.homePage.displayPage();
         }else{
@@ -77,30 +87,5 @@ public class Login extends AbstractMenuPage {
         }
         CreateUser.addUser(pseudonym,email,password, planEnum);
         displayPage();
-    }
-
-    @Override
-    void button3() {
-
-    }
-
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
     }
 }

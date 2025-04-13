@@ -34,36 +34,8 @@ public class DeletePlaylist extends AbstractMenuPage {
             System.out.println("Invalid input");
             displayPage();
         }
-
+        System.out.println("Choice invalid");
+        displayPage();
     }
 
-    @Override
-    void button2() {
-
-    }
-
-    @Override
-    void button3() {
-
-    }
-
-    @Override
-    void button4() {
-
-    }
-
-    @Override
-    void button5() {
-
-    }
-
-    @Override
-    void button6() {
-
-    }
-
-    @Override
-    void button7() {
-
-    }
 }

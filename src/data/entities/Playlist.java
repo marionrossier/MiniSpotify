@@ -1,16 +1,20 @@
-package datas.entities;
+package data.entities;
+
+import data.storage.PlaylistRepository;
 
 import java.util.*;
 
 public class Playlist {
     private String playlistName;
-    private String playlistGuId;
-    private LinkedList<Song> playlistSongs = new LinkedList<>();
+    private int playlistId;
+    private LinkedList<Integer> playlistSongs = new LinkedList<>();
     private double playlistDuration;
 
-    public Playlist(String playlistName, String playlistGuId) {
+    public Playlist (){}
+
+    public Playlist(String playlistName, int playlistId) {
         this.playlistName = playlistName;
-        this.playlistGuId = playlistGuId;
+        this.playlistId = playlistId;
     }
 
     public String getPlaylistName() {
@@ -21,19 +25,21 @@ public class Playlist {
         this.playlistName = playlistName;
     }
 
-    public String getPlaylistGuId() {
-        return playlistGuId;
+    public int getPlaylistId() {
+        return playlistId;
     }
 
-    public void setPlaylistGuId(String playlistGuId) {
-        this.playlistGuId = playlistGuId;
+    public void setPlaylistId(int playlistId) {
+        this.playlistId = playlistId;
     }
 
-    public LinkedList<Song> getPlaylistSongs() {
+    public LinkedList<Integer> getPlaylistSongs() {
+        PlaylistRepository playlistRepository = new PlaylistRepository();
+        playlistRepository.findPlaylistById(playlistId);
         return playlistSongs;
     }
 
-    public void setPlaylistSongs(LinkedList<Song> playlistSongs) {
+    public void setPlaylistSongs(LinkedList<Integer> playlistSongs) {
         this.playlistSongs = playlistSongs;
     }
 
@@ -45,17 +51,17 @@ public class Playlist {
         this.playlistDuration = playlistDuration;
     }
     public void addSong(Song currentSong) {
-        playlistSongs.add(currentSong);
+        playlistSongs.add(currentSong.getSongId());
         playlistDuration += currentSong.getDuration();
     }
 
     public void removeSong(Song currentSong) {
-        playlistSongs.remove(currentSong);
+        playlistSongs.remove(currentSong.getSongId());
         playlistDuration -= currentSong.getDuration();
     }
 
     public void reorderSong(int songIndex) {
-        Song memory = playlistSongs.get(songIndex);
+        int memory = playlistSongs.get(songIndex);
         playlistSongs.remove(songIndex);
         playlistSongs.add(songIndex, memory);
     }

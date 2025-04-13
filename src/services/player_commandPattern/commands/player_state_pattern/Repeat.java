@@ -1,18 +1,21 @@
 package services.player_commandPattern.commands.player_state_pattern;
 
+import data.entities.Playlist;
+import data.storage.PlaylistRepository;
 import services.player_commandPattern.receivers.SpotifyService;
 
 public class Repeat implements IState{
     private final SpotifyService spotifyService;
+    private PlaylistRepository playlistRepository = new PlaylistRepository();
+
 
     public Repeat(SpotifyService spotifyService) {
         this.spotifyService = spotifyService;
     }
 
-    public void replay(){
-        int currentSongIndex = spotifyService
-                .getCurrentPlaylist()
-                .getPlaylistSongs()
+    public void replay() {
+        Playlist currentPlaylist = playlistRepository.findPlaylistById(spotifyService.getCurrentPlaylist());
+        int currentSongIndex = currentPlaylist.getPlaylistSongs()
                 .indexOf(spotifyService.getCurrentSong());
         spotifyService.play(currentSongIndex);
     }

@@ -67,12 +67,33 @@ public abstract class AbstractMenuPage {
     void button0() {
         pageFactory.homePage.displayPage();
     }
-    abstract void button1();
-    abstract void button2();
-    abstract void button3();
-    abstract void button4();
-    abstract void button5();
-    abstract void button6();
-    abstract void button7();
+    void button1(){
+        System.out.println("Choice invalid");
+        displayPage();
+    };
+    void button2(){
+        System.out.println("Choice invalid");
+        displayPage();
+    };
+    void button3(){
+        System.out.println("Choice invalid");
+        displayPage();
+    };
+    void button4(){
+        System.out.println("Choice invalid");
+        displayPage();
+    };
+    void button5(){
+        System.out.println("Choice invalid");
+        displayPage();
+    };
+    void button6(){
+        System.out.println("Choice invalid");
+        displayPage();
+    };
+    void button7(){
+        System.out.println("Choice invalid");
+        displayPage();
+    };
 
 }

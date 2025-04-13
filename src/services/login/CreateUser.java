@@ -2,20 +2,17 @@ package services.login;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
-import datas.entities.User;
-import datas.entities.PlanEnum;
+import data.entities.User;
+import data.entities.PlanEnum;
 import ressources.Routing;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Base64;
 
 /*
 This class add a new user to user.json with as parameters the pseudo, email, password and plan.
@@ -54,13 +51,14 @@ public class CreateUser {
 
             // Create new user
             User newUser = new User();
-            newUser.setUserGuId(userId);
+            newUser.setUserId(userId);
             newUser.setPseudonym(pseudonym);
             newUser.setEmail(email);
             newUser.setPassword(hashedPassword);
             newUser.setSalt(salt);
             newUser.setPlanEnum(plan);
-            newUser.setPlaylists(new LinkedList<>());
+            newUser.setPlaylists(new ArrayList<>());
+            newUser.setFriends(new ArrayList<>());
 
             // Add user to the users' list
             users.add(newUser);
@@ -88,7 +86,7 @@ public class CreateUser {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-        md.update(salt); // Ajouter le sel au hachage
+        md.update(salt); // Add salt to hash
         byte[] hashedPassword = md.digest(password.getBytes());
         return Base64.getEncoder().encodeToString(hashedPassword); // Encodage in Base64
     }
