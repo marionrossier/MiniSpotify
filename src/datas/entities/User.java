@@ -13,6 +13,7 @@ public class User {
     private byte[] salt;
     private PlanEnum planEnum;
     private List<Integer> playlists;
+    private List<Integer> friends;
 
     // Getters et setters publics
     public int getUserGuId() {
@@ -69,6 +70,14 @@ public class User {
 
     public void setPlaylists(List<Integer> playlists) {
         this.playlists = playlists;
+    }
+
+    public List<Integer> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Integer> friends) {
+        this.friends = friends;
     }
 
 }
