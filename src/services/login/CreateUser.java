@@ -8,14 +8,12 @@ import ressources.Routing;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Base64;
+import java.util.concurrent.LinkedBlockingDeque;
 
 /*
 This class add a new user to user.json with as parameters the pseudo, email, password and plan.
@@ -60,7 +58,8 @@ public class CreateUser {
             newUser.setPassword(hashedPassword);
             newUser.setSalt(salt);
             newUser.setPlanEnum(plan);
-            newUser.setPlaylists(null);
+            newUser.setPlaylists(new ArrayList<>());
+            newUser.setFriends(new ArrayList<>());
 
             // Add user to the users' list
             users.add(newUser);
