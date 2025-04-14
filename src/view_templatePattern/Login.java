@@ -1,15 +1,14 @@
 package view_templatePattern;
 
 
-import datas.entities.PlanEnum;
-import datas.entities.User;
+import data.entities.PlanEnum;
+import data.entities.User;
 import ressources.Cookies;
 import services.login.CreateUser;
 import services.login.VerifyUser;
 import services.player_commandPattern.SpotifyPlayer;
 import services.user.SearchUser;
 
-import static services.login.CreateUser.addUser;
 
 public class Login extends AbstractMenuPage {
     private String pseudonym;
@@ -46,7 +45,7 @@ public class Login extends AbstractMenuPage {
         //Check to password...
         if(VerifyUser.verifyUser(pseudonym, password)) {
             User user = SearchUser.searchUserByPseudo(pseudonym);
-            cookies = new Cookies(user.getUserGuId(), user.getPlanEnum(), user.getPlaylists());
+            cookies = new Cookies(user.getUserId(), user.getPlanEnum(), user.getPlaylists());
             System.out.println("Login successful");
             pageFactory.homePage.displayPage();
         }else{

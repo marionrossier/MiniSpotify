@@ -1,9 +1,12 @@
 package services.player_commandPattern.commands.player_state_pattern;
 
+import data.entities.Playlist;
+import data.storage.PlaylistRepository;
 import services.player_commandPattern.receivers.SpotifyService;
 
 public class Shuffle implements IState {
     private SpotifyService spotifyService;
+    private PlaylistRepository playlistRepository = new PlaylistRepository();
 
     public Shuffle(SpotifyService spotifyService) {
         this.spotifyService = spotifyService;
@@ -12,9 +15,10 @@ public class Shuffle implements IState {
     @Override
     public void next() {
         int nextIndex = spotifyService.getIndexCurrentSong();
+        Playlist currentPlaylist = playlistRepository.findPlaylistById(spotifyService.getCurrentPlaylist());
 
-        while (nextIndex==spotifyService.getIndexCurrentSong()){
-            nextIndex = (int) (Math.random()*spotifyService.getCurrentPlaylist().getPlaylistSongs().size()-1);
+        while (nextIndex == spotifyService.getIndexCurrentSong()) {
+            nextIndex = (int) (Math.random() * currentPlaylist.getPlaylistSongs().size());
         }
         spotifyService.play(nextIndex);
     }

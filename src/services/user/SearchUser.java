@@ -2,7 +2,7 @@ package services.user;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import datas.entities.User;
+import data.entities.User;
 import ressources.Routing;
 
 import java.io.File;
@@ -32,7 +32,7 @@ public class SearchUser {
             // Look up for the user with the pseudoo
             for (User user : users) {
                 if (user.getPseudonym().equals(pseudo)) {
-                    return user.getUserGuId(); // Return the GuId if found
+                    return user.getUserId(); // Return the GuId if found
                 }
             }
         } catch (IOException e) {

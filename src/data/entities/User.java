@@ -1,4 +1,4 @@
-package datas.entities;
+package data.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -6,7 +6,7 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL) // Inclut uniquement les champs non nuls
 public class User {
-    private int userGuId;
+    private int userId;
     private String pseudonym;
     private String email;
     private String password;
@@ -16,12 +16,12 @@ public class User {
     private List<Integer> friends;
 
     // Getters et setters publics
-    public int getUserGuId() {
-        return userGuId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserGuId(int userGuId) {
-        this.userGuId = userGuId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getPseudonym() {

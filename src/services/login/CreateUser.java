@@ -2,8 +2,8 @@ package services.login;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
-import datas.entities.User;
-import datas.entities.PlanEnum;
+import data.entities.User;
+import data.entities.PlanEnum;
 import ressources.Routing;
 
 import java.io.File;
@@ -13,7 +13,6 @@ import java.util.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.concurrent.LinkedBlockingDeque;
 
 /*
 This class add a new user to user.json with as parameters the pseudo, email, password and plan.
@@ -52,7 +51,7 @@ public class CreateUser {
 
             // Create new user
             User newUser = new User();
-            newUser.setUserGuId(userId);
+            newUser.setUserId(userId);
             newUser.setPseudonym(pseudonym);
             newUser.setEmail(email);
             newUser.setPassword(hashedPassword);

@@ -2,7 +2,7 @@ package services.login;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import datas.entities.User;
+import data.entities.User;
 import ressources.Routing;
 
 import java.io.File;

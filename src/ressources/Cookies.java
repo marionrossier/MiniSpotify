@@ -1,8 +1,7 @@
 package ressources;
 
-import datas.entities.PlanEnum;
+import data.entities.PlanEnum;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Cookies {
