@@ -8,15 +8,6 @@
   "playlists" : [ ],
   "friends" : [ ]
 }, {
-  "userId" : 1974715118,
-  "pseudonym" : "nohen",
-  "email" : "nohen",
-  "password" : "hI6TPen1Bhp73X+Z/6/3eQucCXK3ar1aTq74cQ2IHQw=",
-  "salt" : "jT6LLQD4boYDeY2slzJmCQ==",
-  "planEnum" : "PREMIUM",
-  "playlists" : [ ],
-  "friends" : [ ]
-}, {
   "userId" : 400953820,
   "pseudonym" : "testUsers",
   "email" : "email",
