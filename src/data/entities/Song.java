@@ -1,20 +1,19 @@
 package data.entities;
 
+import data.storage.ArtistRepository;
 import services.TransverseCode;
 
 public class Song {
     private String title;
-    //TODO : est-ce qu'on ferait pas une classe séparé our l'artiste ? Comme ça on limite les
-    // doublons et on peut sortir une liste des artistes dans le search...
-    private String artist;
-    //TODO : idem que pour les artistes mais pour les albums
+    private Artist artist;
     private String album;
     private double duration;
-    //TODO : est-ce qu'on fait un enum pour le genre ? Comme ça on peut faire un switch pour la page Search...
-    private String gender;
+    private MusicGender gender;
     private int songId;
     private String audioFilePath;
-    private TransverseCode transverseCode = new TransverseCode();
+    private final TransverseCode transverseCode = new TransverseCode();
+    ArtistRepository repository = new ArtistRepository();
+
 
     public String getAudioFilePath() {
         return audioFilePath;
@@ -26,15 +25,25 @@ public class Song {
 
     public Song (){}
 
-    public Song(String title, String artist, String album, double duration, String gender,
+
+    public Song(String title, String artistName, String album, double duration, MusicGender gender,
                 String audioFilePath) {
         this.title = title;
-        this.artist = artist;
         this.album = album;
         this.duration = duration;
         this.gender = gender;
         this.songId = transverseCode.setUniqueId();
         this.audioFilePath = audioFilePath;
+
+
+        Artist existingArtist = repository.findArtistByName(artistName);
+        if (existingArtist != null) {
+            this.artist = existingArtist;
+        } else {
+            this.artist = new Artist(artistName);
+            repository.addArtist(this.artist);
+        }
+        this.artist.getArtistSongsID().add(this.songId);
     }
 
     public String getTitle() {
@@ -45,11 +54,11 @@ public class Song {
         this.title = title;
     }
 
-    public String getArtist() {
+    public Artist getArtist() {
         return artist;
     }
 
-    public void setArtist(String artist) {
+    public void setArtist(Artist artist) {
         this.artist = artist;
     }
 
@@ -69,11 +78,11 @@ public class Song {
         this.duration = duration;
     }
 
-    public String getGender() {
+    public MusicGender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(MusicGender gender) {
         this.gender = gender;
     }
 

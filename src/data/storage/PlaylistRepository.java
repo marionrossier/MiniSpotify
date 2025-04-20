@@ -29,9 +29,9 @@ public class PlaylistRepository {
             return new ArrayList<>();
         }
         try {
-            return objectMapper.readValue(file, new TypeReference<List<Playlist>>() {});
+            return objectMapper.readValue(file, new TypeReference<>() {});
         } catch (IOException e) {
-            System.err.println("Erreur lors du chargement des playlists : " + e.getMessage());
+            System.err.println("Error during the playlists upload : " + e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -40,7 +40,7 @@ public class PlaylistRepository {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), playlists);
         } catch (IOException e) {
-            System.err.println("Erreur lors de la sauvegarde des playlists : " + e.getMessage());
+            System.err.println("Error during the saving process for the playlists : " + e.getMessage());
         }
     }
 
@@ -72,7 +72,7 @@ public class PlaylistRepository {
                 return;
             }
         }
-        System.err.println("Playlist avec l'ID " + updatedPlaylist.getPlaylistId() + " non trouvée.");
+        System.err.println("Playlist with ID " + updatedPlaylist.getPlaylistId() + " not found.");
     }
 
     public Playlist findPlaylistByName(String name) {

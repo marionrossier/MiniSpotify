@@ -1,20 +1,325 @@
-[
-  {
-    "songId": 1,
-    "title": "SongTitle1",
-    "artist": "SongArtist",
-    "album": "SongAlbum",
-    "duration": 3.5,
-    "gender": "Classical",
-    "audioFilePath": "src/data/songsfiles/boneyM_Sunny.mp3"
+[ {
+  "title" : "SongTitle2",
+  "artist" : {
+    "artistName" : "SongArtist",
+    "artistId" : 1748272249,
+    "artistSongsId" : [ ]
   },
-  {
-    "songId": 2,
-    "title": "SongTitle2",
-    "artist": "SongArtist",
-    "album": "SongAlbum",
-    "duration": 3,
-    "gender": "Classical",
-    "audioFilePath": "src/data/songsfiles/Old Nokia Tune Original Classic [Nokia 3310].mp3"
-  }
-]
+  "album" : "SongAlbum",
+  "duration" : 3.0,
+  "gender" : "NULL",
+  "songId" : 2,
+  "audioFilePath" : "src/data/songsfiles/Old Nokia Tune Original Classic [Nokia 3310].mp3"
+}, {
+  "title" : "Rehab",
+  "artist" : {
+    "artistName" : "Amy Winehouse",
+    "artistId" : 673998268,
+    "artistSongsId" : [ 545311250 ]
+  },
+  "album" : "Back to Black",
+  "duration" : 3.34,
+  "gender" : "SOUL_RNB",
+  "songId" : 545311250,
+  "audioFilePath" : "Rehab - Amy Winehouse - Back to Black - 2006 - Soul _ R&B - 0334.mp3"
+}, {
+  "title" : "Judas",
+  "artist" : {
+    "artistName" : "Lady Gaga",
+    "artistId" : 1694526941,
+    "artistSongsId" : [ 2108751760 ]
+  },
+  "album" : "Born This Way",
+  "duration" : 4.09,
+  "gender" : "POP",
+  "songId" : 2108751760,
+  "audioFilePath" : "Judas - Lady Gaga - Born This Way - 2011 - Pop _ Electro-pop - 0409.mp3"
+}, {
+  "title" : "Bloody Mary",
+  "artist" : {
+    "artistName" : "Lady Gaga",
+    "artistId" : 1694526941,
+    "artistSongsId" : [ 1030537171 ]
+  },
+  "album" : "Born This Way",
+  "duration" : 4.05,
+  "gender" : "POP",
+  "songId" : 1030537171,
+  "audioFilePath" : "Bloody Mary - Lady Gaga - Born This Way - 2011 - Pop _ Dark pop - 0405.mp3"
+}, {
+  "title" : "You Know I'm No Good",
+  "artist" : {
+    "artistName" : "Amy Winehouse",
+    "artistId" : 673998268,
+    "artistSongsId" : [ 1629508320 ]
+  },
+  "album" : "Back to Black",
+  "duration" : 4.17,
+  "gender" : "SOUL_RNB",
+  "songId" : 1629508320,
+  "audioFilePath" : "You Know I'm No Good - Amy Winehouse - Back to Black - 2006 - Soul _ Jazz - 0417.mp3"
+}, {
+  "title" : "Me & Mr. Jones",
+  "artist" : {
+    "artistName" : "Amy Winehouse",
+    "artistId" : 673998268,
+    "artistSongsId" : [ 1576442627 ]
+  },
+  "album" : "Back to Black",
+  "duration" : 2.33,
+  "gender" : "SOUL_RNB",
+  "songId" : 1576442627,
+  "audioFilePath" : "Me & Mr. Jones - Amy Winehouse - Back to Black - 2006 - Soul _ Jazz - 0233.mp3"
+}, {
+  "title" : "Sunny",
+  "artist" : {
+    "artistName" : "Boney M.",
+    "artistId" : 2132605467,
+    "artistSongsId" : [ 1303249627 ]
+  },
+  "album" : "Sunny",
+  "duration" : 3.58,
+  "gender" : "DISCO",
+  "songId" : 1303249627,
+  "audioFilePath" : "Sunny - Boney M. - Sunny (Official)... - 1976 - Disco - 0358.mp3"
+}, {
+  "title" : "Can't Hold Us",
+  "artist" : {
+    "artistName" : "Macklemore",
+    "artistId" : 1802922659,
+    "artistSongsId" : [ 1854477522 ]
+  },
+  "album" : "The Heist",
+  "duration" : 4.18,
+  "gender" : "HIP_HOP",
+  "songId" : 1854477522,
+  "audioFilePath" : "Can't Hold Us - Macklemore & Ryan Lewis - The Heist - 2012 - Hip-hop - 0418.mp3"
+}, {
+  "title" : "Come When I Call",
+  "artist" : {
+    "artistName" : "John Mayer",
+    "artistId" : 91532298,
+    "artistSongsId" : [ 54963796 ]
+  },
+  "album" : "Where the Light Is",
+  "duration" : 2.57,
+  "gender" : "SOUL_RNB",
+  "songId" : 54963796,
+  "audioFilePath" : "Come When I Call - John Mayer - Where the Light Is - 2008 - Blues Rock - 0257.mp3"
+}, {
+  "title" : "Viens à Saint Germain",
+  "artist" : {
+    "artistName" : "Dany Brillant",
+    "artistId" : 1346755388,
+    "artistSongsId" : [ 1677411639 ]
+  },
+  "album" : "Viens à Saint-Germain",
+  "duration" : 2.57,
+  "gender" : "FRENCH_VARIETY",
+  "songId" : 1677411639,
+  "audioFilePath" : "Viens à Saint Germain - Dany Brillant - Viens à Saint-Germain - 1992 - Chanson française _ Swing - 0257.mp3"
+}, {
+  "title" : "Suzette",
+  "artist" : {
+    "artistName" : "Dany Brillant",
+    "artistId" : 1346755388,
+    "artistSongsId" : [ 226184544 ]
+  },
+  "album" : "C'est ça qui est bon",
+  "duration" : 2.57,
+  "gender" : "FRENCH_VARIETY",
+  "songId" : 226184544,
+  "audioFilePath" : "Suzette - Dany Brillant - C'est ça qui est bon - 1991 - Chanson française _ Swing - 0257.mp3"
+}, {
+  "title" : "Diamonds",
+  "artist" : {
+    "artistName" : "Rihanna",
+    "artistId" : 2126274779,
+    "artistSongsId" : [ 347629292 ]
+  },
+  "album" : "Unapologetic",
+  "duration" : 3.45,
+  "gender" : "SOUL_RNB",
+  "songId" : 347629292,
+  "audioFilePath" : "Diamonds - Rihanna - Unapologetic - 2012 - Pop _ R&B - 0345.mp3"
+}, {
+  "title" : "Free Fallin",
+  "artist" : {
+    "artistName" : "John Mayer",
+    "artistId" : 91532298,
+    "artistSongsId" : [ 472517568 ]
+  },
+  "album" : "Where the Light Is",
+  "duration" : 4.03,
+  "gender" : "ROCK",
+  "songId" : 472517568,
+  "audioFilePath" : "Free Fallin - John Mayer - Where the Light Is - 2008 - Soft Rock - 0403.mp3"
+}, {
+  "title" : "Give It 2 Me",
+  "artist" : {
+    "artistName" : "Madonna",
+    "artistId" : 308779402,
+    "artistSongsId" : [ 127997062 ]
+  },
+  "album" : "Hard Candy",
+  "duration" : 4.47,
+  "gender" : "POP",
+  "songId" : 127997062,
+  "audioFilePath" : "Give It 2 Me - Madonna - Hard Candy - 2008 - Dance-pop - 0447.mp3"
+}, {
+  "title" : "I'm Gonna Find Another You",
+  "artist" : {
+    "artistName" : "John Mayer",
+    "artistId" : 91532298,
+    "artistSongsId" : [ 111116332 ]
+  },
+  "album" : "Where the Light Is",
+  "duration" : 4.43,
+  "gender" : "SOUL_RNB",
+  "songId" : 111116332,
+  "audioFilePath" : "I'm Gonna Find Another You (Live) - John Mayer - Where the Light Is - 2008 - Blues _ Soul - 0443.mp3"
+}, {
+  "title" : "La Isla Bonita",
+  "artist" : {
+    "artistName" : "Madonna",
+    "artistId" : 308779402,
+    "artistSongsId" : [ 254918329 ]
+  },
+  "album" : "True Blue",
+  "duration" : 4.01,
+  "gender" : "POP",
+  "songId" : 254918329,
+  "audioFilePath" : "La Isla Bonita - Madonna - True Blue - 1986 - Latin pop - 0401.mp3"
+}, {
+  "title" : "Man Down",
+  "artist" : {
+    "artistName" : "Rihanna",
+    "artistId" : 2126274779,
+    "artistSongsId" : [ 726380163 ]
+  },
+  "album" : "Loud",
+  "duration" : 4.27,
+  "gender" : "REGGAE",
+  "songId" : 726380163,
+  "audioFilePath" : "Man Down - Rihanna - Loud - 2010 - Reggae fusion - 0427.mp3"
+}, {
+  "title" : "Time is Running Out",
+  "artist" : {
+    "artistName" : "Muse",
+    "artistId" : 1639229517,
+    "artistSongsId" : [ 1163354228 ]
+  },
+  "album" : "Absolution",
+  "duration" : 3.56,
+  "gender" : "ROCK",
+  "songId" : 1163354228,
+  "audioFilePath" : "Time is Running Out - Muse - Absolution - 2003 - Alternative Rock - 0356.mp3"
+}, {
+  "title" : "De mes propres ailes (Remix)",
+  "artist" : {
+    "artistName" : "Olivier Dion",
+    "artistId" : 1158890606,
+    "artistSongsId" : [ 1169426451 ]
+  },
+  "album" : "Les 3 Mousquetaires",
+  "duration" : 3.41,
+  "gender" : "POP",
+  "songId" : 1169426451,
+  "audioFilePath" : "De mes propres ailes (Remix) - Olivier Dion - Les 3 Mousquetaires - 2016 - Pop française - 0341.mp3"
+}, {
+  "title" : "Fuck Me Pumps",
+  "artist" : {
+    "artistName" : "Amy Winehouse",
+    "artistId" : 673998268,
+    "artistSongsId" : [ 1156006730 ]
+  },
+  "album" : "Frank",
+  "duration" : 3.18,
+  "gender" : "SOUL_RNB",
+  "songId" : 1156006730,
+  "audioFilePath" : "Fuck Me Pumps - Amy Winehouse - Frank - 2003 - Soul _ Jazz - 0318.mp3"
+}, {
+  "title" : "Poker Face",
+  "artist" : {
+    "artistName" : "Lady Gaga",
+    "artistId" : 1694526941,
+    "artistSongsId" : [ 1034414947 ]
+  },
+  "album" : "The Fame Monster",
+  "duration" : 3.57,
+  "gender" : "POP",
+  "songId" : 1034414947,
+  "audioFilePath" : "Poker Face - Lady Gaga - The Fame Monster - 2008 - Electropop - 0357.mp3"
+}, {
+  "title" : "Right Now",
+  "artist" : {
+    "artistName" : "Rihanna",
+    "artistId" : 2126274779,
+    "artistSongsId" : [ 434723011 ]
+  },
+  "album" : "Unapologetic",
+  "duration" : 3.01,
+  "gender" : "ELECTRO",
+  "songId" : 434723011,
+  "audioFilePath" : "Right Now - Rihanna & David Guetta - Unapologetic - 2012 - EDM _ Dance-pop - 0301.mp3"
+}, {
+  "title" : "Thrift Shop",
+  "artist" : {
+    "artistName" : "Macklemore",
+    "artistId" : 1802922659,
+    "artistSongsId" : [ 1268811252 ]
+  },
+  "album" : "The Heist",
+  "duration" : 3.52,
+  "gender" : "HIP_HOP",
+  "songId" : 1268811252,
+  "audioFilePath" : "Thrift Shop - Macklemore & Ryan Lewis - The Heist - 2012 - Hip-hop _ Comedy rap - 0352.mp3"
+}, {
+  "title" : "Whatever It Takes",
+  "artist" : {
+    "artistName" : "Imagine Dragons",
+    "artistId" : 645450873,
+    "artistSongsId" : [ 271085774 ]
+  },
+  "album" : "Evolve",
+  "duration" : 3.39,
+  "gender" : "ROCK",
+  "songId" : 271085774,
+  "audioFilePath" : "Whatever It Takes - Imagine Dragons - Evolve - 2017 - Pop rock - 0339.mp3"
+}, {
+  "title" : "Believer",
+  "artist" : {
+    "artistName" : "Imagine Dragons",
+    "artistId" : 645450873,
+    "artistSongsId" : [ 734805545 ]
+  },
+  "album" : "Evolve",
+  "duration" : 3.24,
+  "gender" : "ROCK",
+  "songId" : 734805545,
+  "audioFilePath" : "Believer - Imagine Dragons - Evolve - 2017 - Pop rock _ Alt rock - 0324.mp3"
+}, {
+  "title" : "Demons",
+  "artist" : {
+    "artistName" : "Imagine Dragons",
+    "artistId" : 645450873,
+    "artistSongsId" : [ 706166846 ]
+  },
+  "album" : "Night Visions",
+  "duration" : 2.57,
+  "gender" : "ROCK",
+  "songId" : 706166846,
+  "audioFilePath" : "Demons - Imagine Dragons - Night Visions - 2012 - Pop rock _ Indie pop - 0257.mp3"
+}, {
+  "title" : "Not Today",
+  "artist" : {
+    "artistName" : "Imagine Dragons",
+    "artistId" : 645450873,
+    "artistSongsId" : [ 1554429585 ]
+  },
+  "album" : "Me Before You",
+  "duration" : 3.58,
+  "gender" : "ROCK",
+  "songId" : 1554429585,
+  "audioFilePath" : "Not Today - Imagine Dragons - Me Before You - 2016 - Pop rock - 0358.mp3"
+} ]

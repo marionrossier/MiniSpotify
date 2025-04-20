@@ -47,7 +47,7 @@ public class PlaymusicTest {
 
     private static void startMusic() {
         try {
-         FileInputStream audioFile = new FileInputStream("src/data/songsfiles/boneyM_Sunny.mp3");
+         FileInputStream audioFile = new FileInputStream("src/data/songsfiles/Sunny - Boney M. - Sunny (Official)... - 1976 - Disco - 0358.mp3");
             player = new Player(audioFile);
 
             playerThread = new Thread(() -> {
