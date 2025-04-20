@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO : définir qui fait quoi dans les classes : UserRepository, User, CreateUser, SearchUser, VerifyUser
+// car CreateUser devrait être dans User, SearchUser dans UserRepository et VerifyUser dans UserRepository
 public class UserRepository {
     private final String filePath;
     private final ObjectMapper objectMapper;
@@ -33,9 +35,9 @@ public class UserRepository {
             return new ArrayList<>();
         }
         try {
-            return objectMapper.readValue(file, new TypeReference<List<User>>() {});
+            return objectMapper.readValue(file, new TypeReference<>() {});
         } catch (IOException e) {
-            System.err.println("Erreur lors du chargement des utilisateurs : " + e.getMessage());
+            System.err.println("Error during the loading of the users : " + e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -44,7 +46,7 @@ public class UserRepository {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), users);
         } catch (IOException e) {
-            System.err.println("Erreur lors de la sauvegarde des utilisateurs : " + e.getMessage());
+            System.err.println("Error during the saving of the users : " + e.getMessage());
         }
     }
 
@@ -65,5 +67,17 @@ public class UserRepository {
                 .filter(user -> user.getUserId() == userId)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public User findUserByPseudonym (String pseudonym) {
+        return getAllUsers().stream()
+                .filter(user -> user.getPseudonym().equals(pseudonym))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public User updateAccount() {
+        throw new UnsupportedOperationException("Not implemented yet");
+        /*TODO*/
     }
 }

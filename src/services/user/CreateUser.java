@@ -29,9 +29,9 @@ public class CreateUser {
         File userFile = new File(USER_FILE_PATH);
 
         try {
-            // Load the existings users from the JSON
+            // Load the existing users from the JSON
             List<User> users = userFile.exists()
-                ? objectMapper.readValue(userFile, new TypeReference<List<User>>() {})
+                ? objectMapper.readValue(userFile, new TypeReference<>() {})
                 : new LinkedList<>();
 
             // Check if the pseudonym already exists
@@ -91,7 +91,7 @@ public class CreateUser {
         }
         md.update(salt); // Add salt to hash
         byte[] hashedPassword = md.digest(password.getBytes());
-        return Base64.getEncoder().encodeToString(hashedPassword); // Encodage in Base64
+        return Base64.getEncoder().encodeToString(hashedPassword);
     }
 
     public boolean isPseudonymExists(String pseudonym) {
@@ -99,7 +99,7 @@ public class CreateUser {
         File userFile = new File(USER_FILE_PATH);
 
         try {
-            // Load the existings users from JSON
+            // Load the existing users from JSON
             if (!userFile.exists() || userFile.length() == 0) {
                 return false; // json file does not exist or is empty
             }

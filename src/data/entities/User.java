@@ -15,7 +15,7 @@ public class User {
     private PlanEnum planEnum;
     private List<Integer> playlists;
     private List<Integer> friends;
-    private TransverseCode transverseCode = new TransverseCode();
+    private final TransverseCode transverseCode = new TransverseCode();
 
     public User() {
     }
@@ -27,7 +27,7 @@ public class User {
         this.planEnum = planEnum;
         this.userId = transverseCode.setUniqueId();
     }
-    // Getters et setters publics
+
     public int getUserId() {
         return userId;
     }
@@ -91,5 +91,8 @@ public class User {
     public void setFriends(List<Integer> friends) {
         this.friends = friends;
     }
+
+    public void followFriend() {/*TODO*/}
+    public void unfollowFriend() {/*TODO*/}
 
 }

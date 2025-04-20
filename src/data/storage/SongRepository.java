@@ -29,9 +29,9 @@ public class SongRepository {
             return new ArrayList<>();
         }
         try {
-            return objectMapper.readValue(file, new TypeReference<List<Song>>() {});
+            return objectMapper.readValue(file, new TypeReference<>() {});
         } catch (IOException e) {
-            System.err.println("Erreur lors du chargement des chansons : " + e.getMessage());
+            System.err.println("Error during the songs loading : " + e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -40,7 +40,7 @@ public class SongRepository {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), songs);
         } catch (IOException e) {
-            System.err.println("Erreur lors de la sauvegarde des chansons : " + e.getMessage());
+            System.err.println("Error during the songs saving : " + e.getMessage());
         }
     }
 
@@ -62,4 +62,12 @@ public class SongRepository {
                 .findFirst()
                 .orElse(null);
     }
+
+    public Song findSongByTitle() {
+        throw new UnsupportedOperationException("Not implemented yet");
+        /*TODO*/
+    }
+
+    public void findSongByArtist(String artist) {/*TODO*/}
+    public void findSongByGender(String gender) {/*TODO*/}
 }
