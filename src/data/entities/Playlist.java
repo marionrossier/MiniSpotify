@@ -11,6 +11,7 @@ public class Playlist {
     private LinkedList<Integer> playlistSongs = new LinkedList<>();
     private double playlistDuration;
     private int playlistSize;
+    private int ownerId; //TODO: implémenter
     private TransverseService transverseService = new TransverseService();
 
     public Playlist (){}

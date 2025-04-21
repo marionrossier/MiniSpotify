@@ -7,9 +7,7 @@ public class FriendsCommunePlaylists extends AbstractMenuPage{
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Commune Playlists Page";
         this.pageContent = backLineWith0 + lineBreak +
-                "Tip the playlist's number to play it";
-
-        //TODO : tu veux dire quoi par là ? Comment tu vois la suite ?
-
+                nb1 + "Listen to a playlist" + lineBreak+
+                nb2 + "Remove a playlist"; //TODO : selectionner l'option, puis récuperer le numéro de la playlist
     }
 }

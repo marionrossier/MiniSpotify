@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO : définir qui fait quoi dans les classes : UserRepository, User, CreateUser, SearchUser, VerifyUser
-// car CreateUser devrait être dans User, SearchUser dans UserRepository et VerifyUser dans UserRepository
 public class UserRepository {
     private final String filePath;
     private final ObjectMapper objectMapper;

@@ -103,8 +103,4 @@ public class User {
     public void setFriends(List<Integer> friends) {
         this.friends = friends;
     }
-
-    public void followFriend() {/*TODO*/}
-    public void unfollowFriend() {/*TODO*/}
-
 }

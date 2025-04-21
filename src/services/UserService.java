@@ -51,4 +51,7 @@ public class UserService {
             return false;
         }
     }
+
+    public void followFriend() {/*TODO*/}
+    public void unfollowFriend() {/*TODO*/}
 }

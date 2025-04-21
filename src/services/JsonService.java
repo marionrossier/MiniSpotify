@@ -58,4 +58,12 @@ public class JsonService {
         repository.addSong(new Song("Demons", "Imagine Dragons", "Night Visions", 2.57, MusicGender.ROCK, "Demons - Imagine Dragons - Night Visions - 2012 - Pop rock _ Indie pop - 0257.mp3"));
         repository.addSong(new Song("Not Today", "Imagine Dragons", "Me Before You", 3.58, MusicGender.ROCK, "Not Today - Imagine Dragons - Me Before You - 2016 - Pop rock - 0358.mp3"));
     }
+
+    public void addUser (){
+        // TODO : Implementer la méthode pour ajouter des utilisateurs (Florent)
+    }
+
+    public void addPlaylist (){
+        // TODO : Implementer la méthode pour ajouter des playlists (Marion)
+    }
 }

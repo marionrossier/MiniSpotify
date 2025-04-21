@@ -23,8 +23,7 @@ public class CreatePlaylist extends AbstractMenuPage{
 
         System.out.println(ok + "Playlist saved successfully !");
 
-        //TODO : comment tu veux faire pour la suite ?
-        //search a song...
+        //TODO : search a song by songName !
         //TODO : add back to the menu "backLineWith0 + lineBreak"
     }
 

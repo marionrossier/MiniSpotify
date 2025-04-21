@@ -29,7 +29,7 @@ public class CreateAccount extends AbstractMenuPage {
         password = in.nextLine();
         System.out.print("Enter your email : ");
         email = in.nextLine();
-        //TODO : check if email is valid
+        //TODO : check if email is valid (dans UserService)
         System.out.println(lineBreak + "Choose your plan : ");
 
         super.displayContent(pageContent);

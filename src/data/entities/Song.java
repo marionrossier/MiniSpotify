@@ -29,6 +29,7 @@ public class Song {
     public Song(String title, String artistName, String album, double duration, MusicGender gender,
                 String audioFilePath) {
         this.title = title;
+        // TODO : this.songName = songName avec le nom de la chanson comme sur son fichier, sera utilisé pour la recherche de chanson
         this.album = album;
         this.duration = duration;
         this.gender = gender;

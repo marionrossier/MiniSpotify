@@ -7,11 +7,11 @@ public class FriendsHomePage extends AbstractMenuPage{
     public FriendsHomePage(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Friends Home Page";
-        this.pageContent = backLineWith0 + lineBreak +
+        this.pageContent = backLineWith0 + lineBreak + //TODO : bien refactorer la classe et ses boutons !
                 nb1 + "Display friends" + lineBreak +
-                nb2 + "See commune playlists" + lineBreak +
-                nb3 + "Add a friend" + lineBreak +
-                nb4 + "Link a playlist to a friend";
+                nb2 + "Add a friend" + lineBreak +
+                nb3 + "Remove a friend" + lineBreak +
+                nb4 + "Commune Playlists" + lineBreak ;
     }
 
     @Override
@@ -26,11 +26,11 @@ public class FriendsHomePage extends AbstractMenuPage{
 
     @Override
     void button3() {
-        spotifyPageFactory.friendsFollowFriend.templateMethode();
+        spotifyPageFactory.friendAddAFriend.templateMethode();
     }
 
     @Override
     void button4() {
-        spotifyPageFactory.friendsLinkPlaylistFriend.templateMethode();
+        spotifyPageFactory.addFriendPlaylist.templateMethode();
     }
 }
