@@ -1,8 +1,8 @@
 package view_templatePattern;
 
 import data.entities.PlanEnum;
-import services.user.CreateUser;
-import services.player_commandPattern.SpotifyPlayer;
+import player_commandPattern.SpotifyPlayer;
+import services.UserService;
 
 public class CreateAccount extends AbstractMenuPage {
 
@@ -10,7 +10,7 @@ public class CreateAccount extends AbstractMenuPage {
     private String password;
     private String email;
     private PlanEnum planEnum;
-    public CreateUser createUser = new CreateUser();
+    public UserService userService = new UserService();
 
     public CreateAccount(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -53,7 +53,7 @@ public class CreateAccount extends AbstractMenuPage {
     }
 
     private void createAccount() {
-        createUser.addUser(pseudonym,email,password, planEnum);
+        userService.addUser(pseudonym,email,password, planEnum);
         System.out.println("Account created successfully !");
         spotifyPageFactory.login.templateMethode();
     }

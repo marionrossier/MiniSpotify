@@ -1,4 +1,4 @@
-package ressources;
+package services;
 
 public class Icons {
 

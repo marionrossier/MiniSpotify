@@ -1,7 +1,7 @@
 package data.entities;
 
-import data.storage.PlaylistRepository;
-import services.TransverseCode;
+import data.jsons.PlaylistRepository;
+import services.TransverseService;
 
 import java.util.*;
 
@@ -11,13 +11,13 @@ public class Playlist {
     private LinkedList<Integer> playlistSongs = new LinkedList<>();
     private double playlistDuration;
     private int playlistSize;
-    private TransverseCode transverseCode = new TransverseCode();
+    private TransverseService transverseService = new TransverseService();
 
     public Playlist (){}
 
     public Playlist(String playlistName) {
         this.playlistName = playlistName;
-        this.playlistId = transverseCode.setUniqueId();
+        this.playlistId = transverseService.setUniqueId();
     }
     public Playlist(String playlistName, int playlistId) {
         this.playlistName = playlistName;

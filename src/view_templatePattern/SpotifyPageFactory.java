@@ -1,11 +1,8 @@
 package view_templatePattern;
 
-import services.player_commandPattern.SpotifyPlayer;
-
-import java.util.Scanner;
+import player_commandPattern.SpotifyPlayer;
 
 public class SpotifyPageFactory {
-//    Scanner in = new Scanner(System.in);
     ChoseYourPlaylist choseYourPlaylist;
     CreatePlaylist createPlaylist;
     DeletePlaylist deletePlaylist;

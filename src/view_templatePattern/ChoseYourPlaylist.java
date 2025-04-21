@@ -1,6 +1,6 @@
 package view_templatePattern;
 
-import services.player_commandPattern.SpotifyPlayer;
+import player_commandPattern.SpotifyPlayer;
 
 public class ChoseYourPlaylist extends AbstractMenuPage {
 

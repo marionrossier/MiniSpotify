@@ -1,8 +1,8 @@
 package view_templatePattern;
 
-import ressources.Cookies;
-import ressources.Icons;
-import services.player_commandPattern.SpotifyPlayer;
+import services.Cookies;
+import services.Icons;
+import player_commandPattern.SpotifyPlayer;
 
 import java.util.Scanner;
 

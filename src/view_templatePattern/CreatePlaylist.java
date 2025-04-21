@@ -1,8 +1,8 @@
 package view_templatePattern;
 
 import data.entities.Playlist;
-import data.storage.PlaylistRepository;
-import services.player_commandPattern.SpotifyPlayer;
+import data.jsons.PlaylistRepository;
+import player_commandPattern.SpotifyPlayer;
 
 public class CreatePlaylist extends AbstractMenuPage{
     private final Playlist playlist = new Playlist();

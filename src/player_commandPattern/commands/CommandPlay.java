@@ -1,8 +1,8 @@
-package services.player_commandPattern.commands;
+package player_commandPattern.commands;
 
 import data.entities.Playlist;
-import data.storage.PlaylistRepository;
-import services.player_commandPattern.receivers.SpotifyService;
+import data.jsons.PlaylistRepository;
+import player_commandPattern.receivers.SpotifyService;
 
 public class CommandPlay implements ICommand {
     private SpotifyService spotifyService;

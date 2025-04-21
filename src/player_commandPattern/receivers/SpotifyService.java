@@ -1,14 +1,14 @@
-package services.player_commandPattern.receivers;
+package player_commandPattern.receivers;
 
 import data.entities.Playlist;
-import data.storage.PlaylistRepository;
+import data.jsons.PlaylistRepository;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
-import services.player_commandPattern.commands.player_state_pattern.*;
+import player_commandPattern.commands.player_state_pattern.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Stack;
+import java.util.*;
 
 public class SpotifyService {
 

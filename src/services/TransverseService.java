@@ -2,12 +2,12 @@ package services;
 
 import java.util.*;
 
-public class TransverseCode {
+public class TransverseService {
 
     public int setUniqueId() {
         return Math.abs(UUID.randomUUID().hashCode());
     }
 
-    public TransverseCode(){
+    public TransverseService(){
     }
 }

@@ -1,7 +1,7 @@
-package services.player_commandPattern;
+package player_commandPattern;
 
-import services.player_commandPattern.commands.*;
-import services.player_commandPattern.receivers.SpotifyService;
+import player_commandPattern.commands.ICommand;
+import player_commandPattern.receivers.SpotifyService;
 
 import java.util.*;
 

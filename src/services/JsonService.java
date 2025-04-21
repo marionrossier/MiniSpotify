@@ -3,10 +3,10 @@ package services;
 import data.entities.Artist;
 import data.entities.MusicGender;
 import data.entities.Song;
-import data.storage.ArtistRepository;
-import data.storage.SongRepository;
+import data.jsons.ArtistRepository;
+import data.jsons.SongRepository;
 
-public class Populate {
+public class JsonService {
     public static void main(String[] args) {
         ArtistPopulate();
         SongPopulate();

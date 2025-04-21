@@ -1,8 +1,8 @@
-package services.player_commandPattern.commands.player_state_pattern;
+package player_commandPattern.commands.player_state_pattern;
 
 import data.entities.Playlist;
-import data.storage.PlaylistRepository;
-import services.player_commandPattern.receivers.SpotifyService;
+import data.jsons.PlaylistRepository;
+import player_commandPattern.receivers.SpotifyService;
 
 public class Repeat implements IState{
     private final SpotifyService spotifyService;

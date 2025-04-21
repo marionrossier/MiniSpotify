@@ -1,6 +1,6 @@
 package data.entities;
 
-import services.TransverseCode;
+import services.TransverseService;
 
 import java.util.LinkedList;
 
@@ -8,14 +8,14 @@ public class Artist {
     private String artistName;
     private int artistId;
     private LinkedList<Integer> artistSongsID = new LinkedList<>();
-    private final TransverseCode transverseCode = new TransverseCode();
+    private final TransverseService transverseService = new TransverseService();
 
     public Artist() {
     }
 
     public Artist(String artistName) {
         this.artistName = artistName;
-        this.artistId = transverseCode.setUniqueId();
+        this.artistId = transverseService.setUniqueId();
     }
 
     public String getArtistName() {
@@ -31,7 +31,7 @@ public class Artist {
         this.artistName = artistName;
     }
     public void setArtistId() {
-        this.artistId = transverseCode.setUniqueId();
+        this.artistId = transverseService.setUniqueId();
     }
     public void setArtistSongsID(LinkedList<Integer> artistSongsID) {
         this.artistSongsID = artistSongsID;

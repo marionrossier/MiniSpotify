@@ -1,6 +1,6 @@
-package services.player_commandPattern.commands;
+package player_commandPattern.commands;
 
-import services.player_commandPattern.receivers.SpotifyService;
+import player_commandPattern.receivers.SpotifyService;
 
 public class CommandNext implements ICommand {
     private SpotifyService spotifyService;

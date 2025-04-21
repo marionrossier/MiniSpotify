@@ -1,4 +1,4 @@
-package data.storage;
+package data.jsons;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,7 +19,7 @@ public class ArtistRepository {
     }
 
     public ArtistRepository() {
-        this.filePath = "src/data/storage/artist.json";
+        this.filePath = "src/data/jsons/artist.json";
         this.objectMapper = new ObjectMapper();
     }
 

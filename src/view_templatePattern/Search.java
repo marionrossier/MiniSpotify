@@ -1,7 +1,6 @@
 package view_templatePattern;
 
-import data.storage.SongRepository;
-import services.player_commandPattern.SpotifyPlayer;
+import player_commandPattern.SpotifyPlayer;
 
 public class Search extends AbstractMenuPage {
 

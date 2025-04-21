@@ -1,11 +1,4 @@
-import data.entities.*;
-import data.storage.*;
-import services.player_commandPattern.SpotifyPlayer;
-import services.player_commandPattern.commands.ICommand;
-import services.player_commandPattern.receivers.SpotifyService;
 import view_templatePattern.*;
-
-import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {

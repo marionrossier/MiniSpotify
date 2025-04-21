@@ -1,4 +1,4 @@
-package services.player_commandPattern.commands.player_state_pattern;
+package player_commandPattern.commands.player_state_pattern;
 
 public interface IState {
 
