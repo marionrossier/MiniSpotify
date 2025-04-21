@@ -1,0 +1,85 @@
+[ {
+  "playlistName" : "POP Vibes",
+  "playlistId" : 506177992,
+  "playlistSongsId" : [ 872272219, 1297812817, 1411387436, 474736140, 172586501, 1338197511 ],
+  "playlistSeconds" : 1480,
+  "playlistSize" : 6,
+  "ownerId" : 0
+}, {
+  "playlistName" : "Rock Legends",
+  "playlistId" : 375415389,
+  "playlistSongsId" : [ 424099184, 1302348970, 1674132511, 1123081604, 1281601206, 977169387 ],
+  "playlistSeconds" : 1317,
+  "playlistSize" : 6,
+  "ownerId" : 0
+}, {
+  "playlistName" : "Amy Forever",
+  "playlistId" : 1322612053,
+  "playlistSongsId" : [ 155113268, 365058535, 836418353, 1690548446 ],
+  "playlistSeconds" : 822,
+  "playlistSize" : 4,
+  "ownerId" : 0
+}, {
+  "playlistName" : "Imagine This",
+  "playlistId" : 2013718453,
+  "playlistSongsId" : [ 1674132511, 1123081604, 1281601206, 977169387 ],
+  "playlistSeconds" : 838,
+  "playlistSize" : 4,
+  "ownerId" : 0
+}, {
+  "playlistName" : "Quick Hits",
+  "playlistId" : 55918166,
+  "playlistSongsId" : [ 836418353, 182189416, 949217884, 1667426682, 1690548446, 1259359522, 1281601206 ],
+  "playlistSeconds" : 1240,
+  "playlistSize" : 7,
+  "ownerId" : 0
+}, {
+  "playlistName" : "Girls",
+  "playlistId" : 1836322996,
+  "playlistSongsId" : [ 155113268, 365058535, 836418353, 1690548446, 872272219, 1297812817, 1338197511, 1581494300, 1846376291, 1259359522, 1411387436, 474736140 ],
+  "playlistSeconds" : 2754,
+  "playlistSize" : 12,
+  "ownerId" : 0
+}, {
+  "playlistName" : "Boys",
+  "playlistId" : 1278792406,
+  "playlistSongsId" : [ 1668230988, 1524582978, 1140627190, 182189416, 1444691749, 424099184, 1302348970, 1674132511, 1123081604, 1281601206, 977169387, 172586501 ],
+  "playlistSeconds" : 2726,
+  "playlistSize" : 12,
+  "ownerId" : 0
+}, {
+  "playlistName" : "Soul & RnB Grooves",
+  "playlistId" : 2099177308,
+  "playlistSongsId" : [ 155113268, 365058535, 836418353, 182189416, 1581494300, 1444691749, 1690548446 ],
+  "playlistSeconds" : 1507,
+  "playlistSize" : 7,
+  "ownerId" : 0
+}, {
+  "playlistName" : "Dance Floor",
+  "playlistId" : 707041886,
+  "playlistSongsId" : [ 1668230988, 1259359522, 1524582978, 1140627190 ],
+  "playlistSeconds" : 909,
+  "playlistSize" : 4,
+  "ownerId" : 0
+}, {
+  "playlistName" : "Random Favorites",
+  "playlistId" : 113881287,
+  "playlistSongsId" : [ 182189416, 1581494300, 1259359522, 1444691749, 1140627190 ],
+  "playlistSeconds" : 1114,
+  "playlistSize" : 5,
+  "ownerId" : 0
+}, {
+  "playlistName" : "Before 2000",
+  "playlistId" : 936055177,
+  "playlistSongsId" : [ 1668230988, 949217884, 1667426682, 474736140 ],
+  "playlistSeconds" : 833,
+  "playlistSize" : 4,
+  "ownerId" : 0
+}, {
+  "playlistName" : "AllSongs",
+  "playlistId" : 382271214,
+  "playlistSongsId" : [ 155113268, 872272219, 1297812817, 365058535, 836418353, 1668230988, 1524582978, 182189416, 949217884, 1667426682, 1581494300, 424099184, 1411387436, 1444691749, 474736140, 1846376291, 1302348970, 172586501, 1690548446, 1338197511, 1259359522, 1140627190, 1674132511, 1123081604, 1281601206, 977169387 ],
+  "playlistSeconds" : 6286,
+  "playlistSize" : 26,
+  "ownerId" : 0
+} ]

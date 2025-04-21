@@ -1,0 +1,49 @@
+[ {
+  "artistName" : "Amy Winehouse",
+  "artistId" : 1539815031,
+  "artistSongsID" : [ ]
+}, {
+  "artistName" : "Lady Gaga",
+  "artistId" : 214819657,
+  "artistSongsID" : [ ]
+}, {
+  "artistName" : "Boney M.",
+  "artistId" : 1686222828,
+  "artistSongsID" : [ ]
+}, {
+  "artistName" : "Macklemore & Ryan Lewis",
+  "artistId" : 1435089286,
+  "artistSongsID" : [ ]
+}, {
+  "artistName" : "John Mayer",
+  "artistId" : 948198216,
+  "artistSongsID" : [ ]
+}, {
+  "artistName" : "Dany Brillant",
+  "artistId" : 2142958884,
+  "artistSongsID" : [ ]
+}, {
+  "artistName" : "Rihanna",
+  "artistId" : 709166158,
+  "artistSongsID" : [ ]
+}, {
+  "artistName" : "Madonna",
+  "artistId" : 1584794690,
+  "artistSongsID" : [ ]
+}, {
+  "artistName" : "Muse",
+  "artistId" : 1838997097,
+  "artistSongsID" : [ ]
+}, {
+  "artistName" : "Olivier Dion",
+  "artistId" : 499219613,
+  "artistSongsID" : [ ]
+}, {
+  "artistName" : "Imagine Dragons",
+  "artistId" : 599252437,
+  "artistSongsID" : [ ]
+}, {
+  "artistName" : "Macklemore",
+  "artistId" : 2122433011,
+  "artistSongsID" : [ ]
+} ]

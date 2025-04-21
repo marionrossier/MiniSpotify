@@ -1,33 +1,51 @@
 package data.entities;
 
+import data.jsons.ArtistRepository;
+import services.TransverseService;
+
 public class Song {
     private String title;
-    private String artist;
+    private String songName;
+    private Artist artist;
     private String album;
-    private double duration;
-    private String gender;
+    private int seconds;
+    private MusicGender gender;
     private int songId;
     private String audioFilePath;
+    private final TransverseService transverseService = new TransverseService();
+    ArtistRepository repository = new ArtistRepository();
 
-    public String getAudioFilePath() {
-        return audioFilePath;
-    }
-
-    public void setAudioFilePath(String audioFilePath) {
-        this.audioFilePath = audioFilePath;
-    }
 
     public Song (){}
 
-    public Song(String title, String artist, String album, double duration, String gender, int songId,
+
+    public Song(String title, String artistName, String album, int seconds, MusicGender gender,
                 String audioFilePath) {
         this.title = title;
-        this.artist = artist;
+        this.songName = title+" | "+artistName+" | "+album+" | "+gender+" | "+ seconds;
         this.album = album;
-        this.duration = duration;
+        this.seconds = seconds;
         this.gender = gender;
-        this.songId = songId;
+        this.songId = transverseService.setUniqueId();
         this.audioFilePath = audioFilePath;
+
+
+        Artist existingArtist = repository.findArtistByName(artistName);
+        if (existingArtist != null) {
+            this.artist = existingArtist;
+        } else {
+            this.artist = new Artist(artistName);
+            repository.addArtist(this.artist);
+        }
+        this.artist.getArtistSongsID().add(this.songId);
+    }
+
+    public String getSongName() {
+        return songName;
+    }
+
+    public void setSongName() {
+        this.songName = title+" | "+artist.getArtistName()+" | "+album+" | "+gender+" | "+ seconds;
     }
 
     public String getTitle() {
@@ -38,11 +56,11 @@ public class Song {
         this.title = title;
     }
 
-    public String getArtist() {
+    public Artist getArtist() {
         return artist;
     }
 
-    public void setArtist(String artist) {
+    public void setArtist(Artist artist) {
         this.artist = artist;
     }
 
@@ -54,19 +72,19 @@ public class Song {
         this.album = album;
     }
 
-    public double getDuration() {
-        return duration;
+    public int getSeconds() {
+        return seconds;
     }
 
-    public void setDuration(double duration) {
-        this.duration = duration;
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
     }
 
-    public String getGender() {
+    public MusicGender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(MusicGender gender) {
         this.gender = gender;
     }
 
@@ -76,5 +94,13 @@ public class Song {
 
     public void setSongId(int songId) {
         this.songId = songId;
+    }
+
+    public String getAudioFilePath() {
+        return audioFilePath;
+    }
+
+    public void setAudioFilePath(String audioFilePath) {
+        this.audioFilePath = audioFilePath;
     }
 }

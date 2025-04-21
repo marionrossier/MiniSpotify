@@ -1,28 +1,18 @@
 package view_templatePattern;
 
-import services.player_commandPattern.SpotifyPlayer;
+import player_commandPattern.SpotifyPlayer;
 
 public class SongPlayer extends AbstractMenuPage {
 
-
-    public SongPlayer(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
-        super(pageFactory, spotifyPlayer);
+    public SongPlayer(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+        super(spotifyPageFactory, spotifyPlayer);
+        this.pageTitle = "Song Player Page";
+        this.pageContent = backLineWith0 + lineBreak+
+                "Your song player ! " +lineBreak+
+                nb1 + "|"+ nb2 + "|"+ nb3 + "|"+ nb4 + "|"+ nb5 + "|"+ nb6 + "|"+ nb7 + "|"+ lineBreak +
+                shuffle+ "|" + previous + "|" + play + "|" + pause + "|" + next + "|" + repeatOne + "|" + playBack + lineBreak;
+        //TODO : changer pour , shuffle, previous, playback, play/pause, next, repeat
     }
-
-    @Override
-    void displayPage() {
-        System.out.println("Song Player");
-        System.out.print("0) Exit\n" +
-                "1) Shuffle\n" +
-                "2) Previous\n" +
-                "3) Play\n" +
-                "4) Pause\n" +
-                "5) Next\n" +
-                "6) Repeat\n" +
-                "7) Play back  >> State pattern\n");
-        super.displayPage();
-    }
-
 
     @Override
     void button1() {
@@ -36,7 +26,8 @@ public class SongPlayer extends AbstractMenuPage {
 
     @Override
     void button3() {
-        spotifyPlayer.selectPlay(1);//TODO : a changer une fois l'interface SearchSong terminée
+        spotifyPlayer.selectPlay(1);
+        //TODO : a changer une fois l'interface SearchSong terminée
     }
 
     @Override

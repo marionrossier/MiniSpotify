@@ -1,31 +1,26 @@
 package view_templatePattern;
 
-import services.player_commandPattern.SpotifyPlayer;
+import player_commandPattern.SpotifyPlayer;
 
 public class HomePagePlaylist extends AbstractMenuPage {
 
-
-    public HomePagePlaylist(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
-        super(pageFactory, spotifyPlayer);
-    }
-
-    @Override
-    void displayPage() {
-        System.out.println("Home Page Playlist");
-        System.out.print("0) Exit\n" +
-                "1) Choose your playlist\n" +
-                "2) Create a playlist\n");
-        super.displayPage();
+    public HomePagePlaylist(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+        super(spotifyPageFactory, spotifyPlayer);
+        this.pageTitle = "Home Page Playlist";
+        this.pageContent =
+                backLineWith0 + lineBreak +
+                nb1 + "Choose your playlist" + lineBreak +
+                nb2 + "Create a playlist";
     }
 
     @Override
     void button1() {
-        pageFactory.choseYourPlaylist.displayPage();
+        spotifyPageFactory.choseYourPlaylist.templateMethode();
     }
 
     @Override
     void button2() {
-        pageFactory.createPlaylist.displayPage();
+        spotifyPageFactory.createPlaylist.templateMethode();
     }
 
 }

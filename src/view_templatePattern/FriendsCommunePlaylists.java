@@ -1,16 +1,13 @@
 package view_templatePattern;
 
-import services.player_commandPattern.SpotifyPlayer;
+import player_commandPattern.SpotifyPlayer;
 
 public class FriendsCommunePlaylists extends AbstractMenuPage{
-    public FriendsCommunePlaylists(PageFactory pageFactory, SpotifyPlayer spotifyPlayer) {
-        super(pageFactory, spotifyPlayer);
-    }
-
-    @Override
-    void displayPage() {
-        System.out.println("Commune Playlists");
-        System.out.print("0) Exit\n" +
-                "Tip the playlist's number to play it\n");
+    public FriendsCommunePlaylists(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+        super(spotifyPageFactory, spotifyPlayer);
+        this.pageTitle = "Commune Playlists Page";
+        this.pageContent = backLineWith0 + lineBreak +
+                nb1 + "Listen to a playlist" + lineBreak+
+                nb2 + "Remove a playlist"; //TODO : selectionner l'option, puis récuperer le numéro de la playlist
     }
 }

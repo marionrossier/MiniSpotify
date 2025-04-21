@@ -1,6 +1,7 @@
 package data.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import services.TransverseService;
 
 import java.util.List;
 
@@ -14,8 +15,31 @@ public class User {
     private PlanEnum planEnum;
     private List<Integer> playlists;
     private List<Integer> friends;
+    private final TransverseService transverseService = new TransverseService();
 
-    // Getters et setters publics
+    public User() {
+    }
+
+    public User(String pseudonym, String email, String password, PlanEnum planEnum) {
+        this.pseudonym = pseudonym;
+        this.email = email;
+        this.password = password;
+        this.planEnum = planEnum;
+        this.userId = transverseService.setUniqueId();
+    }
+
+    public User(String pseudonym, String email, String password, byte[] salt,
+                PlanEnum planEnum, List<Integer> playlists, List<Integer> friends) {
+        this.pseudonym = pseudonym;
+        this.email = email;
+        this.password = password;
+        this.salt = salt;
+        this.planEnum = planEnum;
+        this.userId = transverseService.setUniqueId();
+        this.playlists = playlists;
+        this.friends = friends;
+    }
+
     public int getUserId() {
         return userId;
     }
@@ -79,5 +103,4 @@ public class User {
     public void setFriends(List<Integer> friends) {
         this.friends = friends;
     }
-
 }
