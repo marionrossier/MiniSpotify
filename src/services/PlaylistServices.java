@@ -9,7 +9,7 @@ import java.util.*;
 public class PlaylistServices {
     private Playlist playlist;
     private final LinkedList<Song> playlistSongs;
-    double playlistDuration = playlist.getPlaylistDuration();
+    double playlistDuration = playlist.getPlaylistSeconds();
 
     public PlaylistServices(Playlist playlist, LinkedList<Song> playlistSongs) {
         this.playlist = playlist;

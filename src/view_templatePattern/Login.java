@@ -1,14 +1,13 @@
 package view_templatePattern;
 
 import data.entities.User;
-import services.Cookies;
+import services.Cookies_SingeltonPattern.CookieUser;
 import data.jsons.UserRepository;
 import player_commandPattern.SpotifyPlayer;
 import services.UserService;
 
 
 public class Login extends AbstractMenuPage {
-    public Cookies cookies;
     public UserRepository userRepository = new UserRepository();
     public UserService userService = new UserService();
 
@@ -19,7 +18,7 @@ public class Login extends AbstractMenuPage {
                 nb0 + "End process" + lineBreak +
                 nb1+ "Sign in"+lineBreak +
                 nb2+ "Create an account";
-        cookies = null;
+        CookieUser.reset();
     }
 
     @Override
@@ -35,11 +34,11 @@ public class Login extends AbstractMenuPage {
 
         System.out.print("Enter your password : ");
         String password = in.nextLine();
-        //Check to password...
 
+        //Check the password...
         if(userService.verifyUserAuthentification(pseudonym, password)) {
             User user = userRepository.findUserByPseudonym(pseudonym);
-            cookies = new Cookies(user.getUserId(), user.getPlanEnum(), user.getPlaylists());
+            CookieUser.setInstance(user.getUserId());
             System.out.println(lineBreak + ok + "Login successful !");
             spotifyPageFactory.homePage.templateMethode();
         }else{

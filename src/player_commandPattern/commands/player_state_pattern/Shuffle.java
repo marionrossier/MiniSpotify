@@ -18,7 +18,7 @@ public class Shuffle implements IState {
         Playlist currentPlaylist = playlistRepository.findPlaylistById(spotifyService.getCurrentPlaylistId());
 
         while (nextIndex == spotifyService.getIndexCurrentSong()) {
-            nextIndex = (int) (Math.random() * currentPlaylist.getPlaylistSongs().size());
+            nextIndex = (int) (Math.random() * currentPlaylist.getPlaylistSongsId().size());
         }
         spotifyService.play(nextIndex);
     }

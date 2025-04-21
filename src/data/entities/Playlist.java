@@ -1,6 +1,7 @@
 package data.entities;
 
 import data.jsons.PlaylistRepository;
+import services.Cookies_SingeltonPattern.CookieUser;
 import services.TransverseService;
 
 import java.util.*;
@@ -8,10 +9,10 @@ import java.util.*;
 public class Playlist {
     private String playlistName;
     private int playlistId;
-    private LinkedList<Integer> playlistSongs = new LinkedList<>();
-    private double playlistDuration;
+    private LinkedList<Integer> playlistSongsId = new LinkedList<>();
+    private int playlistSeconds;
     private int playlistSize;
-    private int ownerId; //TODO: implémenter
+    private int ownerId;
     private TransverseService transverseService = new TransverseService();
 
     public Playlist (){}
@@ -19,10 +20,16 @@ public class Playlist {
     public Playlist(String playlistName) {
         this.playlistName = playlistName;
         this.playlistId = transverseService.setUniqueId();
+        this.ownerId = CookieUser.getInstance().getId();
     }
-    public Playlist(String playlistName, int playlistId) {
+
+    public Playlist(String playlistName, LinkedList <Integer> playlistSongsId, int playlistSeconds, int playlistSize) {
         this.playlistName = playlistName;
-        this.playlistId = playlistId;
+        this.playlistId = transverseService.setUniqueId();
+        this.ownerId = 0;
+        this.playlistSongsId = playlistSongsId;
+        this.playlistSeconds = playlistSeconds;
+        this.playlistSize = playlistSize;
     }
 
     public String getPlaylistName() {
@@ -41,33 +48,40 @@ public class Playlist {
         this.playlistId = playlistId;
     }
 
-    public LinkedList<Integer> getPlaylistSongs() {
+    public LinkedList<Integer> getPlaylistSongsId() {
         PlaylistRepository playlistRepository = new PlaylistRepository();
         playlistRepository.findPlaylistById(playlistId);
-        return playlistSongs;
+        return playlistSongsId;
     }
 
-    public void setPlaylistSongs(LinkedList<Integer> playlistSongs) {
-        this.playlistSongs = playlistSongs;
+    public int getOwnerId() {
+        return ownerId;
     }
 
-    public double getPlaylistDuration() {
-        return playlistDuration;
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
-    //TODO : a vérifier la méthode...
+    public void setPlaylistSongsId(LinkedList<Integer> playlistSongsId) {
+        this.playlistSongsId = playlistSongsId;
+    }
+
+    public int getPlaylistSeconds() {
+        return playlistSeconds;
+    }
+
     public void setPlaylistDuration() {
-        double totalDuration = 0;
-        for (int i = 0; i < playlistSongs.size(); i++) {
+        int totalSeconds = 0;
+        for (int i = 0; i < playlistSongsId.size(); i++) {
             Song currentSong = new Song();
-            currentSong.setSongId(playlistSongs.get(i));
-            totalDuration += currentSong.getDuration();
+            currentSong.setSongId(playlistSongsId.get(i));
+            totalSeconds += currentSong.getSeconds();
         }
-        this.playlistDuration = totalDuration;
+        this.playlistSeconds = totalSeconds;
     }
     public void addSong(Song currentSong) {
-        playlistSongs.add(currentSong.getSongId());
-        playlistDuration += currentSong.getDuration();
+        playlistSongsId.add(currentSong.getSongId());
+        playlistSeconds += currentSong.getSeconds();
     }
 
     public int getPlaylistSize() {
@@ -75,18 +89,18 @@ public class Playlist {
     }
 
     public void setPlaylistSize() {
-        this.playlistSize = playlistSongs.size();
+        this.playlistSize = playlistSongsId.size();
     }
 
     public void removeSong(Song currentSong) {
-        playlistSongs.remove(currentSong.getSongId());
-        playlistDuration -= currentSong.getDuration();
+        playlistSongsId.remove(currentSong.getSongId());
+        playlistSeconds -= currentSong.getSeconds();
     }
 
     public void reorderSong(int songIndex) {
-        int memory = playlistSongs.get(songIndex);
-        playlistSongs.remove(songIndex);
-        playlistSongs.add(songIndex, memory);
+        int memory = playlistSongsId.get(songIndex);
+        playlistSongsId.remove(songIndex);
+        playlistSongsId.add(songIndex, memory);
     }
 
 }

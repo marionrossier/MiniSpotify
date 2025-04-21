@@ -1,6 +1,5 @@
 package view_templatePattern;
 
-import services.Cookies;
 import services.Icons;
 import player_commandPattern.SpotifyPlayer;
 
@@ -13,7 +12,6 @@ public abstract class AbstractMenuPage {
     public SpotifyPlayer spotifyPlayer;
     SpotifyPageFactory spotifyPageFactory;
     Scanner in = new Scanner(System.in);
-    public Cookies cookies;
 
     public Icons icons = new Icons();
     public String nb0 = icons.icon0To9(0);

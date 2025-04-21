@@ -1,6 +1,7 @@
 package view_templatePattern;
 
 import player_commandPattern.SpotifyPlayer;
+import services.Cookies_SingeltonPattern.CookiePlaylist;
 
 public class OnPlaylist extends AbstractMenuPage{
 
@@ -20,6 +21,7 @@ public class OnPlaylist extends AbstractMenuPage{
 
     @Override
     void button1() {
+        int playlistId = CookiePlaylist.getInstance().getId();
         //TODO : play the playlist
     }
 

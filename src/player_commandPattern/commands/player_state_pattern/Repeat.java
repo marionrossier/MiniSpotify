@@ -15,7 +15,7 @@ public class Repeat implements IState{
 
     public void replay() {
         Playlist currentPlaylist = playlistRepository.findPlaylistById(spotifyService.getCurrentPlaylistId());
-        int currentSongIndex = currentPlaylist.getPlaylistSongs()
+        int currentSongIndex = currentPlaylist.getPlaylistSongsId()
                 .indexOf(spotifyService.getCurrentSongId());
         spotifyService.play(currentSongIndex);
     }

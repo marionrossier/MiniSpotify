@@ -5,9 +5,10 @@ import services.TransverseService;
 
 public class Song {
     private String title;
+    private String songName;
     private Artist artist;
     private String album;
-    private double duration;
+    private int seconds;
     private MusicGender gender;
     private int songId;
     private String audioFilePath;
@@ -15,23 +16,15 @@ public class Song {
     ArtistRepository repository = new ArtistRepository();
 
 
-    public String getAudioFilePath() {
-        return audioFilePath;
-    }
-
-    public void setAudioFilePath(String audioFilePath) {
-        this.audioFilePath = audioFilePath;
-    }
-
     public Song (){}
 
 
-    public Song(String title, String artistName, String album, double duration, MusicGender gender,
+    public Song(String title, String artistName, String album, int seconds, MusicGender gender,
                 String audioFilePath) {
         this.title = title;
-        // TODO : this.songName = songName avec le nom de la chanson comme sur son fichier, sera utilisé pour la recherche de chanson
+        this.songName = title+" | "+artistName+" | "+album+" | "+gender+" | "+ seconds;
         this.album = album;
-        this.duration = duration;
+        this.seconds = seconds;
         this.gender = gender;
         this.songId = transverseService.setUniqueId();
         this.audioFilePath = audioFilePath;
@@ -45,6 +38,14 @@ public class Song {
             repository.addArtist(this.artist);
         }
         this.artist.getArtistSongsID().add(this.songId);
+    }
+
+    public String getSongName() {
+        return songName;
+    }
+
+    public void setSongName() {
+        this.songName = title+" | "+artist.getArtistName()+" | "+album+" | "+gender+" | "+ seconds;
     }
 
     public String getTitle() {
@@ -71,12 +72,12 @@ public class Song {
         this.album = album;
     }
 
-    public double getDuration() {
-        return duration;
+    public int getSeconds() {
+        return seconds;
     }
 
-    public void setDuration(double duration) {
-        this.duration = duration;
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
     }
 
     public MusicGender getGender() {
@@ -93,5 +94,13 @@ public class Song {
 
     public void setSongId(int songId) {
         this.songId = songId;
+    }
+
+    public String getAudioFilePath() {
+        return audioFilePath;
+    }
+
+    public void setAudioFilePath(String audioFilePath) {
+        this.audioFilePath = audioFilePath;
     }
 }

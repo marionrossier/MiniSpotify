@@ -25,11 +25,15 @@ public class PlaylistRepository {
 
     public List<Playlist> getAllPlaylists() {
         File file = new File(filePath);
-        if (!file.exists()) {
+        if (!file.exists() || file.length() == 0) {
             return new ArrayList<>();
         }
         try {
-            return objectMapper.readValue(file, new TypeReference<>() {});
+            List<Playlist> playlists = objectMapper.readValue(file, new TypeReference<List<Playlist>>() {});
+            if (playlists == null || playlists.isEmpty()) {
+                return new ArrayList<>();
+            }
+            return playlists;
         } catch (IOException e) {
             System.err.println("Error during the playlists upload : " + e.getMessage());
             return new ArrayList<>();

@@ -25,13 +25,18 @@ public class ArtistRepository {
 
     public List<Artist> getAllArtists() {
         File file = new File(filePath);
-        if (!file.exists()) {
+        if (!file.exists() || file.length() == 0) {
+            System.out.println("The JSON file is empty or does not exist.");
             return new ArrayList<>();
         }
         try {
-            return objectMapper.readValue(file, new TypeReference<>() {});
+            List<Artist> artists = objectMapper.readValue(file, new TypeReference<List<Artist>>() {});
+            if (artists.isEmpty()) {
+                return new ArrayList<>();
+            }
+            return artists;
         } catch (IOException e) {
-            System.err.println("Error during the artists upload : " + e.getMessage());
+            System.err.println("Error while loading artists: " + e.getMessage());
             return new ArrayList<>();
         }
     }

@@ -2,6 +2,7 @@ package view_templatePattern;
 
 import data.entities.PlanEnum;
 import player_commandPattern.SpotifyPlayer;
+import services.Cookies_SingeltonPattern.CookieUser;
 import services.UserService;
 
 public class CreateAccount extends AbstractMenuPage {
@@ -18,7 +19,7 @@ public class CreateAccount extends AbstractMenuPage {
         this.pageContent = backLineWith0 + lineBreak +
                 nb1 + "FREE " + free + lineBreak +
                 nb2 + "PREMIUM " + premium ;
-        cookies = null;
+        CookieUser.reset();
     }
 
     @Override

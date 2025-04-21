@@ -29,13 +29,18 @@ public class UserRepository {
 
     public List<User> getAllUsers() {
         File file = new File(filePath);
-        if (!file.exists()) {
+        if (!file.exists() || file.length() == 0) {
+            System.out.println("The JSON file is empty or does not exist.");
             return new ArrayList<>();
         }
         try {
-            return objectMapper.readValue(file, new TypeReference<>() {});
+            List<User> users = objectMapper.readValue(file, new TypeReference<List<User>>() {});
+            if (users == null || users.isEmpty()) {
+                return new ArrayList<>();
+            }
+            return users;
         } catch (IOException e) {
-            System.err.println("Error during the loading of the users : " + e.getMessage());
+            System.err.println("Error during the loading of the users: " + e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -74,8 +79,16 @@ public class UserRepository {
                 .orElse(null);
     }
 
-    public User updateAccount() {
-        throw new UnsupportedOperationException("Not implemented yet");
-        /*TODO*/
+    public User updateAccount(User user) {
+        List<User> users = getAllUsers();
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUserId() == user.getUserId()) {
+                users.set(i, user);
+                saveAllUsers(users);
+                return user;
+            }
+        }
+        System.err.println("User not found.");
+        return null;
     }
 }

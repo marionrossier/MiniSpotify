@@ -17,7 +17,7 @@ public class Sequential implements IState{
     public void next() {
         Playlist currentPlaylist = playlistRepository.findPlaylistById(spotifyService.getCurrentPlaylistId());
         int nextIndex = spotifyService.getIndexCurrentSong() + 1;
-        if (nextIndex > currentPlaylist.getPlaylistSongs().size() - 1) {
+        if (nextIndex > currentPlaylist.getPlaylistSongsId().size() - 1) {
             nextIndex = 0;
         }
         spotifyService.play(nextIndex);
@@ -28,7 +28,7 @@ public class Sequential implements IState{
         Playlist currentPlaylist = playlistRepository.findPlaylistById(spotifyService.getCurrentPlaylistId());
         int previousIndex = spotifyService.getIndexCurrentSong() - 1;
         if (previousIndex < 0) {
-            previousIndex = currentPlaylist.getPlaylistSongs().size() - 1;
+            previousIndex = currentPlaylist.getPlaylistSongsId().size() - 1;
         }
         spotifyService.play(previousIndex);
     }

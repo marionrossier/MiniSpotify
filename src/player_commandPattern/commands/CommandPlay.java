@@ -9,7 +9,7 @@ public class CommandPlay implements ICommand {
     int playlistId = spotifyService.getCurrentPlaylistId();
     PlaylistRepository playlistRepository = new PlaylistRepository();
     Playlist playlist = playlistRepository.findPlaylistById(playlistId);
-    int songIndex = playlist.getPlaylistSongs().indexOf(spotifyService.getCurrentSongId());
+    int songIndex = playlist.getPlaylistSongsId().indexOf(spotifyService.getCurrentSongId());
 
     @Override
     public void execute(String button) {

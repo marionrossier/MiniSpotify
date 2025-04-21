@@ -39,7 +39,7 @@ public class SpotifyService {
         PlaylistRepository playlistRepository = new PlaylistRepository();
         Playlist playlist = playlistRepository.findPlaylistById(currentPlaylistId);
         if (playlist != null) {
-            return playlist.getPlaylistSongs().indexOf(currentSongId);
+            return playlist.getPlaylistSongsId().indexOf(currentSongId);
         }
         else {
             System.err.println("No playlist found.");
@@ -94,9 +94,9 @@ public class SpotifyService {
     //COMMAND PATTERN
     public void play(int songIndex) {
         //Change of the currentSong
-        setCurrentSongId(playlist.getPlaylistSongs().get(songIndex));
+        setCurrentSongId(playlist.getPlaylistSongsId().get(songIndex));
         //addition of the currentSong index in the sonHistoricByIndex
-        songHistoricByIndex.push(playlist.getPlaylistSongs().indexOf(currentSongId));
+        songHistoricByIndex.push(playlist.getPlaylistSongsId().indexOf(currentSongId));
 
         try {
             FileInputStream audioFile = new FileInputStream(String.valueOf(currentSongId));

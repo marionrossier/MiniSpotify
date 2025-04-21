@@ -1,6 +1,7 @@
 package view_templatePattern;
 
 import player_commandPattern.SpotifyPlayer;
+import services.Cookies_SingeltonPattern.CookieUser;
 
 public class HomePage extends AbstractMenuPage {
 
@@ -18,6 +19,7 @@ public class HomePage extends AbstractMenuPage {
     void button0() {
         System.out.println("Logging you out ...");
         spotifyPageFactory.login.templateMethode();
+        CookieUser.reset();
     }
 
     @Override

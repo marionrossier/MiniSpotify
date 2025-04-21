@@ -2,6 +2,7 @@ package data.jsons;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import data.entities.MusicGender;
 import data.entities.Song;
 
 import java.io.File;
@@ -25,11 +26,16 @@ public class SongRepository {
 
     public List<Song> getAllSongs() {
         File file = new File(filePath);
-        if (!file.exists()) {
+        if (!file.exists() || file.length() == 0) {
+            System.out.println("The JSON file is empty or does not exist.");
             return new ArrayList<>();
         }
         try {
-            return objectMapper.readValue(file, new TypeReference<>() {});
+            List<Song> songs = objectMapper.readValue(file, new TypeReference<List<Song>>() {});
+            if (songs == null || songs.isEmpty()) {
+                return new ArrayList<>();
+            }
+            return songs;
         } catch (IOException e) {
             System.err.println("Error during the songs loading : " + e.getMessage());
             return new ArrayList<>();
@@ -63,11 +69,21 @@ public class SongRepository {
                 .orElse(null);
     }
 
-    public Song findSongByTitle() {
-        throw new UnsupportedOperationException("Not implemented yet");
-        /*TODO*/
+    public List<Song> findSongByTitle(String title) {
+        return getAllSongs().stream()
+                .filter(song -> song.getTitle().toLowerCase().contains(title.toLowerCase()))
+                .toList();
     }
 
-    public void findSongByArtist(String artist) {/*TODO*/}
-    public void findSongByGender(String gender) {/*TODO*/}
+    public List<Song> findSongByArtist(String artist) {
+        return getAllSongs().stream()
+                .filter(song -> song.getArtist().getArtistName().toLowerCase().contains(artist.toLowerCase()))
+                .toList();
+    }
+
+    public List<Song> findSongByGender(MusicGender gender) {
+        return getAllSongs().stream()
+                .filter(song -> song.getGender() == gender)
+                .toList();
+    }
 }
