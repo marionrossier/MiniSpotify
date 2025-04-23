@@ -32,7 +32,7 @@ public class Search extends AbstractMenuPage {
         //  "getArtistByName(String name) return liste" des correspondances
 
         ArtistRepository artistRepository = new ArtistRepository();
-        Artist searchedArtist = artistRepository.findArtistByName(artistName); //Pas juste à 100%
+        Artist searchedArtist = artistRepository.getArtistByName(artistName); //Pas juste à 100%
     }
 
     @Override

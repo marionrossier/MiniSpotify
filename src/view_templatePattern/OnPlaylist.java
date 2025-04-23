@@ -1,13 +1,12 @@
 package view_templatePattern;
 
 import player_commandPattern.SpotifyPlayer;
-import services.Cookies_SingeltonPattern.CookiePlaylist;
 
 public class OnPlaylist extends AbstractMenuPage{
 
     public OnPlaylist(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
-        this.pageTitle = "Playlist Page";
+        this.pageTitle = "Playlist Page : ";
         this.pageContent = backLineWith0 + lineBreak +
                 nb1 + "Play the playlist" + lineBreak +
                 nb2 + "Edit the playlist" + lineBreak +
@@ -21,8 +20,7 @@ public class OnPlaylist extends AbstractMenuPage{
 
     @Override
     void button1() {
-        int playlistId = CookiePlaylist.getInstance().getId();
-        //TODO : play the playlist
+        spotifyPageFactory.songPlayer.templateMethode();
     }
 
     @Override

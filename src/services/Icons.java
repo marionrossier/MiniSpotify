@@ -27,7 +27,7 @@ public class Icons {
         return ("🔂 ");
     }
     public String iconRepeatOne (){
-        return ("🔁");
+        return ("🔁 ");
     }
     public String iconBack (){
         return ("Back");

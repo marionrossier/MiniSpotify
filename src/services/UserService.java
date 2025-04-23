@@ -12,7 +12,7 @@ public class UserService {
 
     public int getUserIdByPseudo(String pseudo) {
 
-        User searchedUser = userRepository.findUserByPseudonym(pseudo);
+        User searchedUser = userRepository.getUserByPseudonym(pseudo);
         if (searchedUser == null) {
             return -1; // Return -1 if the pseudo was not found
         }
@@ -23,7 +23,7 @@ public class UserService {
         byte[] salt = passwordService.generateSalt();
         String hashedPassword = passwordService.hashPassword(password, salt);
 
-        User existingUser = userRepository.findUserByPseudonym(pseudonym);
+        User existingUser = userRepository.getUserByPseudonym(pseudonym);
         if (existingUser != null) {
             System.err.println("The pseudonym \""+pseudonym+ "\" already exists.");
         }
@@ -35,7 +35,7 @@ public class UserService {
 
     public boolean verifyUserAuthentification(String pseudonym, String password) {
 
-        User searchedUser = userRepository.findUserByPseudonym(pseudonym);
+        User searchedUser = userRepository.getUserByPseudonym(pseudonym);
 
         if (searchedUser == null) {
             System.err.println("The user does not exist.");

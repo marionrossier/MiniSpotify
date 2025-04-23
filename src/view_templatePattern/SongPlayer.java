@@ -9,8 +9,8 @@ public class SongPlayer extends AbstractMenuPage {
         this.pageTitle = "Song Player Page";
         this.pageContent = backLineWith0 + lineBreak+
                 "Your song player ! " +lineBreak+
-                nb1 + "|"+ nb2 + "|"+ nb3 + "|"+ nb4 + "|"+ nb5 + "|"+ nb6 + "|"+ nb7 + "|"+ lineBreak +
-                shuffle+ "|" + previous + "|" + play + "|" + pause + "|" + next + "|" + repeatOne + "|" + playBack + lineBreak;
+                nb1 + " |"+ nb2 + " |"+ nb3 + " |"+ nb4 + " |"+ nb5 + " |"+ nb6 + " |"+ nb7 + " |"+ lineBreak +
+                shuffle+ " |" + previous + " |" + play + " |" + pause + " |" + next + " |" + repeatOne + " |" + playBack + lineBreak;
         //TODO : changer pour , shuffle, previous, playback, play/pause, next, repeat
     }
 
@@ -26,8 +26,7 @@ public class SongPlayer extends AbstractMenuPage {
 
     @Override
     void button3() {
-        spotifyPlayer.selectPlay(1);
-        //TODO : a changer une fois l'interface SearchSong terminée
+        spotifyPlayer.selectPlay();
     }
 
     @Override

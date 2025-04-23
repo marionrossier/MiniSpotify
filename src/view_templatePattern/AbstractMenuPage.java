@@ -75,7 +75,7 @@ public abstract class AbstractMenuPage {
         System.out.print("Your input : ");
     }
 
-    final void validateInput(){
+    void validateInput(){
         try{
             index = in.nextInt();
             in.nextLine(); // Clear the newline character
@@ -87,7 +87,7 @@ public abstract class AbstractMenuPage {
         }
     }
 
-    final void switchPage() {
+    void switchPage() {
         switch (index){
             case 0:
                 button0();

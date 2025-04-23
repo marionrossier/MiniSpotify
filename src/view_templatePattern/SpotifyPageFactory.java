@@ -19,7 +19,7 @@ public class SpotifyPageFactory {
     OnPlaylist onPlaylist;
     Search search;
     SongPlayer songPlayer;
-    SpotifyPlayer spotifyPlayer;
+    public SpotifyPlayer spotifyPlayer;
     SearchGender searchGender;
     FriendInformation friendInformation;
     FriendRemoveAFriend friendRemoveAFriend;

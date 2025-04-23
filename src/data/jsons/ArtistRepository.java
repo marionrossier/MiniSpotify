@@ -55,13 +55,13 @@ public class ArtistRepository {
         saveAllArtists(artists);
     }
 
-    public void removeArtistById(int artistId) {
+    public void deleteArtistById(int artistId) {
         List<Artist> artists = getAllArtists();
         artists.removeIf(artist -> artist.getArtistId() == artistId);
         saveAllArtists(artists);
     }
 
-    public Artist findArtistById(int artistId) {
+    public Artist getArtistById(int artistId) {
         return getAllArtists().stream()
                 .filter(artist -> artist.getArtistId() == artistId)
                 .findFirst()
@@ -80,7 +80,7 @@ public class ArtistRepository {
         System.err.println("Artist with ID " + updatedArtist.getArtistId() + " not found.");
     }
 
-    public Artist findArtistByName(String name) {
+    public Artist getArtistByName(String name) {
         List<Artist> artists = getAllArtists();
         for (Artist artist : artists) {
             if (artist.getArtistName().equalsIgnoreCase(name)) {

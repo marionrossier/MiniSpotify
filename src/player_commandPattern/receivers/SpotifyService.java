@@ -2,9 +2,11 @@ package player_commandPattern.receivers;
 
 import data.entities.Playlist;
 import data.jsons.PlaylistRepository;
+import data.jsons.SongRepository;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 import player_commandPattern.commands.player_state_pattern.*;
+import services.Cookies_SingeltonPattern;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,43 +15,31 @@ import java.util.*;
 public class SpotifyService {
 
     private Stack<Integer> songHistoricByIndex;
-    private int currentPlaylistId;
-    private int currentSongId;
     private Player player;
     private Thread playerThread;
     private boolean isPlaying = false;
+    private SongRepository songRepository = new SongRepository();
 
     public Stack<Integer> getSongHistoricByIndex() {
         return songHistoricByIndex;
     }
 
-    public int getCurrentPlaylistId() {
-        return currentPlaylistId;
-    }
-
-    public void setCurrentPlaylistId(int currentPlaylistId) {
-        this.currentPlaylistId = currentPlaylistId;
-    }
-
-    public int getCurrentSongId() {
-        return currentSongId;
+    public void addToSongHistoricByCookies() {
+        songHistoricByIndex.push(playlist.getPlaylistSongsId().indexOf(Cookies_SingeltonPattern.getInstance().getCurrentSongId()));
     }
 
     public int getIndexCurrentSong() {
         PlaylistRepository playlistRepository = new PlaylistRepository();
-        Playlist playlist = playlistRepository.findPlaylistById(currentPlaylistId);
+        Playlist playlist = playlistRepository.getPlaylistById(Cookies_SingeltonPattern.resetCookies().getCurrentPlaylistId());
         if (playlist != null) {
-            return playlist.getPlaylistSongsId().indexOf(currentSongId);
+            return playlist.getPlaylistSongsId().indexOf(Cookies_SingeltonPattern.getInstance().getCurrentSongId());
         }
         else {
             System.err.println("No playlist found.");
+            return -1;
         }
-        return -1; // Retourne -1 si la playlist n'est pas trouvée
     }
 
-    public void setCurrentSongId(int currentSongId) {
-        this.currentSongId = currentSongId;
-    }
 
     //STATE PATTERN
     private IState currentState;
@@ -59,9 +49,7 @@ public class SpotifyService {
 
     public Playlist playlist;
 
-    public SpotifyService(int currentSongId, int currentPlaylistId) {
-        this.currentSongId = currentSongId;
-        this.currentPlaylistId = currentPlaylistId;
+    public SpotifyService() {
         this.sequentialState = new Sequential(this);
         this.shuffleState = new Shuffle(this);
         this.repeatState = new Repeat(this);
@@ -92,14 +80,15 @@ public class SpotifyService {
     }
 
     //COMMAND PATTERN
-    public void play(int songIndex) {
-        //Change of the currentSong
-        setCurrentSongId(playlist.getPlaylistSongsId().get(songIndex));
-        //addition of the currentSong index in the sonHistoricByIndex
-        songHistoricByIndex.push(playlist.getPlaylistSongsId().indexOf(currentSongId));
+    //TODO : attention, car je suis pas sur qu'il prenne la chanson...
+
+    public void play() {
 
         try {
-            FileInputStream audioFile = new FileInputStream(String.valueOf(currentSongId));
+            String audioFilePath = songRepository
+                    .getSongById(Cookies_SingeltonPattern.getInstance().getCurrentSongId())
+                    .getAudioFilePath();
+            FileInputStream audioFile = new FileInputStream(audioFilePath);
             player = new Player(audioFile);
 
             playerThread = new Thread(() -> {
@@ -113,6 +102,9 @@ public class SpotifyService {
                 }
             });
             playerThread.start();
+            System.out.println("Lecture démarrée.");
+            new Scanner(System.in).nextLine();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (JavaLayerException e) {
@@ -135,7 +127,7 @@ public class SpotifyService {
     public void playback() {
         currentState.playback();
         stop();
-        play(getIndexCurrentSong());
+        play();
     }
 
     public void next() {
@@ -149,7 +141,6 @@ public class SpotifyService {
     public void shuffle() {
         if (this.getCurrentState()== this.shuffleState) {
             setCurrentState(sequentialState);
-
         }
         else {
             setCurrentState(shuffleState);

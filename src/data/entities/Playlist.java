@@ -1,7 +1,6 @@
 package data.entities;
 
-import data.jsons.PlaylistRepository;
-import services.Cookies_SingeltonPattern.CookieUser;
+import services.Cookies_SingeltonPattern;
 import services.TransverseService;
 
 import java.util.*;
@@ -20,7 +19,7 @@ public class Playlist {
     public Playlist(String playlistName) {
         this.playlistName = playlistName;
         this.playlistId = transverseService.setUniqueId();
-        this.ownerId = CookieUser.getInstance().getId();
+        this.ownerId = Cookies_SingeltonPattern.getInstance().getUserId();
     }
 
     public Playlist(String playlistName, LinkedList <Integer> playlistSongsId, int playlistSeconds, int playlistSize) {
@@ -49,9 +48,11 @@ public class Playlist {
     }
 
     public LinkedList<Integer> getPlaylistSongsId() {
-        PlaylistRepository playlistRepository = new PlaylistRepository();
-        playlistRepository.findPlaylistById(playlistId);
         return playlistSongsId;
+    }
+
+    public void setPlaylistSongsId(LinkedList<Integer> playlistSongsId) {
+        this.playlistSongsId = playlistSongsId;
     }
 
     public int getOwnerId() {
@@ -60,10 +61,6 @@ public class Playlist {
 
     public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
-    }
-
-    public void setPlaylistSongsId(LinkedList<Integer> playlistSongsId) {
-        this.playlistSongsId = playlistSongsId;
     }
 
     public int getPlaylistSeconds() {

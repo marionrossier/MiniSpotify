@@ -54,13 +54,13 @@ public class PlaylistRepository {
         saveAllPlaylists(playlists);
     }
 
-    public void removePlaylistById(int playlistId) {
+    public void deletePlaylistById(int playlistId) {
         List<Playlist> playlists = getAllPlaylists();
         playlists.removeIf(playlist -> playlist.getPlaylistId() == playlistId);
         saveAllPlaylists(playlists);
     }
 
-    public Playlist findPlaylistById(int playlistId) {
+    public Playlist getPlaylistById(int playlistId) {
         return getAllPlaylists().stream()
                 .filter(playlist -> playlist.getPlaylistId() == playlistId)
                 .findFirst()
@@ -79,7 +79,7 @@ public class PlaylistRepository {
         System.err.println("Playlist with ID " + updatedPlaylist.getPlaylistId() + " not found.");
     }
 
-    public Playlist findPlaylistByName(String name) {
+    public Playlist getPlaylistByName(String name) {
         List<Playlist> playlists = getAllPlaylists();
         for (Playlist playlist : playlists) {
             if (playlist.getPlaylistName().equalsIgnoreCase(name)) {

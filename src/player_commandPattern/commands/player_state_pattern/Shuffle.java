@@ -3,6 +3,7 @@ package player_commandPattern.commands.player_state_pattern;
 import data.entities.Playlist;
 import data.jsons.PlaylistRepository;
 import player_commandPattern.receivers.SpotifyService;
+import services.Cookies_SingeltonPattern;
 
 public class Shuffle implements IState {
     private final SpotifyService spotifyService;
@@ -14,27 +15,34 @@ public class Shuffle implements IState {
 
     @Override
     public void next() {
+        Playlist currentPlaylist = playlistRepository.getPlaylistById(Cookies_SingeltonPattern.getInstance().getCurrentPlaylistId());
+
         int nextIndex = spotifyService.getIndexCurrentSong();
-        Playlist currentPlaylist = playlistRepository.findPlaylistById(spotifyService.getCurrentPlaylistId());
 
         while (nextIndex == spotifyService.getIndexCurrentSong()) {
             nextIndex = (int) (Math.random() * currentPlaylist.getPlaylistSongsId().size());
         }
-        spotifyService.play(nextIndex);
+        int nextSongId = currentPlaylist.getPlaylistSongsId().get(nextIndex);
+        Cookies_SingeltonPattern.setCurrentSongId(nextSongId);
+        spotifyService.addToSongHistoricByCookies();
+
+        spotifyService.play();
     }
 
     @Override
     public void previous() {
         spotifyService.getSongHistoricByIndex().pop();
+        Playlist currentPlaylist = playlistRepository.getPlaylistById(Cookies_SingeltonPattern.getInstance().getCurrentPlaylistId());
         int previousSongIndex = spotifyService.getSongHistoricByIndex().peek();
 
-        spotifyService.play(previousSongIndex);
-        //Took of one more because it is automatically added again in the play action !
-        spotifyService.getSongHistoricByIndex().pop();
+        int previousSongId = currentPlaylist.getPlaylistSongsId().get(previousSongIndex);
+        Cookies_SingeltonPattern.setCurrentSongId(previousSongId);
+
+        spotifyService.play();
     }
 
     @Override
     public void playback() {
-        spotifyService.play(spotifyService.getIndexCurrentSong());
+        spotifyService.play();
     }
 }

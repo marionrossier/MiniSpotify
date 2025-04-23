@@ -7,12 +7,11 @@ import java.util.*;
 
 public class SpotifyPlayer {
     private final SpotifyService spotifyService;
-    private int songIndex;
 
-    public SpotifyPlayer(SpotifyService spotifyService, Stack<ICommand> commandHistoric) {
+    public SpotifyPlayer(SpotifyService spotifyService, Stack<ICommand> commandHistory) {
         this.spotifyService = spotifyService;
-        this.songIndex = spotifyService.getIndexCurrentSong();
     }
+
     public void selectNext() {
         spotifyService.next();
     }
@@ -20,9 +19,8 @@ public class SpotifyPlayer {
         spotifyService.pause();
     }
 
-    //TODO : retirer le paramètre songIndex ? possible ?
-    public void selectPlay(int songIndex) {
-        spotifyService.play(songIndex);
+    public void selectPlay() {
+        spotifyService.play();
     }
     public void selectPlayback() {
         spotifyService.playback();

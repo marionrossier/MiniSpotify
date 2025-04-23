@@ -5,14 +5,14 @@ import data.entities.User;
 import data.jsons.PlaylistRepository;
 import data.jsons.UserRepository;
 import player_commandPattern.SpotifyPlayer;
-import services.Cookies_SingeltonPattern.CookiePlaylist;
-import services.Cookies_SingeltonPattern.CookieUser;
+import services.Cookies_SingeltonPattern;
 
 import java.util.Scanner;
 
 public class ChoseYourPlaylist extends AbstractMenuPage {
 
     String firstPageContent;
+    UserRepository userRepository = new UserRepository();
 
     public ChoseYourPlaylist(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -30,16 +30,12 @@ public class ChoseYourPlaylist extends AbstractMenuPage {
     }
     @Override
     void displaySpecificContent() {
-        UserRepository userRepository = new UserRepository();
-        User currentUser = userRepository.findUserById(CookieUser.getInstance().getId()); //232928320
-        Scanner scanner = new Scanner(System.in);
-
+        User currentUser = userRepository.getUserById(Cookies_SingeltonPattern.getInstance().getUserId()); //232928320
         PlaylistRepository playlistRepository = new PlaylistRepository();
-
         if (currentUser != null && currentUser.getPlaylists() != null) {
             int i = 1;
-            for (Integer playlistId : currentUser.getPlaylists()) {
-                Playlist playlist = playlistRepository.findPlaylistById(playlistId);
+            for (int playlistId : currentUser.getPlaylists()) {
+                Playlist playlist = playlistRepository.getPlaylistById(playlistId);
                 if (playlist != null) {
                     System.out.println(i + ". " + playlist.getPlaylistName());
                     i++;
@@ -48,9 +44,20 @@ public class ChoseYourPlaylist extends AbstractMenuPage {
         } else {
             System.out.println("No playlists available.");
         }
-        displayInput();
-        CookiePlaylist.setInstance(scanner.nextInt());
+    }
+
+    @Override
+    void validateInput(){
+        Scanner scanner = new Scanner(System.in);
+        User currentUser = userRepository.getUserById(Cookies_SingeltonPattern.getInstance().getUserId());
+        int chosenPlaylist = currentUser.getPlaylists().get(scanner.nextInt()-1);
+        Cookies_SingeltonPattern.setCurrentPlaylistId(chosenPlaylist);
+
+        //TODO : faire méthode pour gérer les mauvaises saisies
 
         spotifyPageFactory.onPlaylist.templateMethode();
     }
+
+    @Override
+    void switchPage(){}
 }
