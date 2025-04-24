@@ -20,9 +20,9 @@ public class Shuffle implements IState {
         int nextIndex = spotifyService.getIndexCurrentSong();
 
         while (nextIndex == spotifyService.getIndexCurrentSong()) {
-            nextIndex = (int) (Math.random() * currentPlaylist.getPlaylistSongsId().size());
+            nextIndex = (int) (Math.random() * currentPlaylist.getPlaylistSongsListWithId().size());
         }
-        int nextSongId = currentPlaylist.getPlaylistSongsId().get(nextIndex);
+        int nextSongId = currentPlaylist.getPlaylistSongsListWithId().get(nextIndex);
         Cookies_SingeltonPattern.setCurrentSongId(nextSongId);
         spotifyService.addToSongHistoricByCookies();
 
@@ -35,7 +35,7 @@ public class Shuffle implements IState {
         Playlist currentPlaylist = playlistRepository.getPlaylistById(Cookies_SingeltonPattern.getInstance().getCurrentPlaylistId());
         int previousSongIndex = spotifyService.getSongHistoricByIndex().peek();
 
-        int previousSongId = currentPlaylist.getPlaylistSongsId().get(previousSongIndex);
+        int previousSongId = currentPlaylist.getPlaylistSongsListWithId().get(previousSongIndex);
         Cookies_SingeltonPattern.setCurrentSongId(previousSongId);
 
         spotifyService.play();

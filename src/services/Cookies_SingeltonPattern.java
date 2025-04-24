@@ -1,6 +1,11 @@
 package services;
 
+import data.entities.Playlist;
 import data.jsons.PlaylistRepository;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Cookies_SingeltonPattern {
     private static Cookies_SingeltonPattern instance;
@@ -9,15 +14,17 @@ public class Cookies_SingeltonPattern {
     private int currentPlaylistId;
     private int currentSongId;
     private PlaylistRepository playlistRepository = new PlaylistRepository();
+    private List<Integer> temporaryPlaylist = new ArrayList<>();
 
     private Cookies_SingeltonPattern(int userId) {
         this.userId = userId;
         this.currentPlaylistId = playlistRepository.getPlaylistByName("AllSongs").getPlaylistId();
-        this.currentSongId = playlistRepository.getPlaylistByName("AllSongs").getPlaylistSongsId().getFirst();
+        this.currentSongId = playlistRepository.getPlaylistByName("AllSongs").getPlaylistSongsListWithId().getFirst();
+        this.temporaryPlaylist = null;
     }
 
     public static Cookies_SingeltonPattern setUser(int userId) {
-        if (instance == null) {
+        if (instance == null || instance.userId == 1) {
             instance = new Cookies_SingeltonPattern(userId);
         }
         return instance;
@@ -39,6 +46,21 @@ public class Cookies_SingeltonPattern {
         return instance;
     }
 
+    public static Cookies_SingeltonPattern setTemporaryPlaylist(List<Integer> temporaryPlaylist) {
+        if (instance == null) {
+            throw new IllegalStateException("Cookies instance not initialized. Please set the user first.");
+        }
+        instance.temporaryPlaylist = temporaryPlaylist;
+
+        Playlist temporaryPlaylistObj = new Playlist("temporaryPlaylist");
+        temporaryPlaylistObj.setPlaylistSongsId((LinkedList<Integer>) temporaryPlaylist);
+
+
+        instance.currentPlaylistId = instance.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId();
+        instance.currentSongId = instance.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistSongsListWithId().getFirst();
+        return instance;
+    }
+
     public static Cookies_SingeltonPattern setInstance(int id) {
         if (instance == null) {
             instance = new Cookies_SingeltonPattern(id);
@@ -47,7 +69,13 @@ public class Cookies_SingeltonPattern {
     }
 
     public static Cookies_SingeltonPattern resetCookies() {
-        instance = null;
+        if (instance != null){
+            if (Cookies_SingeltonPattern.getInstance().getTemporaryPlaylist() != null) {
+                instance.playlistRepository.deletePlaylistById(instance.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId());
+            }
+            instance = null;
+        }
+
         return instance;
     }
 
@@ -68,6 +96,10 @@ public class Cookies_SingeltonPattern {
 
     public int getCurrentSongId() {
         return currentSongId;
+    }
+
+    public List<Integer> getTemporaryPlaylist() {
+        return temporaryPlaylist;
     }
 
     @Override

@@ -2,6 +2,8 @@ package view_templatePattern;
 
 import player_commandPattern.SpotifyPlayer;
 
+import java.util.Stack;
+
 public class SpotifyPageFactory {
     PlaylistChoseList playlistChoseList;
     PlaylistCreation playlistCreation;
@@ -12,7 +14,7 @@ public class SpotifyPageFactory {
     FriendsHomePage friendsHomePage;
     FriendAddPlaylist friendAddPlaylist;
     HomePage homePage;
-    PlaylistHomePage playlistHomePage;
+    public PlaylistHomePage playlistHomePage;
     Login login;
     CreateAccount createAccount;
     PlaylistDisplay playlistDisplay;
@@ -22,6 +24,7 @@ public class SpotifyPageFactory {
     SearchGender searchGender;
     FriendInformation friendInformation;
     FriendRemoveAFriend friendRemoveAFriend;
+    ActionFoundedSongs actionFoundedSongs;
 
     public void setUpPages() {
         this.playlistChoseList = new PlaylistChoseList(this, spotifyPlayer);
@@ -42,6 +45,7 @@ public class SpotifyPageFactory {
         this.searchGender = new SearchGender(this, spotifyPlayer);
         this.friendInformation = new FriendInformation(this, spotifyPlayer);
         this.friendRemoveAFriend = new FriendRemoveAFriend(this, spotifyPlayer);
+        this.actionFoundedSongs = new ActionFoundedSongs(this, spotifyPlayer);
     }
 
     public void startLogin(){

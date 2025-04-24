@@ -22,7 +22,7 @@ public class Song {
                 String audioFilePath) {
         this.songId = id;
         this.title = title;
-        this.songName = title+" | "+artistName+" | "+album+" | "+gender+" | "+ seconds;
+        this.songName = title+" - "+artistName;
         this.album = album;
         this.seconds = seconds;
         this.gender = gender;
@@ -42,7 +42,7 @@ public class Song {
     public Song(String title, String artistName, String album, int seconds, MusicGender gender,
                 String audioFilePath) {
         this.title = title;
-        this.songName = title+" | "+artistName+" | "+album+" | "+gender+" | "+ seconds;
+        this.songName = title+" - "+artistName;
         this.album = album;
         this.seconds = seconds;
         this.gender = gender;

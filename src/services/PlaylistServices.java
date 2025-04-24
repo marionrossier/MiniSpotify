@@ -1,18 +1,19 @@
 package services;
 
 import data.entities.Playlist;
-import data.entities.Song;
 import data.entities.User;
 import data.jsons.PlaylistRepository;
 import data.jsons.UserRepository;
+import view_templatePattern.PlaylistHomePage;
+import view_templatePattern.SpotifyPageFactory;
 
 import java.util.*;
 
 public class PlaylistServices {
 
-    PlaylistRepository playlistRepository = new PlaylistRepository();
     UserRepository userRepository = new UserRepository();
-    User currentUser = userRepository.getUserById(Cookies_SingeltonPattern.getInstance().getUserId());
+    PlaylistRepository playlistRepository = new PlaylistRepository();
+    Scanner in = new Scanner(System.in);
 
     public PlaylistServices (){
 
@@ -23,7 +24,7 @@ public class PlaylistServices {
 
     public void printUserPlaylists(){
         int i = 1;
-        for (int playlistId : currentUser.getPlaylists()) {
+        for (int playlistId : userRepository.getUserById(Cookies_SingeltonPattern.getInstance().getUserId()).getPlaylists()) {
             Playlist playlist = playlistRepository.getPlaylistById(playlistId);
             if (playlist != null) {
                 System.out.println(i + ". " + playlist.getPlaylistName());
@@ -32,9 +33,72 @@ public class PlaylistServices {
         }
     }
 
-    public void addSongToPlaylist(String playlistName) {/*TODO*/}
-    public void editPlayList(String playlistName) {/*TODO*/}
-    public void removeSongFromPlaylist(String playlistName) {/*TODO*/}
+    public int validationPlaylistChoice() {
+        Scanner scanner = new Scanner(System.in);
+        User currentUser = userRepository.getUserById(Cookies_SingeltonPattern.getInstance().getUserId());
+
+        int chosenPlaylist = -1;
+
+        while (true) {
+            String input = scanner.nextLine();
+
+            if (input.equals("0")) {
+                //TODO: implémenter le fait d'arriver sur la homepagePlaylist
+                break;
+            }
+
+            try {
+                int inputNumber = Integer.parseInt(input);
+
+                if (inputNumber < 1 || inputNumber > currentUser.getPlaylists().size()) {
+                    System.err.println("Invalid Playlist number.");
+                    System.out.println("Try again or press \"0\" to go back : ");
+                } else {
+                    chosenPlaylist = currentUser.getPlaylists().get(inputNumber - 1);
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid input, please enter a number : ");
+            }
+        }
+
+        return chosenPlaylist;
+    }
+
+    public void addSongToPlaylist(int songId) {
+        playlistRepository.getPlaylistById(Cookies_SingeltonPattern.getInstance().getCurrentPlaylistId())
+                .getPlaylistSongsListWithId().add(songId);
+    }
+
+    public void addSongToPlaylistFromTemporaryPlaylist(int playlistId) {
+        Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
+        Playlist targetPlaylist = playlistRepository.getPlaylistById(playlistId);
+
+        if (targetPlaylist != null && temporaryPlaylist != null) {
+            targetPlaylist.getPlaylistSongsListWithId().addAll(temporaryPlaylist.getPlaylistSongsListWithId());
+            playlistRepository.updatePlaylist(targetPlaylist);
+        } else {
+            System.err.println("Target playlist or temporary playlist not found.");
+        }
+    }
+
+    public void editPlayListName() {
+        System.out.print("Enter the new name of the playlist : ");
+        String newName = in.next();
+
+        Playlist playlist = playlistRepository.getPlaylistById(Cookies_SingeltonPattern.getInstance().getCurrentPlaylistId());
+        playlist.setPlaylistName(newName);
+        playlistRepository.savePlaylist(playlist);
+        System.out.println("Playlist renamed to " + newName + " !");
+    }
+
+    public void removeSongFromPlaylist(int songIndex) {
+        Playlist playlist = playlistRepository.getPlaylistById(Cookies_SingeltonPattern.getInstance().getCurrentPlaylistId());
+        playlistRepository.getPlaylistById(playlist.getPlaylistId())
+                .getPlaylistSongsListWithId().remove(songIndex);
+        playlistRepository.savePlaylist(playlist);
+
+    }
     public void reorderSongsInPlaylist(String playlistName) {/*TODO*/}
     public LinkedList<Playlist> getSharedPlaylist(User followedUser) {
         throw new UnsupportedOperationException("Not implemented yet");

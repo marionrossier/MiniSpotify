@@ -35,6 +35,12 @@ public class PlaylistRepository {
         }
     }
 
+    public void savePlaylist(Playlist playlist) {
+        List<Playlist> playlists = getAllPlaylists();
+        playlists.add(playlist);
+        saveAllPlaylists(playlists);
+    }
+
     public void saveAllPlaylists(List<Playlist> playlists) {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), playlists);

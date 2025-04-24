@@ -103,4 +103,11 @@ public class User {
     public void setFriends(List<Integer> friends) {
         this.friends = friends;
     }
+
+    public void addOnePlaylist(int playlistId) {
+        if (playlists == null) {
+            return;
+        }
+        playlists.add(playlistId);
+    }
 }

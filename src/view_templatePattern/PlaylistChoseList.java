@@ -6,13 +6,9 @@ import player_commandPattern.SpotifyPlayer;
 import services.Cookies_SingeltonPattern;
 import services.PlaylistServices;
 
-import java.util.Objects;
-import java.util.Scanner;
-
 public class PlaylistChoseList extends AbstractMenuPage {
 
     UserRepository userRepository = new UserRepository();
-    User currentUser = userRepository.getUserById(Cookies_SingeltonPattern.getInstance().getUserId()); //232928320
     PlaylistServices playlistService = new PlaylistServices();
 
     public PlaylistChoseList(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
@@ -23,6 +19,8 @@ public class PlaylistChoseList extends AbstractMenuPage {
 
     @Override
     void displaySpecificContent() {
+        User currentUser = userRepository.getUserById(Cookies_SingeltonPattern.getInstance().getUserId()); //232928320
+
         if (currentUser != null && currentUser.getPlaylists() != null) {
             playlistService.printUserPlaylists();
         } else {
@@ -32,34 +30,8 @@ public class PlaylistChoseList extends AbstractMenuPage {
 
     @Override
     void validateInput() {
-        //TODO : transformer en méthode dans l'abstract ? si besoin plusieurs fois oui !
-        Scanner scanner = new Scanner(System.in);
-        User currentUser = userRepository.getUserById(Cookies_SingeltonPattern.getInstance().getUserId());
 
-        int chosenPlaylist = -1;
-
-        while (true) {
-            String input = scanner.nextLine();
-
-            if (Objects.equals(input, "0")) {
-                spotifyPageFactory.playlistHomePage.templateMethode();
-                return;
-            }
-
-            try {
-                int inputNumber = Integer.parseInt(input);
-
-                if (inputNumber < 1 || inputNumber > currentUser.getPlaylists().size()) {
-                    System.err.println("Invalid Playlist number.");
-                    System.out.println("Try again or press \"0\" to go back : ");
-                } else {
-                    chosenPlaylist = currentUser.getPlaylists().get(inputNumber - 1);
-                    break;
-                }
-            } catch (NumberFormatException e) {
-                System.err.println("Invalid input, please enter a number : ");
-            }
-        }
+        int chosenPlaylist = playlistService.validationPlaylistChoice();
 
         Cookies_SingeltonPattern.setCurrentPlaylistId(chosenPlaylist);
         spotifyPageFactory.playlistDisplay.templateMethode();

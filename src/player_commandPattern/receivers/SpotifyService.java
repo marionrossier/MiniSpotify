@@ -25,14 +25,14 @@ public class SpotifyService {
     }
 
     public void addToSongHistoricByCookies() {
-        songHistoricByIndex.push(playlist.getPlaylistSongsId().indexOf(Cookies_SingeltonPattern.getInstance().getCurrentSongId()));
+        songHistoricByIndex.push(playlist.getPlaylistSongsListWithId().indexOf(Cookies_SingeltonPattern.getInstance().getCurrentSongId()));
     }
 
     public int getIndexCurrentSong() {
         PlaylistRepository playlistRepository = new PlaylistRepository();
         Playlist playlist = playlistRepository.getPlaylistById(Cookies_SingeltonPattern.resetCookies().getCurrentPlaylistId());
         if (playlist != null) {
-            return playlist.getPlaylistSongsId().indexOf(Cookies_SingeltonPattern.getInstance().getCurrentSongId());
+            return playlist.getPlaylistSongsListWithId().indexOf(Cookies_SingeltonPattern.getInstance().getCurrentSongId());
         }
         else {
             System.err.println("No playlist found.");

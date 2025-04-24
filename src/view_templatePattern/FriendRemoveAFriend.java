@@ -2,7 +2,7 @@ package view_templatePattern;
 
 import player_commandPattern.SpotifyPlayer;
 
-public class FriendRemoveAFriend extends AbstractMenuPage{
+public class FriendRemoveAFriend extends AbstractMenuPage {
     public FriendRemoveAFriend(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Remove Friend Page";

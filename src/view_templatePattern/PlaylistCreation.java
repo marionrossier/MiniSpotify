@@ -4,7 +4,7 @@ import data.entities.Playlist;
 import data.jsons.PlaylistRepository;
 import player_commandPattern.SpotifyPlayer;
 
-public class PlaylistCreation extends AbstractMenuPage{
+public class PlaylistCreation extends AbstractMenuPage {
     private final Playlist playlist = new Playlist();
     private final PlaylistRepository playlistRepository = new PlaylistRepository();
 

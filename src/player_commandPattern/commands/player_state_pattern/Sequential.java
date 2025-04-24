@@ -19,10 +19,10 @@ public class Sequential implements IState{
         Playlist currentPlaylist = playlistRepository.getPlaylistById(Cookies_SingeltonPattern.getInstance().getCurrentPlaylistId());
 
         int nextIndex = spotifyService.getIndexCurrentSong() + 1;
-        if (nextIndex > currentPlaylist.getPlaylistSongsId().size() - 1) {
+        if (nextIndex > currentPlaylist.getPlaylistSongsListWithId().size() - 1) {
             nextIndex = 0;
         }
-        int nextSongId = currentPlaylist.getPlaylistSongsId().get(nextIndex);
+        int nextSongId = currentPlaylist.getPlaylistSongsListWithId().get(nextIndex);
         Cookies_SingeltonPattern.setCurrentSongId(nextSongId);
         spotifyService.addToSongHistoricByCookies();
 
@@ -37,9 +37,9 @@ public class Sequential implements IState{
 
         int previousIndex = spotifyService.getIndexCurrentSong() - 1;
         if (previousIndex < 0) {
-            previousIndex = currentPlaylist.getPlaylistSongsId().size() - 1;
+            previousIndex = currentPlaylist.getPlaylistSongsListWithId().size() - 1;
         }
-        int previousSongId = currentPlaylist.getPlaylistSongsId().get(previousIndex);
+        int previousSongId = currentPlaylist.getPlaylistSongsListWithId().get(previousIndex);
         Cookies_SingeltonPattern.setCurrentSongId(previousSongId);
 
         spotifyService.play();

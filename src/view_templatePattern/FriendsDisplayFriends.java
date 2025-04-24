@@ -2,7 +2,7 @@ package view_templatePattern;
 
 import player_commandPattern.SpotifyPlayer;
 
-public class FriendsDisplayFriends extends AbstractMenuPage{
+public class FriendsDisplayFriends extends AbstractMenuPage {
     public FriendsDisplayFriends(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Display actual Friends Page";

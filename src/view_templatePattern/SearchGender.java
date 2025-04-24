@@ -2,7 +2,7 @@ package view_templatePattern;
 
 import player_commandPattern.SpotifyPlayer;
 
-public class SearchGender extends AbstractMenuPage{
+public class SearchGender extends AbstractMenuPage {
 
     public SearchGender(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);

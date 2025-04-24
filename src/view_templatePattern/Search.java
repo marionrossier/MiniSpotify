@@ -3,8 +3,14 @@ package view_templatePattern;
 import data.entities.Artist;
 import data.jsons.ArtistRepository;
 import player_commandPattern.SpotifyPlayer;
+import services.Cookies_SingeltonPattern;
+import services.SongService;
+
+import java.util.List;
 
 public class Search extends AbstractMenuPage {
+
+    SongService songService = new SongService();
 
     public Search(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -17,10 +23,17 @@ public class Search extends AbstractMenuPage {
 
     @Override
     void button1() {
-        System.out.println(search + "Search Song Page");
-        System.out.print(lineBreak + "Enter the name of the song : ");
-        String songName = in.nextLine();
-        // TODO : chercher via SongRepo dans le json tous les songName qui ressembles et permettre le choix.
+        System.out.print(icons.iconSearch() + "Enter the title of the song : ");
+        String songTitle = in.nextLine();
+
+        List<Integer> foundedSongs = songService.searchSongByTitle(songTitle);
+        songService.printSongFound(foundedSongs, songTitle);
+
+        //TODO : terminer
+//        List<Integer> chosenSongs = songService.chooseFoundedSongs(foundedSongs);
+//
+//        Cookies_SingeltonPattern.setTemporaryPlaylist(chosenSongs);
+//        spotifyPageFactory.actionFoundedSongs.templateMethode();
     }
 
     @Override

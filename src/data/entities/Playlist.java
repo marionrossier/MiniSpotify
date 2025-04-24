@@ -47,7 +47,7 @@ public class Playlist {
         this.playlistId = playlistId;
     }
 
-    public LinkedList<Integer> getPlaylistSongsId() {
+    public LinkedList<Integer> getPlaylistSongsListWithId() {
         return playlistSongsId;
     }
 

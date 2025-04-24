@@ -69,19 +69,29 @@ public class SongRepository {
                 .orElse(null);
     }
 
-    public List<Song> getSongByTitle(String title) {
+    public List<Song> getSongsByTitle(String title) {
+        if (title == null || title.isEmpty()) {
+            System.out.println("No result.");
+            return new ArrayList<>();
+        }
+
         return getAllSongs().stream()
                 .filter(song -> song.getTitle().toLowerCase().contains(title.toLowerCase()))
                 .toList();
     }
 
-    public List<Song> getSongByArtist(String artist) {
+    public List<Song> getSongsByArtist(String artist) {
+        if (artist == null || artist.isEmpty()) {
+            System.out.println("No result.");
+            return new ArrayList<>();
+        }
+
         return getAllSongs().stream()
                 .filter(song -> song.getArtist().getArtistName().toLowerCase().contains(artist.toLowerCase()))
                 .toList();
     }
 
-    public List<Song> getSongByGender(MusicGender gender) {
+    public List<Song> getSongsByGender(MusicGender gender) {
         return getAllSongs().stream()
                 .filter(song -> song.getGender() == gender)
                 .toList();
