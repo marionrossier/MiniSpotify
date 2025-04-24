@@ -10,9 +10,10 @@ public class HomePage extends AbstractMenuPage {
         this.pageTitle = "Home Page";
         this.pageContent =
                 logoutLineWith0 + lineBreak +
-                nb1 + "Go to playlists /PLAYER" + lineBreak + //TODO : remettre la bonne page1
+                nb1 + "Go to playlists" + lineBreak +
                 nb2 + "Search" + lineBreak +
-                nb3 + "Friends";
+                nb3 + "Friends" + lineBreak +
+                nb4 + "Go to music player";
     }
 
     @Override
@@ -24,7 +25,7 @@ public class HomePage extends AbstractMenuPage {
 
     @Override
     void button1() {
-        spotifyPageFactory.songPlayer.templateMethode();
+        spotifyPageFactory.choseYourPlaylist.templateMethode();
     }
 
     @Override
@@ -35,5 +36,10 @@ public class HomePage extends AbstractMenuPage {
     @Override
     void button3() {
         spotifyPageFactory.friendsHomePage.templateMethode();
+    }
+
+    @Override
+    void button4(){
+        spotifyPageFactory.songPlayer.templateMethode();
     }
 }

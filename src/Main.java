@@ -9,17 +9,6 @@ import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {
-//        try {
-//            FileInputStream audioFile = new FileInputStream("src/data/jsons/song.json");
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        try {
-//            FileInputStream audioFile = new FileInputStream("resources/songsfiles/Rehab - Amy Winehouse - Back to Black - 2006 - Soul _ R&B - 0334.mp3");
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
 
         // Initialisation des services nécessaires
         SpotifyService spotifyService = new SpotifyService();
