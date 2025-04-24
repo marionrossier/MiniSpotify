@@ -3,8 +3,6 @@ import player_commandPattern.commands.ICommand;
 import player_commandPattern.receivers.SpotifyService;
 import view_templatePattern.*;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Stack;
 
 public class Main {
