@@ -33,6 +33,10 @@ public class PlaylistChoseList extends AbstractMenuPage {
 
         int chosenPlaylist = playlistService.validationPlaylistChoice();
 
+        if (chosenPlaylist == 0) {
+            spotifyPageFactory.homePage.templateMethode();
+            return;
+        }
         Cookies_SingeltonPattern.setCurrentPlaylistId(chosenPlaylist);
         spotifyPageFactory.playlistDisplay.templateMethode();
     }

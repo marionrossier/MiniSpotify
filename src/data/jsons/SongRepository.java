@@ -8,6 +8,7 @@ import data.entities.Song;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SongRepository {
@@ -69,15 +70,14 @@ public class SongRepository {
                 .orElse(null);
     }
 
-    public List<Song> getSongsByTitle(String title) {
+    public LinkedList<Song> getSongsByTitle(String title) {
         if (title == null || title.isEmpty()) {
             System.out.println("No result.");
-            return new ArrayList<>();
+            return new LinkedList<>();
         }
-
-        return getAllSongs().stream()
+        return new LinkedList<>(getAllSongs().stream()
                 .filter(song -> song.getTitle().toLowerCase().contains(title.toLowerCase()))
-                .toList();
+                .toList());
     }
 
     public List<Song> getSongsByArtist(String artist) {

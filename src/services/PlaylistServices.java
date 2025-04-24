@@ -43,8 +43,7 @@ public class PlaylistServices {
             String input = scanner.nextLine();
 
             if (input.equals("0")) {
-                //TODO: implémenter le fait d'arriver sur la homepagePlaylist
-                break;
+                return 0;
             }
 
             try {

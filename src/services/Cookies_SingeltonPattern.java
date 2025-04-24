@@ -46,15 +46,14 @@ public class Cookies_SingeltonPattern {
         return instance;
     }
 
-    public static Cookies_SingeltonPattern setTemporaryPlaylist(List<Integer> temporaryPlaylist) {
+    public static Cookies_SingeltonPattern setTemporaryPlaylist(LinkedList<Integer> temporaryPlaylist) {
         if (instance == null) {
             throw new IllegalStateException("Cookies instance not initialized. Please set the user first.");
         }
         instance.temporaryPlaylist = temporaryPlaylist;
 
         Playlist temporaryPlaylistObj = new Playlist("temporaryPlaylist");
-        temporaryPlaylistObj.setPlaylistSongsId((LinkedList<Integer>) temporaryPlaylist);
-
+        temporaryPlaylistObj.setPlaylistSongsId(temporaryPlaylist);
 
         instance.currentPlaylistId = instance.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId();
         instance.currentSongId = instance.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistSongsListWithId().getFirst();

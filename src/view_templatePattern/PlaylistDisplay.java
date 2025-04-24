@@ -7,6 +7,7 @@ import services.Cookies_SingeltonPattern;
 import services.PlaylistServices;
 import services.SongService;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -61,12 +62,14 @@ public class PlaylistDisplay extends AbstractMenuPage {
     @Override
     void button3() {
         //TODO : voir si besoin d'en faire une méga méthode pour search.. si réutiliser
+
+        System.out.println();
         System.out.print(icons.iconSearch() + "Enter the title of the song : ");
         String songTitle = in.nextLine();
 
-        List<Integer> foundedSongs = songService.searchSongByTitle(songTitle);
+        LinkedList<Integer> foundedSongs = songService.searchSongByTitle(songTitle);
         songService.printSongFound(foundedSongs, songTitle);
-        List<Integer> chosenSongs = songService.chooseFoundedSongs(foundedSongs);
+        LinkedList<Integer> chosenSongs = songService.chooseFoundedSongs(foundedSongs);
 
         Cookies_SingeltonPattern.setTemporaryPlaylist(chosenSongs);
         spotifyPageFactory.actionFoundedSongs.templateMethode();

@@ -4,12 +4,12 @@ import data.entities.Song;
 import data.jsons.SongRepository;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
 public class SongService {
 
-    Icons icons = new Icons();
     Scanner in = new Scanner(System.in);
     String linebreak = "\n";
     SongRepository songRepository = new SongRepository();
@@ -18,13 +18,13 @@ public class SongService {
         // Constructor
     }
 
-    public List<Integer> searchSongByTitle(String songTitle){
+    public LinkedList<Integer> searchSongByTitle(String songTitle){
 
-        List<Song> songsByTitle = songRepository.getSongsByTitle(songTitle);
+        LinkedList<Song> songsByTitle = songRepository.getSongsByTitle(songTitle);
         if (songsByTitle.isEmpty()) {
         //TODO : implémenter le stack des pages ouvertes ici pour pourvoir revenir en arrière avec le 0!
         }
-        List<Integer> songsByTitleId = new ArrayList<>();
+        LinkedList<Integer> songsByTitleId = new LinkedList<>();
         for (Song song : songsByTitle) {
             songsByTitleId.add(song.getSongId());
         }
@@ -42,14 +42,15 @@ public class SongService {
             System.out.println(i + ". " + songRepository.getSongById(song).getSongName());
             i++;
         }
+        System.out.println();
     }
 
-    public List<Integer> chooseFoundedSongs(List<Integer> foundedSongs){
+    public LinkedList<Integer> chooseFoundedSongs(List<Integer> foundedSongs){
         System.out.println("Choose your songs by entering their number and press \"enter\" between each song." + linebreak+
-                "End selection with an \"x\"." + linebreak +
-                " Your selection : ");
+                "End selection with an \"x\"." + linebreak);
+        System.out.print("Your selection : ");
         String input;
-        List<Integer> selectedSongsIndex = new ArrayList<>();
+        LinkedList<Integer> selectedSongsIndex = new LinkedList<>();
 
         while (true) {
             input = in.nextLine();
@@ -68,7 +69,7 @@ public class SongService {
             }
         }
 
-        List<Integer> selectedSongs = new ArrayList<>();
+        LinkedList<Integer> selectedSongs = new LinkedList<>();
 
         for (int index : selectedSongsIndex) {
             if (index < foundedSongs.size()) {
