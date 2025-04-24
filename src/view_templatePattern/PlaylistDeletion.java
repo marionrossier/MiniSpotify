@@ -2,9 +2,9 @@ package view_templatePattern;
 
 import player_commandPattern.SpotifyPlayer;
 
-public class DeletePlaylist extends AbstractMenuPage {
+public class PlaylistDeletion extends AbstractMenuPage {
 
-    public DeletePlaylist(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+    public PlaylistDeletion(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Delete Playlist Page";
         this.pageContent = backLineWith0 + lineBreak +
@@ -15,18 +15,19 @@ public class DeletePlaylist extends AbstractMenuPage {
 
     @Override
     void button0() {
-        spotifyPageFactory.onPlaylist.templateMethode();
+        spotifyPageFactory.playlistDisplay.templateMethode();
     }
 
     @Override
     void button1() {
+        //TODO : delete playlist
         System.out.println("Playlist deleted !");
-        spotifyPageFactory.onPlaylist.templateMethode();
+        spotifyPageFactory.playlistDisplay.templateMethode();
     }
 
     @Override
     void button2() {
         System.out.println("Playlist not deleted !");
-        spotifyPageFactory.onPlaylist.templateMethode();
+        spotifyPageFactory.playlistDisplay.templateMethode();
     }
 }

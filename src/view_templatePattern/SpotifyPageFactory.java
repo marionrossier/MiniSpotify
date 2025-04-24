@@ -3,20 +3,19 @@ package view_templatePattern;
 import player_commandPattern.SpotifyPlayer;
 
 public class SpotifyPageFactory {
-    ChoseYourPlaylist choseYourPlaylist;
-    CreatePlaylist createPlaylist;
-    DeletePlaylist deletePlaylist;
-    EditPlaylist editPlaylist;
+    PlaylistChoseList playlistChoseList;
+    PlaylistCreation playlistCreation;
+    PlaylistDeletion playlistDeletion;
     FriendAddAFriend friendAddAFriend;
     FriendsCommunePlaylists friendsCommunePlaylists;
     FriendsDisplayFriends friendsDisplayFriends;
     FriendsHomePage friendsHomePage;
-    AddFriendPlaylist addFriendPlaylist;
+    FriendAddPlaylist friendAddPlaylist;
     HomePage homePage;
-    HomePagePlaylist homePagePlaylist;
+    PlaylistHomePage playlistHomePage;
     Login login;
     CreateAccount createAccount;
-    OnPlaylist onPlaylist;
+    PlaylistDisplay playlistDisplay;
     Search search;
     SongPlayer songPlayer;
     public SpotifyPlayer spotifyPlayer;
@@ -25,20 +24,19 @@ public class SpotifyPageFactory {
     FriendRemoveAFriend friendRemoveAFriend;
 
     public void setUpPages() {
-        this.choseYourPlaylist = new ChoseYourPlaylist(this, spotifyPlayer);
-        this.createPlaylist = new CreatePlaylist(this, spotifyPlayer);
-        this.deletePlaylist = new DeletePlaylist(this, spotifyPlayer);
-        this.editPlaylist = new EditPlaylist(this, spotifyPlayer);
+        this.playlistChoseList = new PlaylistChoseList(this, spotifyPlayer);
+        this.playlistCreation = new PlaylistCreation(this, spotifyPlayer);
+        this.playlistDeletion = new PlaylistDeletion(this, spotifyPlayer);
         this.friendAddAFriend = new FriendAddAFriend(this, spotifyPlayer);
         this.friendsCommunePlaylists = new FriendsCommunePlaylists(this, spotifyPlayer);
         this.friendsDisplayFriends = new FriendsDisplayFriends(this, spotifyPlayer);
         this.friendsHomePage = new FriendsHomePage(this, spotifyPlayer);
-        this.addFriendPlaylist = new AddFriendPlaylist(this, spotifyPlayer);
+        this.friendAddPlaylist = new FriendAddPlaylist(this, spotifyPlayer);
         this.homePage = new HomePage(this, spotifyPlayer);
-        this.homePagePlaylist = new HomePagePlaylist(this, spotifyPlayer);
+        this.playlistHomePage = new PlaylistHomePage(this, spotifyPlayer);
         this.login = new Login(this, spotifyPlayer);
         this.createAccount = new CreateAccount(this, spotifyPlayer);
-        this.onPlaylist = new OnPlaylist(this, spotifyPlayer);
+        this.playlistDisplay = new PlaylistDisplay(this, spotifyPlayer);
         this.search = new Search(this, spotifyPlayer);
         this.songPlayer = new SongPlayer(this, spotifyPlayer);
         this.searchGender = new SearchGender(this, spotifyPlayer);

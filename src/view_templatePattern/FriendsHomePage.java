@@ -31,6 +31,6 @@ public class FriendsHomePage extends AbstractMenuPage{
 
     @Override
     void button4() {
-        spotifyPageFactory.addFriendPlaylist.templateMethode();
+        spotifyPageFactory.friendAddPlaylist.templateMethode();
     }
 }

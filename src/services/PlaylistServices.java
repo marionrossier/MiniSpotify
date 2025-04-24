@@ -3,20 +3,34 @@ package services;
 import data.entities.Playlist;
 import data.entities.Song;
 import data.entities.User;
+import data.jsons.PlaylistRepository;
+import data.jsons.UserRepository;
 
 import java.util.*;
 
 public class PlaylistServices {
-    private Playlist playlist;
-    private final LinkedList<Song> playlistSongs;
-    double playlistDuration = playlist.getPlaylistSeconds();
 
-    public PlaylistServices(Playlist playlist, LinkedList<Song> playlistSongs) {
-        this.playlist = playlist;
-        this.playlistSongs = playlistSongs;
+    PlaylistRepository playlistRepository = new PlaylistRepository();
+    UserRepository userRepository = new UserRepository();
+    User currentUser = userRepository.getUserById(Cookies_SingeltonPattern.getInstance().getUserId());
+
+    public PlaylistServices (){
+
     }
+
     public void deletePlaylist(String playlistName) {/*TODO*/}
     public void createPlaylist(String playlistName) {/*TODO*/}
+
+    public void printUserPlaylists(){
+        int i = 1;
+        for (int playlistId : currentUser.getPlaylists()) {
+            Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+            if (playlist != null) {
+                System.out.println(i + ". " + playlist.getPlaylistName());
+                i++;
+            }
+        }
+    }
 
     public void addSongToPlaylist(String playlistName) {/*TODO*/}
     public void editPlayList(String playlistName) {/*TODO*/}

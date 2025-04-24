@@ -2,9 +2,9 @@ package view_templatePattern;
 
 import player_commandPattern.SpotifyPlayer;
 
-public class HomePagePlaylist extends AbstractMenuPage {
+public class PlaylistHomePage extends AbstractMenuPage {
 
-    public HomePagePlaylist(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+    public PlaylistHomePage(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Home Page Playlist";
         this.pageContent =
@@ -15,12 +15,12 @@ public class HomePagePlaylist extends AbstractMenuPage {
 
     @Override
     void button1() {
-        spotifyPageFactory.choseYourPlaylist.templateMethode();
+        spotifyPageFactory.playlistChoseList.templateMethode();
     }
 
     @Override
     void button2() {
-        spotifyPageFactory.createPlaylist.templateMethode();
+        spotifyPageFactory.playlistCreation.templateMethode();
     }
 
 }
