@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public abstract class AbstractMenuPage {
     int index;
-    String pageTitle;
-    String pageContent;
+    public String pageTitle;
+    public String pageContent;
     public SpotifyPlayer spotifyPlayer;
     SpotifyPageFactory spotifyPageFactory;
     Scanner in = new Scanner(System.in);
@@ -51,7 +51,7 @@ public abstract class AbstractMenuPage {
         this.spotifyPlayer = spotifyPlayer;
     }
 
-    final void templateMethode (){
+    public final void templateMethode(){
         displayTitle(pageTitle);
         displayContent(pageContent);
         displaySpecificContent();
@@ -75,7 +75,7 @@ public abstract class AbstractMenuPage {
         System.out.print("Your input : ");
     }
 
-    final void validateInput(){
+    void validateInput(){
         try{
             index = in.nextInt();
             in.nextLine(); // Clear the newline character
@@ -87,7 +87,7 @@ public abstract class AbstractMenuPage {
         }
     }
 
-    final void switchPage() {
+    void switchPage() {
         switch (index){
             case 0:
                 button0();

@@ -2,7 +2,7 @@ package view_templatePattern;
 
 import player_commandPattern.SpotifyPlayer;
 
-public class FriendsHomePage extends AbstractMenuPage{
+public class FriendsHomePage extends AbstractMenuPage {
 
     public FriendsHomePage(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -31,6 +31,6 @@ public class FriendsHomePage extends AbstractMenuPage{
 
     @Override
     void button4() {
-        spotifyPageFactory.addFriendPlaylist.templateMethode();
+        spotifyPageFactory.friendAddPlaylist.templateMethode();
     }
 }

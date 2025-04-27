@@ -13,11 +13,6 @@ public class PlaylistRepository {
     private final String filePath;
     private final ObjectMapper objectMapper;
 
-    public PlaylistRepository(String filePath) {
-        this.filePath = filePath;
-        this.objectMapper = new ObjectMapper();
-    }
-
     public PlaylistRepository() {
         this.filePath = "src/data/jsons/playlist.json";
         this.objectMapper = new ObjectMapper();
@@ -40,6 +35,12 @@ public class PlaylistRepository {
         }
     }
 
+    public void savePlaylist(Playlist playlist) {
+        List<Playlist> playlists = getAllPlaylists();
+        playlists.add(playlist);
+        saveAllPlaylists(playlists);
+    }
+
     public void saveAllPlaylists(List<Playlist> playlists) {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), playlists);
@@ -54,13 +55,13 @@ public class PlaylistRepository {
         saveAllPlaylists(playlists);
     }
 
-    public void removePlaylistById(int playlistId) {
+    public void deletePlaylistById(int playlistId) {
         List<Playlist> playlists = getAllPlaylists();
         playlists.removeIf(playlist -> playlist.getPlaylistId() == playlistId);
         saveAllPlaylists(playlists);
     }
 
-    public Playlist findPlaylistById(int playlistId) {
+    public Playlist getPlaylistById(int playlistId) {
         return getAllPlaylists().stream()
                 .filter(playlist -> playlist.getPlaylistId() == playlistId)
                 .findFirst()
@@ -79,7 +80,7 @@ public class PlaylistRepository {
         System.err.println("Playlist with ID " + updatedPlaylist.getPlaylistId() + " not found.");
     }
 
-    public Playlist findPlaylistByName(String name) {
+    public Playlist getPlaylistByName(String name) {
         List<Playlist> playlists = getAllPlaylists();
         for (Playlist playlist : playlists) {
             if (playlist.getPlaylistName().equalsIgnoreCase(name)) {

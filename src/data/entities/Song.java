@@ -1,6 +1,7 @@
 package data.entities;
 
 import data.jsons.ArtistRepository;
+import data.jsons.SongRepository;
 import services.TransverseService;
 
 public class Song {
@@ -13,29 +14,48 @@ public class Song {
     private int songId;
     private String audioFilePath;
     private final TransverseService transverseService = new TransverseService();
-    ArtistRepository repository = new ArtistRepository();
-
+    ArtistRepository artistRepository = new ArtistRepository();
 
     public Song (){}
 
-
-    public Song(String title, String artistName, String album, int seconds, MusicGender gender,
+    public Song(int id, String title, String artistName, String album, int seconds, MusicGender gender,
                 String audioFilePath) {
+        this.songId = id;
         this.title = title;
-        this.songName = title+" | "+artistName+" | "+album+" | "+gender+" | "+ seconds;
+        this.songName = title+" - "+artistName;
         this.album = album;
         this.seconds = seconds;
         this.gender = gender;
-        this.songId = transverseService.setUniqueId();
-        this.audioFilePath = audioFilePath;
+        this.audioFilePath = "src\\data\\songsfiles\\"+audioFilePath;
 
 
-        Artist existingArtist = repository.findArtistByName(artistName);
+        Artist existingArtist = artistRepository.getArtistByName(artistName);
         if (existingArtist != null) {
             this.artist = existingArtist;
         } else {
             this.artist = new Artist(artistName);
-            repository.addArtist(this.artist);
+            artistRepository.addArtist(this.artist);
+        }
+        this.artist.getArtistSongsID().add(this.songId);
+    }
+
+    public Song(String title, String artistName, String album, int seconds, MusicGender gender,
+                String audioFilePath) {
+        this.title = title;
+        this.songName = title+" - "+artistName;
+        this.album = album;
+        this.seconds = seconds;
+        this.gender = gender;
+        this.songId = transverseService.setUniqueId();
+        this.audioFilePath = "src\\data\\songsfiles\\"+audioFilePath;
+
+
+        Artist existingArtist = artistRepository.getArtistByName(artistName);
+        if (existingArtist != null) {
+            this.artist = existingArtist;
+        } else {
+            this.artist = new Artist(artistName);
+            artistRepository.addArtist(this.artist);
         }
         this.artist.getArtistSongsID().add(this.songId);
     }

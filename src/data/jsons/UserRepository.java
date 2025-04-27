@@ -65,14 +65,14 @@ public class UserRepository {
         saveAllUsers(users);
     }
 
-    public User findUserById(int userId) {
+    public User getUserById(int userId) {
         return getAllUsers().stream()
                 .filter(user -> user.getUserId() == userId)
                 .findFirst()
                 .orElse(null);
     }
 
-    public User findUserByPseudonym (String pseudonym) {
+    public User getUserByPseudonym(String pseudonym) {
         return getAllUsers().stream()
                 .filter(user -> user.getPseudonym().equals(pseudonym))
                 .findFirst()

@@ -1,85 +1,106 @@
 [ {
   "playlistName" : "POP Vibes",
-  "playlistId" : 506177992,
-  "playlistSongsId" : [ 872272219, 1297812817, 1411387436, 474736140, 172586501, 1338197511 ],
+  "playlistId" : 1723864887,
   "playlistSeconds" : 1480,
   "playlistSize" : 6,
-  "ownerId" : 0
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 1986076679, 2084461505, 1988790520, 700468481, 998984026, 1290739974 ]
 }, {
   "playlistName" : "Rock Legends",
-  "playlistId" : 375415389,
-  "playlistSongsId" : [ 424099184, 1302348970, 1674132511, 1123081604, 1281601206, 977169387 ],
+  "playlistId" : 91026931,
   "playlistSeconds" : 1317,
   "playlistSize" : 6,
-  "ownerId" : 0
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482 ]
 }, {
   "playlistName" : "Amy Forever",
-  "playlistId" : 1322612053,
-  "playlistSongsId" : [ 155113268, 365058535, 836418353, 1690548446 ],
+  "playlistId" : 507157566,
   "playlistSeconds" : 822,
   "playlistSize" : 4,
-  "ownerId" : 0
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 1108071776, 342105258, 625427469, 661206135 ]
 }, {
   "playlistName" : "Imagine This",
-  "playlistId" : 2013718453,
-  "playlistSongsId" : [ 1674132511, 1123081604, 1281601206, 977169387 ],
+  "playlistId" : 479327418,
   "playlistSeconds" : 838,
   "playlistSize" : 4,
-  "ownerId" : 0
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 1287974581, 614172035, 494087492, 515539482 ]
 }, {
   "playlistName" : "Quick Hits",
-  "playlistId" : 55918166,
-  "playlistSongsId" : [ 836418353, 182189416, 949217884, 1667426682, 1690548446, 1259359522, 1281601206 ],
+  "playlistId" : 106575472,
   "playlistSeconds" : 1240,
   "playlistSize" : 7,
-  "ownerId" : 0
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 625427469, 1280045910, 354322599, 1925355941, 661206135, 1252829874, 494087492 ]
 }, {
   "playlistName" : "Girls",
-  "playlistId" : 1836322996,
-  "playlistSongsId" : [ 155113268, 365058535, 836418353, 1690548446, 872272219, 1297812817, 1338197511, 1581494300, 1846376291, 1259359522, 1411387436, 474736140 ],
+  "playlistId" : 275850304,
   "playlistSeconds" : 2754,
   "playlistSize" : 12,
-  "ownerId" : 0
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 1108071776, 342105258, 625427469, 661206135, 1986076679, 2084461505, 1290739974, 1951451340, 469321884, 1252829874, 1988790520, 700468481 ]
 }, {
   "playlistName" : "Boys",
-  "playlistId" : 1278792406,
-  "playlistSongsId" : [ 1668230988, 1524582978, 1140627190, 182189416, 1444691749, 424099184, 1302348970, 1674132511, 1123081604, 1281601206, 977169387, 172586501 ],
+  "playlistId" : 87371119,
   "playlistSeconds" : 2726,
   "playlistSize" : 12,
-  "ownerId" : 0
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 325561970, 321324189, 521970022, 1280045910, 719812166, 243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482, 998984026 ]
 }, {
   "playlistName" : "Soul & RnB Grooves",
-  "playlistId" : 2099177308,
-  "playlistSongsId" : [ 155113268, 365058535, 836418353, 182189416, 1581494300, 1444691749, 1690548446 ],
+  "playlistId" : 1077548532,
   "playlistSeconds" : 1507,
   "playlistSize" : 7,
-  "ownerId" : 0
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 1108071776, 342105258, 625427469, 1280045910, 1951451340, 719812166, 661206135 ]
 }, {
   "playlistName" : "Dance Floor",
-  "playlistId" : 707041886,
-  "playlistSongsId" : [ 1668230988, 1259359522, 1524582978, 1140627190 ],
+  "playlistId" : 1386898919,
   "playlistSeconds" : 909,
   "playlistSize" : 4,
-  "ownerId" : 0
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 325561970, 1252829874, 321324189, 521970022 ]
 }, {
   "playlistName" : "Random Favorites",
-  "playlistId" : 113881287,
-  "playlistSongsId" : [ 182189416, 1581494300, 1259359522, 1444691749, 1140627190 ],
+  "playlistId" : 1123430232,
   "playlistSeconds" : 1114,
   "playlistSize" : 5,
-  "ownerId" : 0
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 1280045910, 1951451340, 1252829874, 719812166, 521970022 ]
 }, {
   "playlistName" : "Before 2000",
-  "playlistId" : 936055177,
-  "playlistSongsId" : [ 1668230988, 949217884, 1667426682, 474736140 ],
+  "playlistId" : 621042657,
   "playlistSeconds" : 833,
   "playlistSize" : 4,
-  "ownerId" : 0
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 325561970, 354322599, 1925355941, 700468481 ]
 }, {
   "playlistName" : "AllSongs",
-  "playlistId" : 382271214,
-  "playlistSongsId" : [ 155113268, 872272219, 1297812817, 365058535, 836418353, 1668230988, 1524582978, 182189416, 949217884, 1667426682, 1581494300, 424099184, 1411387436, 1444691749, 474736140, 1846376291, 1302348970, 172586501, 1690548446, 1338197511, 1259359522, 1140627190, 1674132511, 1123081604, 1281601206, 977169387 ],
+  "playlistId" : 2010779858,
   "playlistSeconds" : 6286,
   "playlistSize" : 26,
-  "ownerId" : 0
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 1108071776, 1986076679, 2084461505, 342105258, 625427469, 325561970, 321324189, 1280045910, 354322599, 1925355941, 1951451340, 243871940, 1988790520, 719812166, 700468481, 469321884, 1824616046, 998984026, 661206135, 1290739974, 1252829874, 521970022, 1287974581, 614172035, 494087492, 515539482 ]
+}, {
+  "playlistName" : "Soul & RnB Grooves",
+  "playlistId" : 1077548532,
+  "playlistSeconds" : 1507,
+  "playlistSize" : 7,
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 1108071776, 342105258, 625427469, 1280045910, 1951451340, 719812166, 661206135 ]
+}, {
+  "playlistName" : "Soul & RnB Grooves",
+  "playlistId" : 1077548532,
+  "playlistSeconds" : 1507,
+  "playlistSize" : 7,
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 1108071776, 342105258, 625427469, 1280045910, 1951451340, 719812166, 661206135 ]
+}, {
+  "playlistName" : "Believer",
+  "playlistId" : 1077548532,
+  "playlistSeconds" : 1507,
+  "playlistSize" : 7,
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 1108071776, 342105258, 625427469, 1280045910, 1951451340, 719812166, 661206135 ]
 } ]
