@@ -3,7 +3,7 @@ package view_templatePattern;
 import data.entities.User;
 import services.Cookies_SingeltonPattern;
 import data.jsons.UserRepository;
-import player_commandPattern.SpotifyPlayer;
+import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.UserService;
 
 
@@ -11,7 +11,7 @@ public class Login extends AbstractMenuPage {
     public UserRepository userRepository = new UserRepository();
     public UserService userService = new UserService(new UserRepository());
 
-    public Login(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+    public Login(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Login Page";
         this.pageContent =

@@ -1,51 +1,49 @@
 package view_templatePattern;
 
-import player_commandPattern.SpotifyPlayer;
+import player_StatePattern.playlist_player.IPlaylistPlayer;
 
 public class SongPlayer extends AbstractMenuPage {
 
-    public SongPlayer(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+    public SongPlayer(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Song Player Page";
         this.pageContent = backLineWith0 + lineBreak+
                 "Your song player ! " +lineBreak+
-                nb1 + " |"+ nb2 + " |"+ nb3 + " |"+ nb4 + " |"+ nb5 + " |"+ nb6 + " |"+ nb7 + " |"+ lineBreak +
-                shuffle+ " |" + previous + " |" + play + " |" + pause + " |" + next + " |" + repeatOne + " |" + playBack + lineBreak;
-        //TODO : changer pour , shuffle, previous, playback, play/pause, next, repeat
+                nb1 + ":"+ shuffle + " |" +
+                nb2 + ":"+ previous + " |" +
+                nb3 + ":"+ playPause +" |" +
+                nb4 + ":"+ playBack + " |" +
+                nb5 + ":"+ next + " |" +
+                nb6 + ":"+ repeatOne + " |";
     }
 
     @Override
     void button1() {
-        spotifyPlayer.selectShuffle();
+        spotifyPlayer.setShuffleMode();
     }
 
     @Override
     void button2() {
-        spotifyPlayer.selectPrevious();
+        spotifyPlayer.previous();
     }
 
     @Override
     void button3() {
-        spotifyPlayer.selectPlay();
+        spotifyPlayer.resume();
     }
 
     @Override
     void button4() {
-        spotifyPlayer.selectPause();
+        spotifyPlayer.playback();
     }
 
     @Override
     void button5() {
-        spotifyPlayer.selectNext();
+        spotifyPlayer.next();
     }
 
     @Override
     void button6() {
-        spotifyPlayer.selectRepeat();
-    }
-
-    @Override
-    void button7() {
-        spotifyPlayer.selectPlayback();
+        spotifyPlayer.setRepeatMode();
     }
 }

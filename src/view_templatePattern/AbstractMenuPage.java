@@ -1,7 +1,7 @@
 package view_templatePattern;
 
 import services.Icons;
-import player_commandPattern.SpotifyPlayer;
+import player_StatePattern.playlist_player.IPlaylistPlayer;
 
 import java.util.Scanner;
 
@@ -9,10 +9,11 @@ public abstract class AbstractMenuPage {
     int index;
     public String pageTitle;
     public String pageContent;
-    public SpotifyPlayer spotifyPlayer;
+    public IPlaylistPlayer spotifyPlayer;
     SpotifyPageFactory spotifyPageFactory;
     Scanner in = new Scanner(System.in);
 
+    //For more visibility
     public Icons icons = new Icons();
     public String nb0 = icons.icon0To9(0);
     public String nb1 = icons.icon0To9(1);
@@ -23,6 +24,7 @@ public abstract class AbstractMenuPage {
     public String nb6 = icons.icon0To9(6);
     public String nb7 = icons.icon0To9(7);
     public String play = icons.iconPlay();
+    public String playPause = icons.iconPlayPause();
     public String playBack = icons.iconPlayBack();
     public String pause = icons.iconPause();
     public String next = icons.iconNext();
@@ -46,7 +48,7 @@ public abstract class AbstractMenuPage {
     public String backLineWith0 = nb0 + icons.iconBack();
     public String search = icons.iconSearch();
 
-    public AbstractMenuPage(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+    public AbstractMenuPage(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         this.spotifyPageFactory = spotifyPageFactory;
         this.spotifyPlayer = spotifyPlayer;
     }

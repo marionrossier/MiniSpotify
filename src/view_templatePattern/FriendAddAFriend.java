@@ -1,9 +1,9 @@
 package view_templatePattern;
 
-import player_commandPattern.SpotifyPlayer;
+import player_StatePattern.playlist_player.IPlaylistPlayer;
 
 public class FriendAddAFriend extends AbstractMenuPage {
-    public FriendAddAFriend(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+    public FriendAddAFriend(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Follow Friend Page";
         this.pageContent = backLineWith0 + lineBreak +

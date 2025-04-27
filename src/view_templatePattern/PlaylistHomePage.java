@@ -1,10 +1,10 @@
 package view_templatePattern;
 
-import player_commandPattern.SpotifyPlayer;
+import player_StatePattern.playlist_player.IPlaylistPlayer;
 
 public class PlaylistHomePage extends AbstractMenuPage {
 
-    public PlaylistHomePage(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+    public PlaylistHomePage(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Home Page Playlist";
         this.pageContent =

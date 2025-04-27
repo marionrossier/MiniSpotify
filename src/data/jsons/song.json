@@ -10,7 +10,7 @@
   "seconds" : 214,
   "gender" : "SOUL_RNB",
   "songId" : 1108071776,
-  "audioFilePath" : "src\\data\\songsfiles\\Rehab - Amy Winehouse - Back to Black - 2006 - Soul _ R&B - 0334.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Rehab - Amy Winehouse - Back to Black - 2006 - Soul _ R&B - 0334.mp3"
 }, {
   "title" : "Judas",
   "songName" : "Judas - Lady Gaga",
@@ -23,7 +23,7 @@
   "seconds" : 249,
   "gender" : "POP",
   "songId" : 1986076679,
-  "audioFilePath" : "src\\data\\songsfiles\\Judas - Lady Gaga - Born This Way - 2011 - Pop _ Electro-pop - 0409.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Judas - Lady Gaga - Born This Way - 2011 - Pop _ Electro-pop - 0409.mp3"
 }, {
   "title" : "Bloody Mary",
   "songName" : "Bloody Mary - Lady Gaga",
@@ -36,7 +36,7 @@
   "seconds" : 245,
   "gender" : "POP",
   "songId" : 2084461505,
-  "audioFilePath" : "src\\data\\songsfiles\\Bloody Mary - Lady Gaga - Born This Way - 2011 - Pop _ Dark pop - 0405.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Bloody Mary - Lady Gaga - Born This Way - 2011 - Pop _ Dark pop - 0405.mp3"
 }, {
   "title" : "You Know I'm No Good",
   "songName" : "You Know I'm No Good - Amy Winehouse",
@@ -49,7 +49,7 @@
   "seconds" : 257,
   "gender" : "SOUL_RNB",
   "songId" : 342105258,
-  "audioFilePath" : "src\\data\\songsfiles\\You Know I'm No Good - Amy Winehouse - Back to Black - 2006 - Soul _ Jazz - 0417.mp3"
+  "audioFilePath" : "resources\\songsfiles\\You Know I'm No Good - Amy Winehouse - Back to Black - 2006 - Soul _ Jazz - 0417.mp3"
 }, {
   "title" : "Me & Mr. Jones",
   "songName" : "Me & Mr. Jones - Amy Winehouse",
@@ -62,7 +62,7 @@
   "seconds" : 153,
   "gender" : "SOUL_RNB",
   "songId" : 625427469,
-  "audioFilePath" : "src\\data\\songsfiles\\Me & Mr. Jones - Amy Winehouse - Back to Black - 2006 - Soul _ Jazz - 0233.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Me & Mr. Jones - Amy Winehouse - Back to Black - 2006 - Soul _ Jazz - 0233.mp3"
 }, {
   "title" : "Sunny",
   "songName" : "Sunny - Boney M.",
@@ -75,7 +75,7 @@
   "seconds" : 238,
   "gender" : "DISCO",
   "songId" : 325561970,
-  "audioFilePath" : "src\\data\\songsfiles\\Sunny - Boney M. - Sunny (Official)... - 1976 - Disco - 0358.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Sunny - Boney M. - Sunny (Official)... - 1976 - Disco - 0358.mp3"
 }, {
   "title" : "Can't Hold Us",
   "songName" : "Can't Hold Us - Macklemore",
@@ -88,7 +88,7 @@
   "seconds" : 258,
   "gender" : "HIP_HOP",
   "songId" : 321324189,
-  "audioFilePath" : "src\\data\\songsfiles\\Can't Hold Us - Macklemore & Ryan Lewis - The Heist - 2012 - Hip-hop - 0418.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Can't Hold Us - Macklemore & Ryan Lewis - The Heist - 2012 - Hip-hop - 0418.mp3"
 }, {
   "title" : "Come When I Call",
   "songName" : "Come When I Call - John Mayer",
@@ -101,7 +101,7 @@
   "seconds" : 177,
   "gender" : "SOUL_RNB",
   "songId" : 1280045910,
-  "audioFilePath" : "src\\data\\songsfiles\\Come When I Call - John Mayer - Where the Light Is - 2008 - Blues Rock - 0257.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Come When I Call - John Mayer - Where the Light Is - 2008 - Blues Rock - 0257.mp3"
 }, {
   "title" : "Viens à Saint Germain",
   "songName" : "Viens à Saint Germain - Dany Brillant",
@@ -114,7 +114,7 @@
   "seconds" : 177,
   "gender" : "FRENCH_VARIETY",
   "songId" : 354322599,
-  "audioFilePath" : "src\\data\\songsfiles\\Viens à Saint Germain - Dany Brillant - Viens à Saint-Germain - 1992 - Chanson française _ Swing - 0257.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Viens à Saint Germain - Dany Brillant - Viens à Saint-Germain - 1992 - Chanson française _ Swing - 0257.mp3"
 }, {
   "title" : "Suzette",
   "songName" : "Suzette - Dany Brillant",
@@ -127,7 +127,7 @@
   "seconds" : 177,
   "gender" : "FRENCH_VARIETY",
   "songId" : 1925355941,
-  "audioFilePath" : "src\\data\\songsfiles\\Suzette - Dany Brillant - C'est ça qui est bon - 1991 - Chanson française _ Swing - 0257.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Suzette - Dany Brillant - C'est ça qui est bon - 1991 - Chanson française _ Swing - 0257.mp3"
 }, {
   "title" : "Diamonds",
   "songName" : "Diamonds - Rihanna",
@@ -140,7 +140,7 @@
   "seconds" : 225,
   "gender" : "SOUL_RNB",
   "songId" : 1951451340,
-  "audioFilePath" : "src\\data\\songsfiles\\Diamonds - Rihanna - Unapologetic - 2012 - Pop _ R&B - 0345.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Diamonds - Rihanna - Unapologetic - 2012 - Pop _ R&B - 0345.mp3"
 }, {
   "title" : "Free Fallin",
   "songName" : "Free Fallin - John Mayer",
@@ -153,7 +153,7 @@
   "seconds" : 243,
   "gender" : "ROCK",
   "songId" : 243871940,
-  "audioFilePath" : "src\\data\\songsfiles\\Free Fallin - John Mayer - Where the Light Is - 2008 - Soft Rock - 0403.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Free Fallin - John Mayer - Where the Light Is - 2008 - Soft Rock - 0403.mp3"
 }, {
   "title" : "Give It 2 Me",
   "songName" : "Give It 2 Me - Madonna",
@@ -166,7 +166,7 @@
   "seconds" : 287,
   "gender" : "POP",
   "songId" : 1988790520,
-  "audioFilePath" : "src\\data\\songsfiles\\Give It 2 Me - Madonna - Hard Candy - 2008 - Dance-pop - 0447.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Give It 2 Me - Madonna - Hard Candy - 2008 - Dance-pop - 0447.mp3"
 }, {
   "title" : "I'm Gonna Find Another You",
   "songName" : "I'm Gonna Find Another You - John Mayer",
@@ -179,7 +179,7 @@
   "seconds" : 283,
   "gender" : "SOUL_RNB",
   "songId" : 719812166,
-  "audioFilePath" : "src\\data\\songsfiles\\I'm Gonna Find Another You (Live) - John Mayer - Where the Light Is - 2008 - Blues _ Soul - 0443.mp3"
+  "audioFilePath" : "resources\\songsfiles\\I'm Gonna Find Another You (Live) - John Mayer - Where the Light Is - 2008 - Blues _ Soul - 0443.mp3"
 }, {
   "title" : "La Isla Bonita",
   "songName" : "La Isla Bonita - Madonna",
@@ -192,7 +192,7 @@
   "seconds" : 241,
   "gender" : "POP",
   "songId" : 700468481,
-  "audioFilePath" : "src\\data\\songsfiles\\La Isla Bonita - Madonna - True Blue - 1986 - Latin pop - 0401.mp3"
+  "audioFilePath" : "resources\\songsfiles\\La Isla Bonita - Madonna - True Blue - 1986 - Latin pop - 0401.mp3"
 }, {
   "title" : "Man Down",
   "songName" : "Man Down - Rihanna",
@@ -205,7 +205,7 @@
   "seconds" : 267,
   "gender" : "REGGAE",
   "songId" : 469321884,
-  "audioFilePath" : "src\\data\\songsfiles\\Man Down - Rihanna - Loud - 2010 - Reggae fusion - 0427.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Man Down - Rihanna - Loud - 2010 - Reggae fusion - 0427.mp3"
 }, {
   "title" : "Time is Running Out",
   "songName" : "Time is Running Out - Muse",
@@ -218,7 +218,7 @@
   "seconds" : 236,
   "gender" : "ROCK",
   "songId" : 1824616046,
-  "audioFilePath" : "src\\data\\songsfiles\\Time is Running Out - Muse - Absolution - 2003 - Alternative Rock - 0356.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Time is Running Out - Muse - Absolution - 2003 - Alternative Rock - 0356.mp3"
 }, {
   "title" : "De mes propres ailes (Remix)",
   "songName" : "De mes propres ailes (Remix) - Olivier Dion",
@@ -231,7 +231,7 @@
   "seconds" : 221,
   "gender" : "POP",
   "songId" : 998984026,
-  "audioFilePath" : "src\\data\\songsfiles\\De mes propres ailes (Remix) - Olivier Dion - Les 3 Mousquetaires - 2016 - Pop française - 0341.mp3"
+  "audioFilePath" : "resources\\songsfiles\\De mes propres ailes (Remix) - Olivier Dion - Les 3 Mousquetaires - 2016 - Pop française - 0341.mp3"
 }, {
   "title" : "Fuck Me Pumps",
   "songName" : "Fuck Me Pumps - Amy Winehouse",
@@ -244,7 +244,7 @@
   "seconds" : 198,
   "gender" : "SOUL_RNB",
   "songId" : 661206135,
-  "audioFilePath" : "src\\data\\songsfiles\\Fuck Me Pumps - Amy Winehouse - Frank - 2003 - Soul _ Jazz - 0318.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Fuck Me Pumps - Amy Winehouse - Frank - 2003 - Soul _ Jazz - 0318.mp3"
 }, {
   "title" : "Poker Face",
   "songName" : "Poker Face - Lady Gaga",
@@ -257,7 +257,7 @@
   "seconds" : 237,
   "gender" : "POP",
   "songId" : 1290739974,
-  "audioFilePath" : "src\\data\\songsfiles\\Poker Face - Lady Gaga - The Fame Monster - 2008 - Electropop - 0357.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Poker Face - Lady Gaga - The Fame Monster - 2008 - Electropop - 0357.mp3"
 }, {
   "title" : "Right Now",
   "songName" : "Right Now - Rihanna",
@@ -270,7 +270,7 @@
   "seconds" : 181,
   "gender" : "ELECTRO",
   "songId" : 1252829874,
-  "audioFilePath" : "src\\data\\songsfiles\\Right Now - Rihanna & David Guetta - Unapologetic - 2012 - EDM _ Dance-pop - 0301.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Right Now - Rihanna & David Guetta - Unapologetic - 2012 - EDM _ Dance-pop - 0301.mp3"
 }, {
   "title" : "Thrift Shop",
   "songName" : "Thrift Shop - Macklemore",
@@ -283,7 +283,7 @@
   "seconds" : 232,
   "gender" : "HIP_HOP",
   "songId" : 521970022,
-  "audioFilePath" : "src\\data\\songsfiles\\Thrift Shop - Macklemore & Ryan Lewis - The Heist - 2012 - Hip-hop _ Comedy rap - 0352.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Thrift Shop - Macklemore & Ryan Lewis - The Heist - 2012 - Hip-hop _ Comedy rap - 0352.mp3"
 }, {
   "title" : "Whatever It Takes",
   "songName" : "Whatever It Takes - Imagine Dragons",
@@ -296,7 +296,7 @@
   "seconds" : 219,
   "gender" : "ROCK",
   "songId" : 1287974581,
-  "audioFilePath" : "src\\data\\songsfiles\\Whatever It Takes - Imagine Dragons - Evolve - 2017 - Pop rock - 0339.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Whatever It Takes - Imagine Dragons - Evolve - 2017 - Pop rock - 0339.mp3"
 }, {
   "title" : "Believer",
   "songName" : "Believer - Imagine Dragons",
@@ -309,7 +309,7 @@
   "seconds" : 204,
   "gender" : "ROCK",
   "songId" : 614172035,
-  "audioFilePath" : "src\\data\\songsfiles\\Believer - Imagine Dragons - Evolve - 2017 - Pop rock _ Alt rock - 0324.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Believer - Imagine Dragons - Evolve - 2017 - Pop rock _ Alt rock - 0324.mp3"
 }, {
   "title" : "Demons",
   "songName" : "Demons - Imagine Dragons",
@@ -322,7 +322,7 @@
   "seconds" : 177,
   "gender" : "ROCK",
   "songId" : 494087492,
-  "audioFilePath" : "src\\data\\songsfiles\\Demons - Imagine Dragons - Night Visions - 2012 - Pop rock _ Indie pop - 0257.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Demons - Imagine Dragons - Night Visions - 2012 - Pop rock _ Indie pop - 0257.mp3"
 }, {
   "title" : "Not Today",
   "songName" : "Not Today - Imagine Dragons",
@@ -335,5 +335,5 @@
   "seconds" : 238,
   "gender" : "ROCK",
   "songId" : 515539482,
-  "audioFilePath" : "src\\data\\songsfiles\\Not Today - Imagine Dragons - Me Before You - 2016 - Pop rock - 0358.mp3"
+  "audioFilePath" : "resources\\songsfiles\\Not Today - Imagine Dragons - Me Before You - 2016 - Pop rock - 0358.mp3"
 } ]

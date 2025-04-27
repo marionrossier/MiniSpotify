@@ -4,7 +4,7 @@ import data.entities.Playlist;
 import data.entities.User;
 import data.jsons.PlaylistRepository;
 import data.jsons.UserRepository;
-import player_commandPattern.SpotifyPlayer;
+import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingeltonPattern;
 import services.PlaylistServices;
 import services.SongService;
@@ -21,7 +21,7 @@ public class ActionFoundedSongs extends AbstractMenuPage {
     PlaylistServices playlistService = new PlaylistServices();
     UserRepository userRepository = new UserRepository();
 
-    public ActionFoundedSongs(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+    public ActionFoundedSongs(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
 
         this.pageTitle = "Chose your action for the founded songs";

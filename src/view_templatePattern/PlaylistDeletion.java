@@ -1,10 +1,10 @@
 package view_templatePattern;
 
-import player_commandPattern.SpotifyPlayer;
+import player_StatePattern.playlist_player.IPlaylistPlayer;
 
 public class PlaylistDeletion extends AbstractMenuPage {
 
-    public PlaylistDeletion(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+    public PlaylistDeletion(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Delete Playlist Page";
         this.pageContent = backLineWith0 + lineBreak +

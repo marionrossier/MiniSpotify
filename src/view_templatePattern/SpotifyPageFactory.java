@@ -1,8 +1,6 @@
 package view_templatePattern;
 
-import player_commandPattern.SpotifyPlayer;
-
-import java.util.Stack;
+import player_StatePattern.playlist_player.IPlaylistPlayer;
 
 public class SpotifyPageFactory {
     PlaylistChoseList playlistChoseList;
@@ -20,7 +18,7 @@ public class SpotifyPageFactory {
     PlaylistDisplay playlistDisplay;
     Search search;
     SongPlayer songPlayer;
-    public SpotifyPlayer spotifyPlayer;
+    public IPlaylistPlayer spotifyPlayer;
     SearchGender searchGender;
     FriendInformation friendInformation;
     FriendRemoveAFriend friendRemoveAFriend;
