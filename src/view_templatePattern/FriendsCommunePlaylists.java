@@ -1,9 +1,9 @@
 package view_templatePattern;
 
-import player_commandPattern.SpotifyPlayer;
+import player_StatePattern.playlist_player.IPlaylistPlayer;
 
 public class FriendsCommunePlaylists extends AbstractMenuPage {
-    public FriendsCommunePlaylists(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+    public FriendsCommunePlaylists(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Commune Playlists Page";
         this.pageContent = backLineWith0 + lineBreak +

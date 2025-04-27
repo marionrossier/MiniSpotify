@@ -2,8 +2,7 @@ package view_templatePattern;
 
 import data.entities.Artist;
 import data.jsons.ArtistRepository;
-import player_commandPattern.SpotifyPlayer;
-import services.Cookies_SingeltonPattern;
+import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.SongService;
 
 import java.util.List;
@@ -12,7 +11,7 @@ public class Search extends AbstractMenuPage {
 
     SongService songService = new SongService();
 
-    public Search(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+    public Search(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Search Page";
         this.pageContent = backLineWith0 + lineBreak +

@@ -2,7 +2,7 @@ package view_templatePattern;
 
 import data.entities.User;
 import data.jsons.UserRepository;
-import player_commandPattern.SpotifyPlayer;
+import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingeltonPattern;
 import services.PlaylistServices;
 
@@ -11,7 +11,7 @@ public class PlaylistChoseList extends AbstractMenuPage {
     UserRepository userRepository = new UserRepository();
     PlaylistServices playlistService = new PlaylistServices();
 
-    public PlaylistChoseList(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+    public PlaylistChoseList(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Chose Your Playlist Page";
         this.pageContent = "Chose a Playlist below or press \"0\"";

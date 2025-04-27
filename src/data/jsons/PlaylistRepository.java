@@ -18,7 +18,7 @@ public class PlaylistRepository {
         this.objectMapper = new ObjectMapper();
     }
 
-    private List<Playlist> getAllPlaylists() {
+    public List<Playlist> getAllPlaylists() {
         File file = new File(filePath);
         if (!file.exists() || file.length() == 0) {
             return new ArrayList<>();
@@ -41,7 +41,7 @@ public class PlaylistRepository {
         saveAllPlaylists(playlists);
     }
 
-    public void saveAllPlaylists(List<Playlist> playlists) {
+    private void saveAllPlaylists(List<Playlist> playlists) {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), playlists);
         } catch (IOException e) {

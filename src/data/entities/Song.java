@@ -26,7 +26,7 @@ public class Song {
         this.album = album;
         this.seconds = seconds;
         this.gender = gender;
-        this.audioFilePath = "src\\data\\songsfiles\\"+audioFilePath;
+        this.audioFilePath = "resources\\songsfiles\\"+audioFilePath;
 
 
         Artist existingArtist = artistRepository.getArtistByName(artistName);
@@ -47,7 +47,7 @@ public class Song {
         this.seconds = seconds;
         this.gender = gender;
         this.songId = transverseService.setUniqueId();
-        this.audioFilePath = "src\\data\\songsfiles\\"+audioFilePath;
+        this.audioFilePath = "resources\\songsfiles\\"+audioFilePath;
 
 
         Artist existingArtist = artistRepository.getArtistByName(artistName);

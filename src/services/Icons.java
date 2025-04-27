@@ -3,73 +3,76 @@ package services;
 public class Icons {
 
     public String icon0To9(int x){
-        return (x+"\uFE0F⃣ ");
+        return (x+"\uFE0F⃣");
     }
     public String iconPlay (){
-        return ("▶\uFE0F ");
+        return ("▶\uFE0F");
+    }
+    public String iconPlayPause (){
+        return ("⏯️");
     }
     public String iconPlayBack (){
-        return ("⏮️ ");
+        return ("⏮️");
     }
     public String iconPause (){
-        return ("⏸️ ");
+        return ("⏸️");
     }
     public String iconNext(){
-        return ("⏩ ");
+        return ("⏩");
     }
     public String iconPrevious(){
-        return ("⏪ ");
+        return ("⏪");
     }
     public String iconShuffle (){
-        return ("🔀 ");
+        return ("🔀");
     }
     public String iconSequential (){
-        return ("🔂 ");
+        return ("🔁");
     }
     public String iconRepeatOne (){
-        return ("🔁 ");
+        return ("🔂");
     }
     public String iconBack (){
-        return ("Back");
+        return ("Back ");
     }
     public String iconLogout(){
         return ("Logout ");
     }
 
     public String iconNew (){
-        return ("🆕 ");
+        return ("🆕");
     }
     public String iconUp (){
-        return ("🔼 ");
+        return ("🔼");
     }
     public String iconDown (){
-        return ("🔽 ");
+        return ("🔽");
     }
     public String iconOk (){
-        return ("✅ ");
+        return ("✅");
     }
     public String iconCross (){
-        return ("❌ ");
+        return ("❌");
     }
     public String iconWarning (){
-        return ("⚠️ ");
+        return ("⚠️");
     }
     public String iconLock (){
-        return ("🔒 ");
+        return ("🔒");
     }
     public String iconPremium (){
-        return ("💎 ");
+        return ("💎");
     }
     public String iconFree (){
-        return ("🆓 ");
+        return ("🆓");
     }
     public String iconGroup (){
-        return ("👥 ");
+        return ("👥");
     }
     public String iconEarth (){
-        return ("🌍 ");
+        return ("🌍");
     }
     public String iconSearch (){
-        return ("🔍 ");
+        return ("🔍");
     }
 }

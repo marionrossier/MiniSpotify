@@ -1,10 +1,10 @@
 package view_templatePattern;
 
-import player_commandPattern.SpotifyPlayer;
+import player_StatePattern.playlist_player.IPlaylistPlayer;
 
 public class FriendsHomePage extends AbstractMenuPage {
 
-    public FriendsHomePage(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+    public FriendsHomePage(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Friends Home Page";
         this.pageContent = backLineWith0 + lineBreak + //TODO : bien refactorer la classe et ses boutons !

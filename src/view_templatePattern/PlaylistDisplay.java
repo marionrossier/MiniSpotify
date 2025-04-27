@@ -2,13 +2,12 @@ package view_templatePattern;
 
 import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
-import player_commandPattern.SpotifyPlayer;
+import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingeltonPattern;
 import services.PlaylistServices;
 import services.SongService;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Scanner;
 
 public class PlaylistDisplay extends AbstractMenuPage {
@@ -19,7 +18,7 @@ public class PlaylistDisplay extends AbstractMenuPage {
     PlaylistServices playlistServices = new PlaylistServices();
     SongRepository songRepository = new SongRepository();
 
-    public PlaylistDisplay(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+    public PlaylistDisplay(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Playlist Page : ";
         this.pageContent = backLineWith0 + lineBreak +

@@ -1,3 +1,5 @@
+package demo;
+
 import data.entities.PlanEnum;
 import data.jsons.UserRepository;
 import services.UserService;

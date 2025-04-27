@@ -2,13 +2,13 @@ package view_templatePattern;
 
 import data.entities.Playlist;
 import data.jsons.PlaylistRepository;
-import player_commandPattern.SpotifyPlayer;
+import player_StatePattern.playlist_player.IPlaylistPlayer;
 
 public class PlaylistCreation extends AbstractMenuPage {
     private final Playlist playlist = new Playlist();
     private final PlaylistRepository playlistRepository = new PlaylistRepository();
 
-    public PlaylistCreation(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
+    public PlaylistCreation(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Create Playlist Page";
         this.pageContent = "Enter the name of the playlist : ";
