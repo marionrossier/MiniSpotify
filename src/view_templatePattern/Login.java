@@ -9,7 +9,7 @@ import services.UserService;
 
 public class Login extends AbstractMenuPage {
     public UserRepository userRepository = new UserRepository();
-    public UserService userService = new UserService();
+    public UserService userService = new UserService(new UserRepository());
 
     public Login(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);

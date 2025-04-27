@@ -1,6 +1,7 @@
 package view_templatePattern;
 
 import data.entities.PlanEnum;
+import data.jsons.UserRepository;
 import player_commandPattern.SpotifyPlayer;
 import services.Cookies_SingeltonPattern;
 import services.UserService;
@@ -11,7 +12,7 @@ public class CreateAccount extends AbstractMenuPage {
     private String password;
     private String email;
     private PlanEnum planEnum;
-    public UserService userService = new UserService();
+    public UserService userService = new UserService(new UserRepository());
 
     public CreateAccount(SpotifyPageFactory spotifyPageFactory, SpotifyPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);

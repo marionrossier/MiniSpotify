@@ -18,7 +18,7 @@ public class PlaylistRepository {
         this.objectMapper = new ObjectMapper();
     }
 
-    public List<Playlist> getAllPlaylists() {
+    private List<Playlist> getAllPlaylists() {
         File file = new File(filePath);
         if (!file.exists() || file.length() == 0) {
             return new ArrayList<>();

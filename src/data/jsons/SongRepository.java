@@ -43,7 +43,7 @@ public class SongRepository {
         }
     }
 
-    public void saveAllSongs(List<Song> songs) {
+    private void saveAllSongs(List<Song> songs) {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), songs);
         } catch (IOException e) {

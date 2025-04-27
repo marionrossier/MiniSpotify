@@ -41,7 +41,7 @@ public class ArtistRepository {
         }
     }
 
-    public void saveAllArtists(List<Artist> artists) {
+    private void saveAllArtists(List<Artist> artists) {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), artists);
         } catch (IOException e) {
