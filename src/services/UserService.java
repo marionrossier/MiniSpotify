@@ -7,8 +7,12 @@ import data.jsons.UserRepository;
 import java.util.ArrayList;
 
 public class UserService {
-    private final UserRepository userRepository = new UserRepository();
+    private final UserRepository userRepository;
     private final PasswordService passwordService = new PasswordService();
+
+    public UserService(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     public int getUserIdByPseudo(String pseudo) {
 

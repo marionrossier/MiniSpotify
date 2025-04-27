@@ -1,10 +1,11 @@
 import data.entities.PlanEnum;
+import data.jsons.UserRepository;
 import services.UserService;
 
 public class TestServices {
     public static void main(String[] args) {
 
-        UserService userService = new UserService();
+        UserService userService = new UserService(new UserRepository());
 
         PlanEnum planEnum = PlanEnum.FREE;
         userService.addUser("testUsers", "email", "password", planEnum);

@@ -45,7 +45,7 @@ public class UserRepository {
         }
     }
 
-    public void saveAllUsers(List<User> users) {
+    private void saveAllUsers(List<User> users) {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), users);
         } catch (IOException e) {
