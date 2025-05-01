@@ -13,6 +13,11 @@ public class PlaylistRepository {
     private final String filePath;
     private final ObjectMapper objectMapper;
 
+    public PlaylistRepository(String filePath) {
+        this.filePath = filePath;
+        this.objectMapper = new ObjectMapper();
+    }
+
     public PlaylistRepository() {
         this.filePath = "src/data/jsons/playlist.json";
         this.objectMapper = new ObjectMapper();
@@ -88,5 +93,9 @@ public class PlaylistRepository {
             }
         }
         return null;
+    }
+
+    public int getCurrentSongByPlaylistID (int playlistId) {
+        return this.getPlaylistById(playlistId).getPlaylistSongsListWithId().getFirst();
     }
 }

@@ -26,7 +26,9 @@ public class ArtistRepository {
     public List<Artist> getAllArtists() {
         File file = new File(filePath);
         if (!file.exists() || file.length() == 0) {
-            System.out.println("The JSON file is empty or does not exist.");
+
+
+
             return new ArrayList<>();
         }
         try {

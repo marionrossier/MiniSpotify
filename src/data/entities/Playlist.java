@@ -1,6 +1,5 @@
 package data.entities;
 
-import services.Cookies_SingeltonPattern;
 import services.TransverseService;
 
 import java.util.*;
@@ -19,7 +18,6 @@ public class Playlist {
     public Playlist(String playlistName) {
         this.playlistName = playlistName;
         this.playlistId = transverseService.setUniqueId();
-        this.ownerId = Cookies_SingeltonPattern.getInstance().getUserId();
     }
 
     public Playlist(String playlistName, LinkedList <Integer> playlistSongsId, int playlistSeconds, int playlistSize) {
@@ -100,4 +98,7 @@ public class Playlist {
         playlistSongsId.add(songIndex, memory);
     }
 
+    public void setName(String updatedName) {
+        this.playlistName = updatedName;
+    }
 }

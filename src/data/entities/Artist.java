@@ -30,8 +30,8 @@ public class Artist {
     public void setArtistName(String artistName) {
         this.artistName = artistName;
     }
-    public void setArtistId() {
-        this.artistId = transverseService.setUniqueId();
+    public void setArtistId(int id) {
+        this.artistId = id;
     }
     public void setArtistSongsID(LinkedList<Integer> artistSongsID) {
         this.artistSongsID = artistSongsID;
