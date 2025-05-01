@@ -3,7 +3,7 @@ package view_templatePattern;
 import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.Cookies_SingeltonPattern;
+import services.Cookies_SingletonPattern;
 import services.PlaylistServices;
 import services.SongService;
 
@@ -34,12 +34,12 @@ public class PlaylistDisplay extends AbstractMenuPage {
     void displaySpecificContent(){
         System.out.println();
         System.out.println("Playlist name : " + playlistRepository
-                .getPlaylistById(Cookies_SingeltonPattern.getInstance().getCurrentPlaylistId())
+                .getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId())
                 .getPlaylistName());
         System.out.println("Playlist songs : ");
 
         songService.printSongList(playlistRepository
-                .getPlaylistById(Cookies_SingeltonPattern.getInstance().getCurrentPlaylistId())
+                .getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId())
                 .getPlaylistSongsListWithId());
     }
 
@@ -70,7 +70,7 @@ public class PlaylistDisplay extends AbstractMenuPage {
         songService.printSongFound(foundedSongs, songTitle);
         LinkedList<Integer> chosenSongs = songService.chooseFoundedSongs(foundedSongs);
 
-        Cookies_SingeltonPattern.setTemporaryPlaylist(chosenSongs);
+        Cookies_SingletonPattern.setTemporaryPlaylist(chosenSongs);
         spotifyPageFactory.actionFoundedSongs.templateMethode();
     }
 

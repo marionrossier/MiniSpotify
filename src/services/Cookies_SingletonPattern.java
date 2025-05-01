@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Cookies_SingeltonPattern {
-    private static Cookies_SingeltonPattern instance;
+public class Cookies_SingletonPattern {
+    private static Cookies_SingletonPattern instance;
 
     private final int userId;
     private int currentPlaylistId;
@@ -16,21 +16,21 @@ public class Cookies_SingeltonPattern {
     private PlaylistRepository playlistRepository = new PlaylistRepository();
     private List<Integer> temporaryPlaylist = new ArrayList<>();
 
-    private Cookies_SingeltonPattern(int userId) {
+    private Cookies_SingletonPattern(int userId) {
         this.userId = userId;
         this.currentPlaylistId = playlistRepository.getPlaylistByName("AllSongs").getPlaylistId();
         this.currentSongId = playlistRepository.getPlaylistByName("AllSongs").getPlaylistSongsListWithId().getFirst();
         this.temporaryPlaylist = null;
     }
 
-    public static Cookies_SingeltonPattern setUser(int userId) {
+    public static Cookies_SingletonPattern setUser(int userId) {
         if (instance == null || instance.userId == 1) {
-            instance = new Cookies_SingeltonPattern(userId);
+            instance = new Cookies_SingletonPattern(userId);
         }
         return instance;
     }
 
-    public static Cookies_SingeltonPattern setCurrentPlaylistId(int currentPlaylistId) {
+    public static Cookies_SingletonPattern setCurrentPlaylistId(int currentPlaylistId) {
         if (instance == null) {
             throw new IllegalStateException("Cookies instance not initialized. Please set the user first.");
         }
@@ -38,7 +38,7 @@ public class Cookies_SingeltonPattern {
         return instance;
     }
 
-    public static Cookies_SingeltonPattern setCurrentSongId(int currentSongId) {
+    public static Cookies_SingletonPattern setCurrentSongId(int currentSongId) {
         if (instance == null) {
             throw new IllegalStateException("Cookies instance not initialized. Please set the user first.");
         }
@@ -46,7 +46,7 @@ public class Cookies_SingeltonPattern {
         return instance;
     }
 
-    public static Cookies_SingeltonPattern setTemporaryPlaylist(LinkedList<Integer> temporaryPlaylist) {
+    public static Cookies_SingletonPattern setTemporaryPlaylist(LinkedList<Integer> temporaryPlaylist) {
         if (instance == null) {
             throw new IllegalStateException("Cookies instance not initialized. Please set the user first.");
         }
@@ -60,16 +60,16 @@ public class Cookies_SingeltonPattern {
         return instance;
     }
 
-    public static Cookies_SingeltonPattern setInstance(int id) {
+    public static Cookies_SingletonPattern setInstance(int id) {
         if (instance == null) {
-            instance = new Cookies_SingeltonPattern(id);
+            instance = new Cookies_SingletonPattern(id);
         }
         return instance;
     }
 
-    public static Cookies_SingeltonPattern resetCookies() {
+    public static Cookies_SingletonPattern resetCookies() {
         if (instance != null){
-            if (Cookies_SingeltonPattern.getInstance().getTemporaryPlaylist() != null) {
+            if (Cookies_SingletonPattern.getInstance().getTemporaryPlaylist() != null) {
                 instance.playlistRepository.deletePlaylistById(instance.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId());
             }
             instance = null;
@@ -78,7 +78,7 @@ public class Cookies_SingeltonPattern {
         return instance;
     }
 
-    public static Cookies_SingeltonPattern getInstance() {
+    public static Cookies_SingletonPattern getInstance() {
         if (instance == null) {
             throw new IllegalStateException("Cookies instance not initialized.");
         }

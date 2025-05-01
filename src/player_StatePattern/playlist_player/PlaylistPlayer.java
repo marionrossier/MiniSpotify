@@ -4,6 +4,7 @@ import data.entities.Song;
 import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
 import player_StatePattern.file_player.IMusicPlayer;
+import services.Cookies_SingletonPattern;
 
 import java.util.*;
 
@@ -75,8 +76,9 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     }
 
     @Override
-    public void resume() {
-        musicPlayer.resume();
+    public void resume(int currentSongId) {
+        this.currentSong = songRepository.getSongById(currentSongId);
+        musicPlayer.resume(currentSong.getAudioFilePath());
     }
 
     @Override
@@ -88,6 +90,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     public void next() {
         this.songIdHistory.push(currentSong.getSongId());
         this.currentSong = currentState.getNextSong();
+        Cookies_SingletonPattern.setCurrentSongId(this.currentSong.getSongId());
         this.musicPlayer.play(this.currentSong.getAudioFilePath());
     }
 
@@ -96,6 +99,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         if (songIdHistory.isEmpty()) return;
         int previousSongId = songIdHistory.pop();
         this.currentSong = songRepository.getSongById(previousSongId);
+        Cookies_SingletonPattern.setCurrentSongId(this.currentSong.getSongId());
         this.musicPlayer.play(this.currentSong.getAudioFilePath());
     }
 }

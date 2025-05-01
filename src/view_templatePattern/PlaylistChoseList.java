@@ -1,15 +1,17 @@
 package view_templatePattern;
 
 import data.entities.User;
+import data.jsons.PlaylistRepository;
 import data.jsons.UserRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.Cookies_SingeltonPattern;
+import services.Cookies_SingletonPattern;
 import services.PlaylistServices;
 
 public class PlaylistChoseList extends AbstractMenuPage {
 
     UserRepository userRepository = new UserRepository();
     PlaylistServices playlistService = new PlaylistServices();
+    PlaylistRepository playlistRepository = new PlaylistRepository();
 
     public PlaylistChoseList(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -19,7 +21,7 @@ public class PlaylistChoseList extends AbstractMenuPage {
 
     @Override
     void displaySpecificContent() {
-        User currentUser = userRepository.getUserById(Cookies_SingeltonPattern.getInstance().getUserId()); //232928320
+        User currentUser = userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId()); //232928320
 
         if (currentUser != null && currentUser.getPlaylists() != null) {
             playlistService.printUserPlaylists();
@@ -37,7 +39,8 @@ public class PlaylistChoseList extends AbstractMenuPage {
             spotifyPageFactory.homePage.templateMethode();
             return;
         }
-        Cookies_SingeltonPattern.setCurrentPlaylistId(chosenPlaylist);
+        Cookies_SingletonPattern.setCurrentPlaylistId(chosenPlaylist);
+        Cookies_SingletonPattern.setCurrentSongId(playlistRepository.getCurrentSongByPlaylistID(chosenPlaylist));
         spotifyPageFactory.playlistDisplay.templateMethode();
     }
 
