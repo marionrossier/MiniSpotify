@@ -9,7 +9,7 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
     private boolean isPlaying = false;
     private boolean isPaused = false;
 //    private String currentSongPath = null;
-    private BasicPlayer player;
+    private final BasicPlayer player;
     private Runnable onSongEndAction;
 
     public MusicPlayer() {

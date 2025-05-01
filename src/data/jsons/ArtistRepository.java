@@ -32,7 +32,7 @@ public class ArtistRepository {
             return new ArrayList<>();
         }
         try {
-            List<Artist> artists = objectMapper.readValue(file, new TypeReference<List<Artist>>() {});
+            List<Artist> artists = objectMapper.readValue(file, new TypeReference<>() {});
             if (artists.isEmpty()) {
                 return new ArrayList<>();
             }

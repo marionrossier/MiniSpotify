@@ -11,7 +11,7 @@ public class Playlist {
     private int playlistSeconds;
     private int playlistSize;
     private int ownerId;
-    private TransverseService transverseService = new TransverseService();
+    private final TransverseService transverseService = new TransverseService();
 
     public Playlist (){}
 
@@ -67,9 +67,9 @@ public class Playlist {
 
     public void setPlaylistDuration() {
         int totalSeconds = 0;
-        for (int i = 0; i < playlistSongsId.size(); i++) {
+        for (Integer integer : playlistSongsId) {
             Song currentSong = new Song();
-            currentSong.setSongId(playlistSongsId.get(i));
+            currentSong.setSongId(integer);
             totalSeconds += currentSong.getSeconds();
         }
         this.playlistSeconds = totalSeconds;

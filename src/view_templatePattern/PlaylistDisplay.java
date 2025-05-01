@@ -16,7 +16,6 @@ public class PlaylistDisplay extends AbstractMenuPage {
     Scanner in = new Scanner(System.in);
     PlaylistRepository playlistRepository = new PlaylistRepository();
     PlaylistServices playlistServices = new PlaylistServices();
-    SongRepository songRepository = new SongRepository();
 
     public PlaylistDisplay(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);

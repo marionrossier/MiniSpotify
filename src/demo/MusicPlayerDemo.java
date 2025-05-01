@@ -1,6 +1,5 @@
 package demo;
 
-import player_StatePattern.file_player.FakeMusicPlayer;
 import player_StatePattern.file_player.MusicPlayer;
 import player_StatePattern.file_player.IMusicPlayer;
 

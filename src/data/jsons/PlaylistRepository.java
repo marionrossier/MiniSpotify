@@ -29,7 +29,7 @@ public class PlaylistRepository {
             return new ArrayList<>();
         }
         try {
-            List<Playlist> playlists = objectMapper.readValue(file, new TypeReference<List<Playlist>>() {});
+            List<Playlist> playlists = objectMapper.readValue(file, new TypeReference<>() {});
             if (playlists == null || playlists.isEmpty()) {
                 return new ArrayList<>();
             }

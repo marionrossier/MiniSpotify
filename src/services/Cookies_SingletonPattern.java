@@ -3,7 +3,6 @@ package services;
 import data.entities.Playlist;
 import data.jsons.PlaylistRepository;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,8 +12,8 @@ public class Cookies_SingletonPattern {
     private final int userId;
     private int currentPlaylistId;
     private int currentSongId;
-    private PlaylistRepository playlistRepository = new PlaylistRepository();
-    private List<Integer> temporaryPlaylist = new ArrayList<>();
+    private final PlaylistRepository playlistRepository = new PlaylistRepository();
+    private List<Integer> temporaryPlaylist;
 
     private Cookies_SingletonPattern(int userId) {
         this.userId = userId;
@@ -30,23 +29,21 @@ public class Cookies_SingletonPattern {
         return instance;
     }
 
-    public static Cookies_SingletonPattern setCurrentPlaylistId(int currentPlaylistId) {
+    public static void setCurrentPlaylistId(int currentPlaylistId) {
         if (instance == null) {
             throw new IllegalStateException("Cookies instance not initialized. Please set the user first.");
         }
         instance.currentPlaylistId = currentPlaylistId;
-        return instance;
     }
 
-    public static Cookies_SingletonPattern setCurrentSongId(int currentSongId) {
+    public static void setCurrentSongId(int currentSongId) {
         if (instance == null) {
             throw new IllegalStateException("Cookies instance not initialized. Please set the user first.");
         }
         instance.currentSongId = currentSongId;
-        return instance;
     }
 
-    public static Cookies_SingletonPattern setTemporaryPlaylist(LinkedList<Integer> temporaryPlaylist) {
+    public static void setTemporaryPlaylist(LinkedList<Integer> temporaryPlaylist) {
         if (instance == null) {
             throw new IllegalStateException("Cookies instance not initialized. Please set the user first.");
         }
@@ -57,17 +54,15 @@ public class Cookies_SingletonPattern {
 
         instance.currentPlaylistId = instance.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId();
         instance.currentSongId = instance.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistSongsListWithId().getFirst();
-        return instance;
     }
 
-    public static Cookies_SingletonPattern setInstance(int id) {
+    public static void setInstance(int id) {
         if (instance == null) {
             instance = new Cookies_SingletonPattern(id);
         }
-        return instance;
     }
 
-    public static Cookies_SingletonPattern resetCookies() {
+    public static void resetCookies() {
         if (instance != null){
             if (Cookies_SingletonPattern.getInstance().getTemporaryPlaylist() != null) {
                 instance.playlistRepository.deletePlaylistById(instance.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId());
@@ -75,7 +70,6 @@ public class Cookies_SingletonPattern {
             instance = null;
         }
 
-        return instance;
     }
 
     public static Cookies_SingletonPattern getInstance() {
