@@ -1,6 +1,7 @@
 package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.Cookies_SingletonPattern;
 
 public class SongPlayer extends AbstractMenuPage {
 
@@ -29,7 +30,7 @@ public class SongPlayer extends AbstractMenuPage {
 
     @Override
     void button3() {
-        spotifyPlayer.resume();
+        spotifyPlayer.resume(Cookies_SingletonPattern.getInstance().getCurrentSongId());
     }
 
     @Override

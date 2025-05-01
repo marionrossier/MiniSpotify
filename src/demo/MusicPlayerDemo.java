@@ -1,5 +1,6 @@
 package demo;
 
+import player_StatePattern.file_player.FakeMusicPlayer;
 import player_StatePattern.file_player.MusicPlayer;
 import player_StatePattern.file_player.IMusicPlayer;
 
@@ -21,7 +22,7 @@ public class MusicPlayerDemo {
             Thread.sleep(1000 * 5);
             player.pause();
             Thread.sleep(1000 * 5);
-            player.resume();
+            player.resume(firstSong);//TODO : A ajuster ? Car on sait pas s'il s'agit de la première ou de la deuxième chanson
             Thread.sleep(1000 * 60 * 10);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

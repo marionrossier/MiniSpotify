@@ -4,8 +4,6 @@ import data.entities.Playlist;
 import data.entities.User;
 import data.jsons.PlaylistRepository;
 import data.jsons.UserRepository;
-import view_templatePattern.PlaylistHomePage;
-import view_templatePattern.SpotifyPageFactory;
 
 import java.util.*;
 
@@ -24,7 +22,7 @@ public class PlaylistServices {
 
     public void printUserPlaylists(){
         int i = 1;
-        for (int playlistId : userRepository.getUserById(Cookies_SingeltonPattern.getInstance().getUserId()).getPlaylists()) {
+        for (int playlistId : userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId()).getPlaylists()) {
             Playlist playlist = playlistRepository.getPlaylistById(playlistId);
             if (playlist != null) {
                 System.out.println(i + ". " + playlist.getPlaylistName());
@@ -35,7 +33,7 @@ public class PlaylistServices {
 
     public int validationPlaylistChoice() {
         Scanner scanner = new Scanner(System.in);
-        User currentUser = userRepository.getUserById(Cookies_SingeltonPattern.getInstance().getUserId());
+        User currentUser = userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId());
 
         int chosenPlaylist = -1;
 
@@ -65,7 +63,7 @@ public class PlaylistServices {
     }
 
     public void addSongToPlaylist(int songId) {
-        playlistRepository.getPlaylistById(Cookies_SingeltonPattern.getInstance().getCurrentPlaylistId())
+        playlistRepository.getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId())
                 .getPlaylistSongsListWithId().add(songId);
     }
 
@@ -85,14 +83,14 @@ public class PlaylistServices {
         System.out.print("Enter the new name of the playlist : ");
         String newName = in.next();
 
-        Playlist playlist = playlistRepository.getPlaylistById(Cookies_SingeltonPattern.getInstance().getCurrentPlaylistId());
+        Playlist playlist = playlistRepository.getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId());
         playlist.setPlaylistName(newName);
         playlistRepository.savePlaylist(playlist);
         System.out.println("Playlist renamed to " + newName + " !");
     }
 
     public void removeSongFromPlaylist(int songIndex) {
-        Playlist playlist = playlistRepository.getPlaylistById(Cookies_SingeltonPattern.getInstance().getCurrentPlaylistId());
+        Playlist playlist = playlistRepository.getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId());
         playlistRepository.getPlaylistById(playlist.getPlaylistId())
                 .getPlaylistSongsListWithId().remove(songIndex);
         playlistRepository.savePlaylist(playlist);

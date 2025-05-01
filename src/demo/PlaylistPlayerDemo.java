@@ -7,6 +7,7 @@ import player_StatePattern.file_player.MusicPlayer;
 import player_StatePattern.file_player.IMusicPlayer;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import player_StatePattern.playlist_player.PlaylistPlayer;
+import services.Cookies_SingletonPattern;
 // import player_commandPattern.file_player.MusicPlayer; // Quand tu voudras le vrai Player
 
 import java.util.Scanner;
@@ -23,6 +24,7 @@ public class PlaylistPlayerDemo {
         IMusicPlayer musicPlayer = new MusicPlayer();
         IPlaylistPlayer playlistPlayer = new PlaylistPlayer(musicPlayer, songRepository, playlistRepository);
         playlistPlayer.play(playlist.getPlaylistId(), playlist.getPlaylistSongsListWithId().get(0));
+        Cookies_SingletonPattern.setCurrentSongId(playlist.getPlaylistSongsListWithId().get(0));
 
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -49,9 +51,10 @@ public class PlaylistPlayerDemo {
                     playlistPlayer.pause();
                     break;
 
-                case "resume":
-                    playlistPlayer.resume();
-                    break;
+                    //TODO : ajuster... pour pouvoir donner un currentSongID à resume().
+//                case "resume":
+//                    playlistPlayer.resume();
+//                    break;
 
                 case "next":
                     playlistPlayer.next();

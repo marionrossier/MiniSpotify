@@ -3,7 +3,7 @@ package view_templatePattern;
 import data.entities.PlanEnum;
 import data.jsons.UserRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.Cookies_SingeltonPattern;
+import services.Cookies_SingletonPattern;
 import services.UserService;
 
 public class CreateAccount extends AbstractMenuPage {
@@ -20,7 +20,7 @@ public class CreateAccount extends AbstractMenuPage {
         this.pageContent = backLineWith0 + lineBreak +
                 nb1 + "FREE " + free + lineBreak +
                 nb2 + "PREMIUM " + premium ;
-        Cookies_SingeltonPattern.resetCookies();
+        Cookies_SingletonPattern.resetCookies();
     }
 
     @Override

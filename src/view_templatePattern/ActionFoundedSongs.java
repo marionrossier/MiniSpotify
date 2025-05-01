@@ -5,7 +5,7 @@ import data.entities.User;
 import data.jsons.PlaylistRepository;
 import data.jsons.UserRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.Cookies_SingeltonPattern;
+import services.Cookies_SingletonPattern;
 import services.PlaylistServices;
 import services.SongService;
 
@@ -38,9 +38,9 @@ public class ActionFoundedSongs extends AbstractMenuPage {
 
     @Override
     void button1() {
-        List<Integer> songs = Cookies_SingeltonPattern.getInstance().getTemporaryPlaylist();
+        List<Integer> songs = Cookies_SingletonPattern.getInstance().getTemporaryPlaylist();
         Playlist temporaryPlaylist = new Playlist("temporaryPlaylist");
-        temporaryPlaylist.setPlaylistSongsId((LinkedList<Integer>)Cookies_SingeltonPattern.getInstance().getTemporaryPlaylist());
+        temporaryPlaylist.setPlaylistSongsId((LinkedList<Integer>) Cookies_SingletonPattern.getInstance().getTemporaryPlaylist());
 
         if (songs != null && !songs.isEmpty()) {
             for (Integer song : songs) {
@@ -67,8 +67,8 @@ public class ActionFoundedSongs extends AbstractMenuPage {
         System.out.println("Playlist Name : ");
 
         Playlist newPlaylist = new Playlist(in.nextLine());
-        newPlaylist.setPlaylistSongsId((LinkedList<Integer>) Cookies_SingeltonPattern.getInstance().getTemporaryPlaylist());
-        User user = userRepository.getUserById(Cookies_SingeltonPattern.getInstance().getUserId());
+        newPlaylist.setPlaylistSongsId((LinkedList<Integer>) Cookies_SingletonPattern.getInstance().getTemporaryPlaylist());
+        User user = userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId());
         userRepository.updateAccount(user).addOnePlaylist(newPlaylist.getPlaylistId());
 
         spotifyPageFactory.playlistHomePage.templateMethode();
