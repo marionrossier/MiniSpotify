@@ -14,7 +14,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     protected SongRepository songRepository;
     protected final PlaylistRepository playlistRepository;
 
-    protected Stack<Integer> songIdHistory = new Stack<>();;
+    protected Stack<Integer> songIdHistory = new Stack<>();
     protected Song currentSong;
     protected int currentPlaylistId;
 
