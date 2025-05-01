@@ -15,7 +15,7 @@ public class PlaylistDisplay extends AbstractMenuPage {
     SongService songService = new SongService();
     Scanner in = new Scanner(System.in);
     PlaylistRepository playlistRepository = new PlaylistRepository();
-    PlaylistServices playlistServices = new PlaylistServices();
+    PlaylistServices playlistServices = new PlaylistServices(playlistRepository);
 
     public PlaylistDisplay(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -54,7 +54,10 @@ public class PlaylistDisplay extends AbstractMenuPage {
 
     @Override
     void button2() {
-        playlistServices.editPlayListName();
+        System.out.print("Enter the new name of the playlist : ");
+        String newName = in.next();
+        int playlistId = Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
+        playlistServices.editPlayListName(playlistId, newName);
     }
 
     @Override

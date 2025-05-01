@@ -42,6 +42,7 @@ public class PlaylistRepository {
 
     public void savePlaylist(Playlist playlist) {
         List<Playlist> playlists = getAllPlaylists();
+        playlists.removeIf(p -> p.getPlaylistId() == playlist.getPlaylistId());
         playlists.add(playlist);
         saveAllPlaylists(playlists);
     }

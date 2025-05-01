@@ -10,14 +10,17 @@ import java.util.*;
 public class PlaylistServices {
 
     UserRepository userRepository = new UserRepository();
-    PlaylistRepository playlistRepository = new PlaylistRepository();
     Scanner in = new Scanner(System.in);
+    PlaylistRepository playlistRepository;
 
-    public PlaylistServices (){
-
+    public PlaylistServices (PlaylistRepository playlistRepository){
+        this.playlistRepository = playlistRepository;
     }
 
-    public void deletePlaylist(String playlistName) {/*TODO*/}
+    public void deletePlaylist(int playlistId) {
+        playlistRepository.deletePlaylistById(playlistId);
+    }
+
     public void createPlaylist(String playlistName) {/*TODO*/}
 
     public void printUserPlaylists(){
@@ -79,11 +82,8 @@ public class PlaylistServices {
         }
     }
 
-    public void editPlayListName() {
-        System.out.print("Enter the new name of the playlist : ");
-        String newName = in.next();
-
-        Playlist playlist = playlistRepository.getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId());
+    public void editPlayListName(int playlistId, String newName) {
+        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
         playlist.setPlaylistName(newName);
         playlistRepository.savePlaylist(playlist);
         System.out.println("Playlist renamed to " + newName + " !");
@@ -96,6 +96,7 @@ public class PlaylistServices {
         playlistRepository.savePlaylist(playlist);
 
     }
+
     public void reorderSongsInPlaylist(String playlistName) {/*TODO*/}
     public LinkedList<Playlist> getSharedPlaylist(User followedUser) {
         throw new UnsupportedOperationException("Not implemented yet");

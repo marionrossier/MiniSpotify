@@ -10,8 +10,8 @@ import services.PlaylistServices;
 public class PlaylistChoseList extends AbstractMenuPage {
 
     UserRepository userRepository = new UserRepository();
-    PlaylistServices playlistService = new PlaylistServices();
     PlaylistRepository playlistRepository = new PlaylistRepository();
+    PlaylistServices playlistService = new PlaylistServices(playlistRepository);
 
     public PlaylistChoseList(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);

@@ -16,7 +16,8 @@ import java.util.Scanner;
 public class ActionFoundedSongs extends AbstractMenuPage {
 
     Scanner in = new Scanner(System.in);
-    PlaylistServices playlistService = new PlaylistServices();
+    PlaylistRepository playlistRepository = new PlaylistRepository();
+    PlaylistServices playlistService = new PlaylistServices(playlistRepository);
     UserRepository userRepository = new UserRepository();
 
     public ActionFoundedSongs(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
