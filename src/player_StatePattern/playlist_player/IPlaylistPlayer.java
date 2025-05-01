@@ -5,7 +5,7 @@ public interface IPlaylistPlayer {
     void play(int playlistId, int songId);
 
     void pause();
-    void resume();
+    void resume(int currentSongId);
 
     void playback();
 

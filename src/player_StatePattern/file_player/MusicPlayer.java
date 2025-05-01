@@ -6,10 +6,11 @@ import java.io.File;
 import java.util.Map;
 
 public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
-    private BasicPlayer player;
-    private Runnable onSongEndAction;
     private boolean isPlaying = false;
     private boolean isPaused = false;
+//    private String currentSongPath = null;
+    private BasicPlayer player;
+    private Runnable onSongEndAction;
 
     public MusicPlayer() {
         player = new BasicPlayer();
@@ -43,7 +44,7 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
     }
 
     @Override
-    public void resume() {
+    public void resume(String songPath) {
         if (isPaused) {
             try {
                 player.resume();
@@ -52,6 +53,9 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
             } catch (BasicPlayerException e) {
                 e.printStackTrace();
             }
+        }
+        else {
+            play(songPath);
         }
     }
 
@@ -62,8 +66,8 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
         } catch (BasicPlayerException e) {
             e.printStackTrace();
         }
+        isPaused = false; //TODO :ICI
         isPlaying = false;
-        isPaused = false;
     }
 
     @Override
@@ -102,4 +106,11 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
     public void setController(BasicController controller) {
         // rien à faire ici pour toi
     }
+//
+//    public String getCurrentSongPath (){
+//        int currentSongID = Cookies_SingeltonPattern.getInstance().getCurrentSongId();
+//        SongRepository songRepository = new SongRepository();
+//        currentSongPath = songRepository.getSongById(currentSongID).getAudioFilePath();
+//        return currentSongPath;
+//    }
 }

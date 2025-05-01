@@ -24,11 +24,14 @@ public class FakeMusicPlayer implements IMusicPlayer {
     }
 
     @Override
-    public void resume() {
+    public void resume(String songPath) {
         if (isPaused) {
             System.out.println("[FakeMusicPlayer] Resumed: " + currentSongPath);
             isPaused = false;
             isPlaying = true;
+        }
+        else {
+            play(songPath);
         }
     }
 

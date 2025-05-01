@@ -5,7 +5,7 @@ public interface IMusicPlayer {
 
     void pause();
 
-    void resume();
+    void resume(String songPath);
 
     void stop();
 
