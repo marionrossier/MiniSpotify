@@ -1,6 +1,9 @@
 package player_StatePattern.file_player;
 
 public interface IMusicPlayer {
+
+    void playOrPause(String songPath);
+
     void play(String songPath);
 
     void pause();
@@ -12,4 +15,7 @@ public interface IMusicPlayer {
     boolean isPlaying();
 
     void setOnSongEndAction(Runnable action);
+
+    boolean isPaused();
+
 }

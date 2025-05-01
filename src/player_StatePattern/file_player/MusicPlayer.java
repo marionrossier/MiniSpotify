@@ -8,13 +8,24 @@ import java.util.Map;
 public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
     private boolean isPlaying = false;
     private boolean isPaused = false;
-//    private String currentSongPath = null;
     private final BasicPlayer player;
     private Runnable onSongEndAction;
 
     public MusicPlayer() {
         player = new BasicPlayer();
         player.addBasicPlayerListener(this); // ECOUTE les événements du player
+    }
+
+    public void playOrPause (String songPath) {
+        if (isPlaying){
+            pause();
+            return;
+        }
+        if (isPaused){
+            resume(songPath);
+            return;
+        }
+        play(songPath);
     }
 
     @Override
@@ -44,7 +55,7 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
     }
 
     @Override
-    public void resume(String songPath) {
+    public void resume(String songPath) { //Reprendre la lecture de la chanson
         if (isPaused) {
             try {
                 player.resume();
@@ -53,9 +64,6 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
             } catch (BasicPlayerException e) {
                 e.printStackTrace();
             }
-        }
-        else {
-            play(songPath);
         }
     }
 
@@ -66,7 +74,7 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
         } catch (BasicPlayerException e) {
             e.printStackTrace();
         }
-        isPaused = false; //TODO :ICI
+        isPaused = false;
         isPlaying = false;
     }
 
@@ -74,6 +82,12 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
     public boolean isPlaying() {
         return isPlaying;
     }
+
+    @Override
+    public boolean isPaused(){
+        return isPaused;
+    }
+
 
     @Override
     public void setOnSongEndAction(Runnable action) {
@@ -106,11 +120,5 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
     public void setController(BasicController controller) {
         // rien à faire ici pour toi
     }
-//
-//    public String getCurrentSongPath (){
-//        int currentSongID = Cookies_SingeltonPattern.getInstance().getCurrentSongId();
-//        SongRepository songRepository = new SongRepository();
-//        currentSongPath = songRepository.getSongById(currentSongID).getAudioFilePath();
-//        return currentSongPath;
-//    }
+
 }

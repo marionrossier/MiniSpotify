@@ -14,7 +14,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     protected SongRepository songRepository;
     protected final PlaylistRepository playlistRepository;
 
-    protected Stack<Integer> songIdHistory;
+    protected Stack<Integer> songIdHistory = new Stack<>();;
     protected Song currentSong;
     protected int currentPlaylistId;
 
@@ -53,6 +53,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     }
     @Override
     public int getRunningPlaylistId() {
+        currentPlaylistId =Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
         return currentPlaylistId;
     }
 
@@ -62,9 +63,16 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     }
 
     @Override
+    public void playOrPause(int songId) {
+        this.currentSong = songRepository.getSongById(songId);
+        Cookies_SingletonPattern.setCurrentSongId(this.currentSong.getSongId());
+        musicPlayer.playOrPause(currentSong.getAudioFilePath());
+    }
+
+    @Override
     public void play(int playlistId, int songId) {
-        this.songIdHistory = new Stack<>();
         this.currentPlaylistId = playlistId;
+        Cookies_SingletonPattern.setCurrentPlaylistId(this.currentPlaylistId);
 
         this.currentSong = songRepository.getSongById(songId);
         musicPlayer.play(currentSong.getAudioFilePath());
@@ -101,5 +109,10 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         this.currentSong = songRepository.getSongById(previousSongId);
         Cookies_SingletonPattern.setCurrentSongId(this.currentSong.getSongId());
         this.musicPlayer.play(this.currentSong.getAudioFilePath());
+    }
+
+    @Override
+    public IMusicPlayer getMusicPlayer() {
+        return musicPlayer;
     }
 }
