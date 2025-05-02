@@ -31,7 +31,7 @@ public class SongRepository {
             return new ArrayList<>();
         }
         try {
-            List<Song> songs = objectMapper.readValue(file, new TypeReference<List<Song>>() {});
+            List<Song> songs = objectMapper.readValue(file, new TypeReference<>() {});
             if (songs == null || songs.isEmpty()) {
                 return new ArrayList<>();
             }

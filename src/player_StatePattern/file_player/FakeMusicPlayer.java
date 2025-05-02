@@ -7,6 +7,19 @@ public class FakeMusicPlayer implements IMusicPlayer {
     private Runnable onSongEndCallback;
 
     @Override
+    public void playOrPause(String songPath) {
+        if (isPlaying){
+            pause();
+            return;
+        }
+        if (isPaused){
+            resume(songPath);
+            return;
+        }
+        play(songPath);
+    }
+
+    @Override
     public void play(String songPath) {
         currentSongPath = songPath;
         System.out.println("[FakeMusicPlayer] Playing: " + currentSongPath);
@@ -46,6 +59,11 @@ public class FakeMusicPlayer implements IMusicPlayer {
     @Override
     public boolean isPlaying() {
         return isPlaying;
+    }
+
+    @Override
+    public boolean isPaused() {
+        return isPaused;
     }
 
     @Override

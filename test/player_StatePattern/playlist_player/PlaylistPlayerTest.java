@@ -95,6 +95,21 @@ public class PlaylistPlayerTest {
     }
 
     @Test
+    void testPlayOrPause (){
+        // First play a song
+        playlistPlayer.play(1, 1);
+        assertTrue(fakeMusicPlayer.isPlaying());
+        Cookies_SingletonPattern.setCurrentSongId(playlistPlayer.getRunningSongId());
+
+        // Test pause
+        playlistPlayer.playOrPause(Cookies_SingletonPattern.getInstance().getCurrentSongId());
+        assertFalse(fakeMusicPlayer.isPlaying());
+
+        // Test resume
+        playlistPlayer.playOrPause(Cookies_SingletonPattern.getInstance().getCurrentSongId());
+        assertTrue(fakeMusicPlayer.isPlaying());
+    }
+    @Test
     void testPauseAndResume() {
         // First play a song
         playlistPlayer.play(1, 1);

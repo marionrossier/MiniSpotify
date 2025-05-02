@@ -1,7 +1,6 @@
 package services;
 
 import data.entities.Song;
-import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
 
 import java.util.LinkedList;

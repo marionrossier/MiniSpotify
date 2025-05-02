@@ -15,10 +15,9 @@ import java.util.Scanner;
 
 public class ActionFoundedSongs extends AbstractMenuPage {
 
-    PlaylistRepository playlistRepository = new PlaylistRepository();
     Scanner in = new Scanner(System.in);
-    SongService songService = new SongService();
-    PlaylistServices playlistService = new PlaylistServices();
+    PlaylistRepository playlistRepository = new PlaylistRepository();
+    PlaylistServices playlistService = new PlaylistServices(playlistRepository);
     UserRepository userRepository = new UserRepository();
 
     public ActionFoundedSongs(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
@@ -42,10 +41,10 @@ public class ActionFoundedSongs extends AbstractMenuPage {
         Playlist temporaryPlaylist = new Playlist("temporaryPlaylist");
         temporaryPlaylist.setPlaylistSongsId((LinkedList<Integer>) Cookies_SingletonPattern.getInstance().getTemporaryPlaylist());
 
+        Cookies_SingletonPattern.setCurrentPlaylistId(temporaryPlaylist.getPlaylistId());
+
         if (songs != null && !songs.isEmpty()) {
-            for (Integer song : songs) {
                 spotifyPageFactory.songPlayer.templateMethode();
-            }
         } else {
             System.out.println("No songs found to play.");
         }

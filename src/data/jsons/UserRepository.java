@@ -33,7 +33,7 @@ public class UserRepository {
             return new ArrayList<>();
         }
         try {
-            List<User> users = objectMapper.readValue(file, new TypeReference<List<User>>() {});
+            List<User> users = objectMapper.readValue(file, new TypeReference<>() {});
             if (users == null || users.isEmpty()) {
                 return new ArrayList<>();
             }

@@ -1,6 +1,9 @@
 package view_templatePattern;
 
+import data.jsons.PlaylistRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.Cookies_SingletonPattern;
+import services.PlaylistServices;
 
 public class PlaylistDeletion extends AbstractMenuPage {
 
@@ -20,7 +23,8 @@ public class PlaylistDeletion extends AbstractMenuPage {
 
     @Override
     void button1() {
-        //TODO : delete playlist
+        PlaylistServices playlistServices = new PlaylistServices(new PlaylistRepository());
+        playlistServices.deletePlaylist(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId());
         System.out.println("Playlist deleted !");
         spotifyPageFactory.playlistDisplay.templateMethode();
     }

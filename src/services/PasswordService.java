@@ -6,11 +6,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-/*
-This class add a new user to user.json with as parameters the pseudo, email, password and plan.
-The user receive automatically a guid and has no playlist at the beginning.
- */
-
 public class PasswordService {
 
     public byte[] generateSalt() {
