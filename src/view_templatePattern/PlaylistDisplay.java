@@ -1,7 +1,6 @@
 package view_templatePattern;
 
 import data.jsons.PlaylistRepository;
-import data.jsons.SongRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
 import services.PlaylistServices;
