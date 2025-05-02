@@ -19,4 +19,9 @@ class SequentialState implements IState{
         int nextSongId = songsId.get(nextIndex);
         return playlistPlayer.songRepository.getSongById(nextSongId);
     }
+
+    @Override
+    public Song getPreviousSong() {
+        return null;
+    }
 }

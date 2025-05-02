@@ -11,6 +11,8 @@ public abstract class AbstractMenuPage {
 
     //TODO : créer une classe repositoryService qui crée tous les répositories, afin qu'ils soient tous
     // atteignable dans chaque classe
+
+    //TODO : revoir logique des views et faire en sorte qu'on puisse revenir en arrière
     int index;
     public String pageTitle;
     public String pageContent;

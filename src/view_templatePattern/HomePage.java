@@ -26,7 +26,7 @@ public class HomePage extends AbstractMenuPage {
 
     @Override
     void button1() {
-        spotifyPageFactory.playlistChoseList.templateMethode();
+        spotifyPageFactory.playlistHomePage.templateMethode();
     }
 
     @Override

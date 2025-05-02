@@ -104,9 +104,14 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     @Override
     public void previous(){
-        if (songIdHistory.isEmpty()) return;
-        int previousSongId = songIdHistory.pop();
-        this.currentSong = songRepository.getSongById(previousSongId);
+        if (currentState == repeatState){
+            this.currentSong = currentState.getNextSong();
+        }
+        else {
+            if (songIdHistory.isEmpty()) return;
+            int previousSongId = songIdHistory.pop();
+            this.currentSong = songRepository.getSongById(previousSongId);
+        }
         Cookies_SingletonPattern.setCurrentSongId(this.currentSong.getSongId());
         this.musicPlayer.play(this.currentSong.getAudioFilePath());
     }

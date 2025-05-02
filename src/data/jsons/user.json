@@ -5,7 +5,7 @@
   "password" : "o1MEa9SO5LhXAYqJDDia9SDQUSixtXusKKsIY//iNnY=",
   "salt" : "UHx0qoVfA6me0+vdTV6YCw==",
   "planEnum" : "FREE",
-  "playlists" : [2010779858, 621042657, 1077548532],
+  "playlists" : [ 2010779858, 621042657, 1077548532 ],
   "friends" : [ ]
 }, {
   "userId" : 400953820,
@@ -14,6 +14,15 @@
   "password" : "azj/0MzHjkmgvopzzHAjnYiRA4A/mQJ0we9lfv6Oa5A=",
   "salt" : "cRWK1IwRfirbW7Z5Aq8Suw==",
   "planEnum" : "FREE",
-  "playlists" : [2010779858],
+  "playlists" : [ 2010779858 ],
+  "friends" : [ ]
+}, {
+  "userId" : 274173846,
+  "pseudonym" : "Fleppy",
+  "email" : "fleppy",
+  "password" : "a28yZsRbelNCG2JlxxLPUDdnbn75oJovAiBt7Vd4qUk=",
+  "salt" : "mvL8oTflL2maSH5VmRhMwA==",
+  "planEnum" : "PREMIUM",
+  "playlists" : [ ],
   "friends" : [ ]
 } ]

@@ -19,4 +19,9 @@ class ShuffleState implements IState {
         // Be careful if single song playlist
         return context.songRepository.getSongById(nextSongId);
     }
+
+    @Override
+    public Song getPreviousSong() {
+        return null;
+    }
 }

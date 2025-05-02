@@ -82,4 +82,11 @@
   "playlistSize" : 4,
   "ownerId" : 0,
   "playlistSongsListWithId" : [ 325561970, 354322599, 1925355941, 700468481 ]
+}, {
+  "playlistName" : "TestFleppy",
+  "playlistId" : 0,
+  "playlistSeconds" : 0,
+  "playlistSize" : 0,
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ ]
 } ]

@@ -21,6 +21,7 @@ public class Login extends AbstractMenuPage {
         Cookies_SingletonPattern.resetCookies();
     }
 
+    //TODO : rajouter option pour revenir en arrière sur le bouton  2!
     @Override
     void button0() {
         System.out.println("Goodbye");
