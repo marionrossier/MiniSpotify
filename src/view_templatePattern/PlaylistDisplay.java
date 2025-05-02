@@ -61,10 +61,9 @@ public class PlaylistDisplay extends AbstractMenuPage {
 
     @Override
     void button3() {
-        //TODO : voir si besoin d'en faire une méga méthode pour search.. si réutiliser
-
+        //TODO : Mettre dans une classe SearchService pour toute la partie logique
         System.out.println();
-        System.out.print(icons.iconSearch() + "Enter the title of the song : ");
+        System.out.print(icon.iconSearch() + "Enter the title of the song : ");
         String songTitle = in.nextLine();
 
         LinkedList<Integer> foundedSongs = songService.searchSongByTitle(songTitle);

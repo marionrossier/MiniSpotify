@@ -23,6 +23,7 @@ public class PlaylistServices {
 
     public void createPlaylist(String playlistName) {/*TODO*/}
 
+    //TODO : dans une classe printService
     public void printUserPlaylists(){
         int i = 1;
         for (int playlistId : userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId()).getPlaylists()) {

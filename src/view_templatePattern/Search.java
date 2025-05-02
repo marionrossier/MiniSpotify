@@ -22,7 +22,7 @@ public class Search extends AbstractMenuPage {
 
     @Override
     void button1() {
-        System.out.print(icons.iconSearch() + "Enter the title of the song : ");
+        System.out.print(icon.iconSearch() + "Enter the title of the song : ");
         String songTitle = in.nextLine();
 
         List<Integer> foundedSongs = songService.searchSongByTitle(songTitle);

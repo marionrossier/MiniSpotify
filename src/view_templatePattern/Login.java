@@ -35,6 +35,7 @@ public class Login extends AbstractMenuPage {
         System.out.print("Enter your password : ");
         String password = in.nextLine();
 
+        //TODO : mettre cette logique dans passWordService
         //Check the password...
         if(userService.verifyUserAuthentification(pseudonym, password)) {
             User user = userRepository.getUserByPseudonym(pseudonym);

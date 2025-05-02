@@ -1,8 +1,7 @@
 package data.entities;
 
 import data.jsons.ArtistRepository;
-import data.jsons.SongRepository;
-import services.TransverseService;
+import services.UniqueIdService;
 
 public class Song {
     private String title;
@@ -13,7 +12,7 @@ public class Song {
     private MusicGender gender;
     private int songId;
     private String audioFilePath;
-    private final TransverseService transverseService = new TransverseService();
+    private final UniqueIdService uniqueIdService = new UniqueIdService();
     ArtistRepository artistRepository = new ArtistRepository();
 
     public Song (){}
@@ -46,7 +45,7 @@ public class Song {
         this.album = album;
         this.seconds = seconds;
         this.gender = gender;
-        this.songId = transverseService.setUniqueId();
+        this.songId = uniqueIdService.setUniqueId();
         this.audioFilePath = "resources\\songsfiles\\"+audioFilePath;
 
 
