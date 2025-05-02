@@ -75,4 +75,7 @@ public class Icon {
     public String iconSearch (){
         return ("🔍");
     }
+
+    public String lineBreak = "\n";
+
 }

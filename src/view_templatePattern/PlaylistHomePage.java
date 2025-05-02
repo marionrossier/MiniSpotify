@@ -8,9 +8,9 @@ public class PlaylistHomePage extends AbstractMenuPage {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Home Page Playlist";
         this.pageContent =
-                backLineWith0 + lineBreak +
-                nb1 + "Choose your playlist" + lineBreak +
-                nb2 + "Create a playlist";
+                icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
+                icon.iconNbr(1) + "Choose your playlist" + icon.lineBreak +
+                icon.iconNbr(2) + "Create a playlist";
     }
 
     @Override

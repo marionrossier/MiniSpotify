@@ -14,10 +14,10 @@ public class Search extends AbstractMenuPage {
     public Search(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Search Page";
-        this.pageContent = backLineWith0 + lineBreak +
-                nb1 + "Search a song" + lineBreak +
-                nb2 + "Search an artist" + lineBreak +
-                nb3 + "Search a song gender";
+        this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
+                icon.iconNbr(1) + "Search a song" + icon.lineBreak +
+                icon.iconNbr(2) + "Search an artist" + icon.lineBreak +
+                icon.iconNbr(3) + "Search a song gender";
     }
 
     @Override
@@ -37,8 +37,8 @@ public class Search extends AbstractMenuPage {
 
     @Override
     void button2() {
-        System.out.println(search + "Search Artist Page");
-        System.out.print(lineBreak + "Enter the name of the artist : ");
+        System.out.println(icon.iconSearch() + "Search Artist Page");
+        System.out.print(icon.lineBreak + "Enter the name of the artist : ");
         String artistName = in.nextLine();
         // TODO : idem que Song, chercher via le ArtistRep ou il faut créer une méthode
         //  "getArtistByName(String name) return liste" des correspondances

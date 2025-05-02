@@ -17,42 +17,7 @@ public abstract class AbstractMenuPage {
     public IPlaylistPlayer spotifyPlayer;
     SpotifyPageFactory spotifyPageFactory;
     Scanner in = new Scanner(System.in);
-
-    //TODO : remove icons form here and use the Icons Class
-    //For more visibility
-    public Icon icon = new Icon();
-    public String nb0 = icon.iconNbr(0);
-    public String nb1 = icon.iconNbr(1);
-    public String nb2 = icon.iconNbr(2);
-    public String nb3 = icon.iconNbr(3);
-    public String nb4 = icon.iconNbr(4);
-    public String nb5 = icon.iconNbr(5);
-    public String nb6 = icon.iconNbr(6);
-    public String nb7 = icon.iconNbr(7);
-    public String play = icon.iconPlay();
-    public String playPause = icon.iconPlayPause();
-    public String playBack = icon.iconPlayBack();
-    public String pause = icon.iconPause();
-    public String next = icon.iconNext();
-    public String previous = icon.iconPrevious();
-    public String shuffle = icon.iconShuffle();
-    public String sequential = icon.iconSequential();
-    public String repeatOne = icon.iconRepeatOne();
-    public String logoutLineWith0 = nb0 + icon.iconLogout();
-    public String newIcon = icon.iconNew();
-    public String up = icon.iconUp();
-    public String down = icon.iconDown();
-    public String ok = icon.iconOk();
-    public String cross = icon.iconCross();
-    public String warning = icon.iconWarning();
-    public String lock = icon.iconLock();
-    public String premium = icon.iconPremium();
-    public String free = icon.iconFree();
-    public String group = icon.iconGroup();
-    public String earth = icon.iconEarth();
-    public String lineBreak = "\n";
-    public String backLineWith0 = nb0 + icon.iconBack();
-    public String search = icon.iconSearch();
+    Icon icon = new Icon();
 
     public AbstractMenuPage(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         this.spotifyPageFactory = spotifyPageFactory;
@@ -128,7 +93,7 @@ public abstract class AbstractMenuPage {
     }
 
     final void invalidChoice(){
-        System.out.println(warning + "Invalid choice, try again." + warning + lineBreak);
+        System.out.println(icon.iconWarning() + "Invalid choice, try again." + icon.iconWarning() + icon.lineBreak);
     }
 
     void button0() {

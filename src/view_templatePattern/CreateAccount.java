@@ -17,9 +17,9 @@ public class CreateAccount extends AbstractMenuPage {
     public CreateAccount(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Create Account Page";
-        this.pageContent = backLineWith0 + lineBreak +
-                nb1 + "FREE " + free + lineBreak +
-                nb2 + "PREMIUM " + premium ;
+        this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
+                icon.iconNbr(1) + "FREE " + icon.iconFree() + icon.lineBreak +
+                icon.iconNbr(2) + "PREMIUM " + icon.iconPremium() ;
         Cookies_SingletonPattern.resetCookies();
     }
 
@@ -32,7 +32,7 @@ public class CreateAccount extends AbstractMenuPage {
         System.out.print("Enter your email : ");
         email = in.nextLine();
         //TODO : check if email is valid (dans UserService)
-        System.out.println(lineBreak + "Choose your plan : ");
+        System.out.println(icon.lineBreak + "Choose your plan : ");
 
         super.displayContent(pageContent);
     }

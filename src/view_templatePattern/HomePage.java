@@ -9,11 +9,11 @@ public class HomePage extends AbstractMenuPage {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Home Page";
         this.pageContent =
-                logoutLineWith0 + lineBreak +
-                nb1 + "Go to playlists" + lineBreak +
-                nb2 + "Search" + lineBreak +
-                nb3 + "Friends" + lineBreak +
-                nb4 + "Go to music player";
+                icon.iconNbr(0) + icon.iconLogout() + icon.lineBreak +
+                icon.iconNbr(1) + "Go to playlists" + icon.lineBreak +
+                icon.iconNbr(2) + "Search" + icon.lineBreak +
+                icon.iconNbr(3) + "Friends" + icon.lineBreak +
+                icon.iconNbr(4) + "Go to music player";
     }
 
     @Override

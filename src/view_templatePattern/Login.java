@@ -15,9 +15,9 @@ public class Login extends AbstractMenuPage {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Login Page";
         this.pageContent =
-                nb0 + "End process" + lineBreak +
-                nb1+ "Sign in"+lineBreak +
-                nb2+ "Create an account";
+                icon.iconNbr(0) + "End process" + icon.lineBreak +
+                icon.iconNbr(1)+ "Sign in"+icon.lineBreak +
+                icon.iconNbr(2)+ "Create an account";
         Cookies_SingletonPattern.resetCookies();
     }
 
@@ -40,10 +40,10 @@ public class Login extends AbstractMenuPage {
         if(userService.verifyUserAuthentification(pseudonym, password)) {
             User user = userRepository.getUserByPseudonym(pseudonym);
             Cookies_SingletonPattern.setUser(user.getUserId());
-            System.out.println(lineBreak + ok + "Login successful !");
+            System.out.println(icon.lineBreak + icon.iconOk() + "Login successful !");
             spotifyPageFactory.homePage.templateMethode();
         }else{
-            System.out.println(warning + "Login failed ! Please try again.");
+            System.out.println(icon.iconWarning() + "Login failed ! Please try again.");
             button1();
         }
     }
