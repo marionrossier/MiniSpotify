@@ -6,6 +6,7 @@ import data.jsons.PlaylistRepository;
 import java.util.LinkedList;
 import java.util.List;
 
+//TODO : séparer pour avoir une classe Cookie pour le user, pour la playlist et pour les songs.
 public class Cookies_SingletonPattern {
     private static Cookies_SingletonPattern instance;
 
@@ -43,6 +44,7 @@ public class Cookies_SingletonPattern {
         instance.currentSongId = currentSongId;
     }
 
+    //TODO : retirer la logique de création de la playlist d'ici.
     public static void setTemporaryPlaylist(LinkedList<Integer> temporaryPlaylist) {
         if (instance == null) {
             throw new IllegalStateException("Cookies instance not initialized. Please set the user first.");

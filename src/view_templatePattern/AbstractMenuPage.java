@@ -1,52 +1,23 @@
 package view_templatePattern;
 
-import services.Icons;
+import services.Icon;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 
 import java.util.Scanner;
 
+//TODO : modifier celle-ci en interface et faire ensuite 2 abstracts qui extends cette interface
+// dont une pour les menus simples et l'autre pour les menus avec impression d'information
 public abstract class AbstractMenuPage {
+
+    //TODO : créer une classe repositoryService qui crée tous les répositories, afin qu'ils soient tous
+    // atteignable dans chaque classe
     int index;
     public String pageTitle;
     public String pageContent;
     public IPlaylistPlayer spotifyPlayer;
     SpotifyPageFactory spotifyPageFactory;
     Scanner in = new Scanner(System.in);
-
-    //For more visibility
-    public Icons icons = new Icons();
-    public String nb0 = icons.icon0To9(0);
-    public String nb1 = icons.icon0To9(1);
-    public String nb2 = icons.icon0To9(2);
-    public String nb3 = icons.icon0To9(3);
-    public String nb4 = icons.icon0To9(4);
-    public String nb5 = icons.icon0To9(5);
-    public String nb6 = icons.icon0To9(6);
-    public String nb7 = icons.icon0To9(7);
-    public String play = icons.iconPlay();
-    public String playPause = icons.iconPlayPause();
-    public String playBack = icons.iconPlayBack();
-    public String pause = icons.iconPause();
-    public String next = icons.iconNext();
-    public String previous = icons.iconPrevious();
-    public String shuffle = icons.iconShuffle();
-    public String sequential = icons.iconSequential();
-    public String repeatOne = icons.iconRepeatOne();
-    public String logoutLineWith0 = nb0 + icons.iconLogout();
-    public String newIcon = icons.iconNew();
-    public String up = icons.iconUp();
-    public String down = icons.iconDown();
-    public String ok = icons.iconOk();
-    public String cross = icons.iconCross();
-    public String warning = icons.iconWarning();
-    public String lock = icons.iconLock();
-    public String premium = icons.iconPremium();
-    public String free = icons.iconFree();
-    public String group = icons.iconGroup();
-    public String earth = icons.iconEarth();
-    public String lineBreak = "\n";
-    public String backLineWith0 = nb0 + icons.iconBack();
-    public String search = icons.iconSearch();
+    Icon icon = new Icon();
 
     public AbstractMenuPage(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         this.spotifyPageFactory = spotifyPageFactory;
@@ -122,7 +93,7 @@ public abstract class AbstractMenuPage {
     }
 
     final void invalidChoice(){
-        System.out.println(warning + "Invalid choice, try again." + warning + lineBreak);
+        System.out.println(icon.iconWarning() + "Invalid choice, try again." + icon.iconWarning() + icon.lineBreak);
     }
 
     void button0() {

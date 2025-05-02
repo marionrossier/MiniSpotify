@@ -2,6 +2,7 @@ package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 
+//TODO : Modifier ? pour que les pages soient crées au moment ou elles sont appellés.
 public class SpotifyPageFactory {
     PlaylistChoseList playlistChoseList;
     PlaylistCreation playlistCreation;

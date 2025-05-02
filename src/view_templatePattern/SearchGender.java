@@ -7,7 +7,7 @@ public class SearchGender extends AbstractMenuPage {
     public SearchGender(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Search Gender";
-        this.pageContent = backLineWith0 + lineBreak +
+        this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
                 "Select your desired gender";
     }
 

@@ -13,8 +13,8 @@ public class SongService {
     String linebreak = "\n";
     SongRepository songRepository = new SongRepository();
 
+    // Constructor
     public SongService() {
-        // Constructor
     }
 
     public LinkedList<Integer> searchSongByTitle(String songTitle){
@@ -30,11 +30,13 @@ public class SongService {
         return songsByTitleId;
     }
 
+    //TODO : dans la classe printService
     public void printSongFound (List<Integer> songs, String info){
         System.out.println("Songs found with information : " + info);
         printSongList (songs);
     }
 
+    //TODO : dans la classe printService
     public void printSongList (List<Integer> songs){
         int i = 1;
         for (Integer song : songs) {

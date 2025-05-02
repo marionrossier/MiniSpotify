@@ -10,10 +10,10 @@ public class PlaylistDeletion extends AbstractMenuPage {
     public PlaylistDeletion(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Delete Playlist Page";
-        this.pageContent = backLineWith0 + lineBreak +
-                "Are you sure you want to delete this playlist?" + lineBreak +
-                nb1 + "YES" + lineBreak +
-                nb2 + "NO";
+        this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
+                "Are you sure you want to delete this playlist?" + icon.lineBreak +
+                icon.iconNbr(1) + "YES" + icon.lineBreak +
+                icon.iconNbr(2) + "NO";
     }
 
     @Override

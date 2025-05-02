@@ -21,10 +21,10 @@ public class PlaylistCreation extends AbstractMenuPage {
         playlist.setPlaylistName(playlistName);
         playlistRepository.addPlaylist(playlist);
 
-        System.out.println(ok + "Playlist saved successfully !");
+        System.out.println(icon.iconOk() + "Playlist saved successfully !");
 
         //TODO : search a song by songName !
-        //TODO : add back to the menu "backLineWith0 + lineBreak"
+        //TODO : add back to the menu "icon.iconNbr(0) + icon.iconBack() + icon.lineBreak"
     }
 
 }

@@ -11,14 +11,14 @@ public class SongPlayer extends AbstractMenuPage {
     public SongPlayer(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Song Player Page";
-        this.pageContent = backLineWith0 + lineBreak+
-                "Your song player ! " +lineBreak+
-                nb1 + ":"+ shuffle + " |" +
-                nb2 + ":"+ previous + " |" +
-                nb3 + ":"+ playPause +" |" +
-                nb4 + ":"+ playBack + " |" +
-                nb5 + ":"+ next + " |" +
-                nb6 + ":"+ repeatOne + " |";
+        this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak+
+                "Your song player ! " +icon.lineBreak+
+                icon.iconNbr(1) + ":"+ icon.iconShuffle() + " |" +
+                icon.iconNbr(2) + ":"+ icon.iconPrevious() + " |" +
+                icon.iconNbr(3) + ":"+ icon.iconPlayPause() +" |" +
+                icon.iconNbr(4) + ":"+ icon.iconPlayBack() + " |" +
+                icon.iconNbr(5) + ":"+ icon.iconNext() + " |" +
+                icon.iconNbr(6) + ":"+ icon.iconRepeatOne() + " |";
     }
 
     @Override

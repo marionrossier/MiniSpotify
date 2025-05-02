@@ -1,6 +1,6 @@
 package data.entities;
 
-import services.TransverseService;
+import services.UniqueIdService;
 
 import java.util.*;
 
@@ -11,18 +11,18 @@ public class Playlist {
     private int playlistSeconds;
     private int playlistSize;
     private int ownerId;
-    private final TransverseService transverseService = new TransverseService();
+    private final UniqueIdService uniqueIdService = new UniqueIdService();
 
     public Playlist (){}
 
     public Playlist(String playlistName) {
         this.playlistName = playlistName;
-        this.playlistId = transverseService.setUniqueId();
+        this.playlistId = uniqueIdService.setUniqueId();
     }
 
     public Playlist(String playlistName, LinkedList <Integer> playlistSongsId, int playlistSeconds, int playlistSize) {
         this.playlistName = playlistName;
-        this.playlistId = transverseService.setUniqueId();
+        this.playlistId = uniqueIdService.setUniqueId();
         this.ownerId = 0;
         this.playlistSongsId = playlistSongsId;
         this.playlistSeconds = playlistSeconds;
@@ -74,10 +74,6 @@ public class Playlist {
         }
         this.playlistSeconds = totalSeconds;
     }
-    public void addSong(Song currentSong) {
-        playlistSongsId.add(currentSong.getSongId());
-        playlistSeconds += currentSong.getSeconds();
-    }
 
     public int getPlaylistSize() {
         return playlistSize;
@@ -85,6 +81,17 @@ public class Playlist {
 
     public void setPlaylistSize() {
         this.playlistSize = playlistSongsId.size();
+    }
+
+    public void setName(String updatedName) {
+        this.playlistName = updatedName;
+    }
+
+
+    //TODO : Mettre les méthodes addSong, removeSong, reorderSong, dans le service PlaylistService
+    public void addSong(Song currentSong) {
+        playlistSongsId.add(currentSong.getSongId());
+        playlistSeconds += currentSong.getSeconds();
     }
 
     public void removeSong(Song currentSong) {
@@ -96,9 +103,5 @@ public class Playlist {
         int memory = playlistSongsId.get(songIndex);
         playlistSongsId.remove(songIndex);
         playlistSongsId.add(songIndex, memory);
-    }
-
-    public void setName(String updatedName) {
-        this.playlistName = updatedName;
     }
 }

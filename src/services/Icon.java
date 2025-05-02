@@ -1,8 +1,8 @@
 package services;
 
-public class Icons {
+public class Icon {
 
-    public String icon0To9(int x){
+    public String iconNbr(int x){
         return (x+"\uFE0F⃣");
     }
     public String iconPlay (){
@@ -75,4 +75,7 @@ public class Icons {
     public String iconSearch (){
         return ("🔍");
     }
+
+    public String lineBreak = "\n";
+
 }

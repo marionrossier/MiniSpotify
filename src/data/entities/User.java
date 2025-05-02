@@ -1,7 +1,7 @@
 package data.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import services.TransverseService;
+import services.UniqueIdService;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class User {
     private PlanEnum planEnum;
     private List<Integer> playlists;
     private List<Integer> friends;
-    private final TransverseService transverseService = new TransverseService();
+    private final UniqueIdService uniqueIdService = new UniqueIdService();
 
     public User() {
     }
@@ -25,7 +25,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.planEnum = planEnum;
-        this.userId = transverseService.setUniqueId();
+        this.userId = uniqueIdService.setUniqueId();
     }
 
     public User(String pseudonym, String email, String password, byte[] salt,
@@ -35,7 +35,7 @@ public class User {
         this.password = password;
         this.salt = salt;
         this.planEnum = planEnum;
-        this.userId = transverseService.setUniqueId();
+        this.userId = uniqueIdService.setUniqueId();
         this.playlists = playlists;
         this.friends = friends;
     }
@@ -104,6 +104,7 @@ public class User {
         this.friends = friends;
     }
 
+    //TODO : mettre dans les services de PlaylistService
     public void addOnePlaylist(int playlistId) {
         if (playlists == null) {
             return;

@@ -19,13 +19,13 @@ public class PlaylistDisplay extends AbstractMenuPage {
     public PlaylistDisplay(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
         this.pageTitle = "Playlist Page : ";
-        this.pageContent = backLineWith0 + lineBreak +
-                nb1 + "Play the playlist" + lineBreak +
-                nb2 + "Rename Playlist" + lineBreak +
-                nb3 + "Add song" + lineBreak +
-                nb4 + "Remove song" + lineBreak +
-                nb5 + "Reorder song" + lineBreak +
-                nb6 + "Delete the playlist";
+        this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
+                icon.iconNbr(1) + "Play the playlist" + icon.lineBreak +
+                icon.iconNbr(2) + "Rename Playlist" + icon.lineBreak +
+                icon.iconNbr(3) + "Add song" + icon.lineBreak +
+                icon.iconNbr(4) + "Remove song" + icon.lineBreak +
+                icon.iconNbr(5) + "Reorder song" + icon.lineBreak +
+                icon.iconNbr(6) + "Delete the playlist";
     }
 
     @Override
@@ -61,10 +61,9 @@ public class PlaylistDisplay extends AbstractMenuPage {
 
     @Override
     void button3() {
-        //TODO : voir si besoin d'en faire une méga méthode pour search.. si réutiliser
-
+        //TODO : Mettre dans une classe SearchService pour toute la partie logique
         System.out.println();
-        System.out.print(icons.iconSearch() + "Enter the title of the song : ");
+        System.out.print(icon.iconSearch() + "Enter the title of the song : ");
         String songTitle = in.nextLine();
 
         LinkedList<Integer> foundedSongs = songService.searchSongByTitle(songTitle);
