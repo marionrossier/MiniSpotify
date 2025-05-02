@@ -3,6 +3,7 @@ package view_templatePattern;
 import data.entities.Artist;
 import data.jsons.ArtistRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.PrintService;
 import services.SongService;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 public class Search extends AbstractMenuPage {
 
     SongService songService = new SongService();
+    PrintService printService = new PrintService();
 
     public Search(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -26,7 +28,7 @@ public class Search extends AbstractMenuPage {
         String songTitle = in.nextLine();
 
         List<Integer> foundedSongs = songService.searchSongByTitle(songTitle);
-        songService.printSongFound(foundedSongs, songTitle);
+        printService.printSongFound(foundedSongs, songTitle);
 
         //TODO : terminer
 //        List<Integer> chosenSongs = songService.chooseFoundedSongs(foundedSongs);

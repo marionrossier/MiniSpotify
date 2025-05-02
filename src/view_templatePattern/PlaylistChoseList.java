@@ -6,12 +6,14 @@ import data.jsons.UserRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
 import services.PlaylistServices;
+import services.PrintService;
 
 public class PlaylistChoseList extends AbstractMenuPage {
 
     UserRepository userRepository = new UserRepository();
     PlaylistRepository playlistRepository = new PlaylistRepository();
     PlaylistServices playlistService = new PlaylistServices(playlistRepository);
+    PrintService printService = new PrintService();
 
     public PlaylistChoseList(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -24,7 +26,7 @@ public class PlaylistChoseList extends AbstractMenuPage {
         User currentUser = userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId()); //232928320
 
         if (currentUser != null && currentUser.getPlaylists() != null) {
-            playlistService.printUserPlaylists();
+            printService.printUserPlaylists();
         } else {
             System.out.println("No playlists available.");
         }

@@ -4,6 +4,7 @@ import data.jsons.PlaylistRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
 import services.PlaylistServices;
+import services.PrintService;
 import services.SongService;
 
 import java.util.LinkedList;
@@ -12,6 +13,7 @@ import java.util.Scanner;
 public class PlaylistDisplay extends AbstractMenuPage {
 
     SongService songService = new SongService();
+    PrintService printService = new PrintService();
     Scanner in = new Scanner(System.in);
     PlaylistRepository playlistRepository = new PlaylistRepository();
     PlaylistServices playlistServices = new PlaylistServices(playlistRepository);
@@ -36,7 +38,7 @@ public class PlaylistDisplay extends AbstractMenuPage {
                 .getPlaylistName());
         System.out.println("Playlist songs : ");
 
-        songService.printSongList(playlistRepository
+        printService.printSongList(playlistRepository
                 .getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId())
                 .getPlaylistSongsListWithId());
     }
@@ -67,7 +69,7 @@ public class PlaylistDisplay extends AbstractMenuPage {
         String songTitle = in.nextLine();
 
         LinkedList<Integer> foundedSongs = songService.searchSongByTitle(songTitle);
-        songService.printSongFound(foundedSongs, songTitle);
+        printService.printSongFound(foundedSongs, songTitle);
         LinkedList<Integer> chosenSongs = songService.chooseFoundedSongs(foundedSongs);
 
         Cookies_SingletonPattern.setTemporaryPlaylist(chosenSongs);

@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class SongService {
 
     Scanner in = new Scanner(System.in);
-    String linebreak = "\n";
+    Icon icon = new Icon();
     SongRepository songRepository = new SongRepository();
 
     // Constructor
@@ -30,25 +30,9 @@ public class SongService {
         return songsByTitleId;
     }
 
-    //TODO : dans la classe printService
-    public void printSongFound (List<Integer> songs, String info){
-        System.out.println("Songs found with information : " + info);
-        printSongList (songs);
-    }
-
-    //TODO : dans la classe printService
-    public void printSongList (List<Integer> songs){
-        int i = 1;
-        for (Integer song : songs) {
-            System.out.println(i + ". " + songRepository.getSongById(song).getSongName());
-            i++;
-        }
-        System.out.println();
-    }
-
     public LinkedList<Integer> chooseFoundedSongs(List<Integer> foundedSongs){
-        System.out.println("Choose your songs by entering their number and press \"enter\" between each song." + linebreak+
-                "End selection with an \"x\"." + linebreak);
+        System.out.println("Choose your songs by entering their number and press \"enter\" between each song." + icon.lineBreak+
+                "End selection with an \"x\"." + icon.lineBreak);
         System.out.print("Your selection : ");
         String input;
         LinkedList<Integer> selectedSongsIndex = new LinkedList<>();

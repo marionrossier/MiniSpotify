@@ -7,6 +7,7 @@ import data.jsons.UserRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
 import services.PlaylistServices;
+import services.PrintService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class ActionFoundedSongs extends AbstractMenuPage {
     PlaylistRepository playlistRepository = new PlaylistRepository();
     PlaylistServices playlistService = new PlaylistServices(playlistRepository);
     UserRepository userRepository = new UserRepository();
+    PrintService printService = new PrintService();
 
     public ActionFoundedSongs(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -53,7 +55,7 @@ public class ActionFoundedSongs extends AbstractMenuPage {
     @Override
     void button2() {
         System.out.println("Select your playlist : ");
-        playlistService.printUserPlaylists();
+        printService.printUserPlaylists();
         displayInput();
         int playlistId = playlistService.validationPlaylistChoice();
 

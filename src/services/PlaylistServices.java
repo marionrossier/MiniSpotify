@@ -23,17 +23,6 @@ public class PlaylistServices {
 
     public void createPlaylist(String playlistName) {/*TODO*/}
 
-    //TODO : dans une classe printService
-    public void printUserPlaylists(){
-        int i = 1;
-        for (int playlistId : userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId()).getPlaylists()) {
-            Playlist playlist = playlistRepository.getPlaylistById(playlistId);
-            if (playlist != null) {
-                System.out.println(i + ". " + playlist.getPlaylistName());
-                i++;
-            }
-        }
-    }
 
     public int validationPlaylistChoice() {
         Scanner scanner = new Scanner(System.in);
