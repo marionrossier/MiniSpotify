@@ -38,11 +38,8 @@ public class ActionFoundedSongs extends AbstractMenuPage {
 
     @Override
     void button1() {
-        List<Integer> songs = Cookies_SingletonPattern.getInstance().getTemporaryPlaylist();
-        Playlist temporaryPlaylist = new Playlist("temporaryPlaylist");
-        temporaryPlaylist.setPlaylistSongsId((LinkedList<Integer>) Cookies_SingletonPattern.getInstance().getTemporaryPlaylist());
-
-        Cookies_SingletonPattern.setCurrentPlaylistId(temporaryPlaylist.getPlaylistId());
+        Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
+        LinkedList <Integer> songs = temporaryPlaylist.getPlaylistSongsListWithId();
 
         if (songs != null && !songs.isEmpty()) {
                 spotifyPageFactory.songPlayer.templateMethode();
@@ -67,9 +64,14 @@ public class ActionFoundedSongs extends AbstractMenuPage {
         System.out.println("Playlist Name : ");
 
         Playlist newPlaylist = new Playlist(in.nextLine());
-        newPlaylist.setPlaylistSongsId((LinkedList<Integer>) Cookies_SingletonPattern.getInstance().getTemporaryPlaylist());
+
+        Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
+        newPlaylist.setPlaylistSongsId(temporaryPlaylist.getPlaylistSongsListWithId());
+
         User user = userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId());
         userRepository.updateAccount(user).addOnePlaylist(newPlaylist.getPlaylistId());
+
+        playlistService.deleteTemporaryPlaylist();
 
         spotifyPageFactory.playlistHomePage.templateMethode();
     }

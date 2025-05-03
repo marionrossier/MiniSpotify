@@ -13,6 +13,7 @@ import player_StatePattern.playlist_player.PlaylistPlayer;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -112,5 +113,67 @@ class PlaylistServicesTest {
         // Assert
         assertNull(deletedPlaylist, "The playlist should be deleted");
     }
+
+    @Test
+    public void testCreateTemporaryPlaylist(){
+        //Arrange
+        LinkedList <Integer> chosenSongs = new LinkedList<>();
+        chosenSongs.add(1);
+
+        //Act
+        playlistService.createTemporaryPlaylistAndInitCookies(chosenSongs);
+        int temporaryPlaylistId = playlistService.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId();
+        int firstSongId = playlistService.playlistRepository
+                .getPlaylistById(temporaryPlaylistId).getPlaylistSongsListWithId().getFirst();
+
+        int cookieTemporaryPlaylistId = Cookies_SingletonPattern.getInstance().getTemporaryPlaylist();
+        int cookieCurrentSongId = Cookies_SingletonPattern.getInstance().getCurrentSongId();
+
+        //Assert
+        assertEquals("temporaryPlaylist",
+                playlistService.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistName());
+        assertEquals(cookieTemporaryPlaylistId, temporaryPlaylistId);
+        assertEquals(cookieCurrentSongId, firstSongId);
+    }
+
+    @Test
+    public void testDeleteTemporaryPlaylist(){
+        //Arrange
+        LinkedList <Integer> chosenSongs = new LinkedList<>();
+        chosenSongs.add(1);
+
+        playlistService.createTemporaryPlaylistAndInitCookies(chosenSongs);
+        //Act
+        playlistService.deleteTemporaryPlaylist();
+        //Assert
+        assertNull(playlistService.playlistRepository.getPlaylistByName("temporaryPlaylist"), "The playlist should be deleted");
+    }
+
+
+    //TODO : faire ces tests
+//    public void removeSongFromPlaylist(int playlistId, int songIndex) {
+//        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+//
+//        playlistRepository.getPlaylistById(playlist.getPlaylistId())
+//                .getPlaylistSongsListWithId().remove(songIndex);
+//
+//        playlistRepository.savePlaylist(playlist);
+//
+//    }
+//
+//    public void addSongToPlaylistFromTemporaryPlaylist(int playlistId) {
+//        Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
+//        Playlist targetPlaylist = playlistRepository.getPlaylistById(playlistId);
+//
+//        if (targetPlaylist != null && temporaryPlaylist != null) {
+//            targetPlaylist.getPlaylistSongsListWithId().addAll(temporaryPlaylist.getPlaylistSongsListWithId());
+//            playlistRepository.updatePlaylist(targetPlaylist);
+//        } else {
+//            System.err.println("Target playlist or temporary playlist not found.");
+//        }
+//    }
+//
+//    public void reorderSongsInPlaylist(String playlistName) {/*TODO*/}
+
 
 }

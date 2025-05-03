@@ -55,8 +55,6 @@ public class PlaylistServices {
         return chosenPlaylist;
     }
 
-
-    //TODO : Mettre les méthodes addSong, removeSong, reorderSong, dans le service PlaylistService
     public void addSong(int currentPlaylistId, int currentSongId) {
         Playlist playlist = this.playlistRepository.getPlaylistById(currentPlaylistId);
         playlist.getPlaylistSongsListWithId().add(currentSongId);
@@ -87,7 +85,6 @@ public class PlaylistServices {
         }
     }
 
-    //TODO: retirer cette méthode et utiliser le setter...
     public void renamePlayList(int playlistId, String newName) {
         Playlist playlist = playlistRepository.getPlaylistById(playlistId);
         playlist.setPlaylistName(newName);
@@ -109,5 +106,24 @@ public class PlaylistServices {
     public LinkedList<Playlist> getSharedPlaylist(User followedUser) {
         throw new UnsupportedOperationException("Not implemented yet");
         /*TODO*/
+    }
+
+    public void deleteTemporaryPlaylist() {
+        int playlistId = playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId();
+        playlistRepository.deletePlaylistById(playlistId);
+    }
+
+    public void createTemporaryPlaylistAndInitCookies(LinkedList<Integer> chosenSongs) {
+        //Creation of temporaryPlaylist
+        Playlist temporaryPlaylist = new Playlist("temporaryPlaylist");
+        temporaryPlaylist.setPlaylistSongsId(chosenSongs);
+        playlistRepository.savePlaylist(temporaryPlaylist);
+
+        //Initialisation of the Cookies
+        Cookies_SingletonPattern.setTemporaryPlaylist(temporaryPlaylist.getPlaylistId());
+        Cookies_SingletonPattern.setCurrentPlaylistId(playlistRepository
+                .getPlaylistByName("temporaryPlaylist").getPlaylistId());
+        Cookies_SingletonPattern.setCurrentSongId(playlistRepository
+                .getPlaylistByName("temporaryPlaylist").getPlaylistSongsListWithId().getFirst());
     }
 }

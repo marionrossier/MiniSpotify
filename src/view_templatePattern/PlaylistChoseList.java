@@ -42,7 +42,8 @@ public class PlaylistChoseList extends AbstractMenuPage {
             return;
         }
         Cookies_SingletonPattern.setCurrentPlaylistId(chosenPlaylist);
-        Cookies_SingletonPattern.setCurrentSongId(playlistRepository.getCurrentSongByPlaylistID(chosenPlaylist));
+        Cookies_SingletonPattern.setCurrentSongId(
+                playlistRepository.getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
         spotifyPageFactory.playlistDisplay.templateMethode();
     }
 

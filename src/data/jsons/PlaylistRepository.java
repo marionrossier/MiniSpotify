@@ -89,8 +89,4 @@ public class PlaylistRepository {
         }
         return null;
     }
-
-    public int getCurrentSongByPlaylistID (int playlistId) {
-        return this.getPlaylistById(playlistId).getPlaylistSongsListWithId().getFirst();
-    }
 }

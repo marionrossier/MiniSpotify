@@ -1,5 +1,6 @@
 package view_templatePattern;
 
+import data.entities.Playlist;
 import data.jsons.PlaylistRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
@@ -72,7 +73,8 @@ public class PlaylistDisplay extends AbstractMenuPage {
         printService.printSongFound(foundedSongs, songTitle);
         LinkedList<Integer> chosenSongs = songService.chooseFoundedSongs(foundedSongs);
 
-        Cookies_SingletonPattern.setTemporaryPlaylist(chosenSongs);
+        playlistServices.createTemporaryPlaylistAndInitCookies(chosenSongs);
+
         spotifyPageFactory.actionFoundedSongs.templateMethode();
     }
 
