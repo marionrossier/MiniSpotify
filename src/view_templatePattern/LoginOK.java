@@ -6,9 +6,9 @@ import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.PageService;
 
 
-public class Login extends _SimplePageTemplate {
+public class LoginOK extends _SimplePageTemplate {
 
-    public Login(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+    public LoginOK(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Login Page";
@@ -19,7 +19,10 @@ public class Login extends _SimplePageTemplate {
         Cookies_SingletonPattern.resetCookies();
     }
 
-    //TODO : rajouter option pour revenir en arrière sur le bouton  2!
+    @Override
+    public void button0 (){
+        System.exit(0);
+    }
 
     @Override
     public void button1() {

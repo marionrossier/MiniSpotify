@@ -16,10 +16,11 @@ public class PlaylistChoseList extends _SimplePageTemplate {
 
     @Override
     public void displaySpecificContent() {
-        User currentUser = toolbox.getUserRepo().getUserById(Cookies_SingletonPattern.getInstance().getUserId()); //232928320
+        int userId = toolbox.getUserServ().getCookieUserId();
+        User currentUser = toolbox.getUserRepo().getUserById(userId);
 
         if (currentUser != null && currentUser.getPlaylists() != null) {
-            toolbox.getPrintServ().printUserPlaylists();
+            toolbox.getPrintServ().printUserPlaylists(userId);
         } else {
             System.out.println("No playlists available.");
         }

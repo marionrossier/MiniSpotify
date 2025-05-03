@@ -32,10 +32,11 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
         do {
             lastPageId = pageService.getMenuPages().pop();
         } while (lastPageId == getPageId() && !pageService.getMenuPages().isEmpty());
+
         pageService.getPageById(lastPageId).displayAllPage();
     }
 
-    public final void displayAllPage(){
+    public void displayAllPage(){
         pageService.getMenuPages().push(getPageId());
         displayTitle(pageTitle);
         displayContent(pageContent);
@@ -56,6 +57,14 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
 
     public void displayContent(String pageContent){
         System.out.println(pageContent);
+    }
+
+    public String getAnInput (String input){
+        if (input.equals("0")){
+            goBack();
+            return "";
+        }
+        return input;
     }
 
     public void displaySpecificContent(){}

@@ -24,9 +24,9 @@ public class HomePage extends _SimplePageTemplate {
         spotifyPlayer.stop();
 
         toolbox.getPlaylistServ().deleteTemporaryPlaylist();
+        Cookies_SingletonPattern.resetCookies();
 
         pageService.login.displayAllPage();
-        Cookies_SingletonPattern.resetCookies();
     }
 
     @Override

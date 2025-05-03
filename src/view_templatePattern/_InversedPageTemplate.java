@@ -3,14 +3,22 @@ package view_templatePattern;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.PageService;
 
-public abstract class _ComplexPageTemplate extends _SimplePageTemplate {
+public abstract class _InversedPageTemplate extends _SimplePageTemplate {
 
-    public _ComplexPageTemplate(PageService pageManager, IPlaylistPlayer spotifyPlayer) {
+    public _InversedPageTemplate(PageService pageManager, IPlaylistPlayer spotifyPlayer) {
         super(pageManager, spotifyPlayer);
     }
 
     @Override
-    public void displaySpecificContent(){}
+    public void displayAllPage(){
+        pageService.getMenuPages().push(getPageId());
+        displayTitle(pageTitle);
+        displaySpecificContent();
+        displayContent(pageContent);
+        displayInput();
+        validateInput();
+        switchPage();
+    }
 
     @Override
     public void validateInput(){

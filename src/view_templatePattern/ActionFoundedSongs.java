@@ -37,7 +37,8 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
     @Override
     public void button2() {
         System.out.println("Select your playlist : ");
-        toolbox.getPrintServ().printUserPlaylists();
+        int userId = toolbox.getUserServ().getCookieUserId();
+        toolbox.getPrintServ().printUserPlaylists(userId);
         displayInput();
         int playlistId = toolbox.getPlaylistServ().validationPlaylistChoice();
 

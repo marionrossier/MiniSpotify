@@ -20,8 +20,8 @@ public class PageService {
     public FriendsHomePageTemplate friendsHomePage;
     public FriendAddPlaylist friendAddPlaylist;
     public HomePage homePage;
-    public PlaylistHomePageTemplate playlistHomePage;
-    public Login login;
+    public PlaylistHomePage playlistHomePage;
+    public LoginOK login;
     public CreateAccount createAccount;
     public PlaylistDisplay playlistDisplay;
     public Search search;
@@ -62,10 +62,10 @@ public class PageService {
         this.homePage = new HomePage(this, spotifyPlayer, pageId++);
         pages.add(this.homePage);
 
-        this.playlistHomePage = new PlaylistHomePageTemplate(this, spotifyPlayer, pageId++);
+        this.playlistHomePage = new PlaylistHomePage(this, spotifyPlayer, pageId++);
         pages.add(this.playlistHomePage);
 
-        this.login = new Login(this, spotifyPlayer, pageId++);
+        this.login = new LoginOK(this, spotifyPlayer, pageId++);
         pages.add(this.login);
 
         this.createAccount = new CreateAccount(this, spotifyPlayer, pageId++);
@@ -95,6 +95,7 @@ public class PageService {
 
     public void startLogin(){
         menuPages.push(login.pageId);
+        Cookies_SingletonPattern.resetCookies();
         login.displayAllPage();
     }
 

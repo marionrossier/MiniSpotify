@@ -5,7 +5,7 @@ import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
 import services.PageService;
 
-public class CreateAccount extends _SimplePageTemplate {
+public class CreateAccount extends _InversedPageTemplate {
 
     private String pseudonym;
     private String password;
@@ -22,18 +22,15 @@ public class CreateAccount extends _SimplePageTemplate {
         Cookies_SingletonPattern.resetCookies();
     }
 
-    @Override
-    public void displayContent(String pageContent) {
+    public void displaySpecificContent () {
         System.out.print("Enter your pseudonym : ");
-        pseudonym = scanner.nextLine();
+        pseudonym = getAnInput(scanner.nextLine());
         System.out.print("Enter your password : ");
-        password = scanner.nextLine();
+        password = getAnInput(scanner.nextLine());
         System.out.print("Enter your email : ");
-        email = scanner.nextLine();
+        email = getAnInput(scanner.nextLine());
         //TODO : check if email is valid (dans UserService)
         System.out.println(icon.lineBreak + "Choose your plan : ");
-
-        super.displayContent(pageContent);
     }
 
     @Override

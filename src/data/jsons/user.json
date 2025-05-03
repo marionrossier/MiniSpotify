@@ -16,4 +16,13 @@
   "planEnum" : "FREE",
   "playlists" : [ 2010779858, 621042657, 1077548532, 610908062, 187098711 ],
   "friends" : [ ]
+}, {
+  "userId" : 1726370281,
+  "pseudonym" : "florent",
+  "email" : "florent",
+  "password" : "CrqqL5Y1nUCCg2xGzREl7ViyrDfpdzuvCgqdwXHYYEg=",
+  "salt" : "yhxUbFNzzMvwMPy/Fsn/XQ==",
+  "planEnum" : "PREMIUM",
+  "playlists" : [ ],
+  "friends" : [ ]
 } ]

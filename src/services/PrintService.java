@@ -28,9 +28,9 @@ public class PrintService {
         System.out.println();
     }
 
-    public void printUserPlaylists(){
+    public void printUserPlaylists(int userId){
         int i = 1;
-        for (int playlistId : userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId()).getPlaylists()) {
+        for (int playlistId : userRepository.getUserById(userId).getPlaylists()) {
             Playlist playlist = playlistRepository.getPlaylistById(playlistId);
             if (playlist != null) {
                 System.out.println(i + ". " + playlist.getPlaylistName());

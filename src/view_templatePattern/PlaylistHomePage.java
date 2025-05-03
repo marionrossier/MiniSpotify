@@ -3,9 +3,9 @@ package view_templatePattern;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.PageService;
 
-public class PlaylistHomePageTemplate extends _SimplePageTemplate {
+public class PlaylistHomePage extends _SimplePageTemplate {
 
-    public PlaylistHomePageTemplate(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+    public PlaylistHomePage(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Home Page Playlist";
