@@ -58,7 +58,7 @@ public class PlaylistDisplay extends AbstractMenuPage {
         System.out.print("Enter the new name of the playlist : ");
         String newName = in.next();
         int playlistId = Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
-        playlistServices.editPlayListName(playlistId, newName);
+        playlistServices.renamePlayList(playlistId, newName);
     }
 
     @Override
@@ -81,7 +81,8 @@ public class PlaylistDisplay extends AbstractMenuPage {
         System.out.print("Enter the number of the song you want to remove : ");
         int songIndex = in.nextInt()-1;
 
-        playlistServices.removeSongFromPlaylist(songIndex);
+        int currentPlaylistId = Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
+        playlistServices.removeSongFromPlaylist(currentPlaylistId, songIndex);
         spotifyPageFactory.playlistDisplay.templateMethode();
     }
 

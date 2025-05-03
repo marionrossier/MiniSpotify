@@ -55,12 +55,6 @@ public class PlaylistRepository {
         }
     }
 
-    public void addPlaylist(Playlist playlist) {
-        List<Playlist> playlists = getAllPlaylists();
-        playlists.add(playlist);
-        saveAllPlaylists(playlists);
-    }
-
     public void deletePlaylistById(int playlistId) {
         List<Playlist> playlists = getAllPlaylists();
         playlists.removeIf(playlist -> playlist.getPlaylistId() == playlistId);

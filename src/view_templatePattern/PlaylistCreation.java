@@ -19,7 +19,7 @@ public class PlaylistCreation extends AbstractMenuPage {
         String playlistName = in.nextLine();
 
         playlist.setPlaylistName(playlistName);
-        playlistRepository.addPlaylist(playlist);
+        playlistRepository.savePlaylist(playlist);
 
         System.out.println(icon.iconOk() + "Playlist saved successfully !");
 

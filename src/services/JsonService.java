@@ -73,51 +73,51 @@ public class JsonService {
 
         PlaylistRepository playlistRepository = new PlaylistRepository();
 
-        playlistRepository.addPlaylist(new Playlist("POP Vibes",
+        playlistRepository.savePlaylist(new Playlist("POP Vibes",
                 new LinkedList<>(Arrays.asList(1986076679, 2084461505, 1988790520, 700468481, 998984026, 1290739974)),
                 1480, 6));
 
-        playlistRepository.addPlaylist(new Playlist("Rock Legends",
+        playlistRepository.savePlaylist(new Playlist("Rock Legends",
                 new LinkedList<>(Arrays.asList(243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482)),
                 1317, 6));
 
-        playlistRepository.addPlaylist(new Playlist("Amy Forever",
+        playlistRepository.savePlaylist(new Playlist("Amy Forever",
                 new LinkedList<>(Arrays.asList(1108071776, 342105258, 625427469, 661206135)),
                 822, 4));
 
-        playlistRepository.addPlaylist(new Playlist("Imagine This",
+        playlistRepository.savePlaylist(new Playlist("Imagine This",
                 new LinkedList<>(Arrays.asList(1287974581, 614172035, 494087492, 515539482)),
                 838, 4));
 
-        playlistRepository.addPlaylist(new Playlist("Quick Hits",
+        playlistRepository.savePlaylist(new Playlist("Quick Hits",
                 new LinkedList<>(Arrays.asList(625427469, 1280045910, 354322599, 1925355941, 661206135, 1252829874, 494087492)),
                 1240, 7));
 
-        playlistRepository.addPlaylist(new Playlist("Girls",
+        playlistRepository.savePlaylist(new Playlist("Girls",
                 new LinkedList<>(Arrays.asList(1108071776, 342105258, 625427469, 661206135, 1986076679, 2084461505, 1290739974, 1951451340, 469321884, 1252829874, 1988790520, 700468481)),
                 2754, 12));
 
-        playlistRepository.addPlaylist(new Playlist("Boys",
+        playlistRepository.savePlaylist(new Playlist("Boys",
                 new LinkedList<>(Arrays.asList(325561970, 321324189, 521970022, 1280045910, 719812166, 243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482, 998984026)),
                 2726, 12));
 
-        playlistRepository.addPlaylist(new Playlist("Soul & RnB Grooves",
+        playlistRepository.savePlaylist(new Playlist("Soul & RnB Grooves",
                 new LinkedList<>(Arrays.asList(1108071776, 342105258, 625427469, 1280045910, 1951451340, 719812166, 661206135)),
                 1507, 7));
 
-        playlistRepository.addPlaylist(new Playlist("Dance Floor",
+        playlistRepository.savePlaylist(new Playlist("Dance Floor",
                 new LinkedList<>(Arrays.asList(325561970, 1252829874, 321324189, 521970022)),
                 909, 4));
 
-        playlistRepository.addPlaylist(new Playlist("Random Favorites",
+        playlistRepository.savePlaylist(new Playlist("Random Favorites",
                 new LinkedList<>(Arrays.asList(1280045910, 1951451340, 1252829874, 719812166, 521970022)),
                 1114, 5));
 
-        playlistRepository.addPlaylist(new Playlist("Before 2000",
+        playlistRepository.savePlaylist(new Playlist("Before 2000",
                 new LinkedList<>(Arrays.asList(325561970, 354322599, 1925355941, 700468481)),
                 833, 4));
 
-        playlistRepository.addPlaylist(new Playlist("AllSongs",
+        playlistRepository.savePlaylist(new Playlist("AllSongs",
                 new LinkedList<>(Arrays.asList(
                         1108071776, 1986076679, 2084461505, 342105258, 625427469, 325561970, 321324189, 1280045910,
                         354322599, 1925355941, 1951451340, 243871940, 1988790520, 719812166, 700468481, 469321884,

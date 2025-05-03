@@ -13,9 +13,11 @@ class SequentialState implements IState{
 
     @Override
     public Song getNextSong() {
-        LinkedList<Integer> songsId = playlistPlayer.playlistRepository.getPlaylistById(playlistPlayer.getRunningPlaylistId()).getPlaylistSongsListWithId();
+        LinkedList<Integer> songsId = playlistPlayer.playlistRepository
+                .getPlaylistById(playlistPlayer.getRunningPlaylistId())
+                .getPlaylistSongsListWithId();
         int currentIndex = songsId.indexOf(playlistPlayer.currentSong.getSongId());
-        int nextIndex = (currentIndex + 1) % songsId.size(); //for looping in the playlist
+        int nextIndex = (currentIndex + 1) % songsId.size();
         int nextSongId = songsId.get(nextIndex);
         return playlistPlayer.songRepository.getSongById(nextSongId);
     }

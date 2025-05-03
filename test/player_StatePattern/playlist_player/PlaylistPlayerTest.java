@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import player_StatePattern.file_player.FakeMusicPlayer;
 import data.entities.Playlist;
 import services.Cookies_SingletonPattern;
+import services.PlaylistServices;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,6 +36,7 @@ public class PlaylistPlayerTest {
         // Initialize repositories with temp files
         SongRepository songRepository = new SongRepository(songTempFile.getAbsolutePath());
         PlaylistRepository playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
+        PlaylistServices playlistServices = new PlaylistServices(playlistRepository);
         
         // Create test songs
         Song song1 = createSong(1, "Song 1", "path/to/song1.mp3");
@@ -49,12 +51,11 @@ public class PlaylistPlayerTest {
         // Create a test playlist
         Playlist playlist = new Playlist("Test Playlist");
         playlist.setPlaylistId(1);
-        playlist.addSong(song1);
-        playlist.addSong(song2);
-        playlist.addSong(song3);
-        
-        // Add playlist to repository
-        playlistRepository.addPlaylist(playlist);
+        playlistRepository.savePlaylist(playlist);
+
+        playlistServices.addSong(playlist.getPlaylistId(), song1.getSongId());
+        playlistServices.addSong(playlist.getPlaylistId(), song2.getSongId());
+        playlistServices.addSong(playlist.getPlaylistId(), song3.getSongId());
         
         // Create a FakeMusicPlayer for testing
         fakeMusicPlayer = new FakeMusicPlayer();

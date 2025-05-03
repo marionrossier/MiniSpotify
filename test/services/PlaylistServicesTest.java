@@ -18,12 +18,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlaylistServicesTest {
 
-    private PlaylistPlayer playlistPlayer;
-    private FakeMusicPlayer fakeMusicPlayer;
     private File songTempFile;
     private File playlistTempFile;
     private Playlist playlist;
-    private PlaylistServices playlistServices;
+    private PlaylistServices playlistService;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -37,6 +35,7 @@ class PlaylistServicesTest {
         // Initialize repositories with temp files
         SongRepository songRepository = new SongRepository(songTempFile.getAbsolutePath());
         PlaylistRepository playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
+        playlistService = new PlaylistServices(playlistRepository);
 
         // Create test songs
         Song song1 = createSong(1, "Song 1", "path/to/song1.mp3");
@@ -49,23 +48,24 @@ class PlaylistServicesTest {
         songRepository.addSong(song3);
 
         // Create a test playlist
-        this.playlist = new Playlist("Test Playlist");
-        this.playlist.setPlaylistId(1);
-        this.playlist.addSong(song1);
-        this.playlist.addSong(song2);
-        this.playlist.addSong(song3);
+        playlist = new Playlist("Test Playlist");
+        playlist.setPlaylistId(1);
+        playlistRepository.savePlaylist(playlist);
+        this.playlistService.addSong(playlist.getPlaylistId(), song1.getSongId());
+        this.playlistService.addSong(playlist.getPlaylistId(), song2.getSongId());
+        this.playlistService.addSong(playlist.getPlaylistId(), song3.getSongId());
 
         // Add playlist to repository
-        playlistRepository.addPlaylist(playlist);
+        playlistRepository.savePlaylist(playlist);
 
         // Create a FakeMusicPlayer for testing
-        fakeMusicPlayer = new FakeMusicPlayer();
+        FakeMusicPlayer fakeMusicPlayer = new FakeMusicPlayer();
 
         // Instantiate the PlaylistPlayer with the fake player and repositories
-        playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository);
+        PlaylistPlayer playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository);
 
         // Create playlistService
-        playlistServices = new PlaylistServices(playlistRepository);
+        playlistService = new PlaylistServices(playlistRepository);
     }
 
     @AfterEach
@@ -88,14 +88,14 @@ class PlaylistServicesTest {
     }
 
     @Test
-    public void testEditPlayListName (){
+    public void testRenamePlayList(){
         // Arrange
         String newName = "TESTRename";
         int playlistId = this.playlist.getPlaylistId();
 
         // Act
-        playlistServices.editPlayListName(playlistId, newName);
-        String playlistName = playlistServices.playlistRepository.getPlaylistById(1).getPlaylistName();
+        playlistService.renamePlayList(playlistId, newName);
+        String playlistName = playlistService.playlistRepository.getPlaylistById(1).getPlaylistName();
         // Assert
         assertEquals(newName, playlistName);
     }
@@ -106,8 +106,8 @@ class PlaylistServicesTest {
         int playlistId = this.playlist.getPlaylistId();
 
         // Act
-        playlistServices.deletePlaylist(playlistId);
-        Playlist deletedPlaylist = playlistServices.playlistRepository.getPlaylistById(playlistId);
+        playlistService.deletePlaylist(playlistId);
+        Playlist deletedPlaylist = playlistService.playlistRepository.getPlaylistById(playlistId);
 
         // Assert
         assertNull(deletedPlaylist, "The playlist should be deleted");

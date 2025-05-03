@@ -55,10 +55,25 @@ public class PlaylistServices {
         return chosenPlaylist;
     }
 
-    public void addSongToPlaylist(int songId) {
-        playlistRepository.getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId())
-                .getPlaylistSongsListWithId().add(songId);
+
+    //TODO : Mettre les méthodes addSong, removeSong, reorderSong, dans le service PlaylistService
+    public void addSong(int currentPlaylistId, int currentSongId) {
+        Playlist playlist = this.playlistRepository.getPlaylistById(currentPlaylistId);
+        playlist.getPlaylistSongsListWithId().add(currentSongId);
+        playlist.setPlaylistDuration();
+
+        this.playlistRepository.savePlaylist(playlist);
     }
+
+    public void reorderSong(int playlistId, int songId, int oldIndex, int newIndex) {
+        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+        playlist.getPlaylistSongsListWithId().remove(oldIndex);
+        playlist.getPlaylistSongsListWithId().add(newIndex, songId);
+
+        playlistRepository.savePlaylist(playlist);
+    }
+
+    public void reorderSongsInPlaylist(String playlistName) {/*TODO*/}
 
     public void addSongToPlaylistFromTemporaryPlaylist(int playlistId) {
         Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
@@ -72,22 +87,25 @@ public class PlaylistServices {
         }
     }
 
-    public void editPlayListName(int playlistId, String newName) {
+    //TODO: retirer cette méthode et utiliser le setter...
+    public void renamePlayList(int playlistId, String newName) {
         Playlist playlist = playlistRepository.getPlaylistById(playlistId);
         playlist.setPlaylistName(newName);
+
         playlistRepository.savePlaylist(playlist);
         System.out.println("Playlist renamed to " + newName + " !");
     }
 
-    public void removeSongFromPlaylist(int songIndex) {
-        Playlist playlist = playlistRepository.getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId());
+    public void removeSongFromPlaylist(int playlistId, int songIndex) {
+        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+
         playlistRepository.getPlaylistById(playlist.getPlaylistId())
                 .getPlaylistSongsListWithId().remove(songIndex);
+
         playlistRepository.savePlaylist(playlist);
 
     }
 
-    public void reorderSongsInPlaylist(String playlistName) {/*TODO*/}
     public LinkedList<Playlist> getSharedPlaylist(User followedUser) {
         throw new UnsupportedOperationException("Not implemented yet");
         /*TODO*/
