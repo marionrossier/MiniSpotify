@@ -8,6 +8,7 @@ import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
 import services.PlaylistServices;
 import services.PrintService;
+import services.UserService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class ActionFoundedSongs extends AbstractMenuPage {
     PlaylistRepository playlistRepository = new PlaylistRepository();
     PlaylistServices playlistService = new PlaylistServices(playlistRepository);
     UserRepository userRepository = new UserRepository();
+    UserService userService = new UserService(userRepository);
     PrintService printService = new PrintService();
 
     public ActionFoundedSongs(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
@@ -61,17 +63,9 @@ public class ActionFoundedSongs extends AbstractMenuPage {
 
     @Override
     void button3() {
-        System.out.println("Playlist Name : ");
+        System.out.print("Playlist Name : ");
 
-        Playlist newPlaylist = new Playlist(in.nextLine());
-
-        Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
-        newPlaylist.setPlaylistSongsId(temporaryPlaylist.getPlaylistSongsListWithId());
-
-        User user = userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId());
-        userRepository.updateAccount(user).addOnePlaylist(newPlaylist.getPlaylistId());
-
-        playlistService.deleteTemporaryPlaylist();
+        playlistService.createPlaylistWithTemporaryPlaylist(in.nextLine());
 
         spotifyPageFactory.playlistHomePage.templateMethode();
     }

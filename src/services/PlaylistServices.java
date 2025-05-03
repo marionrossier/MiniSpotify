@@ -115,15 +115,35 @@ public class PlaylistServices {
 
     public void createTemporaryPlaylistAndInitCookies(LinkedList<Integer> chosenSongs) {
         //Creation of temporaryPlaylist
-        Playlist temporaryPlaylist = new Playlist("temporaryPlaylist");
+        Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
+        if (temporaryPlaylist == null) {
+            temporaryPlaylist = new Playlist("temporaryPlaylist");
+            playlistRepository.savePlaylist(temporaryPlaylist);
+        }
         temporaryPlaylist.setPlaylistSongsId(chosenSongs);
+        temporaryPlaylist.setPlaylistInformation();
+
         playlistRepository.savePlaylist(temporaryPlaylist);
+        int temporaryPlaylistId = temporaryPlaylist.getPlaylistId();
 
         //Initialisation of the Cookies
-        Cookies_SingletonPattern.setTemporaryPlaylist(temporaryPlaylist.getPlaylistId());
-        Cookies_SingletonPattern.setCurrentPlaylistId(playlistRepository
-                .getPlaylistByName("temporaryPlaylist").getPlaylistId());
+        Cookies_SingletonPattern.setTemporaryPlaylist(temporaryPlaylistId);
+        Cookies_SingletonPattern.setCurrentPlaylistId(temporaryPlaylistId);
         Cookies_SingletonPattern.setCurrentSongId(playlistRepository
-                .getPlaylistByName("temporaryPlaylist").getPlaylistSongsListWithId().getFirst());
+                .getPlaylistById(temporaryPlaylistId).getPlaylistSongsListWithId().getFirst());
+    }
+
+    public void createPlaylistWithTemporaryPlaylist(String playlistName) {
+        Playlist newPlaylist = new Playlist(playlistName);
+
+        Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
+        newPlaylist.setPlaylistSongsId(temporaryPlaylist.getPlaylistSongsListWithId());
+        newPlaylist.setPlaylistInformation();
+        playlistRepository.savePlaylist(newPlaylist);
+
+        UserService userService = new UserService(userRepository);
+        userService.addOnePlaylist(newPlaylist.getPlaylistId());
+
+        this.deleteTemporaryPlaylist();
     }
 }

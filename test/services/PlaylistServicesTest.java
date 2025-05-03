@@ -149,6 +149,27 @@ class PlaylistServicesTest {
         assertNull(playlistService.playlistRepository.getPlaylistByName("temporaryPlaylist"), "The playlist should be deleted");
     }
 
+    @Test
+    public void testCreatePlaylistWithTemporaryPlaylist (){
+        //Arrange
+        LinkedList <Integer> chosenSongs = new LinkedList<>();
+        chosenSongs.add(1);
+        chosenSongs.add(3);
+        playlistService.createTemporaryPlaylistAndInitCookies(chosenSongs);
+        String playlistName = "new Playlist";
+        int temporaryPlaylistLength = playlistService.playlistRepository
+                .getPlaylistByName("temporaryPlaylist")
+                .getPlaylistSongsListWithId().size();
+
+        //Act
+        playlistService.createPlaylistWithTemporaryPlaylist(playlistName);
+        int newPlaylistLength = playlistService.playlistRepository
+                .getPlaylistByName(playlistName)
+                .getPlaylistSongsListWithId().size();
+
+        //Assert
+        assertEquals(temporaryPlaylistLength, newPlaylistLength);
+    }
 
     //TODO : faire ces tests
 //    public void removeSongFromPlaylist(int playlistId, int songIndex) {

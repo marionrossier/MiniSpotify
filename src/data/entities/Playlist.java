@@ -87,4 +87,8 @@ public class Playlist {
         this.playlistName = updatedName;
     }
 
+    public void setPlaylistInformation(){
+        setPlaylistDuration();
+        setPlaylistSize();
+    }
 }

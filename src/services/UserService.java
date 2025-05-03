@@ -5,6 +5,7 @@ import data.entities.User;
 import data.jsons.UserRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserService {
     private final UserRepository userRepository;
@@ -33,7 +34,7 @@ public class UserService {
         }
         else {
             User newUser = new User(pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
-            userRepository.addUser(newUser);
+            userRepository.saveUser(newUser);
         }
     }
 
@@ -54,6 +55,19 @@ public class UserService {
             System.err.println("The password is incorrect.");
             return false;
         }
+    }
+    //TODO : faire la même chose pour les current playlists et song...
+    public int getCookieUserId (){
+        return Cookies_SingletonPattern.getInstance().getUserId();
+    }
+
+    public void addOnePlaylist(int playlistId) {
+        List<Integer> playlists = userRepository.getUserById(getCookieUserId()).getPlaylists();
+        if (playlists == null) {
+            playlists = new ArrayList<>();
+            userRepository.getUserById(getCookieUserId()).setPlaylists(playlists);
+        }
+        userRepository.addPlaylistToUser(getCookieUserId(),playlistId);
     }
 
     public void followFriend() {/*TODO*/}
