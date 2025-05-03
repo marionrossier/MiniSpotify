@@ -9,13 +9,24 @@ import java.util.*;
 
 public class PlaylistServices {
 
-    UserRepository userRepository = new UserRepository();
-    Scanner in = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
+    UserRepository userRepository;
     PlaylistRepository playlistRepository;
-    UserService userService = new UserService(userRepository);
+    UserService userService;
+
+
+    public PlaylistServices (PlaylistRepository playlistRepository, UserRepository userRepository){
+        this.playlistRepository = playlistRepository;
+        this.userRepository = userRepository;
+        this.userService = new UserService(userRepository);
+
+    }
 
     public PlaylistServices (PlaylistRepository playlistRepository){
         this.playlistRepository = playlistRepository;
+        userRepository = new UserRepository();
+        this.userService = new UserService(userRepository);
+
     }
 
     public void deletePlaylist(int playlistId) {
@@ -26,13 +37,12 @@ public class PlaylistServices {
 
 
     public int validationPlaylistChoice() {
-        Scanner scanner = new Scanner(System.in);
         User currentUser = userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId());
 
         int chosenPlaylist = -1;
 
         while (true) {
-            String input = scanner.nextLine();
+            String input = this.scanner.nextLine();
 
             if (input.equals("0")) {
                 return 0;

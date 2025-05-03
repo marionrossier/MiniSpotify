@@ -6,7 +6,6 @@ import data.jsons.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,14 +17,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserServiceTest {
 
     private File tempFile;
-    private UserService service;
+    private UserService userService;
     private UserRepository userRepository;
 
     @BeforeEach
     void setUp() throws IOException {
         tempFile = Files.createTempFile("user", ".json").toFile();
         userRepository = new UserRepository(tempFile.getAbsolutePath());
-        service = new UserService(userRepository);
+        userService = new UserService(userRepository);
     }
 
     @AfterEach
@@ -38,7 +37,7 @@ public class UserServiceTest {
     @Test
     void addUser_ShouldCreateANewUser(){
         // Act
-        service.addUser("TestUser", "test@test.com", "TestPassword", PlanEnum.FREE);
+        userService.addUser("TestUser", "test@test.com", "TestPassword", PlanEnum.FREE);
 
         // Assert
         List<User> users = userRepository.getAllUsers();
@@ -48,10 +47,10 @@ public class UserServiceTest {
     @Test
     void getUserIdByPseudo_ShouldReturnTheUserId(){
         // Arrange
-        service.addUser("TestUser", "test@test.com", "TestPassword", PlanEnum.FREE);
+        userService.addUser("TestUser", "test@test.com", "TestPassword", PlanEnum.FREE);
 
         // Act
-        int userId = service.getUserIdByPseudo("TestUser");
+        int userId = userService.getUserIdByPseudo("TestUser");
 
         // Assert
         assertTrue(userId > 0);
@@ -60,10 +59,10 @@ public class UserServiceTest {
     @Test
     void verifyUserAuthentification_ShouldReturnTrue_WhenCorrectCredentialAreGiven() {
         // Arrange
-        service.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
+        userService.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
 
         // Act
-        boolean result = service.verifyUserAuthentification("TestUser", "CorrectPassword");
+        boolean result = userService.verifyUserAuthentification("TestUser", "CorrectPassword");
 
         // Assert
         assertTrue(result);
@@ -72,10 +71,10 @@ public class UserServiceTest {
     @Test
     void verifyUserAuthentification_ShouldReturnFalse_WhenWrongCredentialAreGiven() {
         // Arrange
-        service.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
+        userService.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
 
         // Act
-        boolean result = service.verifyUserAuthentification("TestUser", "WrongPassword");
+        boolean result = userService.verifyUserAuthentification("TestUser", "WrongPassword");
 
         // Assert
         assertFalse(result);

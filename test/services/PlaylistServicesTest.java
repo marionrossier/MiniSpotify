@@ -1,9 +1,12 @@
 package services;
 
+import data.entities.PlanEnum;
 import data.entities.Playlist;
 import data.entities.Song;
+import data.entities.User;
 import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
+import data.jsons.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,22 +24,25 @@ class PlaylistServicesTest {
 
     private File songTempFile;
     private File playlistTempFile;
+    private File userTempFile;
     private Playlist playlist;
     private PlaylistServices playlistService;
 
     @BeforeEach
     void setUp() throws IOException {
-        // Create Cookies_SingeltonPattern instance
-        Cookies_SingletonPattern.setInstance(400953820); //testUsers
 
         // Create temporary files for repositories
         songTempFile = Files.createTempFile("songs", ".json").toFile();
         playlistTempFile = Files.createTempFile("playlists", ".json").toFile();
+        userTempFile = Files.createTempFile("users", ".json").toFile();
+
 
         // Initialize repositories with temp files
         SongRepository songRepository = new SongRepository(songTempFile.getAbsolutePath());
+        UserRepository userRepository = new UserRepository(userTempFile.getAbsolutePath());
         PlaylistRepository playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
-        playlistService = new PlaylistServices(playlistRepository);
+
+        playlistService = new PlaylistServices(playlistRepository, userRepository);
 
         // Create test songs
         Song song1 = createSong(1, "Song 1", "path/to/song1.mp3");
@@ -59,6 +65,14 @@ class PlaylistServicesTest {
         // Add playlist to repository
         playlistRepository.savePlaylist(playlist);
 
+        // Create a test user
+        User user = new User("testUsers","email", "testUsers", PlanEnum.FREE);
+        user.setUserId(400953820);
+        userRepository.saveUser(user);
+
+        // Create Cookies_SingeltonPattern instance
+        Cookies_SingletonPattern.setInstance(400953820); //testUsers
+
         // Create a FakeMusicPlayer for testing
         FakeMusicPlayer fakeMusicPlayer = new FakeMusicPlayer();
 
@@ -66,7 +80,7 @@ class PlaylistServicesTest {
         PlaylistPlayer playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository);
 
         // Create playlistService
-        playlistService = new PlaylistServices(playlistRepository);
+        playlistService = new PlaylistServices(playlistRepository, userRepository);
     }
 
     @AfterEach

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
+    //TODO : mettre final les autre repo et services sous les services.
     private final UserRepository userRepository;
     private final PasswordService passwordService = new PasswordService();
 
