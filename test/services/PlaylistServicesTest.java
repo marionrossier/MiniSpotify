@@ -173,22 +173,22 @@ class PlaylistServicesTest {
 
     //TODO : faire ces tests
 //    public void removeSongFromPlaylist(int playlistId, int songIndex) {
-//        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+//        Playlist playlist = playlistRepo.getPlaylistById(playlistId);
 //
-//        playlistRepository.getPlaylistById(playlist.getPlaylistId())
+//        playlistRepo.getPlaylistById(playlist.getPlaylistId())
 //                .getPlaylistSongsListWithId().remove(songIndex);
 //
-//        playlistRepository.savePlaylist(playlist);
+//        playlistRepo.savePlaylist(playlist);
 //
 //    }
 //
 //    public void addSongToPlaylistFromTemporaryPlaylist(int playlistId) {
-//        Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
-//        Playlist targetPlaylist = playlistRepository.getPlaylistById(playlistId);
+//        Playlist temporaryPlaylist = playlistRepo.getPlaylistByName("temporaryPlaylist");
+//        Playlist targetPlaylist = playlistRepo.getPlaylistById(playlistId);
 //
 //        if (targetPlaylist != null && temporaryPlaylist != null) {
 //            targetPlaylist.getPlaylistSongsListWithId().addAll(temporaryPlaylist.getPlaylistSongsListWithId());
-//            playlistRepository.updatePlaylist(targetPlaylist);
+//            playlistRepo.updatePlaylist(targetPlaylist);
 //        } else {
 //            System.err.println("Target playlist or temporary playlist not found.");
 //        }

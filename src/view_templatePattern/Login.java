@@ -2,14 +2,10 @@ package view_templatePattern;
 
 import data.entities.User;
 import services.Cookies_SingletonPattern;
-import data.jsons.UserRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.UserService;
 
 
 public class Login extends AbstractMenuPage {
-    public UserRepository userRepository = new UserRepository();
-    public UserService userService = new UserService(new UserRepository());
 
     public Login(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -38,8 +34,8 @@ public class Login extends AbstractMenuPage {
 
         //TODO : mettre cette logique dans passWordService
         //Check the password...
-        if(userService.verifyUserAuthentification(pseudonym, password)) {
-            User user = userRepository.getUserByPseudonym(pseudonym);
+        if(toolbox.getUserServ().verifyUserAuthentification(pseudonym, password)) {
+            User user = toolbox.getUserRepo().getUserByPseudonym(pseudonym);
             Cookies_SingletonPattern.setUser(user.getUserId());
             System.out.println(icon.lineBreak + icon.iconOk() + "Login successful !");
             spotifyPageFactory.homePage.templateMethode();

@@ -1,17 +1,15 @@
 package demo;
 
 import data.entities.PlanEnum;
-import data.jsons.UserRepository;
-import services.UserService;
+import services.Toolbox;
 
 public class TestServices {
     public static void main(String[] args) {
-
-        UserService userService = new UserService(new UserRepository());
+        Toolbox toolbox = new Toolbox();
 
         PlanEnum planEnum = PlanEnum.FREE;
-        userService.addUser("testUsers", "email", "password", planEnum);
-        if(userService.verifyUserAuthentification("testUsers", "password"))
+        toolbox.getUserServ().addUser("testUsers", "email", "password", planEnum);
+        if(toolbox.getUserServ().verifyUserAuthentification("testUsers", "password"))
             System.out.println("User verified");
         else
             System.out.println("User not verified");

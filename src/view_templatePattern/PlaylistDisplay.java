@@ -1,23 +1,14 @@
 package view_templatePattern;
 
-import data.entities.Playlist;
-import data.jsons.PlaylistRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
-import services.PlaylistServices;
-import services.PrintService;
-import services.SongService;
 
 import java.util.LinkedList;
 import java.util.Scanner;
 
 public class PlaylistDisplay extends AbstractMenuPage {
 
-    SongService songService = new SongService();
-    PrintService printService = new PrintService();
     Scanner in = new Scanner(System.in);
-    PlaylistRepository playlistRepository = new PlaylistRepository();
-    PlaylistServices playlistServices = new PlaylistServices(playlistRepository);
 
     public PlaylistDisplay(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -34,12 +25,12 @@ public class PlaylistDisplay extends AbstractMenuPage {
     @Override
     void displaySpecificContent(){
         System.out.println();
-        System.out.println("Playlist name : " + playlistRepository
+        System.out.println("Playlist name : " + toolbox.getPlaylistRepo()
                 .getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId())
                 .getPlaylistName());
         System.out.println("Playlist songs : ");
 
-        printService.printSongList(playlistRepository
+        toolbox.getPrintServ().printSongList(toolbox.getPlaylistRepo()
                 .getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId())
                 .getPlaylistSongsListWithId());
     }
@@ -59,7 +50,7 @@ public class PlaylistDisplay extends AbstractMenuPage {
         System.out.print("Enter the new name of the playlist : ");
         String newName = in.next();
         int playlistId = Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
-        playlistServices.renamePlayList(playlistId, newName);
+        toolbox.getPlaylistServ().renamePlayList(playlistId, newName);
     }
 
     @Override
@@ -69,11 +60,11 @@ public class PlaylistDisplay extends AbstractMenuPage {
         System.out.print(icon.iconSearch() + "Enter the title of the song : ");
         String songTitle = in.nextLine();
 
-        LinkedList<Integer> foundedSongs = songService.searchSongByTitle(songTitle);
-        printService.printSongFound(foundedSongs, songTitle);
-        LinkedList<Integer> chosenSongs = songService.chooseFoundedSongs(foundedSongs);
+        LinkedList<Integer> foundedSongs = toolbox.getSongServ().searchSongByTitle(songTitle);
+        toolbox.getPrintServ().printSongFound(foundedSongs, songTitle);
+        LinkedList<Integer> chosenSongs = toolbox.getSongServ().chooseFoundedSongs(foundedSongs);
 
-        playlistServices.createTemporaryPlaylistAndInitCookies(chosenSongs);
+        toolbox.getPlaylistServ().createTemporaryPlaylistAndInitCookies(chosenSongs);
 
         spotifyPageFactory.actionFoundedSongs.templateMethode();
     }
@@ -84,7 +75,7 @@ public class PlaylistDisplay extends AbstractMenuPage {
         int songIndex = in.nextInt()-1;
 
         int currentPlaylistId = Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
-        playlistServices.removeSongFromPlaylist(currentPlaylistId, songIndex);
+        toolbox.getPlaylistServ().removeSongFromPlaylist(currentPlaylistId, songIndex);
         spotifyPageFactory.playlistDisplay.templateMethode();
     }
 

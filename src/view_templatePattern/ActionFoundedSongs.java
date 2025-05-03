@@ -1,27 +1,14 @@
 package view_templatePattern;
 
 import data.entities.Playlist;
-import data.entities.User;
-import data.jsons.PlaylistRepository;
-import data.jsons.UserRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.Cookies_SingletonPattern;
-import services.PlaylistServices;
-import services.PrintService;
-import services.UserService;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Scanner;
 
 public class ActionFoundedSongs extends AbstractMenuPage {
 
     Scanner in = new Scanner(System.in);
-    PlaylistRepository playlistRepository = new PlaylistRepository();
-    PlaylistServices playlistService = new PlaylistServices(playlistRepository);
-    UserRepository userRepository = new UserRepository();
-    UserService userService = new UserService(userRepository);
-    PrintService printService = new PrintService();
 
     public ActionFoundedSongs(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -40,7 +27,7 @@ public class ActionFoundedSongs extends AbstractMenuPage {
 
     @Override
     void button1() {
-        Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
+        Playlist temporaryPlaylist = toolbox.getPlaylistRepo().getPlaylistByName("temporaryPlaylist");
         LinkedList <Integer> songs = temporaryPlaylist.getPlaylistSongsListWithId();
 
         if (songs != null && !songs.isEmpty()) {
@@ -54,18 +41,18 @@ public class ActionFoundedSongs extends AbstractMenuPage {
     @Override
     void button2() {
         System.out.println("Select your playlist : ");
-        printService.printUserPlaylists();
+        toolbox.getPrintServ().printUserPlaylists();
         displayInput();
-        int playlistId = playlistService.validationPlaylistChoice();
+        int playlistId = toolbox.getPlaylistServ().validationPlaylistChoice();
 
-        playlistService.addSongToPlaylistFromTemporaryPlaylist(playlistId);
+        toolbox.getPlaylistServ().addSongToPlaylistFromTemporaryPlaylist(playlistId);
     }
 
     @Override
     void button3() {
         System.out.print("Playlist Name : ");
 
-        playlistService.createPlaylistWithTemporaryPlaylist(in.nextLine());
+        toolbox.getPlaylistServ().createPlaylistWithTemporaryPlaylist(in.nextLine());
 
         spotifyPageFactory.playlistHomePage.templateMethode();
     }

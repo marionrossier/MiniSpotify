@@ -1,12 +1,10 @@
 package view_templatePattern;
 
 import data.entities.Playlist;
-import data.jsons.PlaylistRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 
 public class PlaylistCreation extends AbstractMenuPage {
     private final Playlist playlist = new Playlist();
-    private final PlaylistRepository playlistRepository = new PlaylistRepository();
 
     public PlaylistCreation(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -19,7 +17,7 @@ public class PlaylistCreation extends AbstractMenuPage {
         String playlistName = in.nextLine();
 
         playlist.setPlaylistName(playlistName);
-        playlistRepository.savePlaylist(playlist);
+        toolbox.getPlaylistRepo().savePlaylist(playlist);
 
         System.out.println(icon.iconOk() + "Playlist saved successfully !");
 

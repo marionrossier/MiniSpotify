@@ -1,12 +1,9 @@
 package view_templatePattern;
 
-import data.jsons.SongRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
 
 public class SongPlayer extends AbstractMenuPage {
-
-    SongRepository songRepository = new SongRepository();
 
     public SongPlayer(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -59,7 +56,7 @@ public class SongPlayer extends AbstractMenuPage {
 
     void loop(){
         while (spotifyPlayer.getMusicPlayer().isPlaying() || spotifyPlayer.getMusicPlayer().isPaused()) {
-            System.out.println(this.songRepository.getSongById(spotifyPlayer.getRunningSongId()).getSongName());
+            System.out.println(toolbox.getSongRepo().getSongById(spotifyPlayer.getRunningSongId()).getSongName());
             displayInput();
             validateInput();
             switchPage();

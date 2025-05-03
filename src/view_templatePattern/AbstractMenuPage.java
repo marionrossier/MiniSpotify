@@ -2,6 +2,7 @@ package view_templatePattern;
 
 import services.Icon;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.Toolbox;
 
 import java.util.Scanner;
 
@@ -9,17 +10,18 @@ import java.util.Scanner;
 // dont une pour les menus simples et l'autre pour les menus avec impression d'information
 public abstract class AbstractMenuPage {
 
-    //TODO : créer une classe repositoryService qui crée tous les répositories, afin qu'ils soient tous
-    // atteignable dans chaque classe
 
     //TODO : revoir logique des views et faire en sorte qu'on puisse revenir en arrière
     int index;
     public String pageTitle;
     public String pageContent;
     public IPlaylistPlayer spotifyPlayer;
+
     SpotifyPageFactory spotifyPageFactory;
     Scanner in = new Scanner(System.in);
-    Icon icon = new Icon();
+    protected Icon icon = new Icon();
+
+    protected Toolbox toolbox = new Toolbox();
 
     public AbstractMenuPage(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         this.spotifyPageFactory = spotifyPageFactory;

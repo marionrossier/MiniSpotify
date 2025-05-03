@@ -1,9 +1,7 @@
 package view_templatePattern;
 
-import data.jsons.PlaylistRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
-import services.PlaylistServices;
 
 public class HomePage extends AbstractMenuPage {
 
@@ -23,8 +21,7 @@ public class HomePage extends AbstractMenuPage {
         System.out.println("Logging you out ...");
         spotifyPlayer.stop();
 
-        PlaylistServices playlistServices = new PlaylistServices(new PlaylistRepository());
-        playlistServices.deleteTemporaryPlaylist();
+        toolbox.getPlaylistServ().deleteTemporaryPlaylist();
 
         spotifyPageFactory.login.templateMethode();
         Cookies_SingletonPattern.resetCookies();

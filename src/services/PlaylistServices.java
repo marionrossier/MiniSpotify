@@ -12,6 +12,7 @@ public class PlaylistServices {
     UserRepository userRepository = new UserRepository();
     Scanner in = new Scanner(System.in);
     PlaylistRepository playlistRepository;
+    UserService userService = new UserService(userRepository);
 
     public PlaylistServices (PlaylistRepository playlistRepository){
         this.playlistRepository = playlistRepository;
@@ -109,8 +110,11 @@ public class PlaylistServices {
     }
 
     public void deleteTemporaryPlaylist() {
-        int playlistId = playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId();
-        playlistRepository.deletePlaylistById(playlistId);
+        Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
+        if (temporaryPlaylist != null) {
+            int playlistId = temporaryPlaylist.getPlaylistId();
+            playlistRepository.deletePlaylistById(playlistId);
+        }
     }
 
     public void createTemporaryPlaylistAndInitCookies(LinkedList<Integer> chosenSongs) {
@@ -141,7 +145,6 @@ public class PlaylistServices {
         newPlaylist.setPlaylistInformation();
         playlistRepository.savePlaylist(newPlaylist);
 
-        UserService userService = new UserService(userRepository);
         userService.addOnePlaylist(newPlaylist.getPlaylistId());
 
         this.deleteTemporaryPlaylist();

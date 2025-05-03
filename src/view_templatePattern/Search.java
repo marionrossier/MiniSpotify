@@ -1,17 +1,11 @@
 package view_templatePattern;
 
 import data.entities.Artist;
-import data.jsons.ArtistRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.PrintService;
-import services.SongService;
 
 import java.util.List;
 
 public class Search extends AbstractMenuPage {
-
-    SongService songService = new SongService();
-    PrintService printService = new PrintService();
 
     public Search(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -27,8 +21,8 @@ public class Search extends AbstractMenuPage {
         System.out.print(icon.iconSearch() + "Enter the title of the song : ");
         String songTitle = in.nextLine();
 
-        List<Integer> foundedSongs = songService.searchSongByTitle(songTitle);
-        printService.printSongFound(foundedSongs, songTitle);
+        List<Integer> foundedSongs = toolbox.getSongServ().searchSongByTitle(songTitle);
+        toolbox.getPrintServ().printSongFound(foundedSongs, songTitle);
 
         //TODO : terminer
 //        List<Integer> chosenSongs = songService.chooseFoundedSongs(foundedSongs);
@@ -45,8 +39,7 @@ public class Search extends AbstractMenuPage {
         // TODO : idem que Song, chercher via le ArtistRep ou il faut créer une méthode
         //  "getArtistByName(String name) return liste" des correspondances
 
-        ArtistRepository artistRepository = new ArtistRepository();
-        Artist searchedArtist = artistRepository.getArtistByName(artistName); //Pas juste à 100%
+        Artist searchedArtist = toolbox.getArtistRepo().getArtistByName(artistName); //Pas juste à 100%
     }
 
     @Override

@@ -1,19 +1,10 @@
 package view_templatePattern;
 
 import data.entities.User;
-import data.jsons.PlaylistRepository;
-import data.jsons.UserRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
-import services.PlaylistServices;
-import services.PrintService;
 
 public class PlaylistChoseList extends AbstractMenuPage {
-
-    UserRepository userRepository = new UserRepository();
-    PlaylistRepository playlistRepository = new PlaylistRepository();
-    PlaylistServices playlistService = new PlaylistServices(playlistRepository);
-    PrintService printService = new PrintService();
 
     public PlaylistChoseList(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         super(spotifyPageFactory, spotifyPlayer);
@@ -23,10 +14,10 @@ public class PlaylistChoseList extends AbstractMenuPage {
 
     @Override
     void displaySpecificContent() {
-        User currentUser = userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId()); //232928320
+        User currentUser = toolbox.getUserRepo().getUserById(Cookies_SingletonPattern.getInstance().getUserId()); //232928320
 
         if (currentUser != null && currentUser.getPlaylists() != null) {
-            printService.printUserPlaylists();
+            toolbox.getPrintServ().printUserPlaylists();
         } else {
             System.out.println("No playlists available.");
         }
@@ -35,7 +26,7 @@ public class PlaylistChoseList extends AbstractMenuPage {
     @Override
     void validateInput() {
 
-        int chosenPlaylist = playlistService.validationPlaylistChoice();
+        int chosenPlaylist = toolbox.getPlaylistServ().validationPlaylistChoice();
 
         if (chosenPlaylist == 0) {
             spotifyPageFactory.homePage.templateMethode();
@@ -43,7 +34,7 @@ public class PlaylistChoseList extends AbstractMenuPage {
         }
         Cookies_SingletonPattern.setCurrentPlaylistId(chosenPlaylist);
         Cookies_SingletonPattern.setCurrentSongId(
-                playlistRepository.getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
+                toolbox.getPlaylistRepo().getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
         spotifyPageFactory.playlistDisplay.templateMethode();
     }
 
