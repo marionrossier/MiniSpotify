@@ -14,8 +14,8 @@ public class Toolbox {
     ArtistRepository artistRepo = new ArtistRepository();
     SongRepository songRepo = new SongRepository();
 
-    PlaylistServices playlistServ = new PlaylistServices(playlistRepo); //TODO : retirer la variable du constructeur
-    SongService songServ = new SongService();
+    PlaylistServices playlistServ = new PlaylistServices(playlistRepo);
+    SongService songServ = new SongService(songRepo);
     UserService userServ = new UserService(userRepo);
     PrintService printServ = new PrintService();
     PasswordService passwordServ = new PasswordService();

@@ -14,7 +14,7 @@ public class SongService {
     SongRepository songRepository = new SongRepository();
 
     // Constructor
-    public SongService() {
+    public SongService(SongRepository songRepo) {
     }
 
     public LinkedList<Integer> searchSongByTitle(String songTitle){
