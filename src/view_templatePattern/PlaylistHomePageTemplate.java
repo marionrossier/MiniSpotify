@@ -1,11 +1,12 @@
 package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.PageService;
 
 public class PlaylistHomePageTemplate extends _SimplePageTemplate {
 
-    public PlaylistHomePageTemplate(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public PlaylistHomePageTemplate(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Home Page Playlist";
         this.pageContent =
@@ -16,12 +17,12 @@ public class PlaylistHomePageTemplate extends _SimplePageTemplate {
 
     @Override
     public void button1() {
-        spotifyPageFactory.playlistChoseList.displayAllPage();
+        pageService.playlistChoseList.displayAllPage();
     }
 
     @Override
     public void button2() {
-        spotifyPageFactory.playlistCreation.displayAllPage();
+        pageService.playlistCreation.displayAllPage();
     }
 
 }

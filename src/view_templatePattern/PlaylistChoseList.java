@@ -3,14 +3,15 @@ package view_templatePattern;
 import data.entities.User;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
+import services.PageService;
 
 public class PlaylistChoseList extends _SimplePageTemplate {
 
-    public PlaylistChoseList(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public PlaylistChoseList(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Chose Your Playlist Page";
-        this.pageContent = "Chose a Playlist below or press \"0\"";
+        this.pageContent = "Chose a Playlist below or press \"0\" to go back !";
     }
 
     @Override
@@ -30,12 +31,12 @@ public class PlaylistChoseList extends _SimplePageTemplate {
         int chosenPlaylist = toolbox.getPlaylistServ().validationPlaylistChoice();
 
         if (chosenPlaylist == 0) {
-            spotifyPageFactory.homePage.displayAllPage();
+            pageService.homePage.displayAllPage();
             return;
         }
         Cookies_SingletonPattern.setCurrentPlaylistId(chosenPlaylist);
         Cookies_SingletonPattern.setCurrentSongId(
                 toolbox.getPlaylistRepo().getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
-        spotifyPageFactory.playlistDisplay.displayAllPage();
+        pageService.playlistDisplay.displayAllPage();
     }
 }

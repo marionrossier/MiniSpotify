@@ -2,11 +2,12 @@ package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
+import services.PageService;
 
 public class HomePage extends _SimplePageTemplate {
 
-    public HomePage(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public HomePage(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Home Page";
         this.pageContent =
@@ -24,27 +25,27 @@ public class HomePage extends _SimplePageTemplate {
 
         toolbox.getPlaylistServ().deleteTemporaryPlaylist();
 
-        spotifyPageFactory.login.displayAllPage();
+        pageService.login.displayAllPage();
         Cookies_SingletonPattern.resetCookies();
     }
 
     @Override
     public void button1() {
-        spotifyPageFactory.playlistHomePage.displayAllPage();
+        pageService.playlistHomePage.displayAllPage();
     }
 
     @Override
     public void button2() {
-        spotifyPageFactory.search.displayAllPage();
+        pageService.search.displayAllPage();
     }
 
     @Override
     public void button3() {
-        spotifyPageFactory.friendsHomePage.displayAllPage();
+        pageService.friendsHomePage.displayAllPage();
     }
 
     @Override
     public void button4(){
-        spotifyPageFactory.songPlayer.displayAllPage();
+        pageService.songPlayer.displayAllPage();
     }
 }

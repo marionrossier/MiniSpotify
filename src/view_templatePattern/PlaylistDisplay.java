@@ -1,6 +1,7 @@
 package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.PageService;
 
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -9,8 +10,8 @@ public class PlaylistDisplay extends _SimplePageTemplate {
 
     Scanner in = new Scanner(System.in);
 
-    public PlaylistDisplay(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public PlaylistDisplay(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Playlist Page : ";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
@@ -37,7 +38,7 @@ public class PlaylistDisplay extends _SimplePageTemplate {
 
     @Override
     public void button1() {
-        spotifyPageFactory.songPlayer.displayAllPage();
+        pageService.songPlayer.displayAllPage();
     }
 
     @Override
@@ -61,7 +62,7 @@ public class PlaylistDisplay extends _SimplePageTemplate {
 
         toolbox.getPlaylistServ().createTemporaryPlaylistAndInitCookies(chosenSongs);
 
-        spotifyPageFactory.actionFoundedSongs.displayAllPage();
+        pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
@@ -71,7 +72,7 @@ public class PlaylistDisplay extends _SimplePageTemplate {
 
         int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
         toolbox.getPlaylistServ().removeSongFromPlaylist(currentPlaylistId, songIndex);
-        spotifyPageFactory.playlistDisplay.displayAllPage();
+        pageService.playlistDisplay.displayAllPage();
     }
 
     @Override
@@ -81,6 +82,6 @@ public class PlaylistDisplay extends _SimplePageTemplate {
 
     @Override
     public void button6() {
-        spotifyPageFactory.playlistDeletion.displayAllPage();
+        pageService.playlistDeletion.displayAllPage();
     }
 }

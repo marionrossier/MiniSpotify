@@ -4,6 +4,8 @@ public interface _MenuInterface {
 
     void displayAllPage();
 
+    int getPageId();
+
     void displayTitle(String pageTitle);
     void displayContent(String pageContent);
 

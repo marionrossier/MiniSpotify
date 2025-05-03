@@ -2,13 +2,14 @@ package view_templatePattern;
 
 import data.entities.Artist;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.PageService;
 
 import java.util.List;
 
 public class Search extends _SimplePageTemplate {
 
-    public Search(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public Search(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Search Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
@@ -45,7 +46,7 @@ public class Search extends _SimplePageTemplate {
 
     @Override
     public void button3() {
-        spotifyPageFactory.searchGender.displayAllPage();
+        pageService.searchGender.displayAllPage();
     }
 
 }

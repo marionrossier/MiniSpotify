@@ -1,11 +1,12 @@
 package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.PageService;
 
 public abstract class _ComplexPageTemplate extends _SimplePageTemplate {
 
-    public _ComplexPageTemplate(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public _ComplexPageTemplate(PageService pageManager, IPlaylistPlayer spotifyPlayer) {
+        super(pageManager, spotifyPlayer);
     }
 
     @Override

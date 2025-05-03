@@ -2,6 +2,7 @@ package view_templatePattern;
 
 import services.Icon;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.PageService;
 import services.Toolbox;
 
 import java.util.Scanner;
@@ -14,26 +15,28 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
     public int pageId;
     public String pageContent;
     public IPlaylistPlayer spotifyPlayer;
-    public Stack <Integer> menuPages = new Stack<>();
 
-    SpotifyPageFactory spotifyPageFactory;
+    PageService pageService;
     Scanner scanner = new Scanner(System.in);
 
     protected Icon icon = new Icon();
     protected Toolbox toolbox = new Toolbox();
 
-    public _SimplePageTemplate(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
-        this.spotifyPageFactory = spotifyPageFactory;
+    public _SimplePageTemplate(PageService pageService, IPlaylistPlayer spotifyPlayer) {
+        this.pageService = pageService;
         this.spotifyPlayer = spotifyPlayer;
     }
 
-    public final void goBack(){
-        int lastPageId = menuPages.pop();
-        spotifyPageFactory.pageManager(lastPageId);
+    public final void goBack() {
+        int lastPageId;
+        do {
+            lastPageId = pageService.getMenuPages().pop();
+        } while (lastPageId == getPageId() && !pageService.getMenuPages().isEmpty());
+        pageService.getPageById(lastPageId).displayAllPage();
     }
 
     public final void displayAllPage(){
-        menuPages.push(getPageId());
+        pageService.getMenuPages().push(getPageId());
         displayTitle(pageTitle);
         displayContent(pageContent);
         displaySpecificContent();

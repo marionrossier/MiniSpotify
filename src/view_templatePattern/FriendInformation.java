@@ -1,10 +1,11 @@
 package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.PageService;
 
 public class FriendInformation extends _SimplePageTemplate {
-    public FriendInformation(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public FriendInformation(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Friend information Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +

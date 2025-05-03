@@ -2,6 +2,7 @@ package view_templatePattern;
 
 import data.entities.Playlist;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.PageService;
 
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -10,8 +11,8 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
 
     Scanner in = new Scanner(System.in);
 
-    public ActionFoundedSongs(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public ActionFoundedSongs(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Chose your action for the founded songs";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
@@ -26,11 +27,11 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
         LinkedList <Integer> songs = temporaryPlaylist.getPlaylistSongsListWithId();
 
         if (songs != null && !songs.isEmpty()) {
-                spotifyPageFactory.songPlayer.displayAllPage();
+                pageService.songPlayer.displayAllPage();
         } else {
             System.out.println("No songs found to play.");
         }
-        spotifyPageFactory.search.displayAllPage();
+        pageService.search.displayAllPage();
     }
 
     @Override
@@ -49,7 +50,7 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
 
         toolbox.getPlaylistServ().createPlaylistWithTemporaryPlaylist(in.nextLine());
 
-        spotifyPageFactory.playlistHomePage.displayAllPage();
+        pageService.playlistHomePage.displayAllPage();
     }
 
 }

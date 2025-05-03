@@ -2,11 +2,12 @@ package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
+import services.PageService;
 
 public class SongPlayer extends _SimplePageTemplate {
 
-    public SongPlayer(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public SongPlayer(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Song Player Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak+

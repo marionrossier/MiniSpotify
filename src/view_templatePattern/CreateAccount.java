@@ -3,6 +3,7 @@ package view_templatePattern;
 import data.entities.PlanEnum;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
+import services.PageService;
 
 public class CreateAccount extends _SimplePageTemplate {
 
@@ -11,8 +12,8 @@ public class CreateAccount extends _SimplePageTemplate {
     private String email;
     private PlanEnum planEnum;
 
-    public CreateAccount(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public CreateAccount(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Create Account Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
@@ -50,6 +51,6 @@ public class CreateAccount extends _SimplePageTemplate {
     private void createAccount() {
         toolbox.getUserServ().addUser(pseudonym,email,password, planEnum);
         System.out.println("Account created successfully !");
-        spotifyPageFactory.login.displayAllPage();
+        pageService.login.displayAllPage();
     }
 }

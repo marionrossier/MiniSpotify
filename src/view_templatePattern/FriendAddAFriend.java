@@ -1,10 +1,11 @@
 package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.PageService;
 
 public class FriendAddAFriend extends _SimplePageTemplate {
-    public FriendAddAFriend(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public FriendAddAFriend(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
         this.pageTitle = "Follow Friend Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
                 "Tip the friend's pseudo to follow him"; //outil de recherche par pseudo

@@ -1,11 +1,12 @@
 package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.PageService;
 
 public class SearchGender extends _SimplePageTemplate {
 
-    public SearchGender(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public SearchGender(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Search Gender";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +

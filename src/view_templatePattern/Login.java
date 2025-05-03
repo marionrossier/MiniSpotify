@@ -3,12 +3,13 @@ package view_templatePattern;
 import data.entities.User;
 import services.Cookies_SingletonPattern;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.PageService;
 
 
 public class Login extends _SimplePageTemplate {
 
-    public Login(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public Login(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Login Page";
         this.pageContent =
@@ -35,7 +36,7 @@ public class Login extends _SimplePageTemplate {
             User user = toolbox.getUserRepo().getUserByPseudonym(pseudonym);
             Cookies_SingletonPattern.setUser(user.getUserId());
             System.out.println(icon.lineBreak + icon.iconOk() + "Login successful !");
-            spotifyPageFactory.homePage.displayAllPage();
+            pageService.homePage.displayAllPage();
         }else{
             System.out.println(icon.iconWarning() + "Login failed ! Please try again.");
             button1();
@@ -44,6 +45,6 @@ public class Login extends _SimplePageTemplate {
 
     @Override
     public void button2() {
-        spotifyPageFactory.createAccount.displayAllPage();
+        pageService.createAccount.displayAllPage();
     }
 }
