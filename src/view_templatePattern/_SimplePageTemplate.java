@@ -5,30 +5,35 @@ import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Toolbox;
 
 import java.util.Scanner;
+import java.util.Stack;
 
-//TODO : modifier celle-ci en interface et faire ensuite 2 abstracts qui extends cette interface
-// dont une pour les menus simples et l'autre pour les menus avec impression d'information
-public abstract class AbstractMenuPage {
+public abstract class _SimplePageTemplate implements _MenuInterface {
 
-
-    //TODO : revoir logique des views et faire en sorte qu'on puisse revenir en arrière
     int index;
     public String pageTitle;
+    public int pageId;
     public String pageContent;
     public IPlaylistPlayer spotifyPlayer;
+    public Stack <Integer> menuPages = new Stack<>();
 
     SpotifyPageFactory spotifyPageFactory;
-    Scanner in = new Scanner(System.in);
-    protected Icon icon = new Icon();
+    Scanner scanner = new Scanner(System.in);
 
+    protected Icon icon = new Icon();
     protected Toolbox toolbox = new Toolbox();
 
-    public AbstractMenuPage(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
+    public _SimplePageTemplate(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
         this.spotifyPageFactory = spotifyPageFactory;
         this.spotifyPlayer = spotifyPlayer;
     }
 
-    public final void templateMethode(){
+    public final void goBack(){
+        int lastPageId = menuPages.pop();
+        spotifyPageFactory.pageManager(lastPageId);
+    }
+
+    public final void displayAllPage(){
+        menuPages.push(getPageId());
         displayTitle(pageTitle);
         displayContent(pageContent);
         displaySpecificContent();
@@ -37,34 +42,38 @@ public abstract class AbstractMenuPage {
         switchPage();
     }
 
-    final void displayTitle(String pageTitle){
+    public final int getPageId (){
+        return pageId;
+    }
+
+    public final void displayTitle(String pageTitle){
         System.out.println();
         System.out.println(">>>>>> "+ pageTitle +" <<<<<<<");
     }
 
-    void displayContent(String pageContent){
+    public void displayContent(String pageContent){
         System.out.println(pageContent);
     }
 
-    void displaySpecificContent(){}
+    public void displaySpecificContent(){}
 
-    final void displayInput (){
+    public final void displayInput (){
         System.out.print("Your input : ");
     }
 
-    void validateInput(){
+    public void validateInput(){
         try{
-            index = in.nextInt();
-            in.nextLine(); // Clear the newline character
+            index = scanner.nextInt();
+            scanner.nextLine(); // Clear the newline character
         }catch (Exception e){
             System.out.println("Invalid input, try again.");
-            in.nextLine(); // Clear the invalid input
+            scanner.nextLine(); // Clear the invalid input
             displayInput();
             validateInput();
         }
     }
 
-    void switchPage() {
+    public final void switchPage() {
         switch (index){
             case 0:
                 button0();
@@ -96,39 +105,39 @@ public abstract class AbstractMenuPage {
         }
     }
 
-    final void invalidChoice(){
+    public final void invalidChoice(){
         System.out.println(icon.iconWarning() + "Invalid choice, try again." + icon.iconWarning() + icon.lineBreak);
     }
 
-    void button0() {
-        spotifyPageFactory.homePage.templateMethode();
+    public void button0() {
+        goBack();
     }
-    void button1(){
+    public void button1(){
         invalidChoice();
-        templateMethode();
+        displayAllPage();
     }
-    void button2(){
+    public void button2(){
         invalidChoice();
-        templateMethode();
+        displayAllPage();
     }
-    void button3(){
+    public void button3(){
         invalidChoice();
-        templateMethode();
+        displayAllPage();
     }
-    void button4(){
+    public void button4(){
         invalidChoice();
-        templateMethode();
+        displayAllPage();
     }
-    void button5(){
+    public void button5(){
         invalidChoice();
-        templateMethode();
+        displayAllPage();
     }
-    void button6(){
+    public void button6(){
         invalidChoice();
-        templateMethode();
+        displayAllPage();
     }
-    void button7(){
+    public void button7(){
         invalidChoice();
-        templateMethode();
+        displayAllPage();
     }
 }

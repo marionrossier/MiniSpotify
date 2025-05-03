@@ -4,15 +4,16 @@ import data.entities.PlanEnum;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
 
-public class CreateAccount extends AbstractMenuPage {
+public class CreateAccount extends _SimplePageTemplate {
 
     private String pseudonym;
     private String password;
     private String email;
     private PlanEnum planEnum;
 
-    public CreateAccount(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
+    public CreateAccount(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(spotifyPageFactory, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Create Account Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
                 icon.iconNbr(1) + "FREE " + icon.iconFree() + icon.lineBreak +
@@ -21,13 +22,13 @@ public class CreateAccount extends AbstractMenuPage {
     }
 
     @Override
-    void displayContent(String pageContent) {
+    public void displayContent(String pageContent) {
         System.out.print("Enter your pseudonym : ");
-        pseudonym = in.nextLine();
+        pseudonym = scanner.nextLine();
         System.out.print("Enter your password : ");
-        password = in.nextLine();
+        password = scanner.nextLine();
         System.out.print("Enter your email : ");
-        email = in.nextLine();
+        email = scanner.nextLine();
         //TODO : check if email is valid (dans UserService)
         System.out.println(icon.lineBreak + "Choose your plan : ");
 
@@ -35,18 +36,13 @@ public class CreateAccount extends AbstractMenuPage {
     }
 
     @Override
-    void button0() {
-        spotifyPageFactory.login.templateMethode();
-    }
-
-    @Override
-    void button1() {
+    public void button1() {
         planEnum = PlanEnum.FREE;
         createAccount();
     }
 
     @Override
-    void button2() {
+    public void button2() {
         planEnum = PlanEnum.PREMIUM;
         createAccount();
     }
@@ -54,6 +50,6 @@ public class CreateAccount extends AbstractMenuPage {
     private void createAccount() {
         toolbox.getUserServ().addUser(pseudonym,email,password, planEnum);
         System.out.println("Account created successfully !");
-        spotifyPageFactory.login.templateMethode();
+        spotifyPageFactory.login.displayAllPage();
     }
 }

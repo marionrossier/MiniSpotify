@@ -3,10 +3,11 @@ package view_templatePattern;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
 
-public class SongPlayer extends AbstractMenuPage {
+public class SongPlayer extends _SimplePageTemplate {
 
-    public SongPlayer(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
+    public SongPlayer(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(spotifyPageFactory, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Song Player Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak+
                 "Your song player ! " +icon.lineBreak+
@@ -19,37 +20,37 @@ public class SongPlayer extends AbstractMenuPage {
     }
 
     @Override
-    void button1() {
+    public void button1() {
         spotifyPlayer.setShuffleMode();
         loop();
     }
 
     @Override
-    void button2() {
+    public void button2() {
         spotifyPlayer.previous();
         loop();
     }
 
     @Override
-    void button3() {
+    public void button3() {
         spotifyPlayer.playOrPause(Cookies_SingletonPattern.getInstance().getCurrentSongId());
         loop();
     }
 
     @Override
-    void button4() {
+    public void button4() {
         spotifyPlayer.playback();
         loop();
     }
 
     @Override
-    void button5() {
+    public void button5() {
         spotifyPlayer.next();
         loop();
     }
 
     @Override
-    void button6() {
+    public void button6() {
         spotifyPlayer.setRepeatMode();
         loop();
     }

@@ -2,10 +2,11 @@ package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 
-public class FriendsHomePage extends AbstractMenuPage {
+public class FriendsHomePageTemplate extends _SimplePageTemplate {
 
-    public FriendsHomePage(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
+    public FriendsHomePageTemplate(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(spotifyPageFactory, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Friends Home Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak + //TODO : bien refactorer la classe et ses boutons !
                 icon.iconNbr(1) + "Display friends" + icon.lineBreak +
@@ -15,22 +16,22 @@ public class FriendsHomePage extends AbstractMenuPage {
     }
 
     @Override
-    void button1() {
-        spotifyPageFactory.friendsDisplayFriends.templateMethode();
+    public void button1() {
+        spotifyPageFactory.friendsDisplayFriends.displayAllPage();
     }
 
     @Override
-    void button2() {
-        spotifyPageFactory.friendsCommunePlaylists.templateMethode();
+    public void button2() {
+        spotifyPageFactory.friendsCommunePlaylists.displayAllPage();
     }
 
     @Override
-    void button3() {
-        spotifyPageFactory.friendAddAFriend.templateMethode();
+    public void button3() {
+        spotifyPageFactory.friendAddAFriend.displayAllPage();
     }
 
     @Override
-    void button4() {
-        spotifyPageFactory.friendAddPlaylist.templateMethode();
+    public void button4() {
+        spotifyPageFactory.friendAddPlaylist.displayAllPage();
     }
 }

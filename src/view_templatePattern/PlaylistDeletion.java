@@ -1,12 +1,12 @@
 package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.Cookies_SingletonPattern;
 
-public class PlaylistDeletion extends AbstractMenuPage {
+public class PlaylistDeletion extends _SimplePageTemplate {
 
-    public PlaylistDeletion(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
+    public PlaylistDeletion(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(spotifyPageFactory, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Delete Playlist Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
                 "Are you sure you want to delete this playlist?" + icon.lineBreak +
@@ -15,20 +15,15 @@ public class PlaylistDeletion extends AbstractMenuPage {
     }
 
     @Override
-    void button0() {
-        spotifyPageFactory.playlistDisplay.templateMethode();
-    }
-
-    @Override
-    void button1() {
+    public void button1() {
         toolbox.getPlaylistServ().deletePlaylist(toolbox.getPlaylistServ().getCurrentPlaylistId());
         System.out.println("Playlist deleted !");
-        spotifyPageFactory.playlistDisplay.templateMethode();
+        spotifyPageFactory.playlistDisplay.displayAllPage();
     }
 
     @Override
-    void button2() {
+    public void button2() {
         System.out.println("Playlist not deleted !");
-        spotifyPageFactory.playlistDisplay.templateMethode();
+        spotifyPageFactory.playlistDisplay.displayAllPage();
     }
 }

@@ -3,18 +3,19 @@ package view_templatePattern;
 import data.entities.Playlist;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 
-public class PlaylistCreation extends AbstractMenuPage {
+public class PlaylistCreation extends _SimplePageTemplate {
     private final Playlist playlist = new Playlist();
 
-    public PlaylistCreation(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
+    public PlaylistCreation(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(spotifyPageFactory, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Create Playlist Page";
         this.pageContent = "Enter the name of the playlist : ";
     }
     @Override
-    void displayContent(String pageContent) {
+    public void displayContent(String pageContent) {
         System.out.print(pageContent);
-        String playlistName = in.nextLine();
+        String playlistName = scanner.nextLine();
 
         playlist.setPlaylistName(playlistName);
         toolbox.getPlaylistRepo().savePlaylist(playlist);

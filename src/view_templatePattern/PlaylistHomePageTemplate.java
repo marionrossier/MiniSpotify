@@ -2,10 +2,11 @@ package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 
-public class PlaylistHomePage extends AbstractMenuPage {
+public class PlaylistHomePageTemplate extends _SimplePageTemplate {
 
-    public PlaylistHomePage(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
+    public PlaylistHomePageTemplate(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(spotifyPageFactory, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Home Page Playlist";
         this.pageContent =
                 icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
@@ -14,13 +15,13 @@ public class PlaylistHomePage extends AbstractMenuPage {
     }
 
     @Override
-    void button1() {
-        spotifyPageFactory.playlistChoseList.templateMethode();
+    public void button1() {
+        spotifyPageFactory.playlistChoseList.displayAllPage();
     }
 
     @Override
-    void button2() {
-        spotifyPageFactory.playlistCreation.templateMethode();
+    public void button2() {
+        spotifyPageFactory.playlistCreation.displayAllPage();
     }
 
 }

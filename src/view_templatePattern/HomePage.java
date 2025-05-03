@@ -3,10 +3,11 @@ package view_templatePattern;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
 
-public class HomePage extends AbstractMenuPage {
+public class HomePage extends _SimplePageTemplate {
 
-    public HomePage(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
+    public HomePage(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(spotifyPageFactory, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Home Page";
         this.pageContent =
                 icon.iconNbr(0) + icon.iconLogout() + icon.lineBreak +
@@ -17,33 +18,33 @@ public class HomePage extends AbstractMenuPage {
     }
 
     @Override
-    void button0() {
+    public void button0() {
         System.out.println("Logging you out ...");
         spotifyPlayer.stop();
 
         toolbox.getPlaylistServ().deleteTemporaryPlaylist();
 
-        spotifyPageFactory.login.templateMethode();
+        spotifyPageFactory.login.displayAllPage();
         Cookies_SingletonPattern.resetCookies();
     }
 
     @Override
-    void button1() {
-        spotifyPageFactory.playlistHomePage.templateMethode();
+    public void button1() {
+        spotifyPageFactory.playlistHomePage.displayAllPage();
     }
 
     @Override
-    void button2() {
-        spotifyPageFactory.search.templateMethode();
+    public void button2() {
+        spotifyPageFactory.search.displayAllPage();
     }
 
     @Override
-    void button3() {
-        spotifyPageFactory.friendsHomePage.templateMethode();
+    public void button3() {
+        spotifyPageFactory.friendsHomePage.displayAllPage();
     }
 
     @Override
-    void button4(){
-        spotifyPageFactory.songPlayer.templateMethode();
+    public void button4(){
+        spotifyPageFactory.songPlayer.displayAllPage();
     }
 }

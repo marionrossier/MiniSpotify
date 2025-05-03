@@ -5,10 +5,11 @@ import player_StatePattern.playlist_player.IPlaylistPlayer;
 
 import java.util.List;
 
-public class Search extends AbstractMenuPage {
+public class Search extends _SimplePageTemplate {
 
-    public Search(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
+    public Search(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(spotifyPageFactory, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Search Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
                 icon.iconNbr(1) + "Search a song" + icon.lineBreak +
@@ -17,9 +18,9 @@ public class Search extends AbstractMenuPage {
     }
 
     @Override
-    void button1() {
+    public void button1() {
         System.out.print(icon.iconSearch() + "Enter the title of the song : ");
-        String songTitle = in.nextLine();
+        String songTitle = scanner.nextLine();
 
         List<Integer> foundedSongs = toolbox.getSongServ().searchSongByTitle(songTitle);
         toolbox.getPrintServ().printSongFound(foundedSongs, songTitle);
@@ -32,10 +33,10 @@ public class Search extends AbstractMenuPage {
     }
 
     @Override
-    void button2() {
+    public void button2() {
         System.out.println(icon.iconSearch() + "Search Artist Page");
         System.out.print(icon.lineBreak + "Enter the name of the artist : ");
-        String artistName = in.nextLine();
+        String artistName = scanner.nextLine();
         // TODO : idem que Song, chercher via le ArtistRep ou il faut créer une méthode
         //  "getArtistByName(String name) return liste" des correspondances
 
@@ -43,8 +44,8 @@ public class Search extends AbstractMenuPage {
     }
 
     @Override
-    void button3() {
-        spotifyPageFactory.searchGender.templateMethode();
+    public void button3() {
+        spotifyPageFactory.searchGender.displayAllPage();
     }
 
 }

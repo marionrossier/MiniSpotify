@@ -5,10 +5,11 @@ import services.Cookies_SingletonPattern;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 
 
-public class Login extends AbstractMenuPage {
+public class Login extends _SimplePageTemplate {
 
-    public Login(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
+    public Login(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(spotifyPageFactory, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Login Page";
         this.pageContent =
                 icon.iconNbr(0) + "End process" + icon.lineBreak +
@@ -18,19 +19,15 @@ public class Login extends AbstractMenuPage {
     }
 
     //TODO : rajouter option pour revenir en arrière sur le bouton  2!
-    @Override
-    void button0() {
-        System.out.println("Goodbye");
-    }
 
     @Override
-    void button1() {
+    public void button1() {
         System.out.println();
         System.out.print("Enter your pseudonym : ");
-        String pseudonym = in.nextLine();
+        String pseudonym = scanner.nextLine();
 
         System.out.print("Enter your password : ");
-        String password = in.nextLine();
+        String password = scanner.nextLine();
 
         //TODO : mettre cette logique dans passWordService
         //Check the password...
@@ -38,7 +35,7 @@ public class Login extends AbstractMenuPage {
             User user = toolbox.getUserRepo().getUserByPseudonym(pseudonym);
             Cookies_SingletonPattern.setUser(user.getUserId());
             System.out.println(icon.lineBreak + icon.iconOk() + "Login successful !");
-            spotifyPageFactory.homePage.templateMethode();
+            spotifyPageFactory.homePage.displayAllPage();
         }else{
             System.out.println(icon.iconWarning() + "Login failed ! Please try again.");
             button1();
@@ -46,7 +43,7 @@ public class Login extends AbstractMenuPage {
     }
 
     @Override
-    void button2() {
-        spotifyPageFactory.createAccount.templateMethode();
+    public void button2() {
+        spotifyPageFactory.createAccount.displayAllPage();
     }
 }

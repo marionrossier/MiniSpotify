@@ -5,12 +5,13 @@ import player_StatePattern.playlist_player.IPlaylistPlayer;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class PlaylistDisplay extends AbstractMenuPage {
+public class PlaylistDisplay extends _SimplePageTemplate {
 
     Scanner in = new Scanner(System.in);
 
-    public PlaylistDisplay(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
+    public PlaylistDisplay(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(spotifyPageFactory, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Playlist Page : ";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
                 icon.iconNbr(1) + "Play the playlist" + icon.lineBreak +
@@ -22,7 +23,7 @@ public class PlaylistDisplay extends AbstractMenuPage {
     }
 
     @Override
-    void displaySpecificContent(){
+    public void displaySpecificContent(){
         System.out.println();
         System.out.println("Playlist name : " + toolbox.getPlaylistRepo()
                 .getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId())
@@ -35,17 +36,12 @@ public class PlaylistDisplay extends AbstractMenuPage {
     }
 
     @Override
-    void button0() {
-        spotifyPageFactory.playlistChoseList.templateMethode();
+    public void button1() {
+        spotifyPageFactory.songPlayer.displayAllPage();
     }
 
     @Override
-    void button1() {
-        spotifyPageFactory.songPlayer.templateMethode();
-    }
-
-    @Override
-    void button2() {
+    public void button2() {
         System.out.print("Enter the new name of the playlist : ");
         String newName = in.next();
         int playlistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
@@ -53,7 +49,7 @@ public class PlaylistDisplay extends AbstractMenuPage {
     }
 
     @Override
-    void button3() {
+    public void button3() {
         //TODO : Mettre dans une classe SearchService pour toute la partie logique
         System.out.println();
         System.out.print(icon.iconSearch() + "Enter the title of the song : ");
@@ -65,26 +61,26 @@ public class PlaylistDisplay extends AbstractMenuPage {
 
         toolbox.getPlaylistServ().createTemporaryPlaylistAndInitCookies(chosenSongs);
 
-        spotifyPageFactory.actionFoundedSongs.templateMethode();
+        spotifyPageFactory.actionFoundedSongs.displayAllPage();
     }
 
     @Override
-    void button4() {
+    public void button4() {
         System.out.print("Enter the number of the song you want to remove : ");
         int songIndex = in.nextInt()-1;
 
         int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
         toolbox.getPlaylistServ().removeSongFromPlaylist(currentPlaylistId, songIndex);
-        spotifyPageFactory.playlistDisplay.templateMethode();
+        spotifyPageFactory.playlistDisplay.displayAllPage();
     }
 
     @Override
-    void button5() {
+    public void button5() {
         //TODO : reorder song in playlist
     }
 
     @Override
-    void button6() {
-        spotifyPageFactory.playlistDeletion.templateMethode();
+    public void button6() {
+        spotifyPageFactory.playlistDeletion.displayAllPage();
     }
 }
