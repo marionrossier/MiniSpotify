@@ -116,6 +116,10 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         this.musicPlayer.play(this.currentSong.getAudioFilePath());
     }
 
+    public void stop (){
+        musicPlayer.stop();
+    }
+
     @Override
     public IMusicPlayer getMusicPlayer() {
         return musicPlayer;

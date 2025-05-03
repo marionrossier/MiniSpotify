@@ -19,9 +19,9 @@ public class HomePage extends AbstractMenuPage {
     @Override
     void button0() {
         System.out.println("Logging you out ...");
+        spotifyPlayer.stop();
         spotifyPageFactory.login.templateMethode();
         Cookies_SingletonPattern.resetCookies();
-
     }
 
     @Override
