@@ -10,8 +10,8 @@ import java.util.Scanner;
 public class SongService {
 
     Scanner in = new Scanner(System.in);
-    Icon icon = new Icon();
-    SongRepository songRepository = new SongRepository();
+    private final Icon icon = new Icon();
+    private final SongRepository songRepository = new SongRepository();
 
     // Constructor
     public SongService(SongRepository songRepo) {

@@ -6,9 +6,6 @@ import data.jsons.SongRepository;
 import data.jsons.UserRepository;
 
 public class Toolbox {
-    //TODO : créer une classe repositoryService qui crée tous les répositories, afin qu'ils soient tous
-    // atteignable dans chaque classe
-
     UserRepository userRepo = new UserRepository();
     PlaylistRepository playlistRepo = new PlaylistRepository();
     ArtistRepository artistRepo = new ArtistRepository();

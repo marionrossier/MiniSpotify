@@ -1,5 +1,6 @@
 package player_StatePattern.playlist_player;
 
+import data.entities.Playlist;
 import data.entities.Song;
 import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
@@ -16,7 +17,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     protected Stack<Integer> songIdHistory = new Stack<>();
     protected Song currentSong;
-    protected int currentPlaylistId;
+    protected Playlist currentPlaylist;
 
     //STATE PATTERN
     private IState currentState;
@@ -51,10 +52,10 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     public void setRepeatMode(){
         currentState = this.repeatState;
     }
+
     @Override
     public int getRunningPlaylistId() {
-        currentPlaylistId =Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
-        return currentPlaylistId;
+        return currentPlaylist.getPlaylistId();
     }
 
     @Override
@@ -71,8 +72,8 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     @Override
     public void play(int playlistId, int songId) {
-        this.currentPlaylistId = playlistId;
-        Cookies_SingletonPattern.setCurrentPlaylistId(this.currentPlaylistId);
+        this.currentPlaylist = playlistRepository.getPlaylistById(playlistId);
+        Cookies_SingletonPattern.setCurrentPlaylistId(this.currentPlaylist.getPlaylistId());
 
         this.currentSong = songRepository.getSongById(songId);
         musicPlayer.play(currentSong.getAudioFilePath());

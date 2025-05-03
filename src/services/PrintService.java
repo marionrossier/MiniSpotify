@@ -10,9 +10,9 @@ import java.util.List;
 
 public class PrintService {
 
-    SongRepository songRepository = new SongRepository();
-    UserRepository userRepository = new UserRepository();
-    PlaylistRepository playlistRepository = new PlaylistRepository();
+    private final SongRepository songRepository = new SongRepository();
+    private final UserRepository userRepository = new UserRepository();
+    private final PlaylistRepository playlistRepository = new PlaylistRepository();
 
     public void printSongFound (List<Integer> songs, String info){
         System.out.println("Songs found with information : " + info);

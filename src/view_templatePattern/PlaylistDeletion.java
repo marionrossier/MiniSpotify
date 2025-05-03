@@ -21,7 +21,7 @@ public class PlaylistDeletion extends AbstractMenuPage {
 
     @Override
     void button1() {
-        toolbox.getPlaylistServ().deletePlaylist(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId());
+        toolbox.getPlaylistServ().deletePlaylist(toolbox.getPlaylistServ().getCurrentPlaylistId());
         System.out.println("Playlist deleted !");
         spotifyPageFactory.playlistDisplay.templateMethode();
     }

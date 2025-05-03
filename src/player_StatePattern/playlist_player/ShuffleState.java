@@ -12,7 +12,7 @@ class ShuffleState implements IState {
 
     @Override
     public Song getNextSong() {
-        LinkedList<Integer> songsId = context.playlistRepository.getPlaylistById(context.currentPlaylistId).getPlaylistSongsListWithId();
+        LinkedList<Integer> songsId = context.playlistRepository.getPlaylistById(context.currentPlaylist.getPlaylistId()).getPlaylistSongsListWithId();
         int nextIndex = (int) (Math.random() * songsId.size());
         int nextSongId = songsId.get(nextIndex);
         //TODO : Check if the song is already played and avoid playing it again until all songs are played

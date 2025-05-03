@@ -10,9 +10,9 @@ import java.util.*;
 public class PlaylistServices {
 
     Scanner scanner = new Scanner(System.in);
-    UserRepository userRepository;
-    PlaylistRepository playlistRepository;
-    UserService userService;
+    private final UserRepository userRepository;
+    final PlaylistRepository playlistRepository;
+    private final UserService userService;
 
 
     public PlaylistServices (PlaylistRepository playlistRepository, UserRepository userRepository){
@@ -158,5 +158,9 @@ public class PlaylistServices {
         userService.addOnePlaylist(newPlaylist.getPlaylistId());
 
         this.deleteTemporaryPlaylist();
+    }
+    
+    public int getCurrentPlaylistId (){
+        return Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
     }
 }

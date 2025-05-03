@@ -1,7 +1,6 @@
 package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.Cookies_SingletonPattern;
 
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -26,12 +25,12 @@ public class PlaylistDisplay extends AbstractMenuPage {
     void displaySpecificContent(){
         System.out.println();
         System.out.println("Playlist name : " + toolbox.getPlaylistRepo()
-                .getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId())
+                .getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId())
                 .getPlaylistName());
         System.out.println("Playlist songs : ");
 
         toolbox.getPrintServ().printSongList(toolbox.getPlaylistRepo()
-                .getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId())
+                .getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId())
                 .getPlaylistSongsListWithId());
     }
 
@@ -49,7 +48,7 @@ public class PlaylistDisplay extends AbstractMenuPage {
     void button2() {
         System.out.print("Enter the new name of the playlist : ");
         String newName = in.next();
-        int playlistId = Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
+        int playlistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
         toolbox.getPlaylistServ().renamePlayList(playlistId, newName);
     }
 
@@ -74,7 +73,7 @@ public class PlaylistDisplay extends AbstractMenuPage {
         System.out.print("Enter the number of the song you want to remove : ");
         int songIndex = in.nextInt()-1;
 
-        int currentPlaylistId = Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
+        int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
         toolbox.getPlaylistServ().removeSongFromPlaylist(currentPlaylistId, songIndex);
         spotifyPageFactory.playlistDisplay.templateMethode();
     }

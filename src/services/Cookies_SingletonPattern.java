@@ -84,6 +84,7 @@ public class Cookies_SingletonPattern {
         return currentSongId;
     }
 
+    //TODO : Supprimer ce cookie
     public int getTemporaryPlaylist() {
         return temporaryPlaylistId;
     }

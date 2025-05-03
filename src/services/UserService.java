@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
-    //TODO : mettre final les autre repo et services sous les services.
     private final UserRepository userRepository;
     private final PasswordService passwordService = new PasswordService();
 
@@ -57,7 +56,6 @@ public class UserService {
             return false;
         }
     }
-    //TODO : faire la même chose pour les current playlists et song...
     public int getCookieUserId (){
         return Cookies_SingletonPattern.getInstance().getUserId();
     }
