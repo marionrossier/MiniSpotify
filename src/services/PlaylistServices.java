@@ -37,7 +37,7 @@ public class PlaylistServices {
 
 
     public int validationPlaylistChoice() {
-        User currentUser = userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId());
+        User currentUser = userRepository.getUserById(userService.getCurrentUserId());
 
         int chosenPlaylist = -1;
 
@@ -120,12 +120,17 @@ public class PlaylistServices {
     }
 
     public void deleteTemporaryPlaylist() {
-        Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
+        Playlist temporaryPlaylist = playlistRepository.getPlaylistById(getTemporaryPlaylistId());
         if (temporaryPlaylist != null) {
             int playlistId = temporaryPlaylist.getPlaylistId();
             playlistRepository.deletePlaylistById(playlistId);
         }
     }
+
+//    public void resetTemporaryPlaylist(){
+//        Playlist temporaryPlaylist = playlistRepository.getPlaylistById(getTemporaryPlaylistId());
+//        temporaryPlaylist.getPlaylistSongsListWithId().removeAll(temporaryPlaylist.getPlaylistSongsListWithId());
+//    }
 
     public void createTemporaryPlaylistAndInitCookies(LinkedList<Integer> chosenSongs) {
         //Creation of temporaryPlaylist
@@ -141,8 +146,7 @@ public class PlaylistServices {
         int temporaryPlaylistId = temporaryPlaylist.getPlaylistId();
 
         //Initialisation of the Cookies
-        Cookies_SingletonPattern.setTemporaryPlaylist(temporaryPlaylistId);
-        Cookies_SingletonPattern.setCurrentSongId(playlistRepository
+        setCurrentSongId(playlistRepository
                 .getPlaylistById(temporaryPlaylistId).getPlaylistSongsListWithId().getFirst());
     }
 
@@ -161,5 +165,25 @@ public class PlaylistServices {
     
     public int getCurrentPlaylistId (){
         return Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
+    }
+
+    public int getTemporaryPlaylistId (){
+        return playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId();
+    }
+
+    public void setCurrentPlaylistId (int playlistId){
+        Cookies_SingletonPattern.setCurrentPlaylistId(playlistId);
+    }
+
+    public void setCurrentSongId (int songId){
+        Cookies_SingletonPattern.setCurrentSongId(songId);
+    }
+
+    public int getCurrentSongId() {
+        return Cookies_SingletonPattern.getInstance().getCurrentSongId();
+    }
+
+    public int getAllSongsPlaylistId (){
+        return playlistRepository.getPlaylistByName("AllSongs").getPlaylistId();
     }
 }

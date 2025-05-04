@@ -1,8 +1,7 @@
 package services;
 
+import data.entities.Playlist;
 import data.jsons.PlaylistRepository;
-
-import java.util.List;
 
 //TODO : séparer pour avoir une classe Cookie pour le user, pour la playlist et pour les songs.
 public class Cookies_SingletonPattern {
@@ -12,13 +11,12 @@ public class Cookies_SingletonPattern {
     private int currentPlaylistId;
     private int currentSongId;
     private final PlaylistRepository playlistRepository = new PlaylistRepository();
-    private int temporaryPlaylistId;
+    private final PlaylistServices playlistServices = new PlaylistServices(playlistRepository);
 
     private Cookies_SingletonPattern(int userId) {
         this.userId = userId;
         this.currentPlaylistId = playlistRepository.getPlaylistByName("AllSongs").getPlaylistId();
         this.currentSongId = playlistRepository.getPlaylistByName("AllSongs").getPlaylistSongsListWithId().getFirst();
-        this.temporaryPlaylistId = 0;
     }
 
     public static Cookies_SingletonPattern setUser(int userId) {
@@ -42,13 +40,6 @@ public class Cookies_SingletonPattern {
         instance.currentSongId = currentSongId;
     }
 
-    public static void setTemporaryPlaylist(int temporaryPlaylistId) {
-        if (instance == null) {
-            throw new IllegalStateException("Cookies instance not initialized. Please set the user first.");
-        }
-        instance.temporaryPlaylistId = temporaryPlaylistId;
-    }
-
     public static void setInstance(int id) {
         if (instance == null) {
             instance = new Cookies_SingletonPattern(id);
@@ -57,12 +48,12 @@ public class Cookies_SingletonPattern {
 
     public static void resetCookies() {
         if (instance != null){
-            if (Cookies_SingletonPattern.getInstance().getTemporaryPlaylist() != 0) {
-                instance.playlistRepository.deletePlaylistById(instance.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId());
+            Playlist playlist = instance.playlistRepository.getPlaylistById(instance.playlistServices.getTemporaryPlaylistId());
+            if (!playlist.getPlaylistName().isEmpty()) {
+                instance.playlistServices.deleteTemporaryPlaylist();
             }
             instance = null;
         }
-
     }
 
     public static Cookies_SingletonPattern getInstance() {
@@ -82,11 +73,6 @@ public class Cookies_SingletonPattern {
 
     public int getCurrentSongId() {
         return currentSongId;
-    }
-
-    //TODO : Supprimer ce cookie
-    public int getTemporaryPlaylist() {
-        return temporaryPlaylistId;
     }
 
     @Override

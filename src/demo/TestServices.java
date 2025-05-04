@@ -9,7 +9,7 @@ public class TestServices {
 
         PlanEnum planEnum = PlanEnum.FREE;
         toolbox.getUserServ().addUser("testUsers", "email", "password", planEnum);
-        if(toolbox.getUserServ().verifyUserAuthentification("testUsers", "password"))
+        if(toolbox.getPasswordServ().verifyUserAuthentification("testUsers", "password"))
             System.out.println("User verified");
         else
             System.out.println("User not verified");

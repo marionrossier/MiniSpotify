@@ -2,7 +2,6 @@ package view_templatePattern;
 
 import data.entities.User;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.Cookies_SingletonPattern;
 import services.PageService;
 
 public class PlaylistChoseList extends _SimplePageTemplate {
@@ -16,7 +15,7 @@ public class PlaylistChoseList extends _SimplePageTemplate {
 
     @Override
     public void displaySpecificContent() {
-        int userId = toolbox.getUserServ().getCookieUserId();
+        int userId = toolbox.getUserServ().getCurrentUserId();
         User currentUser = toolbox.getUserRepo().getUserById(userId);
 
         if (currentUser != null && currentUser.getPlaylists() != null) {
@@ -35,8 +34,8 @@ public class PlaylistChoseList extends _SimplePageTemplate {
             pageService.homePage.displayAllPage();
             return;
         }
-        Cookies_SingletonPattern.setCurrentPlaylistId(chosenPlaylist);
-        Cookies_SingletonPattern.setCurrentSongId(
+        toolbox.getPlaylistServ().setCurrentPlaylistId(chosenPlaylist);
+        toolbox.getPlaylistServ().setCurrentSongId(
                 toolbox.getPlaylistRepo().getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
         pageService.playlistDisplay.displayAllPage();
     }

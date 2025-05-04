@@ -19,12 +19,15 @@ public class UserServiceTest {
     private File tempFile;
     private UserService userService;
     private UserRepository userRepository;
+    private PasswordService passwordService;
 
     @BeforeEach
     void setUp() throws IOException {
         tempFile = Files.createTempFile("user", ".json").toFile();
         userRepository = new UserRepository(tempFile.getAbsolutePath());
         userService = new UserService(userRepository);
+        passwordService = new PasswordService(userRepository);
+
     }
 
     @AfterEach
@@ -62,7 +65,7 @@ public class UserServiceTest {
         userService.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
 
         // Act
-        boolean result = userService.verifyUserAuthentification("TestUser", "CorrectPassword");
+        boolean result = passwordService.verifyUserAuthentification("TestUser", "CorrectPassword");
 
         // Assert
         assertTrue(result);
@@ -74,7 +77,7 @@ public class UserServiceTest {
         userService.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
 
         // Act
-        boolean result = userService.verifyUserAuthentification("TestUser", "WrongPassword");
+        boolean result = passwordService.verifyUserAuthentification("TestUser", "WrongPassword");
 
         // Assert
         assertFalse(result);

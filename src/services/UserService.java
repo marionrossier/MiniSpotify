@@ -9,10 +9,11 @@ import java.util.List;
 
 public class UserService {
     private final UserRepository userRepository;
-    private final PasswordService passwordService = new PasswordService();
+    private final PasswordService passwordService;
 
     public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
+        this.passwordService = new PasswordService(userRepository);
     }
 
     public int getUserIdByPseudo(String pseudo) {
@@ -38,35 +39,21 @@ public class UserService {
         }
     }
 
-    public boolean verifyUserAuthentification(String pseudonym, String password) {
-
-        User searchedUser = userRepository.getUserByPseudonym(pseudonym);
-
-        if (searchedUser == null) {
-            System.err.println("The user does not exist.");
-            return false;
-        }
-
-        String givenHashedPassword = passwordService.hashPassword(password, searchedUser.getSalt());
-
-        if (givenHashedPassword.equals(searchedUser.getPassword())) {
-            return true;
-        } else {
-            System.err.println("The password is incorrect.");
-            return false;
-        }
-    }
-    public int getCookieUserId (){
+    public int getCurrentUserId(){
         return Cookies_SingletonPattern.getInstance().getUserId();
     }
 
+    public void resetCookie (){
+        Cookies_SingletonPattern.resetCookies();
+    }
+
     public void addOnePlaylist(int playlistId) {
-        List<Integer> playlists = userRepository.getUserById(getCookieUserId()).getPlaylists();
+        List<Integer> playlists = userRepository.getUserById(getCurrentUserId()).getPlaylists();
         if (playlists == null) {
             playlists = new ArrayList<>();
-            userRepository.getUserById(getCookieUserId()).setPlaylists(playlists);
+            userRepository.getUserById(getCurrentUserId()).setPlaylists(playlists);
         }
-        userRepository.addPlaylistToUser(getCookieUserId(),playlistId);
+        userRepository.addPlaylistToUser(getCurrentUserId(),playlistId);
     }
 
     public void followFriend() {/*TODO*/}

@@ -140,14 +140,9 @@ class PlaylistServicesTest {
         int firstSongId = playlistService.playlistRepository
                 .getPlaylistById(temporaryPlaylistId).getPlaylistSongsListWithId().getFirst();
 
-        int cookieTemporaryPlaylistId = Cookies_SingletonPattern.getInstance().getTemporaryPlaylist();
-        int cookieCurrentSongId = Cookies_SingletonPattern.getInstance().getCurrentSongId();
-
         //Assert
         assertEquals("temporaryPlaylist",
                 playlistService.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistName());
-        assertEquals(cookieTemporaryPlaylistId, temporaryPlaylistId);
-        assertEquals(cookieCurrentSongId, firstSongId);
     }
 
     @Test

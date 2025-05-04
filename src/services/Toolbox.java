@@ -15,7 +15,7 @@ public class Toolbox {
     SongService songServ = new SongService(songRepo);
     UserService userServ = new UserService(userRepo);
     PrintService printServ = new PrintService();
-    PasswordService passwordServ = new PasswordService();
+    PasswordService passwordServ = new PasswordService(userRepo);
 
     public Toolbox() {
     }

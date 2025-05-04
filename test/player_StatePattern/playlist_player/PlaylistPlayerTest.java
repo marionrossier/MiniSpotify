@@ -23,6 +23,9 @@ public class PlaylistPlayerTest {
     private FakeMusicPlayer fakeMusicPlayer;
     private File songTempFile;
     private File playlistTempFile;
+    private SongRepository songRepository;
+    private PlaylistRepository playlistRepository;
+    private PlaylistServices playlistServices;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -34,9 +37,9 @@ public class PlaylistPlayerTest {
         playlistTempFile = Files.createTempFile("playlists", ".json").toFile();
         
         // Initialize repositories with temp files
-        SongRepository songRepository = new SongRepository(songTempFile.getAbsolutePath());
-        PlaylistRepository playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
-        PlaylistServices playlistServices = new PlaylistServices(playlistRepository);
+        songRepository = new SongRepository(songTempFile.getAbsolutePath());
+        playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
+        playlistServices = new PlaylistServices(playlistRepository);
         
         // Create test songs
         Song song1 = createSong(1, "Song 1", "path/to/song1.mp3");
@@ -100,14 +103,14 @@ public class PlaylistPlayerTest {
         // First play a song
         playlistPlayer.play(1, 1);
         assertTrue(fakeMusicPlayer.isPlaying());
-        Cookies_SingletonPattern.setCurrentSongId(playlistPlayer.getRunningSongId());
+        playlistServices.setCurrentSongId(playlistPlayer.getRunningSongId());
 
         // Test pause
-        playlistPlayer.playOrPause(Cookies_SingletonPattern.getInstance().getCurrentSongId());
+        playlistPlayer.playOrPause(playlistServices.getCurrentSongId());
         assertFalse(fakeMusicPlayer.isPlaying());
 
         // Test resume
-        playlistPlayer.playOrPause(Cookies_SingletonPattern.getInstance().getCurrentSongId());
+        playlistPlayer.playOrPause(playlistServices.getCurrentSongId());
         assertTrue(fakeMusicPlayer.isPlaying());
     }
     @Test
@@ -115,14 +118,14 @@ public class PlaylistPlayerTest {
         // First play a song
         playlistPlayer.play(1, 1);
         assertTrue(fakeMusicPlayer.isPlaying());
-        Cookies_SingletonPattern.setCurrentSongId(playlistPlayer.getRunningSongId());
+        playlistServices.setCurrentSongId(playlistPlayer.getRunningSongId());
         
         // Test pause
         playlistPlayer.pause();
         assertFalse(fakeMusicPlayer.isPlaying());
         
         // Test resume
-        playlistPlayer.resume(Cookies_SingletonPattern.getInstance().getCurrentSongId());
+        playlistPlayer.resume(playlistServices.getCurrentSongId());
         assertTrue(fakeMusicPlayer.isPlaying());
     }
 

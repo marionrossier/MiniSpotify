@@ -1,6 +1,7 @@
 package services;
 
 import data.jsons.PlaylistRepository;
+import data.jsons.UserRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import view_templatePattern.*;
 
@@ -11,6 +12,7 @@ public class PageService {
 
     ArrayList<_MenuInterface> pages = new ArrayList<>();
     public final Stack<Integer> menuPages = new Stack<>();
+    private UserService userService = new UserService(new UserRepository());
 
     public PlaylistChoseList playlistChoseList;
     public PlaylistCreation playlistCreation;
@@ -96,7 +98,7 @@ public class PageService {
 
     public void startLogin(){
         menuPages.push(login.pageId);
-        Cookies_SingletonPattern.resetCookies();
+        userService.resetCookie();
         login.displayAllPage();
     }
 

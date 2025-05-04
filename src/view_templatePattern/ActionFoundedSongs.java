@@ -35,7 +35,7 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
 
     @Override
     public void button2() {
-        toolbox.getPlaylistServ().addSongToPlaylistFromTemporaryPlaylist(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId());
+        toolbox.getPlaylistServ().addSongToPlaylistFromTemporaryPlaylist(toolbox.getPlaylistServ().getCurrentPlaylistId());
         pageService.playlistDisplay.displayAllPage();
     }
 

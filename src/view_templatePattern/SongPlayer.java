@@ -35,7 +35,7 @@ public class SongPlayer extends _SimplePageTemplate {
 
     @Override
     public void button3() {
-        spotifyPlayer.playOrPause(Cookies_SingletonPattern.getInstance().getCurrentSongId());
+        spotifyPlayer.playOrPause(toolbox.getPlaylistServ().getCurrentSongId());
         loop();
     }
 

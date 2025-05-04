@@ -22,8 +22,7 @@ public class HomePage extends _SimplePageTemplate {
         System.out.println("Logging you out ...");
         spotifyPlayer.stop();
 
-        toolbox.getPlaylistServ().deleteTemporaryPlaylist();
-        Cookies_SingletonPattern.resetCookies();
+        toolbox.getUserServ().resetCookie();
 
         pageService.login.displayAllPage();
     }
