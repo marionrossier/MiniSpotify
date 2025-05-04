@@ -1,5 +1,6 @@
 package services;
 
+import data.entities.MusicGender;
 import data.entities.Playlist;
 import data.entities.User;
 import data.jsons.PlaylistRepository;
@@ -30,12 +31,27 @@ public class PrintService {
 
     public void printUserPlaylists(int userId){
         int i = 1;
-        for (int playlistId : userRepository.getUserById(userId).getPlaylists()) {
-            Playlist playlist = playlistRepository.getPlaylistById(playlistId);
-            if (playlist != null) {
-                System.out.println(i + ". " + playlist.getPlaylistName());
-                i++;
+        User currentUser = userRepository.getUserById(userId);
+
+        if (currentUser != null && currentUser.getPlaylists() != null){
+            for (int playlistId : userRepository.getUserById(userId).getPlaylists()) {
+                Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+                if (playlist != null) {
+                    System.out.println(i + ". " + playlist.getPlaylistName());
+                    i++;
+                }
             }
+        }
+        else {
+            System.out.println("No playlists available.");
+        }
+    }
+
+    public void printGenderList() {
+        int i = 1;
+        for (MusicGender gender : MusicGender.values()) {
+            System.out.println(i + ". " + gender.getDisplayName());
+            i++;
         }
     }
 }

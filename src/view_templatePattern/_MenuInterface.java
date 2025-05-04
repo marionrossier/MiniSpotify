@@ -25,6 +25,6 @@ public interface _MenuInterface {
     void button5();
     void button6();
     void button7();
-
+    void button8();
     void button9();
 }

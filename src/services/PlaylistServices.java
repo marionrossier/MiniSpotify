@@ -13,6 +13,7 @@ public class PlaylistServices {
     private final UserRepository userRepository;
     final PlaylistRepository playlistRepository;
     private final UserService userService;
+    private final PageService pageService = new PageService();
 
 
     public PlaylistServices (PlaylistRepository playlistRepository, UserRepository userRepository){
@@ -127,13 +128,7 @@ public class PlaylistServices {
         }
     }
 
-//    public void resetTemporaryPlaylist(){
-//        Playlist temporaryPlaylist = playlistRepository.getPlaylistById(getTemporaryPlaylistId());
-//        temporaryPlaylist.getPlaylistSongsListWithId().removeAll(temporaryPlaylist.getPlaylistSongsListWithId());
-//    }
-
-    public void createTemporaryPlaylistAndInitCookies(LinkedList<Integer> chosenSongs) {
-        //Creation of temporaryPlaylist
+    public void createTemporaryPlaylist(LinkedList<Integer> chosenSongs) {
         Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
         if (temporaryPlaylist == null) {
             temporaryPlaylist = new Playlist("temporaryPlaylist");
@@ -143,11 +138,6 @@ public class PlaylistServices {
         temporaryPlaylist.setPlaylistInformation();
 
         playlistRepository.savePlaylist(temporaryPlaylist);
-        int temporaryPlaylistId = temporaryPlaylist.getPlaylistId();
-
-        //Initialisation of the Cookies
-        setCurrentSongId(playlistRepository
-                .getPlaylistById(temporaryPlaylistId).getPlaylistSongsListWithId().getFirst());
     }
 
     public void createPlaylistWithTemporaryPlaylist(String playlistName) {
@@ -185,5 +175,17 @@ public class PlaylistServices {
 
     public int getAllSongsPlaylistId (){
         return playlistRepository.getPlaylistByName("AllSongs").getPlaylistId();
+    }
+
+    public void validatePlaylistIdInput() {
+        int chosenPlaylist = validationPlaylistChoice();
+
+        if (chosenPlaylist == 0) {
+            pageService.homePage.displayAllPage();
+            return;
+        }
+        setCurrentPlaylistId(chosenPlaylist);
+        setCurrentSongId(playlistRepository.getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
+        pageService.playlistDisplay.displayAllPage();
     }
 }

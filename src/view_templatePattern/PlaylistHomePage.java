@@ -22,7 +22,7 @@ public class PlaylistHomePage extends _SimplePageTemplate {
 
     @Override
     public void button2() {
-        pageService.playlistCreation.displayAllPage();
+        pageService.search.displayAllPage();
     }
 
 }

@@ -15,28 +15,11 @@ public class PlaylistChoseList extends _SimplePageTemplate {
 
     @Override
     public void displaySpecificContent() {
-        int userId = toolbox.getUserServ().getCurrentUserId();
-        User currentUser = toolbox.getUserRepo().getUserById(userId);
-
-        if (currentUser != null && currentUser.getPlaylists() != null) {
-            toolbox.getPrintServ().printUserPlaylists(userId);
-        } else {
-            System.out.println("No playlists available.");
-        }
+        toolbox.getPrintServ().printUserPlaylists(toolbox.getUserServ().getCurrentUserId());
     }
 
     @Override
     public void validateInput() {
-
-        int chosenPlaylist = toolbox.getPlaylistServ().validationPlaylistChoice();
-
-        if (chosenPlaylist == 0) {
-            pageService.homePage.displayAllPage();
-            return;
-        }
-        toolbox.getPlaylistServ().setCurrentPlaylistId(chosenPlaylist);
-        toolbox.getPlaylistServ().setCurrentSongId(
-                toolbox.getPlaylistRepo().getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
-        pageService.playlistDisplay.displayAllPage();
+        toolbox.getPlaylistServ().validatePlaylistIdInput();
     }
 }

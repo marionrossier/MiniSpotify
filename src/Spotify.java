@@ -14,10 +14,10 @@ public class Spotify {
 
         IPlaylistPlayer spotifyPlayer = new PlaylistPlayer(musicPlayer, songRepository, playlistRepository);
 
-        PageService miniSpotify = new PageService();
-        miniSpotify.spotifyPlayer = spotifyPlayer; // Initialisation de SpotifyPlayer dans la factory
+        PageService pageService = new PageService();
+        pageService.spotifyPlayer = spotifyPlayer; // Initialisation de SpotifyPlayer dans la factory
 
-        miniSpotify.setUpPages();
-        miniSpotify.startLogin();
+        pageService.setUpPages();
+        pageService.startLogin();
     }
 }
