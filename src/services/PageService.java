@@ -1,5 +1,6 @@
 package services;
 
+import data.jsons.PlaylistRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import view_templatePattern.*;
 
@@ -112,4 +113,20 @@ public class PageService {
         return menuPages;
     }
 
+    public final void goBack(int pageId) {
+        int lastPageId;
+        do {
+            lastPageId = getMenuPages().pop();
+        } while (lastPageId == pageId && !getMenuPages().isEmpty());
+
+        getPageById(lastPageId).displayAllPage();
+    }
+
+    public String gotAnInput(String input){
+        if (input.equals("0")){
+            goBack(this.getMenuPages().peek());
+            return "";
+        }
+        return input;
+    }
 }

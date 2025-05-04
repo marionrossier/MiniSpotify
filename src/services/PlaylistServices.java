@@ -142,7 +142,6 @@ public class PlaylistServices {
 
         //Initialisation of the Cookies
         Cookies_SingletonPattern.setTemporaryPlaylist(temporaryPlaylistId);
-        Cookies_SingletonPattern.setCurrentPlaylistId(temporaryPlaylistId);
         Cookies_SingletonPattern.setCurrentSongId(playlistRepository
                 .getPlaylistById(temporaryPlaylistId).getPlaylistSongsListWithId().getFirst());
     }

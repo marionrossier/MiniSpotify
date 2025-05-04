@@ -17,9 +17,6 @@ public interface _MenuInterface {
 
     void switchPage();
 
-    void invalidChoice();
-    void goBack();
-
     void button0();
     void button1();
     void button2();

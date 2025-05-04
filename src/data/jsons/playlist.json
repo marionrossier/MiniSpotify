@@ -88,12 +88,12 @@
   "playlistSeconds" : 0,
   "playlistSize" : 5,
   "ownerId" : 0,
-  "playlistSongsListWithId" : [ 625427469, 354322599, 243871940, 719812166, 1824616046 ]
+  "playlistSongsListWithId" : [ 625427469, 354322599, 243871940, 719812166, 1824616046, 354322599, 1925355941, 1988790520 ]
 }, {
-  "playlistName" : "AléatoireMarion",
-  "playlistId" : 187098711,
+  "playlistName" : "temporaryPlaylist",
+  "playlistId" : 1699474864,
   "playlistSeconds" : 0,
-  "playlistSize" : 7,
+  "playlistSize" : 3,
   "ownerId" : 0,
-  "playlistSongsListWithId" : [ 625427469, 354322599, 243871940, 719812166, 998984026, 1287974581, 494087492 ]
+  "playlistSongsListWithId" : [ 354322599, 1925355941, 1988790520 ]
 } ]

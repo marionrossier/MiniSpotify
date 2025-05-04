@@ -24,11 +24,11 @@ public class CreateAccount extends _InversedPageTemplate {
 
     public void displaySpecificContent () {
         System.out.print("Enter your pseudonym : ");
-        pseudonym = getAnInput(scanner.nextLine());
+        pseudonym = pageService.gotAnInput(scanner.nextLine());
         System.out.print("Enter your password : ");
-        password = getAnInput(scanner.nextLine());
+        password = pageService.gotAnInput(scanner.nextLine());
         System.out.print("Enter your email : ");
-        email = getAnInput(scanner.nextLine());
+        email = pageService.gotAnInput(scanner.nextLine());
         //TODO : check if email is valid (dans UserService)
         System.out.println(icon.lineBreak + "Choose your plan : ");
     }

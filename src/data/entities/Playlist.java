@@ -87,6 +87,7 @@ public class Playlist {
         this.playlistName = updatedName;
     }
 
+    //TODO : ajuster car ne met pas a jour les informations contenues !
     public void setPlaylistInformation(){
         setPlaylistDuration();
         setPlaylistSize();

@@ -8,15 +8,6 @@
   "playlists" : [ 2010779858 ],
   "friends" : [ ]
 }, {
-  "userId" : 232928320,
-  "pseudonym" : "marion",
-  "email" : "marion",
-  "password" : "o1MEa9SO5LhXAYqJDDia9SDQUSixtXusKKsIY//iNnY=",
-  "salt" : "UHx0qoVfA6me0+vdTV6YCw==",
-  "planEnum" : "FREE",
-  "playlists" : [ 2010779858, 621042657, 1077548532, 610908062, 187098711 ],
-  "friends" : [ ]
-}, {
   "userId" : 1726370281,
   "pseudonym" : "florent",
   "email" : "florent",
@@ -24,5 +15,23 @@
   "salt" : "yhxUbFNzzMvwMPy/Fsn/XQ==",
   "planEnum" : "PREMIUM",
   "playlists" : [ ],
+  "friends" : [ ]
+}, {
+  "userId" : 301730084,
+  "pseudonym" : "l",
+  "email" : "l",
+  "password" : "rTsbxqZnrqT6qIkUaUiTLtYAknUbl7ulJrsNUO1yGMM=",
+  "salt" : "9ySvSD8QHkztNzM+TYxLOQ==",
+  "planEnum" : "FREE",
+  "playlists" : [ ],
+  "friends" : [ ]
+}, {
+  "userId" : 232928320,
+  "pseudonym" : "marion",
+  "email" : "marion",
+  "password" : "o1MEa9SO5LhXAYqJDDia9SDQUSixtXusKKsIY//iNnY=",
+  "salt" : "UHx0qoVfA6me0+vdTV6YCw==",
+  "planEnum" : "FREE",
+  "playlists" : [ 2010779858, 621042657, 1077548532, 610908062, 187098711, 1900618287 ],
   "friends" : [ ]
 } ]

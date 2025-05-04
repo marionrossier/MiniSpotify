@@ -12,6 +12,7 @@ public class SongService {
     Scanner in = new Scanner(System.in);
     private final Icon icon = new Icon();
     private final SongRepository songRepository = new SongRepository();
+    private final PageService pageService = new PageService();
 
     // Constructor
     public SongService(SongRepository songRepo) {
@@ -38,7 +39,7 @@ public class SongService {
         LinkedList<Integer> selectedSongsIndex = new LinkedList<>();
 
         while (true) {
-            input = in.nextLine();
+            input = pageService.gotAnInput(in.nextLine());
             if (input.equals("x")) {
                 break;
             }
