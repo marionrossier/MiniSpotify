@@ -6,45 +6,40 @@ import data.jsons.SongRepository;
 import data.jsons.UserRepository;
 
 public class Toolbox {
-    UserRepository userRepo = new UserRepository();
-    PlaylistRepository playlistRepo = new PlaylistRepository();
-    ArtistRepository artistRepo = new ArtistRepository();
-    SongRepository songRepo = new SongRepository();
+    UserRepository userRepo;
+    PlaylistRepository playlistRepo;
+    ArtistRepository artistRepo;
+    SongRepository songRepo;
 
-    PlaylistServices playlistServ = new PlaylistServices(playlistRepo);
+    PlaylistServices playlistServ;
     SongService songServ;
-    UserService userServ = new UserService(userRepo);
-    PrintService printServ = new PrintService();
-    PasswordService passwordServ = new PasswordService(userRepo);
-    NavigationStackService navigationStackService;
+    UserService userServ;
+    PrintService printServ;
+    PasswordService passwordServ;
 
-    public Toolbox(NavigationStackService navigationStackService) {
-        this.navigationStackService = navigationStackService;
-        this.songServ = new SongService(songRepo, navigationStackService);
+    public Toolbox() {
+        userRepo = new UserRepository();
+        playlistRepo = new PlaylistRepository();
+        artistRepo = new ArtistRepository();
+        songRepo = new SongRepository();
+
+        playlistServ = new PlaylistServices(playlistRepo);
+        userServ = new UserService(userRepo);
+        songServ = new SongService(songRepo);
+        passwordServ = new PasswordService(userRepo);
+        printServ = new PrintService();
     }
 
     public PlaylistServices getPlaylistServ() {
         return playlistServ;
     }
 
-    public PlaylistRepository getPlaylistRepo() {
-        return playlistRepo;
-    }
-
     public SongService getSongServ() {
         return songServ;
     }
 
-    public SongRepository getSongRepo() {
-        return songRepo;
-    }
-
     public UserService getUserServ() {
         return userServ;
-    }
-
-    public UserRepository getUserRepo() {
-        return userRepo;
     }
 
     public PrintService getPrintServ() {
@@ -53,9 +48,5 @@ public class Toolbox {
 
     public PasswordService getPasswordServ() {
         return passwordServ;
-    }
-
-    public ArtistRepository getArtistRepo() {
-        return artistRepo;
     }
 }

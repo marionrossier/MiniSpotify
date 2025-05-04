@@ -13,8 +13,6 @@ public class PlaylistServices {
     private final UserRepository userRepository;
     final PlaylistRepository playlistRepository;
     private final UserService userService;
-    private final PageService pageService = new PageService();
-
 
     public PlaylistServices (PlaylistRepository playlistRepository, UserRepository userRepository){
         this.playlistRepository = playlistRepository;
@@ -33,9 +31,6 @@ public class PlaylistServices {
     public void deletePlaylist(int playlistId) {
         playlistRepository.deletePlaylistById(playlistId);
     }
-
-    public void createPlaylist(String playlistName) {/*TODO*/}
-
 
     public int validationPlaylistChoice() {
         User currentUser = userRepository.getUserById(userService.getCurrentUserId());
@@ -177,7 +172,7 @@ public class PlaylistServices {
         return playlistRepository.getPlaylistByName("AllSongs").getPlaylistId();
     }
 
-    public void validatePlaylistIdInput() {
+    public void validatePlaylistIdInput(PageService pageService) {
         int chosenPlaylist = validationPlaylistChoice();
 
         if (chosenPlaylist == 0) {
@@ -187,5 +182,13 @@ public class PlaylistServices {
         setCurrentPlaylistId(chosenPlaylist);
         setCurrentSongId(playlistRepository.getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
         pageService.playlistDisplay.displayAllPage();
+    }
+
+    public Playlist getPlaylistByName(String name) {
+        return playlistRepository.getPlaylistByName(name);
+    }
+
+    public Playlist getPlaylistById(int id) {
+        return playlistRepository.getPlaylistById(id);
     }
 }

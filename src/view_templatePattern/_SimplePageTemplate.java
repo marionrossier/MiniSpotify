@@ -14,21 +14,20 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
     public int pageId;
     public String pageContent;
     public IPlaylistPlayer spotifyPlayer;
-
     PageService pageService;
     Scanner scanner = new Scanner(System.in);
 
     protected Icon icon = new Icon();
-    protected Toolbox toolbox;
+    protected final Toolbox toolbox;
 
     public _SimplePageTemplate(PageService pageService, IPlaylistPlayer spotifyPlayer) {
         this.pageService = pageService;
         this.spotifyPlayer = spotifyPlayer;
-        this.toolbox = new Toolbox(spotifyPlayer.getNavigationStackService());
+        this.toolbox = new Toolbox();
     }
 
     public void displayAllPage(){
-        spotifyPlayer.getNavigationStackService().getMenuPages().push(getPageId());
+        pageService.getMenuPages().push(getPageId());
         displayTitle(pageTitle);
         displayContent(pageContent);
         displaySpecificContent();
@@ -109,7 +108,7 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
     }
 
     public void button0() {
-        spotifyPlayer.getNavigationStackService().goBack(getPageId());
+        pageService.goBack(getPageId());
     }
     public void button1(){
         invalidChoice();

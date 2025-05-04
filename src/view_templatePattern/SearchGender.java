@@ -23,49 +23,49 @@ public class SearchGender extends _SimplePageTemplate {
 
     @Override
     public void button1() {
-        toolbox.getSongServ().searchSong(MusicGender.SOUL_RNB.getDisplayName(), "byGender", getPageId());
+        toolbox.getSongServ().searchSong(MusicGender.SOUL_RNB.getDisplayName(), "byGender", getPageId(), pageService);
         pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button2() {
-        toolbox.getSongServ().searchSong(MusicGender.POP.getDisplayName(), "byGender", getPageId());
+        toolbox.getSongServ().searchSong(MusicGender.POP.getDisplayName(), "byGender", getPageId(), pageService);
         pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button3() {
-        toolbox.getSongServ().searchSong(MusicGender.HIP_HOP.getDisplayName(), "byGender", getPageId());
+        toolbox.getSongServ().searchSong(MusicGender.HIP_HOP.getDisplayName(), "byGender", getPageId(), pageService);
         pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button4() {
-        toolbox.getSongServ().searchSong(MusicGender.ROCK.getDisplayName(), "byGender", getPageId());
+        toolbox.getSongServ().searchSong(MusicGender.ROCK.getDisplayName(), "byGender", getPageId(), pageService);
         pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button5() {
-        toolbox.getSongServ().searchSong(MusicGender.FRENCH_VARIETY.getDisplayName(), "byGender", getPageId());
+        toolbox.getSongServ().searchSong(MusicGender.FRENCH_VARIETY.getDisplayName(), "byGender", getPageId(), pageService);
         pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button6() {
-        toolbox.getSongServ().searchSong(MusicGender.ELECTRO.getDisplayName(), "byGender", getPageId());
+        toolbox.getSongServ().searchSong(MusicGender.ELECTRO.getDisplayName(), "byGender", getPageId(), pageService);
         pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button7() {
-        toolbox.getSongServ().searchSong(MusicGender.DISCO.getDisplayName(), "byGender", getPageId());
+        toolbox.getSongServ().searchSong(MusicGender.DISCO.getDisplayName(), "byGender", getPageId(), pageService);
         pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button8() {
-        toolbox.getSongServ().searchSong(MusicGender.REGGAE.getDisplayName(), "byGender", getPageId());
+        toolbox.getSongServ().searchSong(MusicGender.REGGAE.getDisplayName(), "byGender", getPageId(), pageService);
         pageService.actionFoundedSongs.displayAllPage();
     }
 }

@@ -6,9 +6,8 @@ import services.Toolbox;
 
 public class TestServices {
     public static void main(String[] args) {
-        NavigationStackService navigationStackService = new NavigationStackService();
 
-        Toolbox toolbox = new Toolbox(navigationStackService);
+        Toolbox toolbox = new Toolbox();
 
         PlanEnum planEnum = PlanEnum.FREE;
         toolbox.getUserServ().addUser("testUsers", "email", "password", planEnum);

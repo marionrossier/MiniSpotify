@@ -9,19 +9,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class PageServiceTest {
 
     private PageService pageService;
-    private final NavigationStackService navigationStackService = new NavigationStackService();
-
 
     @BeforeEach
     void setUp() {
-        pageService = new PageService();
-        pageService.setUpPages();
+        pageService = new PageService(null);
         System.out.println("");
     }
 
     @AfterEach
     void tearDown() {
-        navigationStackService.getMenuPages().clear();
+        pageService.getMenuPages().clear();
     }
 
     @Test

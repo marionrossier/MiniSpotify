@@ -5,13 +5,17 @@ import java.util.Stack;
 public class NavigationStackService {
 
     public final Stack<Integer> menuPages = new Stack<>();
-    private final PageService pageService = new PageService();
+    private final PageService pageService;
 
-    public Stack<Integer> getMenuPages() {
+    protected NavigationStackService(PageService pageService) {
+        this.pageService = pageService;
+    }
+
+    protected Stack<Integer> getMenuPages() {
         return menuPages;
     }
 
-    public final void goBack(int pageId) {
+    protected final void goBack(int pageId) {
         int lastPageId;
         do {
             lastPageId = getMenuPages().pop();

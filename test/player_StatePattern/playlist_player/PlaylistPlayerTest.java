@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import player_StatePattern.file_player.FakeMusicPlayer;
 import data.entities.Playlist;
 import services.Cookies_SingletonPattern;
-import services.NavigationStackService;
 import services.PlaylistServices;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,7 +26,6 @@ public class PlaylistPlayerTest {
     private SongRepository songRepository;
     private PlaylistRepository playlistRepository;
     private PlaylistServices playlistServices;
-    private NavigationStackService navigationStackService;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -42,8 +40,6 @@ public class PlaylistPlayerTest {
         songRepository = new SongRepository(songTempFile.getAbsolutePath());
         playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
         playlistServices = new PlaylistServices(playlistRepository);
-
-        navigationStackService = new NavigationStackService();
         
         // Create test songs
         Song song1 = createSong(1, "Song 1", "path/to/song1.mp3");
@@ -68,7 +64,7 @@ public class PlaylistPlayerTest {
         fakeMusicPlayer = new FakeMusicPlayer();
         
         // Instantiate the PlaylistPlayer with the fake player and repositories
-        playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository, navigationStackService);
+        playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository);
     }
     
     @AfterEach

@@ -12,14 +12,11 @@ public class Spotify {
         PlaylistRepository playlistRepository = new PlaylistRepository();
         SongRepository songRepository = new SongRepository();
         IMusicPlayer musicPlayer = new MusicPlayer();
-        NavigationStackService navigationStackService = new NavigationStackService();
 
-        IPlaylistPlayer spotifyPlayer = new PlaylistPlayer(musicPlayer, songRepository, playlistRepository, navigationStackService);
+        IPlaylistPlayer spotifyPlayer = new PlaylistPlayer(musicPlayer, songRepository, playlistRepository);
 
-        PageService pageService = new PageService();
-        pageService.spotifyPlayer = spotifyPlayer; // Initialisation de SpotifyPlayer dans la factory
+        PageService pageService = new PageService(spotifyPlayer);
 
-        pageService.setUpPages();
         pageService.startLogin();
     }
 }

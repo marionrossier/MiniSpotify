@@ -5,11 +5,13 @@ import player_StatePattern.playlist_player.IPlaylistPlayer;
 import view_templatePattern.*;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class PageService {
 
     ArrayList<_MenuInterface> pages = new ArrayList<>();
     private final UserService userService = new UserService(new UserRepository());
+    private final NavigationStackService navigationStackService = new NavigationStackService(this);
 
     private final IPlaylistPlayer spotifyPlayer;
     public PlaylistChoseList playlistChoseList;
@@ -34,9 +36,10 @@ public class PageService {
 
     public PageService(IPlaylistPlayer spotifyPlayer) {
         this.spotifyPlayer = spotifyPlayer;
+        setUpPages();
     }
 
-    public void setUpPages() {
+    private void setUpPages() {
         int pageId = 1;
 
         this.playlistChoseList = new PlaylistChoseList(this, spotifyPlayer, pageId++);
@@ -98,7 +101,7 @@ public class PageService {
     }
 
     public void startLogin(){
-        spotifyPlayer.getNavigationStackService().menuPages.push(login.pageId);
+        navigationStackService.menuPages.push(login.pageId);
         userService.resetCookie();
         login.displayAllPage();
     }
@@ -114,10 +117,18 @@ public class PageService {
 
     public String gotAnInput(String input){
         if (input.equals("0")){
-            int menuPageId = spotifyPlayer.getNavigationStackService().getMenuPages().peek();
-            spotifyPlayer.getNavigationStackService().goBack(menuPageId);
+            int menuPageId = navigationStackService.getMenuPages().peek();
+            navigationStackService.goBack(menuPageId);
             return "";
         }
         return input;
+    }
+
+    public Stack<Integer> getMenuPages() {
+        return navigationStackService.menuPages;
+    }
+
+    public void goBack(int pageId) {
+        navigationStackService.goBack(pageId);
     }
 }

@@ -13,18 +13,15 @@ public class SongService {
     Scanner in = new Scanner(System.in);
     private final Icon icon = new Icon();
     private final SongRepository songRepository;
-    private final PageService pageService = new PageService();
     private final PrintService printService = new PrintService();
     private final PlaylistServices playlistServices = new PlaylistServices(new PlaylistRepository());
-    private final NavigationStackService navigationStackService;
 
     // Constructor
-    public SongService(SongRepository songRepo, NavigationStackService navigationStackService) {
+    public SongService(SongRepository songRepo) {
         this.songRepository = songRepo;
-        this.navigationStackService = navigationStackService;
     }
 
-    public void searchSong(String input, String type, int pageId) {
+    public void searchSong(String input, String type, int pageId, PageService pageService) {
         LinkedList<Integer> foundedSongs;
 
         switch (type) {
@@ -33,23 +30,23 @@ public class SongService {
             case "byGender" -> foundedSongs = searchByGender(input);
             default -> {
                 System.err.println("Invalid search type: " + type);
-                navigationStackService.goBack(pageId);
+                pageService.goBack(pageId);
                 return;
             }
         }
 
         if (foundedSongs.isEmpty()) {
             System.out.println("No songs found.");
-            navigationStackService.goBack(pageId);
+            pageService.goBack(pageId);
             return;
         }
 
-        searchSongManager(foundedSongs, input);
+        searchSongManager(foundedSongs, input, pageService);
     }
 
-    public void searchSongManager (LinkedList<Integer> foundedSongs, String input){
+    public void searchSongManager (LinkedList<Integer> foundedSongs, String input, PageService pageService){
         printService.printSongFound(foundedSongs, input);
-        LinkedList<Integer> chosenSongs = chooseFoundedSongs(foundedSongs);
+        LinkedList<Integer> chosenSongs = chooseFoundedSongs(foundedSongs, pageService);
 
         playlistServices.createTemporaryPlaylist(chosenSongs);
 
@@ -113,7 +110,7 @@ public class SongService {
         return songsByTitleId;
     }
 
-    public LinkedList<Integer> chooseFoundedSongs(List<Integer> foundedSongs){
+    public LinkedList<Integer> chooseFoundedSongs(List<Integer> foundedSongs, PageService pageService){
         System.out.println("Choose your songs by entering their number and press \"enter\" between each song." + icon.lineBreak+
                 "End selection with an \"x\"." + icon.lineBreak);
         System.out.print("Your selection : ");
@@ -126,7 +123,7 @@ public class SongService {
                 break;
             }
             if (input.equals("0")){
-                navigationStackService.goBack(navigationStackService.getMenuPages().peek());
+                pageService.goBack(pageService.getMenuPages().peek());
             }
             try {
                 int songIndex = Integer.parseInt(input) - 1;
@@ -148,5 +145,9 @@ public class SongService {
             }
         }
         return selectedSongs;
+    }
+
+    public Song getSongById(int songId) {
+        return songRepository.getSongById(songId);
     }
 }

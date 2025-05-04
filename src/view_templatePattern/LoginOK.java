@@ -37,7 +37,7 @@ public class LoginOK extends _SimplePageTemplate {
 
         //Check the password...
         if (toolbox.getPasswordServ().passwordCheck(pseudonym, password)){
-            User user = toolbox.getUserRepo().getUserByPseudonym(pseudonym);
+            User user = toolbox.getUserServ().getUserByPseudonym(pseudonym);
             Cookies_SingletonPattern.setUser(user.getUserId());
             System.out.println(icon.lineBreak + icon.iconOk() + "Login successful !");
             pageService.homePage.displayAllPage();
@@ -55,7 +55,7 @@ public class LoginOK extends _SimplePageTemplate {
 
     public void createAllSongPlaylist (User user){
         int allSongsPlaylistId = toolbox.getPlaylistServ().getAllSongsPlaylistId();
-        List<Integer> playlists = toolbox.getUserRepo().getUserById(toolbox.getUserServ().getCurrentUserId()).getPlaylists();
+        List<Integer> playlists = toolbox.getUserServ().getUserById(toolbox.getUserServ().getCurrentUserId()).getPlaylists();
 
         if (!playlists.contains(allSongsPlaylistId)) {
             playlists.add(0, allSongsPlaylistId);
