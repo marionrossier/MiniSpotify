@@ -8,6 +8,8 @@ import player_StatePattern.file_player.IMusicPlayer;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import player_StatePattern.playlist_player.PlaylistPlayer;
 import services.Cookies_SingletonPattern;
+import services.NavigationStackService;
+import services.PageService;
 import services.PlaylistServices;
 // import player_commandPattern.file_player.MusicPlayer; // Quand tu voudras le vrai Player
 
@@ -19,12 +21,16 @@ public class PlaylistPlayerDemo {
 
         PlaylistRepository playlistRepository = new PlaylistRepository();
         SongRepository songRepository = new SongRepository();
+        IMusicPlayer musicPlayer = new MusicPlayer();
+
+        IPlaylistPlayer playlistPlayer = new PlaylistPlayer(musicPlayer, songRepository, playlistRepository);
+        PageService pageService = new PageService(playlistPlayer);
+
         PlaylistServices playlistServices = new PlaylistServices(playlistRepository);
+
 
         Playlist playlist = playlistRepository.getAllPlaylists().get(0);
 
-        IMusicPlayer musicPlayer = new MusicPlayer();
-        IPlaylistPlayer playlistPlayer = new PlaylistPlayer(musicPlayer, songRepository, playlistRepository);
         playlistPlayer.play(playlist.getPlaylistId(), playlist.getPlaylistSongsListWithId().get(0));
         playlistServices.setCurrentSongId(playlist.getPlaylistSongsListWithId().get(0));
 

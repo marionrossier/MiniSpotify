@@ -26,12 +26,12 @@ public class PlaylistDisplay extends _SimplePageTemplate {
     @Override
     public void displaySpecificContent(){
         System.out.println();
-        System.out.println("Playlist name : " + toolbox.getPlaylistRepo()
+        System.out.println("Playlist name : " + toolbox.getPlaylistServ()
                 .getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId())
                 .getPlaylistName());
         System.out.println("Playlist songs : ");
 
-        toolbox.getPrintServ().printSongList(toolbox.getPlaylistRepo()
+        toolbox.getPrintServ().printSongList(toolbox.getPlaylistServ()
                 .getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId())
                 .getPlaylistSongsListWithId());
     }

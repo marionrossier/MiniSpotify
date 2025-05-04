@@ -12,8 +12,8 @@ class PageServiceTest {
 
     @BeforeEach
     void setUp() {
-        pageService = new PageService();
-        pageService.setUpPages();
+        pageService = new PageService(null);
+        System.out.println("");
     }
 
     @AfterEach
@@ -22,11 +22,11 @@ class PageServiceTest {
     }
 
     @Test
-    void tesGetPageById() {
+    void testGetPageById() {
         //Arrange
 
         //Act
-        int pageId = pageService.search.getPageId();
+        int pageId = pageService.homePage.getPageId();
         boolean exist = false;
         if (pageId > 0){
             exist = true;

@@ -124,7 +124,12 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     }
 
     @Override
-    public IMusicPlayer getMusicPlayer() {
-        return musicPlayer;
+    public boolean isPlaying() {
+        return musicPlayer.isPlaying();
+    }
+
+    @Override
+    public boolean isPaused() {
+        return musicPlayer.isPaused();
     }
 }

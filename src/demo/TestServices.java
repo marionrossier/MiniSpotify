@@ -1,10 +1,12 @@
 package demo;
 
 import data.entities.PlanEnum;
+import services.NavigationStackService;
 import services.Toolbox;
 
 public class TestServices {
     public static void main(String[] args) {
+
         Toolbox toolbox = new Toolbox();
 
         PlanEnum planEnum = PlanEnum.FREE;

@@ -14,19 +14,16 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
     public int pageId;
     public String pageContent;
     public IPlaylistPlayer spotifyPlayer;
-
     PageService pageService;
     Scanner scanner = new Scanner(System.in);
 
     protected Icon icon = new Icon();
-    protected Toolbox toolbox = new Toolbox();
+    protected final Toolbox toolbox;
 
     public _SimplePageTemplate(PageService pageService, IPlaylistPlayer spotifyPlayer) {
         this.pageService = pageService;
         this.spotifyPlayer = spotifyPlayer;
-    }
-
-    public _SimplePageTemplate() {
+        this.toolbox = new Toolbox();
     }
 
     public void displayAllPage(){

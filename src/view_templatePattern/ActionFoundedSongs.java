@@ -23,7 +23,7 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
 
     @Override
     public void button1() {
-        Playlist temporaryPlaylist = toolbox.getPlaylistRepo().getPlaylistByName("temporaryPlaylist");
+        Playlist temporaryPlaylist = toolbox.getPlaylistServ().getPlaylistByName("temporaryPlaylist");
         LinkedList <Integer> songs = temporaryPlaylist.getPlaylistSongsListWithId();
 
         if (songs != null && !songs.isEmpty()) {
@@ -46,7 +46,7 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
         toolbox.getPrintServ().printUserPlaylists(toolbox.getUserServ().getCurrentUserId());
 
         displayInput();
-        toolbox.getPlaylistServ().validatePlaylistIdInput();
+        toolbox.getPlaylistServ().validatePlaylistIdInput(pageService);
 
         toolbox.getPlaylistServ().addSongToPlaylistFromTemporaryPlaylist(toolbox.getPlaylistServ().getCurrentPlaylistId());
         pageService.playlistDisplay.displayAllPage();

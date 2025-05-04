@@ -20,7 +20,7 @@ public class Search extends _SimplePageTemplate {
         System.out.print(icon.lineBreak + icon.iconSearch() + "Enter the title of the song : " + icon.lineBreak);
         String songTitle = scanner.nextLine();
 
-        toolbox.getSongServ().searchSong(songTitle, "byTitle", getPageId());
+        toolbox.getSongServ().searchSong(songTitle, "byTitle", getPageId(), pageService);
         pageService.actionFoundedSongs.displayAllPage();
     }
 
@@ -29,7 +29,7 @@ public class Search extends _SimplePageTemplate {
         System.out.print(icon.lineBreak + icon.iconSearch() + "Enter the name of the artist : " + icon.lineBreak);
         String artistName = scanner.nextLine();
 
-        toolbox.getSongServ().searchSong(artistName, "byArtist", getPageId());
+        toolbox.getSongServ().searchSong(artistName, "byArtist", getPageId(), pageService);
         pageService.actionFoundedSongs.displayAllPage();
     }
 

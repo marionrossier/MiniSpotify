@@ -12,16 +12,16 @@ public class SongService {
 
     Scanner in = new Scanner(System.in);
     private final Icon icon = new Icon();
-    private final SongRepository songRepository = new SongRepository();
-    private final PageService pageService = new PageService();
+    private final SongRepository songRepository;
     private final PrintService printService = new PrintService();
     private final PlaylistServices playlistServices = new PlaylistServices(new PlaylistRepository());
 
     // Constructor
     public SongService(SongRepository songRepo) {
+        this.songRepository = songRepo;
     }
 
-    public void searchSong(String input, String type, int pageId) {
+    public void searchSong(String input, String type, int pageId, PageService pageService) {
         LinkedList<Integer> foundedSongs;
 
         switch (type) {
@@ -41,12 +41,12 @@ public class SongService {
             return;
         }
 
-        searchSongManager(foundedSongs, input);
+        searchSongManager(foundedSongs, input, pageService);
     }
 
-    public void searchSongManager (LinkedList<Integer> foundedSongs, String input){
+    public void searchSongManager (LinkedList<Integer> foundedSongs, String input, PageService pageService){
         printService.printSongFound(foundedSongs, input);
-        LinkedList<Integer> chosenSongs = chooseFoundedSongs(foundedSongs);
+        LinkedList<Integer> chosenSongs = chooseFoundedSongs(foundedSongs, pageService);
 
         playlistServices.createTemporaryPlaylist(chosenSongs);
 
@@ -110,7 +110,7 @@ public class SongService {
         return songsByTitleId;
     }
 
-    public LinkedList<Integer> chooseFoundedSongs(List<Integer> foundedSongs){
+    public LinkedList<Integer> chooseFoundedSongs(List<Integer> foundedSongs, PageService pageService){
         System.out.println("Choose your songs by entering their number and press \"enter\" between each song." + icon.lineBreak+
                 "End selection with an \"x\"." + icon.lineBreak);
         System.out.print("Your selection : ");
@@ -145,5 +145,9 @@ public class SongService {
             }
         }
         return selectedSongs;
+    }
+
+    public Song getSongById(int songId) {
+        return songRepository.getSongById(songId);
     }
 }
