@@ -9,7 +9,7 @@ public class FriendAddPlaylist extends _SimplePageTemplate {
         this.pageId = pageId;
         this.pageTitle = "Link a playlist of a friend";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
-                "Tip the playlist number to add it to your playlists";
+                "Tip the playlist number to add it to your playlists" + icon.goToMusicPlayer;
         // TODO : implémenter
     }
 }

@@ -17,7 +17,8 @@ public class SongPlayer extends _SimplePageTemplate {
                 icon.iconNbr(3) + ":"+ icon.iconPlayPause() +" |" +
                 icon.iconNbr(4) + ":"+ icon.iconPlayBack() + " |" +
                 icon.iconNbr(5) + ":"+ icon.iconNext() + " |" +
-                icon.iconNbr(6) + ":"+ icon.iconRepeatOne() + " |";
+                icon.iconNbr(6) + ":"+ icon.iconRepeatOne() + " |" +
+                icon.lineBreak + icon.iconNbr(9) + "Go to Home Page";
     }
 
     @Override
@@ -63,5 +64,10 @@ public class SongPlayer extends _SimplePageTemplate {
             validateInput();
             switchPage();
         }
+    }
+
+    @Override
+    public void button9(){
+        pageService.homePage.displayAllPage();
     }
 }

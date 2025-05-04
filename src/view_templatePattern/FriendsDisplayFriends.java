@@ -9,7 +9,7 @@ public class FriendsDisplayFriends extends _SimplePageTemplate {
         this.pageId = pageId;
         this.pageTitle = "Display actual Friends Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
-                "Tip the friend's number to see his playlists and have option to add it";
+                "Tip the friend's number to see his playlists and have option to add it" + icon.goToMusicPlayer;
         //TODO : faire aussi la page pour l'ajout d'une playlist a ses propres playlists
     }
 }

@@ -111,6 +111,8 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
             case 7:
                 button7();
                 break;
+            case 9 :
+                button9();
             default:
                 System.out.println("Option non available, try again.");
                 displayContent(pageContent);
@@ -151,5 +153,8 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
     public void button7(){
         invalidChoice();
         displayAllPage();
+    }
+    public void button9(){
+        pageService.songPlayer.displayAllPage();
     }
 }

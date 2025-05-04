@@ -5,6 +5,7 @@ public class Icon {
     public String iconNbr(int x){
         return (x+"\uFE0F⃣");
     }
+
     public String iconPlay (){
         return ("▶\uFE0F");
     }
@@ -38,10 +39,10 @@ public class Icon {
     public String iconLogout(){
         return ("Logout ");
     }
-
     public String iconNew (){
         return ("🆕");
     }
+
     public String iconUp (){
         return ("🔼");
     }
@@ -78,4 +79,6 @@ public class Icon {
 
     public String lineBreak = "\n";
 
+    public String goToMusicPlayer = this.lineBreak +
+            this.iconNbr(9) + "Go to music player";
 }

@@ -18,7 +18,7 @@ public class CreateAccount extends _InversedPageTemplate {
         this.pageTitle = "Create Account Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
                 icon.iconNbr(1) + "FREE " + icon.iconFree() + icon.lineBreak +
-                icon.iconNbr(2) + "PREMIUM " + icon.iconPremium() ;
+                icon.iconNbr(2) + "PREMIUM " + icon.iconPremium();
         Cookies_SingletonPattern.resetCookies();
     }
 

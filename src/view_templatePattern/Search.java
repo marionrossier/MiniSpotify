@@ -15,7 +15,7 @@ public class Search extends _SimplePageTemplate {
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
                 icon.iconNbr(1) + "Search a song" + icon.lineBreak +
                 icon.iconNbr(2) + "Search an artist" + icon.lineBreak +
-                icon.iconNbr(3) + "Search a song gender";
+                icon.iconNbr(3) + "Search a song gender" + icon.goToMusicPlayer;
     }
 
     @Override

@@ -13,7 +13,7 @@ public class FriendsHomePageTemplate extends _SimplePageTemplate {
                 icon.iconNbr(1) + "Display friends" + icon.lineBreak +
                 icon.iconNbr(2) + "Add a friend" + icon.lineBreak +
                 icon.iconNbr(3) + "Remove a friend" + icon.lineBreak +
-                icon.iconNbr(4) + "Commune Playlists" + icon.lineBreak ;
+                icon.iconNbr(4) + "Commune Playlists" + icon.lineBreak  + icon.goToMusicPlayer;
     }
 
     @Override

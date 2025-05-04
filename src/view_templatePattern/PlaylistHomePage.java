@@ -12,7 +12,7 @@ public class PlaylistHomePage extends _SimplePageTemplate {
         this.pageContent =
                 icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
                 icon.iconNbr(1) + "Choose your playlist" + icon.lineBreak +
-                icon.iconNbr(2) + "Create a playlist";
+                icon.iconNbr(2) + "Create a playlist" + icon.goToMusicPlayer;
     }
 
     @Override

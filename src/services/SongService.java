@@ -20,10 +20,10 @@ public class SongService {
     public LinkedList<Integer> searchSongByTitle(String songTitle){
 
         LinkedList<Song> songsByTitle = songRepository.getSongsByTitle(songTitle);
-        if (songsByTitle.isEmpty()) {
-        //TODO : implémenter le stack des pages ouvertes ici pour pourvoir revenir en arrière avec le 0!
-        }
         LinkedList<Integer> songsByTitleId = new LinkedList<>();
+        if (songsByTitle.isEmpty()) {
+            return songsByTitleId;
+        }
         for (Song song : songsByTitle) {
             songsByTitleId.add(song.getSongId());
         }

@@ -57,6 +57,9 @@ public class PlaylistDisplay extends _SimplePageTemplate {
         String songTitle = in.nextLine();
 
         LinkedList<Integer> foundedSongs = toolbox.getSongServ().searchSongByTitle(songTitle);
+        if (foundedSongs.isEmpty()){
+            goBack();
+        }
         toolbox.getPrintServ().printSongFound(foundedSongs, songTitle);
         LinkedList<Integer> chosenSongs = toolbox.getSongServ().chooseFoundedSongs(foundedSongs);
 

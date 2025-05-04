@@ -18,7 +18,7 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
                     icon.iconNbr(1) + "Play Temporary Playlist" + icon.lineBreak +
                     icon.iconNbr(2) + "Add to playlist" + icon.lineBreak +
-                    icon.iconNbr(3) + "Create a playlist";
+                    icon.iconNbr(3) + "Create a playlist" + icon.goToMusicPlayer;
     }
 
     @Override
