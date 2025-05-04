@@ -14,12 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserRepositoryTest {
 
     private File tempFile;
-    private UserRepository repo;
+    private UserRepository userRepository;
 
     @BeforeEach
     void setUp() throws IOException {
         tempFile = Files.createTempFile("user", ".json").toFile();
-        repo = new UserRepository(tempFile.getAbsolutePath());
+        userRepository = new UserRepository(tempFile.getAbsolutePath());
     }
 
     @AfterEach
@@ -30,15 +30,15 @@ class UserRepositoryTest {
     }
 
     @Test
-    void addUser_shouldSaveTheUser() {
+    void saveUser_shouldSaveTheUser() {
         // Arrange
         User user = new User("TestUser", "test@example.com", "1234", PlanEnum.FREE);
 
         // Act
-        repo.addUser(user);
+        userRepository.saveUser(user);
 
         // Assert
-        List<User> users = repo.getAllUsers();
+        List<User> users = userRepository.getAllUsers();
         assertEquals(1, users.size());
         assertEquals("TestUser", users.get(0).getPseudonym());
     }
@@ -48,14 +48,14 @@ class UserRepositoryTest {
         // Arrange
         User userOne = new User("UserOne", "one@example.com", "1234", PlanEnum.FREE);
         User userTwo = new User("UserTwo", "two@example.com", "1234", PlanEnum.FREE);
-        repo.addUser(userOne);
-        repo.addUser(userTwo);
+        userRepository.saveUser(userOne);
+        userRepository.saveUser(userTwo);
 
         // Act
-        repo.removeUserById(userOne.getUserId());
+        userRepository.removeUserById(userOne.getUserId());
 
         // Assert
-        List<User> result = repo.getAllUsers();
+        List<User> result = userRepository.getAllUsers();
         assertEquals(1, result.size());
         assertEquals(userTwo.getUserId(), result.get(0).getUserId());
     }
@@ -64,10 +64,10 @@ class UserRepositoryTest {
     void getUserById_shouldFindTheUser() {
         // Arrange
         User user = new User("TestUser", "test@example.com", "1234", PlanEnum.FREE);
-        repo.addUser(user);
+        userRepository.saveUser(user);
 
         // Act
-        User result = repo.getUserById(user.getUserId());
+        User result = userRepository.getUserById(user.getUserId());
 
         // Assert
         assertNotNull(result);
@@ -78,10 +78,10 @@ class UserRepositoryTest {
     void getUserByPseudonym_shouldFindTheUser() {
         // Arrange
         User user = new User("TestUser", "test@example.com", "1234", PlanEnum.FREE);
-        repo.addUser(user);
+        userRepository.saveUser(user);
 
         // Act
-        User result = repo.getUserByPseudonym("TestUser");
+        User result = userRepository.getUserByPseudonym("TestUser");
 
         // Assert
         assertNotNull(result);
@@ -92,14 +92,16 @@ class UserRepositoryTest {
     void updateAccount_shouldModifyTheUser() {
         // Arrange
         User user = new User("OldUser", "old@example.com", "1234", PlanEnum.FREE);
-        repo.addUser(user);
+        userRepository.saveUser(user);
+        int userId = user.getUserId();
 
         // Act
         user.setPseudonym("NewUser");
-        User updatedUser = repo.updateAccount(user);
+        userRepository.saveUser(user);
+        User updatedUser = userRepository.getUserById(userId);
 
         // Assert
         assertNotNull(updatedUser);
-        assertEquals("NewUser", repo.getUserById(user.getUserId()).getPseudonym());
+        assertEquals("NewUser", userRepository.getUserById(user.getUserId()).getPseudonym());
     }
 }

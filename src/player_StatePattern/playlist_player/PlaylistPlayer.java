@@ -1,10 +1,11 @@
 package player_StatePattern.playlist_player;
 
+import data.entities.Playlist;
 import data.entities.Song;
 import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
 import player_StatePattern.file_player.IMusicPlayer;
-import services.Cookies_SingletonPattern;
+import services.PlaylistServices;
 
 import java.util.*;
 
@@ -13,10 +14,11 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     private final IMusicPlayer musicPlayer;
     protected SongRepository songRepository;
     protected final PlaylistRepository playlistRepository;
+    protected PlaylistServices playlistServices;
 
     protected Stack<Integer> songIdHistory = new Stack<>();
     protected Song currentSong;
-    protected int currentPlaylistId;
+    protected Playlist currentPlaylist;
 
     //STATE PATTERN
     private IState currentState;
@@ -28,6 +30,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         this.musicPlayer = musicPlayer;
         this.songRepository = songRepository;
         this.playlistRepository = playlistRepository;
+        this.playlistServices = new PlaylistServices(playlistRepository);
 
         this.sequentialState = new SequentialState(this);
         this.shuffleState = new ShuffleState(this);
@@ -51,10 +54,10 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     public void setRepeatMode(){
         currentState = this.repeatState;
     }
+
     @Override
     public int getRunningPlaylistId() {
-        currentPlaylistId =Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
-        return currentPlaylistId;
+        return currentPlaylist.getPlaylistId();
     }
 
     @Override
@@ -65,14 +68,14 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     @Override
     public void playOrPause(int songId) {
         this.currentSong = songRepository.getSongById(songId);
-        Cookies_SingletonPattern.setCurrentSongId(this.currentSong.getSongId());
+        playlistServices.setCurrentPlaylistId(this.currentSong.getSongId());
         musicPlayer.playOrPause(currentSong.getAudioFilePath());
     }
 
     @Override
     public void play(int playlistId, int songId) {
-        this.currentPlaylistId = playlistId;
-        Cookies_SingletonPattern.setCurrentPlaylistId(this.currentPlaylistId);
+        this.currentPlaylist = playlistRepository.getPlaylistById(playlistId);
+        playlistServices.setCurrentPlaylistId(this.currentPlaylist.getPlaylistId());
 
         this.currentSong = songRepository.getSongById(songId);
         musicPlayer.play(currentSong.getAudioFilePath());
@@ -98,17 +101,26 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     public void next() {
         this.songIdHistory.push(currentSong.getSongId());
         this.currentSong = currentState.getNextSong();
-        Cookies_SingletonPattern.setCurrentSongId(this.currentSong.getSongId());
+        playlistServices.setCurrentSongId(this.currentSong.getSongId());
         this.musicPlayer.play(this.currentSong.getAudioFilePath());
     }
 
     @Override
     public void previous(){
-        if (songIdHistory.isEmpty()) return;
-        int previousSongId = songIdHistory.pop();
-        this.currentSong = songRepository.getSongById(previousSongId);
-        Cookies_SingletonPattern.setCurrentSongId(this.currentSong.getSongId());
+        if (currentState == repeatState){
+            this.currentSong = currentState.getNextSong();
+        }
+        else {
+            if (songIdHistory.isEmpty()) return;
+            int previousSongId = songIdHistory.pop();
+            this.currentSong = songRepository.getSongById(previousSongId);
+        }
+        playlistServices.setCurrentSongId(this.currentSong.getSongId());
         this.musicPlayer.play(this.currentSong.getAudioFilePath());
+    }
+
+    public void stop (){
+        musicPlayer.stop();
     }
 
     @Override

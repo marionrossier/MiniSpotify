@@ -26,5 +26,6 @@ public interface IPlaylistPlayer {
 
     int getRunningSongId();
 
+    void stop();
     IMusicPlayer getMusicPlayer();
 }

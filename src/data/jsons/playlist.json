@@ -82,4 +82,11 @@
   "playlistSize" : 4,
   "ownerId" : 0,
   "playlistSongsListWithId" : [ 325561970, 354322599, 1925355941, 700468481 ]
+}, {
+  "playlistName" : "TestMarion",
+  "playlistId" : 610908062,
+  "playlistSeconds" : 0,
+  "playlistSize" : 5,
+  "ownerId" : 0,
+  "playlistSongsListWithId" : [ 625427469, 354322599, 243871940, 719812166, 1824616046, 354322599, 1925355941, 1988790520 ]
 } ]

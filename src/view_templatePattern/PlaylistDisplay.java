@@ -1,23 +1,18 @@
 package view_templatePattern;
 
-import data.jsons.PlaylistRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.Cookies_SingletonPattern;
-import services.PlaylistServices;
-import services.SongService;
+import services.PageService;
 
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class PlaylistDisplay extends AbstractMenuPage {
+public class PlaylistDisplay extends _SimplePageTemplate {
 
-    SongService songService = new SongService();
     Scanner in = new Scanner(System.in);
-    PlaylistRepository playlistRepository = new PlaylistRepository();
-    PlaylistServices playlistServices = new PlaylistServices(playlistRepository);
 
-    public PlaylistDisplay(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public PlaylistDisplay(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Playlist Page : ";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
                 icon.iconNbr(1) + "Play the playlist" + icon.lineBreak +
@@ -29,67 +24,67 @@ public class PlaylistDisplay extends AbstractMenuPage {
     }
 
     @Override
-    void displaySpecificContent(){
+    public void displaySpecificContent(){
         System.out.println();
-        System.out.println("Playlist name : " + playlistRepository
-                .getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId())
+        System.out.println("Playlist name : " + toolbox.getPlaylistRepo()
+                .getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId())
                 .getPlaylistName());
         System.out.println("Playlist songs : ");
 
-        songService.printSongList(playlistRepository
-                .getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId())
+        toolbox.getPrintServ().printSongList(toolbox.getPlaylistRepo()
+                .getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId())
                 .getPlaylistSongsListWithId());
     }
 
     @Override
-    void button0() {
-        spotifyPageFactory.playlistChoseList.templateMethode();
+    public void button1() {
+        pageService.songPlayer.displayAllPage();
     }
 
     @Override
-    void button1() {
-        spotifyPageFactory.songPlayer.templateMethode();
-    }
-
-    @Override
-    void button2() {
+    public void button2() {
         System.out.print("Enter the new name of the playlist : ");
         String newName = in.next();
-        int playlistId = Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
-        playlistServices.editPlayListName(playlistId, newName);
+        int playlistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
+        toolbox.getPlaylistServ().renamePlayList(playlistId, newName);
     }
 
     @Override
-    void button3() {
+    public void button3() {
         //TODO : Mettre dans une classe SearchService pour toute la partie logique
         System.out.println();
         System.out.print(icon.iconSearch() + "Enter the title of the song : ");
-        String songTitle = in.nextLine();
+        String songTitle = pageService.gotAnInput(in.nextLine());
 
-        LinkedList<Integer> foundedSongs = songService.searchSongByTitle(songTitle);
-        songService.printSongFound(foundedSongs, songTitle);
-        LinkedList<Integer> chosenSongs = songService.chooseFoundedSongs(foundedSongs);
+        LinkedList<Integer> foundedSongs = toolbox.getSongServ().searchSongByTitle(songTitle);
+        if (foundedSongs.isEmpty()){
+            pageService.goBack(getPageId());
+        }
+        toolbox.getPrintServ().printSongFound(foundedSongs, songTitle);
+        LinkedList<Integer> chosenSongs = toolbox.getSongServ().chooseFoundedSongs(foundedSongs);
 
-        Cookies_SingletonPattern.setTemporaryPlaylist(chosenSongs);
-        spotifyPageFactory.actionFoundedSongs.templateMethode();
+        toolbox.getPlaylistServ().createTemporaryPlaylistAndInitCookies(chosenSongs);
+
+        pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
-    void button4() {
+    public void button4() {
         System.out.print("Enter the number of the song you want to remove : ");
         int songIndex = in.nextInt()-1;
 
-        playlistServices.removeSongFromPlaylist(songIndex);
-        spotifyPageFactory.playlistDisplay.templateMethode();
+        int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
+        toolbox.getPlaylistServ().removeSongFromPlaylist(currentPlaylistId, songIndex);
+        pageService.playlistDisplay.displayAllPage();
     }
 
     @Override
-    void button5() {
+    public void button5() {
         //TODO : reorder song in playlist
     }
 
     @Override
-    void button6() {
-        spotifyPageFactory.playlistDeletion.templateMethode();
+    public void button6() {
+        pageService.playlistDeletion.displayAllPage();
     }
 }

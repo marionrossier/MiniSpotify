@@ -1,32 +1,30 @@
 package view_templatePattern;
 
 import data.entities.Artist;
-import data.jsons.ArtistRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.SongService;
+import services.PageService;
 
 import java.util.List;
 
-public class Search extends AbstractMenuPage {
+public class Search extends _SimplePageTemplate {
 
-    SongService songService = new SongService();
-
-    public Search(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public Search(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Search Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
                 icon.iconNbr(1) + "Search a song" + icon.lineBreak +
                 icon.iconNbr(2) + "Search an artist" + icon.lineBreak +
-                icon.iconNbr(3) + "Search a song gender";
+                icon.iconNbr(3) + "Search a song gender" + icon.goToMusicPlayer;
     }
 
     @Override
-    void button1() {
+    public void button1() {
         System.out.print(icon.iconSearch() + "Enter the title of the song : ");
-        String songTitle = in.nextLine();
+        String songTitle = scanner.nextLine();
 
-        List<Integer> foundedSongs = songService.searchSongByTitle(songTitle);
-        songService.printSongFound(foundedSongs, songTitle);
+        List<Integer> foundedSongs = toolbox.getSongServ().searchSongByTitle(songTitle);
+        toolbox.getPrintServ().printSongFound(foundedSongs, songTitle);
 
         //TODO : terminer
 //        List<Integer> chosenSongs = songService.chooseFoundedSongs(foundedSongs);
@@ -36,20 +34,19 @@ public class Search extends AbstractMenuPage {
     }
 
     @Override
-    void button2() {
+    public void button2() {
         System.out.println(icon.iconSearch() + "Search Artist Page");
         System.out.print(icon.lineBreak + "Enter the name of the artist : ");
-        String artistName = in.nextLine();
+        String artistName = scanner.nextLine();
         // TODO : idem que Song, chercher via le ArtistRep ou il faut créer une méthode
         //  "getArtistByName(String name) return liste" des correspondances
 
-        ArtistRepository artistRepository = new ArtistRepository();
-        Artist searchedArtist = artistRepository.getArtistByName(artistName); //Pas juste à 100%
+        Artist searchedArtist = toolbox.getArtistRepo().getArtistByName(artistName); //Pas juste à 100%
     }
 
     @Override
-    void button3() {
-        spotifyPageFactory.searchGender.templateMethode();
+    public void button3() {
+        pageService.searchGender.displayAllPage();
     }
 
 }

@@ -41,6 +41,7 @@ public class PlaylistRepository {
     }
 
     public void savePlaylist(Playlist playlist) {
+        playlist.setPlaylistInformation();
         List<Playlist> playlists = getAllPlaylists();
         playlists.removeIf(p -> p.getPlaylistId() == playlist.getPlaylistId());
         playlists.add(playlist);
@@ -53,12 +54,6 @@ public class PlaylistRepository {
         } catch (IOException e) {
             System.err.println("Error during the saving process for the playlists : " + e.getMessage());
         }
-    }
-
-    public void addPlaylist(Playlist playlist) {
-        List<Playlist> playlists = getAllPlaylists();
-        playlists.add(playlist);
-        saveAllPlaylists(playlists);
     }
 
     public void deletePlaylistById(int playlistId) {
@@ -94,9 +89,5 @@ public class PlaylistRepository {
             }
         }
         return null;
-    }
-
-    public int getCurrentSongByPlaylistID (int playlistId) {
-        return this.getPlaylistById(playlistId).getPlaylistSongsListWithId().getFirst();
     }
 }

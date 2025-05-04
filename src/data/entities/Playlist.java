@@ -87,21 +87,9 @@ public class Playlist {
         this.playlistName = updatedName;
     }
 
-
-    //TODO : Mettre les méthodes addSong, removeSong, reorderSong, dans le service PlaylistService
-    public void addSong(Song currentSong) {
-        playlistSongsId.add(currentSong.getSongId());
-        playlistSeconds += currentSong.getSeconds();
-    }
-
-    public void removeSong(Song currentSong) {
-        playlistSongsId.remove(currentSong.getSongId());
-        playlistSeconds -= currentSong.getSeconds();
-    }
-
-    public void reorderSong(int songIndex) {
-        int memory = playlistSongsId.get(songIndex);
-        playlistSongsId.remove(songIndex);
-        playlistSongsId.add(songIndex, memory);
+    //TODO : ajuster car ne met pas a jour les informations contenues !
+    public void setPlaylistInformation(){
+        setPlaylistDuration();
+        setPlaylistSize();
     }
 }

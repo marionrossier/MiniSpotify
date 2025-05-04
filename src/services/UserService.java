@@ -5,13 +5,15 @@ import data.entities.User;
 import data.jsons.UserRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserService {
     private final UserRepository userRepository;
-    private final PasswordService passwordService = new PasswordService();
+    private final PasswordService passwordService;
 
     public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
+        this.passwordService = new PasswordService(userRepository);
     }
 
     public int getUserIdByPseudo(String pseudo) {
@@ -33,27 +35,25 @@ public class UserService {
         }
         else {
             User newUser = new User(pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
-            userRepository.addUser(newUser);
+            userRepository.saveUser(newUser);
         }
     }
 
-    public boolean verifyUserAuthentification(String pseudonym, String password) {
+    public int getCurrentUserId(){
+        return Cookies_SingletonPattern.getInstance().getUserId();
+    }
 
-        User searchedUser = userRepository.getUserByPseudonym(pseudonym);
+    public void resetCookie (){
+        Cookies_SingletonPattern.resetCookies();
+    }
 
-        if (searchedUser == null) {
-            System.err.println("The user does not exist.");
-            return false;
+    public void addOnePlaylist(int playlistId) {
+        List<Integer> playlists = userRepository.getUserById(getCurrentUserId()).getPlaylists();
+        if (playlists == null) {
+            playlists = new ArrayList<>();
+            userRepository.getUserById(getCurrentUserId()).setPlaylists(playlists);
         }
-
-        String givenHashedPassword = passwordService.hashPassword(password, searchedUser.getSalt());
-
-        if (givenHashedPassword.equals(searchedUser.getPassword())) {
-            return true;
-        } else {
-            System.err.println("The password is incorrect.");
-            return false;
-        }
+        userRepository.addPlaylistToUser(getCurrentUserId(),playlistId);
     }
 
     public void followFriend() {/*TODO*/}

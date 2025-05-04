@@ -1,62 +1,53 @@
 package view_templatePattern;
 
 import data.entities.PlanEnum;
-import data.jsons.UserRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.Cookies_SingletonPattern;
-import services.UserService;
+import services.PageService;
 
-public class CreateAccount extends AbstractMenuPage {
+public class CreateAccount extends _InversedPageTemplate {
 
     private String pseudonym;
     private String password;
     private String email;
     private PlanEnum planEnum;
-    public UserService userService = new UserService(new UserRepository());
 
-    public CreateAccount(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public CreateAccount(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Create Account Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
                 icon.iconNbr(1) + "FREE " + icon.iconFree() + icon.lineBreak +
-                icon.iconNbr(2) + "PREMIUM " + icon.iconPremium() ;
-        Cookies_SingletonPattern.resetCookies();
+                icon.iconNbr(2) + "PREMIUM " + icon.iconPremium();
+        toolbox.getUserServ().resetCookie();
     }
 
-    @Override
-    void displayContent(String pageContent) {
+    public void displaySpecificContent () {
         System.out.print("Enter your pseudonym : ");
-        pseudonym = in.nextLine();
+        pseudonym = pageService.gotAnInput(scanner.nextLine());
         System.out.print("Enter your password : ");
-        password = in.nextLine();
+        password = pageService.gotAnInput(scanner.nextLine());
         System.out.print("Enter your email : ");
-        email = in.nextLine();
+        email = pageService.gotAnInput(scanner.nextLine());
         //TODO : check if email is valid (dans UserService)
         System.out.println(icon.lineBreak + "Choose your plan : ");
-
-        super.displayContent(pageContent);
     }
 
     @Override
-    void button0() {
-        spotifyPageFactory.login.templateMethode();
-    }
-
-    @Override
-    void button1() {
+    public void button1() {
         planEnum = PlanEnum.FREE;
         createAccount();
     }
 
     @Override
-    void button2() {
+    public void button2() {
         planEnum = PlanEnum.PREMIUM;
         createAccount();
     }
 
     private void createAccount() {
-        userService.addUser(pseudonym,email,password, planEnum);
+        toolbox.getUserServ().addUser(pseudonym,email,password, planEnum);
         System.out.println("Account created successfully !");
-        spotifyPageFactory.login.templateMethode();
+        pageService.login.displayAllPage();
     }
 }

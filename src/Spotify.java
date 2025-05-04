@@ -4,7 +4,7 @@ import player_StatePattern.file_player.MusicPlayer;
 import player_StatePattern.file_player.IMusicPlayer;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import player_StatePattern.playlist_player.PlaylistPlayer;
-import view_templatePattern.SpotifyPageFactory;
+import services.PageService;
 
 public class Spotify {
     public static void startApp(){
@@ -14,7 +14,7 @@ public class Spotify {
 
         IPlaylistPlayer spotifyPlayer = new PlaylistPlayer(musicPlayer, songRepository, playlistRepository);
 
-        SpotifyPageFactory miniSpotify = new SpotifyPageFactory();
+        PageService miniSpotify = new PageService();
         miniSpotify.spotifyPlayer = spotifyPlayer; // Initialisation de SpotifyPlayer dans la factory
 
         miniSpotify.setUpPages();
