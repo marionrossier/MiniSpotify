@@ -135,7 +135,7 @@ class PlaylistServicesTest {
         chosenSongs.add(1);
 
         //Act
-        playlistService.createTemporaryPlaylistAndInitCookies(chosenSongs);
+        playlistService.createTemporaryPlaylist(chosenSongs);
         int temporaryPlaylistId = playlistService.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId();
         int firstSongId = playlistService.playlistRepository
                 .getPlaylistById(temporaryPlaylistId).getPlaylistSongsListWithId().getFirst();
@@ -151,7 +151,7 @@ class PlaylistServicesTest {
         LinkedList <Integer> chosenSongs = new LinkedList<>();
         chosenSongs.add(1);
 
-        playlistService.createTemporaryPlaylistAndInitCookies(chosenSongs);
+        playlistService.createTemporaryPlaylist(chosenSongs);
         //Act
         playlistService.deleteTemporaryPlaylist();
         //Assert
@@ -164,7 +164,7 @@ class PlaylistServicesTest {
         LinkedList <Integer> chosenSongs = new LinkedList<>();
         chosenSongs.add(1);
         chosenSongs.add(3);
-        playlistService.createTemporaryPlaylistAndInitCookies(chosenSongs);
+        playlistService.createTemporaryPlaylist(chosenSongs);
         String playlistName = "new Playlist";
         int temporaryPlaylistLength = playlistService.playlistRepository
                 .getPlaylistByName("temporaryPlaylist")

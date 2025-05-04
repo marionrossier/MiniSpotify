@@ -51,21 +51,7 @@ public class PlaylistDisplay extends _SimplePageTemplate {
 
     @Override
     public void button3() {
-        //TODO : Mettre dans une classe SearchService pour toute la partie logique
-        System.out.println();
-        System.out.print(icon.iconSearch() + "Enter the title of the song : ");
-        String songTitle = pageService.gotAnInput(in.nextLine());
-
-        LinkedList<Integer> foundedSongs = toolbox.getSongServ().searchSongByTitle(songTitle);
-        if (foundedSongs.isEmpty()){
-            pageService.goBack(getPageId());
-        }
-        toolbox.getPrintServ().printSongFound(foundedSongs, songTitle);
-        LinkedList<Integer> chosenSongs = toolbox.getSongServ().chooseFoundedSongs(foundedSongs);
-
-        toolbox.getPlaylistServ().createTemporaryPlaylistAndInitCookies(chosenSongs);
-
-        pageService.actionFoundedSongs.displayAllPage();
+        pageService.search.displayAllPage();
     }
 
     @Override

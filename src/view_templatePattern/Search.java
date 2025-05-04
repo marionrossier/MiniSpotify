@@ -1,10 +1,7 @@
 package view_templatePattern;
 
-import data.entities.Artist;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.PageService;
-
-import java.util.List;
 
 public class Search extends _SimplePageTemplate {
 
@@ -20,33 +17,24 @@ public class Search extends _SimplePageTemplate {
 
     @Override
     public void button1() {
-        System.out.print(icon.iconSearch() + "Enter the title of the song : ");
+        System.out.print(icon.lineBreak + icon.iconSearch() + "Enter the title of the song : " + icon.lineBreak);
         String songTitle = scanner.nextLine();
 
-        List<Integer> foundedSongs = toolbox.getSongServ().searchSongByTitle(songTitle);
-        toolbox.getPrintServ().printSongFound(foundedSongs, songTitle);
-
-        //TODO : terminer
-//        List<Integer> chosenSongs = songService.chooseFoundedSongs(foundedSongs);
-//
-//        Cookies_SingeltonPattern.setTemporaryPlaylist(chosenSongs);
-//        spotifyPageFactory.actionFoundedSongs.templateMethode();
+        toolbox.getSongServ().searchSong(songTitle, "byTitle", getPageId());
+        pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button2() {
-        System.out.println(icon.iconSearch() + "Search Artist Page");
-        System.out.print(icon.lineBreak + "Enter the name of the artist : ");
+        System.out.print(icon.lineBreak + icon.iconSearch() + "Enter the name of the artist : " + icon.lineBreak);
         String artistName = scanner.nextLine();
-        // TODO : idem que Song, chercher via le ArtistRep ou il faut créer une méthode
-        //  "getArtistByName(String name) return liste" des correspondances
 
-        Artist searchedArtist = toolbox.getArtistRepo().getArtistByName(artistName); //Pas juste à 100%
+        toolbox.getSongServ().searchSong(artistName, "byArtist", getPageId());
+        pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button3() {
         pageService.searchGender.displayAllPage();
     }
-
 }

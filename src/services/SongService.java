@@ -1,6 +1,7 @@
 package services;
 
 import data.entities.Song;
+import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
 
 import java.util.LinkedList;
@@ -13,14 +14,92 @@ public class SongService {
     private final Icon icon = new Icon();
     private final SongRepository songRepository = new SongRepository();
     private final PageService pageService = new PageService();
+    private final PrintService printService = new PrintService();
+    private final PlaylistServices playlistServices = new PlaylistServices(new PlaylistRepository());
 
     // Constructor
     public SongService(SongRepository songRepo) {
     }
 
-    public LinkedList<Integer> searchSongByTitle(String songTitle){
+    public void searchSong(String input, String type, int pageId) {
+        LinkedList<Integer> foundedSongs;
 
-        LinkedList<Song> songsByTitle = songRepository.getSongsByTitle(songTitle);
+        switch (type) {
+            case "byTitle" -> foundedSongs = searchByTitle(input);
+            case "byArtist" -> foundedSongs = searchByArtist(input);
+            case "byGender" -> foundedSongs = searchByGender(input);
+            default -> {
+                System.err.println("Invalid search type: " + type);
+                pageService.goBack(pageId);
+                return;
+            }
+        }
+
+        if (foundedSongs.isEmpty()) {
+            System.out.println("No songs found.");
+            pageService.goBack(pageId);
+            return;
+        }
+
+        searchSongManager(foundedSongs, input);
+    }
+
+    public void searchSongManager (LinkedList<Integer> foundedSongs, String input){
+        printService.printSongFound(foundedSongs, input);
+        LinkedList<Integer> chosenSongs = chooseFoundedSongs(foundedSongs);
+
+        playlistServices.createTemporaryPlaylist(chosenSongs);
+
+//        //TODO : a valider is nécessaire....On passe sur la page des playlist et on la séléection...
+//        //initialisation du current song cookie
+//        playlistServices.setCurrentSongId(playlistServices.playlistRepository
+//                .getPlaylistById(playlistServices.getTemporaryPlaylistId()).getPlaylistSongsListWithId().getFirst());
+    }
+
+    public LinkedList<Integer> searchByTitle(String songTitle){
+
+        LinkedList<Song> songsByTitle;
+
+        if (songTitle == null || songTitle.isEmpty()) {
+            System.out.println("No result.");
+            return new LinkedList<>();
+        }
+        else {
+            songsByTitle = songRepository.getSongsByTitle(songTitle);
+        }
+
+        return listSongToListInt(songsByTitle);
+    }
+
+    private LinkedList<Integer> searchByArtist(String artistName) {
+        LinkedList<Song> songsByArtist;
+
+        if (artistName == null || artistName.isEmpty()) {
+            System.out.println("No result.");
+            return new LinkedList<>();
+        }
+        else {
+            songsByArtist = songRepository.getSongsByArtist(artistName);
+        }
+
+        return listSongToListInt(songsByArtist);
+    }
+
+    private LinkedList<Integer> searchByGender(String genderName) {
+        LinkedList<Song> songsByGender;
+
+        if (genderName == null || genderName.isEmpty()) {
+            System.out.println("No result.");
+            return new LinkedList<>();
+        }
+        else {
+            songsByGender = songRepository.getSongsByArtist(genderName);
+        }
+
+        return listSongToListInt(songsByGender);
+    }
+
+    private static LinkedList<Integer> listSongToListInt(LinkedList<Song> songsByTitle) {
         LinkedList<Integer> songsByTitleId = new LinkedList<>();
         if (songsByTitle.isEmpty()) {
             return songsByTitleId;
@@ -42,6 +121,9 @@ public class SongService {
             input = pageService.gotAnInput(in.nextLine());
             if (input.equals("x")) {
                 break;
+            }
+            if (input.equals("0")){
+                pageService.goBack(pageService.getMenuPages().peek());
             }
             try {
                 int songIndex = Integer.parseInt(input) - 1;

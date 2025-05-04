@@ -96,6 +96,8 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
             case 7:
                 button7();
                 break;
+            case 8 :
+                button8();
             case 9 :
                 button9();
             default:
@@ -136,6 +138,10 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
         displayAllPage();
     }
     public void button7(){
+        invalidChoice();
+        displayAllPage();
+    }
+    public void button8(){
         invalidChoice();
         displayAllPage();
     }

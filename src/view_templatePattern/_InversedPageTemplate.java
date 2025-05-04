@@ -19,17 +19,4 @@ public abstract class _InversedPageTemplate extends _SimplePageTemplate {
         validateInput();
         switchPage();
     }
-
-    @Override
-    public void validateInput(){
-        try{
-            index = scanner.nextInt();
-            scanner.nextLine(); // Clear the newline character
-        }catch (Exception e){
-            System.out.println("Invalid input, try again.");
-            scanner.nextLine(); // Clear the invalid input
-            displayInput();
-            validateInput();
-        }
-    }
 }
