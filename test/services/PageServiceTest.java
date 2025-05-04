@@ -9,24 +9,27 @@ import static org.junit.jupiter.api.Assertions.*;
 class PageServiceTest {
 
     private PageService pageService;
+    private final NavigationStackService navigationStackService = new NavigationStackService();
+
 
     @BeforeEach
     void setUp() {
         pageService = new PageService();
         pageService.setUpPages();
+        System.out.println("");
     }
 
     @AfterEach
     void tearDown() {
-        pageService.getMenuPages().clear();
+        navigationStackService.getMenuPages().clear();
     }
 
     @Test
-    void tesGetPageById() {
+    void testGetPageById() {
         //Arrange
 
         //Act
-        int pageId = pageService.search.getPageId();
+        int pageId = pageService.homePage.getPageId();
         boolean exist = false;
         if (pageId > 0){
             exist = true;

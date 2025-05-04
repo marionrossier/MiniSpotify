@@ -12,12 +12,15 @@ public class Toolbox {
     SongRepository songRepo = new SongRepository();
 
     PlaylistServices playlistServ = new PlaylistServices(playlistRepo);
-    SongService songServ = new SongService(songRepo);
+    SongService songServ;
     UserService userServ = new UserService(userRepo);
     PrintService printServ = new PrintService();
     PasswordService passwordServ = new PasswordService(userRepo);
+    NavigationStackService navigationStackService;
 
-    public Toolbox() {
+    public Toolbox(NavigationStackService navigationStackService) {
+        this.navigationStackService = navigationStackService;
+        this.songServ = new SongService(songRepo, navigationStackService);
     }
 
     public PlaylistServices getPlaylistServ() {

@@ -12,13 +12,16 @@ public class SongService {
 
     Scanner in = new Scanner(System.in);
     private final Icon icon = new Icon();
-    private final SongRepository songRepository = new SongRepository();
+    private final SongRepository songRepository;
     private final PageService pageService = new PageService();
     private final PrintService printService = new PrintService();
     private final PlaylistServices playlistServices = new PlaylistServices(new PlaylistRepository());
+    private final NavigationStackService navigationStackService;
 
     // Constructor
-    public SongService(SongRepository songRepo) {
+    public SongService(SongRepository songRepo, NavigationStackService navigationStackService) {
+        this.songRepository = songRepo;
+        this.navigationStackService = navigationStackService;
     }
 
     public void searchSong(String input, String type, int pageId) {
@@ -30,14 +33,14 @@ public class SongService {
             case "byGender" -> foundedSongs = searchByGender(input);
             default -> {
                 System.err.println("Invalid search type: " + type);
-                pageService.goBack(pageId);
+                navigationStackService.goBack(pageId);
                 return;
             }
         }
 
         if (foundedSongs.isEmpty()) {
             System.out.println("No songs found.");
-            pageService.goBack(pageId);
+            navigationStackService.goBack(pageId);
             return;
         }
 
@@ -123,7 +126,7 @@ public class SongService {
                 break;
             }
             if (input.equals("0")){
-                pageService.goBack(pageService.getMenuPages().peek());
+                navigationStackService.goBack(navigationStackService.getMenuPages().peek());
             }
             try {
                 int songIndex = Integer.parseInt(input) - 1;

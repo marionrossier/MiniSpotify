@@ -11,7 +11,7 @@ public abstract class _InversedPageTemplate extends _SimplePageTemplate {
 
     @Override
     public void displayAllPage(){
-        pageService.getMenuPages().push(getPageId());
+        spotifyPlayer.getNavigationStackService().getMenuPages().push(getPageId());
         displayTitle(pageTitle);
         displaySpecificContent();
         displayContent(pageContent);

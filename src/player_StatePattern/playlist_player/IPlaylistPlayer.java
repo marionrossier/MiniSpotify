@@ -1,6 +1,7 @@
 package player_StatePattern.playlist_player;
 
 import player_StatePattern.file_player.IMusicPlayer;
+import services.NavigationStackService;
 
 public interface IPlaylistPlayer {
 
@@ -28,4 +29,5 @@ public interface IPlaylistPlayer {
 
     void stop();
     IMusicPlayer getMusicPlayer();
+    NavigationStackService getNavigationStackService ();
 }

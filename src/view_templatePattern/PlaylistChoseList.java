@@ -1,6 +1,5 @@
 package view_templatePattern;
 
-import data.entities.User;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.PageService;
 

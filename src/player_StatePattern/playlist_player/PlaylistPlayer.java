@@ -5,6 +5,7 @@ import data.entities.Song;
 import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
 import player_StatePattern.file_player.IMusicPlayer;
+import services.NavigationStackService;
 import services.PlaylistServices;
 
 import java.util.*;
@@ -15,6 +16,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     protected SongRepository songRepository;
     protected final PlaylistRepository playlistRepository;
     protected PlaylistServices playlistServices;
+    protected NavigationStackService navigationStackService;
 
     protected Stack<Integer> songIdHistory = new Stack<>();
     protected Song currentSong;
@@ -26,11 +28,12 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     private final IState shuffleState;
     private final IState repeatState;
 
-    public PlaylistPlayer(IMusicPlayer musicPlayer, SongRepository songRepository, PlaylistRepository playlistRepository) {
+    public PlaylistPlayer(IMusicPlayer musicPlayer, SongRepository songRepository, PlaylistRepository playlistRepository, NavigationStackService navigationStackService) {
         this.musicPlayer = musicPlayer;
         this.songRepository = songRepository;
         this.playlistRepository = playlistRepository;
         this.playlistServices = new PlaylistServices(playlistRepository);
+        this.navigationStackService = navigationStackService;
 
         this.sequentialState = new SequentialState(this);
         this.shuffleState = new ShuffleState(this);
@@ -126,5 +129,9 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     @Override
     public IMusicPlayer getMusicPlayer() {
         return musicPlayer;
+    }
+
+    public NavigationStackService getNavigationStackService (){
+        return navigationStackService;
     }
 }

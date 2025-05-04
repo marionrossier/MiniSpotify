@@ -4,6 +4,7 @@ import player_StatePattern.file_player.MusicPlayer;
 import player_StatePattern.file_player.IMusicPlayer;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import player_StatePattern.playlist_player.PlaylistPlayer;
+import services.NavigationStackService;
 import services.PageService;
 
 public class Spotify {
@@ -11,8 +12,9 @@ public class Spotify {
         PlaylistRepository playlistRepository = new PlaylistRepository();
         SongRepository songRepository = new SongRepository();
         IMusicPlayer musicPlayer = new MusicPlayer();
+        NavigationStackService navigationStackService = new NavigationStackService();
 
-        IPlaylistPlayer spotifyPlayer = new PlaylistPlayer(musicPlayer, songRepository, playlistRepository);
+        IPlaylistPlayer spotifyPlayer = new PlaylistPlayer(musicPlayer, songRepository, playlistRepository, navigationStackService);
 
         PageService pageService = new PageService();
         pageService.spotifyPlayer = spotifyPlayer; // Initialisation de SpotifyPlayer dans la factory

@@ -16,15 +16,11 @@ public class PlaylistCreation extends _SimplePageTemplate {
     @Override
     public void displayContent(String pageContent) {
         System.out.print(pageContent);
-        String playlistName = scanner.nextLine();
+        String playlistName = pageService.gotAnInput(scanner.nextLine());
 
-        playlist.setPlaylistName(playlistName);
-        toolbox.getPlaylistRepo().savePlaylist(playlist);
+        toolbox.getPlaylistServ().createPlaylistWithTemporaryPlaylist(playlistName);
 
         System.out.println(icon.iconOk() + "Playlist saved successfully !");
-
-        //TODO : search a song by songName !
-        //TODO : add back to the menu "icon.iconNbr(0) + icon.iconBack() + icon.lineBreak"
     }
 
 }

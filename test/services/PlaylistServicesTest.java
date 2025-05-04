@@ -27,6 +27,7 @@ class PlaylistServicesTest {
     private File userTempFile;
     private Playlist playlist;
     private PlaylistServices playlistService;
+    private NavigationStackService navigationStackService;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -43,6 +44,8 @@ class PlaylistServicesTest {
         PlaylistRepository playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
 
         playlistService = new PlaylistServices(playlistRepository, userRepository);
+
+        navigationStackService = new NavigationStackService();
 
         // Create test songs
         Song song1 = createSong(1, "Song 1", "path/to/song1.mp3");
@@ -77,7 +80,7 @@ class PlaylistServicesTest {
         FakeMusicPlayer fakeMusicPlayer = new FakeMusicPlayer();
 
         // Instantiate the PlaylistPlayer with the fake player and repositories
-        PlaylistPlayer playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository);
+        PlaylistPlayer playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository, navigationStackService);
 
         // Create playlistService
         playlistService = new PlaylistServices(playlistRepository, userRepository);

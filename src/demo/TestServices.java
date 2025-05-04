@@ -1,11 +1,14 @@
 package demo;
 
 import data.entities.PlanEnum;
+import services.NavigationStackService;
 import services.Toolbox;
 
 public class TestServices {
     public static void main(String[] args) {
-        Toolbox toolbox = new Toolbox();
+        NavigationStackService navigationStackService = new NavigationStackService();
+
+        Toolbox toolbox = new Toolbox(navigationStackService);
 
         PlanEnum planEnum = PlanEnum.FREE;
         toolbox.getUserServ().addUser("testUsers", "email", "password", planEnum);

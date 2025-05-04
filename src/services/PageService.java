@@ -5,14 +5,13 @@ import player_StatePattern.playlist_player.IPlaylistPlayer;
 import view_templatePattern.*;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class PageService {
 
     ArrayList<_MenuInterface> pages = new ArrayList<>();
-    public final Stack<Integer> menuPages = new Stack<>();
-    private UserService userService = new UserService(new UserRepository());
+    private final UserService userService = new UserService(new UserRepository());
 
+    private final IPlaylistPlayer spotifyPlayer;
     public PlaylistChoseList playlistChoseList;
     public PlaylistCreation playlistCreation;
     public PlaylistDeletion playlistDeletion;
@@ -28,11 +27,14 @@ public class PageService {
     public PlaylistDisplay playlistDisplay;
     public Search search;
     public SongPlayer songPlayer;
-    public IPlaylistPlayer spotifyPlayer;
     public SearchGender searchGender;
     public FriendInformation friendInformation;
     public FriendRemoveAFriend friendRemoveAFriend;
     public ActionFoundedSongs actionFoundedSongs;
+
+    public PageService(IPlaylistPlayer spotifyPlayer) {
+        this.spotifyPlayer = spotifyPlayer;
+    }
 
     public void setUpPages() {
         int pageId = 1;
@@ -96,7 +98,7 @@ public class PageService {
     }
 
     public void startLogin(){
-        menuPages.push(login.pageId);
+        spotifyPlayer.getNavigationStackService().menuPages.push(login.pageId);
         userService.resetCookie();
         login.displayAllPage();
     }
@@ -110,22 +112,10 @@ public class PageService {
         return null;
     }
 
-    public Stack<Integer> getMenuPages() {
-        return menuPages;
-    }
-
-    public final void goBack(int pageId) {
-        int lastPageId;
-        do {
-            lastPageId = getMenuPages().pop();
-        } while (lastPageId == pageId && !getMenuPages().isEmpty());
-
-        getPageById(lastPageId).displayAllPage();
-    }
-
     public String gotAnInput(String input){
         if (input.equals("0")){
-            goBack(this.getMenuPages().peek());
+            int menuPageId = spotifyPlayer.getNavigationStackService().getMenuPages().peek();
+            spotifyPlayer.getNavigationStackService().goBack(menuPageId);
             return "";
         }
         return input;
