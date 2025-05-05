@@ -18,7 +18,6 @@ public class PlaylistDeletion extends _SimplePageTemplate {
     @Override
     public void button1() {
         toolbox.getPlaylistServ().deletePlaylist(toolbox.getPlaylistServ().getCurrentPlaylistId());
-        System.out.println("Playlist deleted !");
         pageService.playlistDisplay.displayAllPage();
     }
 

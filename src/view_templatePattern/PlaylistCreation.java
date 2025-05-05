@@ -21,6 +21,7 @@ public class PlaylistCreation extends _SimplePageTemplate {
         toolbox.getPlaylistServ().createPlaylistWithTemporaryPlaylist(playlistName);
 
         System.out.println(icon.iconOk() + "Playlist saved successfully !");
+        pageService.playlistDisplay.displayAllPage();
     }
 
 }

@@ -4,20 +4,22 @@ import data.entities.Song;
 import java.util.LinkedList;
 
 class ShuffleState implements IState {
-    private final PlaylistPlayer context;
+    private final PlaylistPlayer playlistPlayer;
 
     public ShuffleState(PlaylistPlayer spotifyService) {
-        this.context = spotifyService;
+        this.playlistPlayer = spotifyService;
     }
 
     @Override
     public Song getNextSong() {
-        LinkedList<Integer> songsId = context.playlistRepository.getPlaylistById(context.currentPlaylist.getPlaylistId()).getPlaylistSongsListWithId();
+        LinkedList<Integer> songsId = playlistPlayer.playlistRepository
+                .getPlaylistById(playlistPlayer.getCurrentPlaylistId())
+                .getPlaylistSongsListWithId();
         int nextIndex = (int) (Math.random() * songsId.size());
         int nextSongId = songsId.get(nextIndex);
         //TODO : Check if the song is already played and avoid playing it again until all songs are played
         // Be careful if single song playlist
-        return context.songRepository.getSongById(nextSongId);
+        return playlistPlayer.songRepository.getSongById(nextSongId);
     }
 
     @Override

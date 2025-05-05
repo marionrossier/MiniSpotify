@@ -19,11 +19,14 @@ class PlaylistRepositoryTest {
     private File tempFile;
     private PlaylistRepository playlistRepository;
     private PlaylistServices playlistService;
+    private SongRepository songRepository;
 
     @BeforeEach
     void setUp() throws IOException {
         tempFile = Files.createTempFile("playlists", ".json").toFile();
         playlistRepository = new PlaylistRepository(tempFile.getAbsolutePath());
+        tempFile = Files.createTempFile("songs", ".json").toFile();
+        songRepository = new SongRepository(tempFile.getAbsolutePath());
         playlistService = new PlaylistServices(playlistRepository);
     }
 

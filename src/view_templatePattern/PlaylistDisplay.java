@@ -1,9 +1,9 @@
 package view_templatePattern;
 
+import data.entities.Playlist;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.PageService;
 
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class PlaylistDisplay extends _SimplePageTemplate {
@@ -19,21 +19,23 @@ public class PlaylistDisplay extends _SimplePageTemplate {
                 icon.iconNbr(2) + "Rename Playlist" + icon.lineBreak +
                 icon.iconNbr(3) + "Add song" + icon.lineBreak +
                 icon.iconNbr(4) + "Remove song" + icon.lineBreak +
-                icon.iconNbr(5) + "Reorder song" + icon.lineBreak +
+                icon.iconNbr(5) + "Reorder song (TODO!!)" + icon.iconPremium() + icon.lineBreak +
                 icon.iconNbr(6) + "Delete the playlist";
     }
 
     @Override
     public void displaySpecificContent(){
         System.out.println();
-        System.out.println("Playlist name : " + toolbox.getPlaylistServ()
-                .getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId())
-                .getPlaylistName());
+        Playlist playlist = toolbox.getPlaylistServ().getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId());
+        if (playlist == null){
+            pageService.playlistHomePage.displayAllPage();
+        }
+        else {
+        System.out.println("Playlist name : " + playlist.getPlaylistName());
         System.out.println("Playlist songs : ");
 
-        toolbox.getPrintServ().printSongList(toolbox.getPlaylistServ()
-                .getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId())
-                .getPlaylistSongsListWithId());
+        toolbox.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId());
+        }
     }
 
     @Override
@@ -60,7 +62,7 @@ public class PlaylistDisplay extends _SimplePageTemplate {
         int songIndex = in.nextInt()-1;
 
         int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
-        toolbox.getPlaylistServ().removeSongFromPlaylist(currentPlaylistId, songIndex);
+        toolbox.getPlaylistServ().deleteSongFromPlaylist(currentPlaylistId, songIndex);
         pageService.playlistDisplay.displayAllPage();
     }
 

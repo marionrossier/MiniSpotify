@@ -14,7 +14,7 @@ public class HomePage extends _SimplePageTemplate {
                 icon.iconNbr(0) + icon.iconLogout() + icon.lineBreak +
                 icon.iconNbr(1) + "Go to playlists" + icon.lineBreak +
                 icon.iconNbr(2) + "Search" + icon.lineBreak +
-                icon.iconNbr(3) + "Friends" + icon.goToMusicPlayer;
+                icon.iconNbr(3) + "Friends (TODO)" + icon.iconPremium() + icon.goToMusicPlayer;
     }
 
     @Override

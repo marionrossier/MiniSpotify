@@ -40,6 +40,7 @@ public class LoginOK extends _SimplePageTemplate {
             User user = toolbox.getUserServ().getUserByPseudonym(pseudonym);
             Cookies_SingletonPattern.setUser(user.getUserId());
             System.out.println(icon.lineBreak + icon.iconOk() + "Login successful !");
+            toolbox.getPlaylistServ().createAllSongPlaylist(user);
             pageService.homePage.displayAllPage();
         }
         else {
@@ -51,14 +52,5 @@ public class LoginOK extends _SimplePageTemplate {
     @Override
     public void button2() {
         pageService.createAccount.displayAllPage();
-    }
-
-    public void createAllSongPlaylist (User user){
-        int allSongsPlaylistId = toolbox.getPlaylistServ().getAllSongsPlaylistId();
-        List<Integer> playlists = toolbox.getUserServ().getUserById(toolbox.getUserServ().getCurrentUserId()).getPlaylists();
-
-        if (!playlists.contains(allSongsPlaylistId)) {
-            playlists.add(0, allSongsPlaylistId);
-        }
     }
 }

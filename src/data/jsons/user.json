@@ -17,13 +17,13 @@
   "playlists" : [ ],
   "friends" : [ ]
 }, {
-  "userId" : 301730084,
-  "pseudonym" : "l",
-  "email" : "l",
-  "password" : "rTsbxqZnrqT6qIkUaUiTLtYAknUbl7ulJrsNUO1yGMM=",
-  "salt" : "9ySvSD8QHkztNzM+TYxLOQ==",
+  "userId" : 1973141090,
+  "pseudonym" : "test",
+  "email" : "test",
+  "password" : "jwkCk1i2hCFsdZm9PKv1a1PlpPt7Fg450uXqVNG5I6E=",
+  "salt" : "t7wkGP2k5yEvhP1ulS5ytA==",
   "planEnum" : "FREE",
-  "playlists" : [ ],
+  "playlists" : [ 2010779858, 2095420773 ],
   "friends" : [ ]
 }, {
   "userId" : 232928320,

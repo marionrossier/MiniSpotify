@@ -81,10 +81,10 @@ public class SongRepository {
                 .toList());
     }
 
-    public List<Song> getSongsByGender(MusicGender gender) {
-        return getAllSongs().stream()
+    public LinkedList<Song> getSongsByGender(MusicGender gender) {
+        return new LinkedList<>(getAllSongs().stream()
                 .filter(song -> song.getGender() == gender)
-                .toList();
+                .toList());
     }
 
     public String getFilePath() {
