@@ -15,7 +15,7 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
                     icon.iconNbr(1) + "Play selected songs" + icon.lineBreak +
                     icon.iconNbr(2) + "Add to current playlist" + icon.lineBreak +
-                    icon.iconNbr(3) + "Add to an other playlist" +icon.lineBreak +
+                    icon.iconNbr(3) + "Add to an other playlist (Ne fonctionne pas)" +icon.lineBreak +
                     icon.iconNbr(4) + "Create a new playlist" + icon.lineBreak +
                     icon.lineBreak + icon.iconNbr(9) + "Dismiss and go to Home Page";
         ;
@@ -41,12 +41,12 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
     }
 
     @Override
-    public void button3() {
+    public void button3() { //TODO : ajuster car la playlist temporaire ne transmet pas ses chansons à l'autre playlist.
         System.out.println("Your Playlists : ");
         toolbox.getPrintServ().printUserPlaylists(toolbox.getUserServ().getCurrentUserId());
 
         displayInput();
-        toolbox.getPlaylistServ().validatePlaylistIdInput(pageService);
+        toolbox.getPlaylistServ().validatePlaylistIdInput(pageService, toolbox.getSongServ());
 
         toolbox.getPlaylistServ().addSongToPlaylistFromTemporaryPlaylist(toolbox.getPlaylistServ().getCurrentPlaylistId());
         pageService.playlistDisplay.displayAllPage();

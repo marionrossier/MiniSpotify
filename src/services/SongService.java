@@ -1,7 +1,7 @@
 package services;
 
+import data.entities.MusicGender;
 import data.entities.Song;
-import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
 
 import java.util.LinkedList;
@@ -14,46 +14,48 @@ public class SongService {
     private final Icon icon = new Icon();
     private final SongRepository songRepository;
     private final PrintService printService = new PrintService();
-    private final PlaylistServices playlistServices = new PlaylistServices(new PlaylistRepository());
 
     // Constructor
     public SongService(SongRepository songRepo) {
         this.songRepository = songRepo;
     }
 
-    public void searchSong(String input, String type, int pageId, PageService pageService) {
+    public void setCurrentSongId (int songId){
+        Cookies_SingletonPattern.setCurrentSongId(songId);
+    }
+
+    public int getCurrentSongId() {
+        return Cookies_SingletonPattern.getInstance().getCurrentSongId();
+    }
+
+    public void searchSong(String input, String type, int pageId, PageService pageService, PlaylistServices playlistServices) {
         LinkedList<Integer> foundedSongs;
 
         switch (type) {
-            case "byTitle" -> foundedSongs = searchByTitle(input);
-            case "byArtist" -> foundedSongs = searchByArtist(input);
-            case "byGender" -> foundedSongs = searchByGender(input);
-            default -> {
+            case "byTitle" :
+                foundedSongs = searchByTitle(input);
+                break;
+            case "byArtist" :
+                foundedSongs = searchByArtist(input);
+                break;
+            case "byGender" :
+                MusicGender gender = MusicGender.valueOf(input);
+                foundedSongs = searchByGender(gender);
+                break;
+            default :
                 System.err.println("Invalid search type: " + type);
                 pageService.goBack(pageId);
                 return;
-            }
         }
-
         if (foundedSongs.isEmpty()) {
             System.out.println("No songs found.");
             pageService.goBack(pageId);
             return;
         }
-
-        searchSongManager(foundedSongs, input, pageService);
-    }
-
-    public void searchSongManager (LinkedList<Integer> foundedSongs, String input, PageService pageService){
         printService.printSongFound(foundedSongs, input);
         LinkedList<Integer> chosenSongs = chooseFoundedSongs(foundedSongs, pageService);
 
         playlistServices.createTemporaryPlaylist(chosenSongs);
-
-//        //TODO : a valider is nécessaire....On passe sur la page des playlist et on la séléection...
-//        //initialisation du current song cookie
-//        playlistServices.setCurrentSongId(playlistServices.playlistRepository
-//                .getPlaylistById(playlistServices.getTemporaryPlaylistId()).getPlaylistSongsListWithId().getFirst());
     }
 
     public LinkedList<Integer> searchByTitle(String songTitle){
@@ -85,15 +87,15 @@ public class SongService {
         return listSongToListInt(songsByArtist);
     }
 
-    private LinkedList<Integer> searchByGender(String genderName) {
+    private LinkedList<Integer> searchByGender(MusicGender genderName) {
         LinkedList<Song> songsByGender;
 
-        if (genderName == null || genderName.isEmpty()) {
+        if (genderName == null) {
             System.out.println("No result.");
             return new LinkedList<>();
         }
         else {
-            songsByGender = songRepository.getSongsByArtist(genderName);
+            songsByGender = songRepository.getSongsByGender(genderName);
         }
 
         return listSongToListInt(songsByGender);

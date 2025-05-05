@@ -10,17 +10,18 @@ public class Search extends _SimplePageTemplate {
         this.pageId = pageId;
         this.pageTitle = "Search Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
-                icon.iconNbr(1) + "Search a song" + icon.lineBreak +
-                icon.iconNbr(2) + "Search an artist" + icon.lineBreak +
-                icon.iconNbr(3) + "Search a song gender" + icon.goToMusicPlayer;
+                icon.iconNbr(1) + "Search by song title" + icon.lineBreak +
+                icon.iconNbr(2) + "Search by artist" + icon.lineBreak +
+                icon.iconNbr(3) + "Search by song gender" + icon.goToMusicPlayer;
     }
 
     @Override
     public void button1() {
-        System.out.print(icon.lineBreak + icon.iconSearch() + "Enter the title of the song : " + icon.lineBreak);
+        System.out.print(icon.lineBreak + icon.iconSearch() + "Enter the title of the song : ");
         String songTitle = scanner.nextLine();
+        System.out.println();
 
-        toolbox.getSongServ().searchSong(songTitle, "byTitle", getPageId(), pageService);
+        toolbox.getSongServ().searchSong(songTitle, "byTitle", getPageId(), pageService, toolbox.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
     }
 
@@ -28,8 +29,9 @@ public class Search extends _SimplePageTemplate {
     public void button2() {
         System.out.print(icon.lineBreak + icon.iconSearch() + "Enter the name of the artist : " + icon.lineBreak);
         String artistName = scanner.nextLine();
+        System.out.println();
 
-        toolbox.getSongServ().searchSong(artistName, "byArtist", getPageId(), pageService);
+        toolbox.getSongServ().searchSong(artistName, "byArtist", getPageId(), pageService, toolbox.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
     }
 

@@ -1,7 +1,6 @@
 package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.Cookies_SingletonPattern;
 import services.PageService;
 
 public class SongPlayer extends _SimplePageTemplate {
@@ -10,15 +9,15 @@ public class SongPlayer extends _SimplePageTemplate {
         super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Song Player Page";
-        this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak+
+        this.pageContent =
+                icon.iconNbr(0) + icon.iconBack() + " | " + icon.iconNbr(9) + "Go to Home Page" +icon.lineBreak+
                 "Your song player ! " +icon.lineBreak+
-                icon.iconNbr(1) + ":"+ icon.iconShuffle() + " |" +
-                icon.iconNbr(2) + ":"+ icon.iconPrevious() + " |" +
-                icon.iconNbr(3) + ":"+ icon.iconPlayPause() +" |" +
-                icon.iconNbr(4) + ":"+ icon.iconPlayBack() + " |" +
-                icon.iconNbr(5) + ":"+ icon.iconNext() + " |" +
-                icon.iconNbr(6) + ":"+ icon.iconRepeatOne() + " |" +
-                icon.lineBreak + icon.iconNbr(9) + "Go to Home Page";
+                icon.iconNbr(1) + ":"+ icon.iconShuffle() + " | " +
+                icon.iconNbr(2) + ":"+ icon.iconPrevious() + " | " +
+                icon.iconNbr(3) + ":"+ icon.iconPlayPause() +" | " +
+                icon.iconNbr(4) + ":"+ icon.iconPlayBack() + " | " +
+                icon.iconNbr(5) + ":"+ icon.iconNext() + " | " +
+                icon.iconNbr(6) + ":"+ icon.iconRepeatOne();
     }
 
     @Override
@@ -35,7 +34,7 @@ public class SongPlayer extends _SimplePageTemplate {
 
     @Override
     public void button3() {
-        spotifyPlayer.playOrPause(toolbox.getPlaylistServ().getCurrentSongId());
+        spotifyPlayer.playOrPause(toolbox.getSongServ().getCurrentSongId());
         loop();
     }
 
@@ -59,7 +58,7 @@ public class SongPlayer extends _SimplePageTemplate {
 
     void loop(){
         while (spotifyPlayer.isPlaying() || spotifyPlayer.isPaused()) {
-            System.out.println(toolbox.getSongServ().getSongById(spotifyPlayer.getRunningSongId()).getSongName());
+            System.out.println(toolbox.getSongServ().getSongById(spotifyPlayer.getCurrentSongId()).getSongName());
             displayInput();
             validateInput();
             switchPage();

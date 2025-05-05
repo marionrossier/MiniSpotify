@@ -6,6 +6,7 @@ import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
 import player_StatePattern.file_player.IMusicPlayer;
 import services.PlaylistServices;
+import services.SongService;
 
 import java.util.*;
 
@@ -15,8 +16,10 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     protected SongRepository songRepository;
     protected final PlaylistRepository playlistRepository;
     protected PlaylistServices playlistServices;
+    protected SongService songService;
 
     protected Stack<Integer> songIdHistory = new Stack<>();
+
     protected Song currentSong;
     protected Playlist currentPlaylist;
 
@@ -30,6 +33,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         this.musicPlayer = musicPlayer;
         this.songRepository = songRepository;
         this.playlistRepository = playlistRepository;
+        this.songService = new SongService(songRepository);
         this.playlistServices = new PlaylistServices(playlistRepository);
 
         this.sequentialState = new SequentialState(this);
@@ -56,19 +60,18 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     }
 
     @Override
-    public int getRunningPlaylistId() {
-        return currentPlaylist.getPlaylistId();
+    public int getCurrentPlaylistId() {
+        return playlistServices.getCurrentPlaylistId();
     }
 
     @Override
-    public int getRunningSongId() {
+    public int getCurrentSongId() {
         return currentSong.getSongId();
     }
 
     @Override
     public void playOrPause(int songId) {
         this.currentSong = songRepository.getSongById(songId);
-        playlistServices.setCurrentPlaylistId(this.currentSong.getSongId());
         musicPlayer.playOrPause(currentSong.getAudioFilePath());
     }
 
@@ -101,7 +104,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     public void next() {
         this.songIdHistory.push(currentSong.getSongId());
         this.currentSong = currentState.getNextSong();
-        playlistServices.setCurrentSongId(this.currentSong.getSongId());
+        songService.setCurrentSongId(this.currentSong.getSongId());
         this.musicPlayer.play(this.currentSong.getAudioFilePath());
     }
 
@@ -115,7 +118,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
             int previousSongId = songIdHistory.pop();
             this.currentSong = songRepository.getSongById(previousSongId);
         }
-        playlistServices.setCurrentSongId(this.currentSong.getSongId());
+        songService.setCurrentSongId(this.currentSong.getSongId());
         this.musicPlayer.play(this.currentSong.getAudioFilePath());
     }
 

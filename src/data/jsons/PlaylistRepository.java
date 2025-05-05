@@ -69,18 +69,6 @@ public class PlaylistRepository {
                 .orElse(null);
     }
 
-    public void updatePlaylist(Playlist updatedPlaylist) {
-        List<Playlist> playlists = getAllPlaylists();
-        for (int i = 0; i < playlists.size(); i++) {
-            if (playlists.get(i).getPlaylistId() == updatedPlaylist.getPlaylistId()) {
-                playlists.set(i, updatedPlaylist);
-                saveAllPlaylists(playlists);
-                return;
-            }
-        }
-        System.err.println("Playlist with ID " + updatedPlaylist.getPlaylistId() + " not found.");
-    }
-
     public Playlist getPlaylistByName(String name) {
         List<Playlist> playlists = getAllPlaylists();
         for (Playlist playlist : playlists) {

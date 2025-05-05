@@ -20,9 +20,9 @@ public interface IPlaylistPlayer {
     void setRepeatMode();
     void setSequentialMode();
 
-    int getRunningPlaylistId();
+    int getCurrentPlaylistId();
 
-    int getRunningSongId();
+    int getCurrentSongId();
 
     void stop();
 

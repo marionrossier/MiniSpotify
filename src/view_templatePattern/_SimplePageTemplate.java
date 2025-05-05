@@ -27,13 +27,30 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
     }
 
     public void displayAllPage(){
-        pageService.getMenuPages().push(getPageId());
+        addToStack();
         displayTitle(pageTitle);
         displayContent(pageContent);
         displaySpecificContent();
         displayInput();
         validateInput();
         switchPage();
+    }
+
+    private void addToStack() {
+        //TODO : compléter la liste des pages sur lesquelles on devrait pas pouvoir faire retour.
+        int actionFoundedSong = pageService.actionFoundedSongs.pageId;
+        int playlistCreation = pageService.playlistCreation.pageId;
+        int searchGender = pageService.searchGender.pageId;
+        int search = pageService.search.pageId;
+        int playlistDeletion = pageService.playlistDeletion.pageId;
+        int [] pageIdNotToAdd = new int[] {actionFoundedSong,playlistCreation, search, searchGender, playlistDeletion};
+
+        for (int id : pageIdNotToAdd) {
+            if (id == getPageId()) {
+                return;
+            }
+        }
+        pageService.getMenuPages().push(getPageId());
     }
 
     public final int getPageId (){

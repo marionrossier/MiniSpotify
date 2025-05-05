@@ -10,6 +10,7 @@ import player_StatePattern.file_player.FakeMusicPlayer;
 import data.entities.Playlist;
 import services.Cookies_SingletonPattern;
 import services.PlaylistServices;
+import services.SongService;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,6 +25,7 @@ public class PlaylistPlayerTest {
     private File songTempFile;
     private File playlistTempFile;
     private SongRepository songRepository;
+    private SongService songService;
     private PlaylistRepository playlistRepository;
     private PlaylistServices playlistServices;
 
@@ -38,6 +40,7 @@ public class PlaylistPlayerTest {
         
         // Initialize repositories with temp files
         songRepository = new SongRepository(songTempFile.getAbsolutePath());
+        songService = new SongService(songRepository);
         playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
         playlistServices = new PlaylistServices(playlistRepository);
         
@@ -92,8 +95,8 @@ public class PlaylistPlayerTest {
         playlistPlayer.play(1, 1);
 
         // Assert
-        assertEquals(1, playlistPlayer.getRunningPlaylistId());
-        assertEquals(1, playlistPlayer.getRunningSongId());
+        assertEquals(1, playlistPlayer.getCurrentPlaylistId());
+        assertEquals(1, playlistPlayer.getCurrentSongId());
         assertTrue(fakeMusicPlayer.isPlaying());
         assertEquals("path/to/song1.mp3", fakeMusicPlayer.getCurrentSongPath());
     }
@@ -103,14 +106,14 @@ public class PlaylistPlayerTest {
         // First play a song
         playlistPlayer.play(1, 1);
         assertTrue(fakeMusicPlayer.isPlaying());
-        playlistServices.setCurrentSongId(playlistPlayer.getRunningSongId());
+        songService.setCurrentSongId(playlistPlayer.getCurrentSongId());
 
         // Test pause
-        playlistPlayer.playOrPause(playlistServices.getCurrentSongId());
+        playlistPlayer.playOrPause(songService.getCurrentSongId());
         assertFalse(fakeMusicPlayer.isPlaying());
 
         // Test resume
-        playlistPlayer.playOrPause(playlistServices.getCurrentSongId());
+        playlistPlayer.playOrPause(songService.getCurrentSongId());
         assertTrue(fakeMusicPlayer.isPlaying());
     }
     @Test
@@ -118,14 +121,14 @@ public class PlaylistPlayerTest {
         // First play a song
         playlistPlayer.play(1, 1);
         assertTrue(fakeMusicPlayer.isPlaying());
-        playlistServices.setCurrentSongId(playlistPlayer.getRunningSongId());
+        songService.setCurrentSongId(playlistPlayer.getCurrentSongId());
         
         // Test pause
         playlistPlayer.pause();
         assertFalse(fakeMusicPlayer.isPlaying());
         
         // Test resume
-        playlistPlayer.resume(playlistServices.getCurrentSongId());
+        playlistPlayer.resume(songService.getCurrentSongId());
         assertTrue(fakeMusicPlayer.isPlaying());
     }
 
@@ -146,21 +149,21 @@ public class PlaylistPlayerTest {
         // Start with sequential mode (default)
         playlistPlayer.setSequentialMode();
         playlistPlayer.play(1, 1);
-        assertEquals(1, playlistPlayer.getRunningSongId());
+        assertEquals(1, playlistPlayer.getCurrentSongId());
         
         // Test next song
         fakeMusicPlayer.triggerSongEnd();
-        assertEquals(2, playlistPlayer.getRunningSongId());
+        assertEquals(2, playlistPlayer.getCurrentSongId());
         assertEquals("path/to/song2.mp3", fakeMusicPlayer.getCurrentSongPath());
         
         // Test next song again
         fakeMusicPlayer.triggerSongEnd();
-        assertEquals(3, playlistPlayer.getRunningSongId());
+        assertEquals(3, playlistPlayer.getCurrentSongId());
         assertEquals("path/to/song3.mp3", fakeMusicPlayer.getCurrentSongPath());
 
         // Test next song loop
         fakeMusicPlayer.triggerSongEnd();
-        assertEquals(1, playlistPlayer.getRunningSongId());
+        assertEquals(1, playlistPlayer.getCurrentSongId());
         assertEquals("path/to/song1.mp3", fakeMusicPlayer.getCurrentSongPath());
     }
 
@@ -171,21 +174,21 @@ public class PlaylistPlayerTest {
         fakeMusicPlayer.triggerSongEnd();
         fakeMusicPlayer.triggerSongEnd();
         fakeMusicPlayer.triggerSongEnd();
-        assertEquals(1, playlistPlayer.getRunningSongId());
+        assertEquals(1, playlistPlayer.getCurrentSongId());
         
         // Test previous
         playlistPlayer.previous();
-        assertEquals(3, playlistPlayer.getRunningSongId());
+        assertEquals(3, playlistPlayer.getCurrentSongId());
         assertEquals("path/to/song3.mp3", fakeMusicPlayer.getCurrentSongPath());
 
         // Test previous
         playlistPlayer.previous();
-        assertEquals(2, playlistPlayer.getRunningSongId());
+        assertEquals(2, playlistPlayer.getCurrentSongId());
         assertEquals("path/to/song2.mp3", fakeMusicPlayer.getCurrentSongPath());
 
         // Test previous
         playlistPlayer.previous();
-        assertEquals(1, playlistPlayer.getRunningSongId());
+        assertEquals(1, playlistPlayer.getCurrentSongId());
         assertEquals("path/to/song1.mp3", fakeMusicPlayer.getCurrentSongPath());
     }
 
@@ -197,7 +200,7 @@ public class PlaylistPlayerTest {
         // Test previous with no history
         playlistPlayer.previous();
         // Should still be on song 1
-        assertEquals(1, playlistPlayer.getRunningSongId());
+        assertEquals(1, playlistPlayer.getCurrentSongId());
     }
 
     @Test
@@ -209,7 +212,7 @@ public class PlaylistPlayerTest {
         // Since shuffle is random, we'll just verify that next() doesn't crash
         // and returns a valid song in the playlist
         fakeMusicPlayer.triggerSongEnd();
-        int songId = playlistPlayer.getRunningSongId();
+        int songId = playlistPlayer.getCurrentSongId();
         assertTrue(songId >= 1 && songId <= 3, "Shuffle should return a valid song ID");
         
         // Do another next and ensure we get a valid song path
@@ -222,16 +225,16 @@ public class PlaylistPlayerTest {
         // Enable repeat mode
         playlistPlayer.setRepeatMode();
         playlistPlayer.play(1, 2);
-        assertEquals(2, playlistPlayer.getRunningSongId());
+        assertEquals(2, playlistPlayer.getCurrentSongId());
         
         // In repeat mode, next should play the same song again
         fakeMusicPlayer.triggerSongEnd();
-        assertEquals(2, playlistPlayer.getRunningSongId());
+        assertEquals(2, playlistPlayer.getCurrentSongId());
         assertEquals("path/to/song2.mp3", fakeMusicPlayer.getCurrentSongPath());
 
         // In repeat mode, next should play the same song again
         fakeMusicPlayer.triggerSongEnd();
-        assertEquals(2, playlistPlayer.getRunningSongId());
+        assertEquals(2, playlistPlayer.getCurrentSongId());
         assertEquals("path/to/song2.mp3", fakeMusicPlayer.getCurrentSongPath());
     }
 
@@ -244,7 +247,7 @@ public class PlaylistPlayerTest {
         fakeMusicPlayer.triggerSongEnd();
         
         // Should auto-advance to song 2
-        assertEquals(2, playlistPlayer.getRunningSongId());
+        assertEquals(2, playlistPlayer.getCurrentSongId());
         assertEquals("path/to/song2.mp3", fakeMusicPlayer.getCurrentSongPath());
     }
 
@@ -256,12 +259,12 @@ public class PlaylistPlayerTest {
         // Test sequential mode
         playlistPlayer.setSequentialMode();
         fakeMusicPlayer.triggerSongEnd();
-        assertEquals(2, playlistPlayer.getRunningSongId());
+        assertEquals(2, playlistPlayer.getCurrentSongId());
         
         // Test repeat mode
         playlistPlayer.setRepeatMode();
         fakeMusicPlayer.triggerSongEnd();
-        assertEquals(2, playlistPlayer.getRunningSongId());
+        assertEquals(2, playlistPlayer.getCurrentSongId());
         
         // Test shuffle mode
         playlistPlayer.setShuffleMode();

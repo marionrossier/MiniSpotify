@@ -2,6 +2,7 @@ package services;
 
 import data.entities.Playlist;
 import data.jsons.PlaylistRepository;
+import data.jsons.SongRepository;
 
 //TODO : séparer pour avoir une classe Cookie pour le user, pour la playlist et pour les songs.
 public class Cookies_SingletonPattern {
@@ -11,11 +12,12 @@ public class Cookies_SingletonPattern {
     private int currentPlaylistId;
     private int currentSongId;
     private final PlaylistRepository playlistRepository = new PlaylistRepository();
+    private final SongRepository songRepository = new SongRepository();
     private final PlaylistServices playlistServices = new PlaylistServices(playlistRepository);
 
     private Cookies_SingletonPattern(int userId) {
         this.userId = userId;
-        this.currentPlaylistId = playlistRepository.getPlaylistByName("AllSongs").getPlaylistId();
+        this.currentPlaylistId = playlistServices.getAllSongsPlaylistId();
         this.currentSongId = playlistRepository.getPlaylistByName("AllSongs").getPlaylistSongsListWithId().getFirst();
     }
 
@@ -47,9 +49,9 @@ public class Cookies_SingletonPattern {
     }
 
     public static void resetCookies() {
-        if (instance != null){
+        if (instance != null) {
             Playlist playlist = instance.playlistRepository.getPlaylistById(instance.playlistServices.getTemporaryPlaylistId());
-            if (!playlist.getPlaylistName().isEmpty()) {
+            if (playlist != null) {
                 instance.playlistServices.deleteTemporaryPlaylist();
             }
             instance = null;

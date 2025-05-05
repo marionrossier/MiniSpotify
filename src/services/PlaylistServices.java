@@ -18,18 +18,23 @@ public class PlaylistServices {
         this.playlistRepository = playlistRepository;
         this.userRepository = userRepository;
         this.userService = new UserService(userRepository);
-
     }
 
     public PlaylistServices (PlaylistRepository playlistRepository){
         this.playlistRepository = playlistRepository;
-        userRepository = new UserRepository();
+        this.userRepository = new UserRepository();
         this.userService = new UserService(userRepository);
-
     }
 
     public void deletePlaylist(int playlistId) {
-        playlistRepository.deletePlaylistById(playlistId);
+        int allSongsPlaylist = getAllSongsPlaylistId();
+        if (playlistId == allSongsPlaylist){
+            System.err.println("You can not delete this playlist.\n");
+        }
+        else {
+            playlistRepository.deletePlaylistById(playlistId);
+            System.out.println("Playlist deleted !");
+        }
     }
 
     public int validationPlaylistChoice() {
@@ -85,8 +90,12 @@ public class PlaylistServices {
         Playlist targetPlaylist = playlistRepository.getPlaylistById(playlistId);
 
         if (targetPlaylist != null && temporaryPlaylist != null) {
-            targetPlaylist.getPlaylistSongsListWithId().addAll(temporaryPlaylist.getPlaylistSongsListWithId());
-            playlistRepository.updatePlaylist(targetPlaylist);
+            for (Integer songId : temporaryPlaylist.getPlaylistSongsListWithId()) {
+                if (!targetPlaylist.getPlaylistSongsListWithId().contains(songId)) {
+                    targetPlaylist.getPlaylistSongsListWithId().add(songId);
+                }
+            }
+            playlistRepository.savePlaylist(targetPlaylist);
         } else {
             System.err.println("Target playlist or temporary playlist not found.");
         }
@@ -100,14 +109,10 @@ public class PlaylistServices {
         System.out.println("Playlist renamed to " + newName + " !");
     }
 
-    public void removeSongFromPlaylist(int playlistId, int songIndex) {
+    public void deleteSongFromPlaylist(int playlistId, int songIndex) {
         Playlist playlist = playlistRepository.getPlaylistById(playlistId);
-
-        playlistRepository.getPlaylistById(playlist.getPlaylistId())
-                .getPlaylistSongsListWithId().remove(songIndex);
-
+        playlist.getPlaylistSongsListWithId().remove(songIndex);
         playlistRepository.savePlaylist(playlist);
-
     }
 
     public LinkedList<Playlist> getSharedPlaylist(User followedUser) {
@@ -152,27 +157,33 @@ public class PlaylistServices {
         return Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
     }
 
-    public int getTemporaryPlaylistId (){
-        return playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId();
+    public int getTemporaryPlaylistId() {
+        Playlist playlist = playlistRepository.getPlaylistByName("temporaryPlaylist");
+        if (playlist == null) {
+            return new Playlist("temporaryPlaylist").getPlaylistId();
+        }
+        return playlist.getPlaylistId();
     }
 
     public void setCurrentPlaylistId (int playlistId){
         Cookies_SingletonPattern.setCurrentPlaylistId(playlistId);
     }
 
-    public void setCurrentSongId (int songId){
-        Cookies_SingletonPattern.setCurrentSongId(songId);
-    }
-
-    public int getCurrentSongId() {
-        return Cookies_SingletonPattern.getInstance().getCurrentSongId();
-    }
-
     public int getAllSongsPlaylistId (){
         return playlistRepository.getPlaylistByName("AllSongs").getPlaylistId();
     }
 
-    public void validatePlaylistIdInput(PageService pageService) {
+    public void createAllSongPlaylist (User user){
+        int allSongsPlaylistId = getAllSongsPlaylistId();
+        List<Integer> playlists = user.getPlaylists();
+
+        if (!playlists.contains(allSongsPlaylistId)) {
+            playlists.add(0, allSongsPlaylistId);
+        }
+        userRepository.saveUser(user);
+    }
+
+    public void validatePlaylistIdInput(PageService pageService, SongService songService) {
         int chosenPlaylist = validationPlaylistChoice();
 
         if (chosenPlaylist == 0) {
@@ -180,7 +191,7 @@ public class PlaylistServices {
             return;
         }
         setCurrentPlaylistId(chosenPlaylist);
-        setCurrentSongId(playlistRepository.getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
+        songService.setCurrentSongId(playlistRepository.getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
         pageService.playlistDisplay.displayAllPage();
     }
 
