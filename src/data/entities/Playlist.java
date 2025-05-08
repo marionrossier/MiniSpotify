@@ -11,22 +11,26 @@ public class Playlist {
     private int durationSeconds;
     private int size;
     private int ownerId;
+    private PlaylistEnum status;
     private final UniqueIdService uniqueIdService = new UniqueIdService();
 
     public Playlist (){}
 
-    public Playlist(String name) {
+    public Playlist(String name, PlaylistEnum status) {
         this.name = name;
         this.playlistId = uniqueIdService.setUniqueId();
+        this.status = status;
     }
 
-    public Playlist(String name, LinkedList <Integer> listSongsId, int durationSeconds, int size) {
+    public Playlist(String name, LinkedList <Integer> listSongsId, int durationSeconds, int size, int ownerId, PlaylistEnum status) {
         this.name = name;
         this.playlistId = uniqueIdService.setUniqueId();
         this.ownerId = 0;
         this.listSongsId = listSongsId;
         this.durationSeconds = durationSeconds;
         this.size = size;
+        this.ownerId = ownerId;
+        this.status = status;
     }
 
     public String getName() {
@@ -87,5 +91,13 @@ public class Playlist {
     public void setPlaylistInformation(){
         setPlaylistDuration();
         setPlaylistSize();
+    }
+
+    public PlaylistEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(PlaylistEnum status) {
+        this.status = status;
     }
 }

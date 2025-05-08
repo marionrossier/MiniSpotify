@@ -1,22 +1,72 @@
 package services;
 
-import data.entities.Artist;
-import data.entities.MusicGender;
-import data.entities.Playlist;
-import data.entities.Song;
+import data.entities.*;
 import data.jsons.ArtistRepository;
 import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
+import data.jsons.UserRepository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 public class JsonService {
     public static void main(String[] args) {
+        UserRepository userRepository = new UserRepository();
+        PlaylistRepository playlistRepository = new PlaylistRepository();
+        UserService userService = new UserService(userRepository);
 
-        addArtist();
-        addSong();
-        addPlaylist();
+        JsonService.addUser(userService);
+        addPlaylist(playlistRepository);
+        addPlaylistToUser(playlistRepository, userRepository);
+    }
+
+    private static void addPlaylistToUser(PlaylistRepository playlistRepository, UserRepository userRepository) {
+
+        int allSongID = playlistRepository.getPlaylistByName("AllSongs").getPlaylistId();
+        int danceFloorId = playlistRepository.getPlaylistByName("Dance Floor").getPlaylistId();
+        int before2000Id = playlistRepository.getPlaylistByName("Before 2000").getPlaylistId();
+        int randomFavoriteId = playlistRepository.getPlaylistByName("Random Favorites").getPlaylistId();
+        int imagineThisId = playlistRepository.getPlaylistByName("Imagine This").getPlaylistId();
+        int girlsId = playlistRepository.getPlaylistByName("Girls").getPlaylistId();
+        int boysId = playlistRepository.getPlaylistByName("Boys").getPlaylistId();
+        int popVibesId = playlistRepository.getPlaylistByName("POP Vibes").getPlaylistId();
+        int rockLegendsId = playlistRepository.getPlaylistByName("Rock Legends").getPlaylistId();
+        int amyForeverId = playlistRepository.getPlaylistByName("Amy Forever").getPlaylistId();
+        int quickHitsId = playlistRepository.getPlaylistByName("Quick Hits").getPlaylistId();
+        int soulRnBId = playlistRepository.getPlaylistByName("Soul & RnB Grooves").getPlaylistId();
+
+
+        User marion = userRepository.getUserById(232928320);
+        List<Integer> marionPlaylists = new ArrayList<>();
+        marionPlaylists.add(allSongID);
+        marionPlaylists.add(danceFloorId);
+        marionPlaylists.add(girlsId);
+        marionPlaylists.add(boysId);
+        marion.setPlaylists(marionPlaylists);
+        userRepository.saveUser(marion);
+
+        User florent = userRepository.getUserById(1726370281);
+        List<Integer> florentPlaylists = new ArrayList<>();
+        florentPlaylists.add(allSongID);
+        florentPlaylists.add(before2000Id);
+        florentPlaylists.add(randomFavoriteId);
+        florentPlaylists.add(imagineThisId);
+        florent.setPlaylists(florentPlaylists);
+        userRepository.saveUser(florent);
+
+
+        User admin = userRepository.getUserById(1);
+        List<Integer> adminPlaylists = new ArrayList<>();
+        adminPlaylists.add(popVibesId);
+        adminPlaylists.add(rockLegendsId);
+        adminPlaylists.add(amyForeverId);
+        adminPlaylists.add(quickHitsId);
+        adminPlaylists.add(soulRnBId);
+        admin.setPlaylists(adminPlaylists);
+        userRepository.saveUser(admin);
+
     }
 
     public static void addArtist() {
@@ -67,57 +117,60 @@ public class JsonService {
 
     }
 
-    public void addUser (){
-        // TODO : Implementer la méthode pour ajouter des utilisateurs (Florent)
+    public static void addUser (UserService userService ){
+
+        userService.addUser(232928320,"marion", "marion","marion",PlanEnum.FREE);
+        userService.addUser(1726370281, "florent", "florent","florent",PlanEnum.PREMIUM);
+        userService.addUser(1,"admin", "admin", "admin", PlanEnum.PREMIUM);
+
     }
 
-    public static void addPlaylist() {
+    public static void addPlaylist(PlaylistRepository playlistRepository) {
 
-        PlaylistRepository playlistRepository = new PlaylistRepository();
 
         playlistRepository.savePlaylist(new Playlist("POP Vibes",
                 new LinkedList<>(Arrays.asList(1986076679, 2084461505, 1988790520, 700468481, 998984026, 1290739974)),
-                1480, 6));
+                1480, 6, 1, PlaylistEnum.PUBLIC));
 
         playlistRepository.savePlaylist(new Playlist("Rock Legends",
                 new LinkedList<>(Arrays.asList(243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482)),
-                1317, 6));
+                1317, 6, 1, PlaylistEnum.PUBLIC));
 
         playlistRepository.savePlaylist(new Playlist("Amy Forever",
                 new LinkedList<>(Arrays.asList(1108071776, 342105258, 625427469, 661206135)),
-                822, 4));
+                822, 4, 1, PlaylistEnum.PUBLIC));
 
         playlistRepository.savePlaylist(new Playlist("Imagine This",
                 new LinkedList<>(Arrays.asList(1287974581, 614172035, 494087492, 515539482)),
-                838, 4));
+                838, 4, 1726370281, PlaylistEnum.PUBLIC));
 
         playlistRepository.savePlaylist(new Playlist("Quick Hits",
                 new LinkedList<>(Arrays.asList(625427469, 1280045910, 354322599, 1925355941, 661206135, 1252829874, 494087492)),
-                1240, 7));
+                1240, 7, 1, PlaylistEnum.PUBLIC));
 
         playlistRepository.savePlaylist(new Playlist("Girls",
                 new LinkedList<>(Arrays.asList(1108071776, 342105258, 625427469, 661206135, 1986076679, 2084461505, 1290739974, 1951451340, 469321884, 1252829874, 1988790520, 700468481)),
-                2754, 12));
+                2754, 12, 232928320, PlaylistEnum.PUBLIC));
 
         playlistRepository.savePlaylist(new Playlist("Boys",
                 new LinkedList<>(Arrays.asList(325561970, 321324189, 521970022, 1280045910, 719812166, 243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482, 998984026)),
-                2726, 12));
+                2726, 12, 232928320, PlaylistEnum.PUBLIC));
 
         playlistRepository.savePlaylist(new Playlist("Soul & RnB Grooves",
                 new LinkedList<>(Arrays.asList(1108071776, 342105258, 625427469, 1280045910, 1951451340, 719812166, 661206135)),
-                1507, 7));
+                1507, 7, 1, PlaylistEnum.PUBLIC));
 
         playlistRepository.savePlaylist(new Playlist("Dance Floor",
                 new LinkedList<>(Arrays.asList(325561970, 1252829874, 321324189, 521970022)),
-                909, 4));
+                909, 4, 232928320, PlaylistEnum.PRIVATE));
 
         playlistRepository.savePlaylist(new Playlist("Random Favorites",
                 new LinkedList<>(Arrays.asList(1280045910, 1951451340, 1252829874, 719812166, 521970022)),
-                1114, 5));
+                1114, 5, 1726370281, PlaylistEnum.PUBLIC));
 
         playlistRepository.savePlaylist(new Playlist("Before 2000",
                 new LinkedList<>(Arrays.asList(325561970, 354322599, 1925355941, 700468481)),
-                833, 4));
+                833, 4, 1726370281, PlaylistEnum.PRIVATE));
 
         playlistRepository.savePlaylist(new Playlist("AllSongs",
                 new LinkedList<>(Arrays.asList(
@@ -125,6 +178,6 @@ public class JsonService {
                         354322599, 1925355941, 1951451340, 243871940, 1988790520, 719812166, 700468481, 469321884,
                         1824616046, 998984026, 661206135, 1290739974, 1252829874, 521970022, 1287974581, 614172035,
                         494087492, 515539482)),
-                6286, 26));
+                6286, 26, 1, PlaylistEnum.PUBLIC));
         }
     }

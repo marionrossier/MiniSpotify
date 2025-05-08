@@ -1,6 +1,7 @@
 package data.jsons;
 
 import data.entities.Playlist;
+import data.entities.PlaylistEnum;
 import data.entities.Song;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +39,7 @@ class PlaylistRepositoryTest {
     }
 
     private Playlist createTestPlaylist(int id, String name) {
-        Playlist playlist = new Playlist(name);
+        Playlist playlist = new Playlist(name, PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(id);
         playlistRepository.savePlaylist(playlist);
         return playlist;

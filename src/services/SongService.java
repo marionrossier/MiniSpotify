@@ -55,7 +55,7 @@ public class SongService {
         printService.printSongFound(foundedSongs, input);
         LinkedList<Integer> chosenSongs = chooseFoundedSongs(foundedSongs, pageService);
 
-        playlistServices.createTemporaryPlaylist(chosenSongs);
+        playlistServices.createTemporaryPlaylist(chosenSongs, playlistServices.getPlaylistStatus());
     }
 
     public LinkedList<Integer> searchByTitle(String songTitle){

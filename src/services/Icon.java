@@ -36,9 +36,6 @@ public class Icon {
     public String iconBack (){
         return ("Back ");
     }
-    public String iconLogout(){
-        return ("Logout ");
-    }
     public String iconNew (){
         return ("🆕");
     }

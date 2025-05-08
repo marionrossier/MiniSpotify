@@ -39,6 +39,17 @@ public class User {
         this.playlists = playlists;
         this.friends = friends;
     }
+    public User(int id, String pseudonym, String email, String password, byte[] salt,
+                PlanEnum planEnum, List<Integer> playlists, List<Integer> friends) {
+        this.pseudonym = pseudonym;
+        this.email = email;
+        this.password = password;
+        this.salt = salt;
+        this.planEnum = planEnum;
+        this.userId = id;
+        this.playlists = playlists;
+        this.friends = friends;
+    }
 
     public int getUserId() {
         return userId;

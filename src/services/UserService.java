@@ -39,6 +39,20 @@ public class UserService {
         }
     }
 
+    public void addUser(int id, String pseudonym, String email, String password, PlanEnum plan) {
+        byte[] salt = passwordService.generateSalt();
+        String hashedPassword = passwordService.hashPassword(password, salt);
+
+        User existingUser = getUserByPseudonym(pseudonym);
+        if (existingUser != null) {
+            System.err.println("The pseudonym \""+pseudonym+ "\" already exists.");
+        }
+        else {
+            User newUser = new User(id, pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
+            userRepository.saveUser(newUser);
+        }
+    }
+
     public int getCurrentUserId(){
         return Cookies_SingletonPattern.getInstance().getUserId();
     }

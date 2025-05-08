@@ -1,5 +1,6 @@
 package player_StatePattern.playlist_player;
 
+import data.entities.PlaylistEnum;
 import data.entities.Song;
 import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
@@ -55,7 +56,7 @@ public class PlaylistPlayerTest {
         songRepository.addSong(song3);
         
         // Create a test playlist
-        Playlist playlist = new Playlist("Test Playlist");
+        Playlist playlist = new Playlist("Test Playlist", PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(1);
         playlistRepository.savePlaylist(playlist);
 

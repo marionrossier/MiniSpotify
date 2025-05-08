@@ -1,6 +1,7 @@
 package services;
 
 import data.entities.Playlist;
+import data.entities.PlaylistEnum;
 import data.entities.User;
 import data.jsons.PlaylistRepository;
 import data.jsons.UserRepository;
@@ -128,25 +129,40 @@ public class PlaylistServices {
         }
     }
 
-    public void createTemporaryPlaylist(LinkedList<Integer> chosenSongs) {
+    public void createNewPlaylist (String playlistName, PlaylistEnum status){
+        //TODO : Ajouter le status de la playlist
+        createPlaylistWithTemporaryPlaylist(playlistName, status);
+        int playlistId = getPlaylistByName(playlistName).getPlaylistId();
+        setCurrentPlaylistId(playlistId);
+        System.out.println();
+        System.out.println("Playlist created successfully !");
+    }
+
+    public void createTemporaryPlaylist(LinkedList<Integer> chosenSongs, PlaylistEnum status) {
         Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
         if (temporaryPlaylist == null) {
-            temporaryPlaylist = new Playlist("temporaryPlaylist");
+            temporaryPlaylist = new Playlist("temporaryPlaylist", PlaylistEnum.PRIVATE);
             playlistRepository.savePlaylist(temporaryPlaylist);
         }
         temporaryPlaylist.setListSongsId(chosenSongs);
         temporaryPlaylist.setPlaylistInformation();
+        temporaryPlaylist.setOwnerId(userService.getCurrentUserId());
+        temporaryPlaylist.setStatus(status);
 
         playlistRepository.savePlaylist(temporaryPlaylist);
     }
 
-    public void createPlaylistWithTemporaryPlaylist(String playlistName) {
+    public void createPlaylistWithTemporaryPlaylist(String playlistName, PlaylistEnum status) {
 
-        Playlist newPlaylist = new Playlist(playlistName);
+        Playlist newPlaylist = new Playlist(playlistName, PlaylistEnum.PRIVATE);
 
         Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
+
         newPlaylist.setListSongsId(temporaryPlaylist.getPlaylistSongsListWithId());
         newPlaylist.setPlaylistInformation();
+        newPlaylist.setOwnerId(userService.getCurrentUserId());
+        newPlaylist.setStatus(status);
+
         playlistRepository.savePlaylist(newPlaylist);
 
         userService.addOnePlaylist(newPlaylist.getPlaylistId());
@@ -159,10 +175,14 @@ public class PlaylistServices {
         return Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
     }
 
+    public PlaylistEnum getPlaylistStatus (){
+        return playlistRepository.getPlaylistStatus(getCurrentPlaylistId());
+    }
+
     public int getTemporaryPlaylistId() {
         Playlist playlist = playlistRepository.getPlaylistByName("temporaryPlaylist");
         if (playlist == null) {
-            return new Playlist("temporaryPlaylist").getPlaylistId();
+            return new Playlist("temporaryPlaylist", PlaylistEnum.PRIVATE).getPlaylistId();
         }
         return playlist.getPlaylistId();
     }
@@ -205,15 +225,15 @@ public class PlaylistServices {
         return playlistRepository.getPlaylistById(id);
     }
 
-public boolean verifyPlaylistName(String playlistName, User user) {
-    List<Integer> userPlaylistsIds = user.getPlaylists();
+    public boolean verifyPlaylistName(String playlistName, User user) {
+        List<Integer> userPlaylistsIds = user.getPlaylists();
 
-    for (Integer playlistId : userPlaylistsIds) {
-        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
-        if (playlist != null && playlist.getName().equalsIgnoreCase(playlistName)) {
-            return false;
+        for (Integer playlistId : userPlaylistsIds) {
+            Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+            if (playlist != null && playlist.getName().equalsIgnoreCase(playlistName)) {
+                return false;
+            }
         }
+        return true;
     }
-    return true;
-}
 }

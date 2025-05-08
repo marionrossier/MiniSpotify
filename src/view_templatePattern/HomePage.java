@@ -12,7 +12,7 @@ public class HomePage extends _SimplePageTemplate {
         this.pageTitle = "Home Page";
         this.pageContent =
                 icon.iconNbr(0) + "Log out" + " | " + icon.goToMusicPlayer + icon.lineBreak +
-                icon.iconNbr(1) + "Go to playlists" + icon.lineBreak +
+                icon.iconNbr(1) + "Playlists" + icon.lineBreak +
                 icon.iconNbr(2) + "Search" + icon.lineBreak +
                 icon.iconNbr(3) + "Friends (TODO)" + icon.iconPremium();
     }

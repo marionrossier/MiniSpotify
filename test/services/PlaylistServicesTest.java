@@ -1,9 +1,6 @@
 package services;
 
-import data.entities.PlanEnum;
-import data.entities.Playlist;
-import data.entities.Song;
-import data.entities.User;
+import data.entities.*;
 import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
 import data.jsons.UserRepository;
@@ -55,7 +52,7 @@ class PlaylistServicesTest {
         songRepository.addSong(song3);
 
         // Create a test playlist
-        playlist = new Playlist("Test Playlist");
+        playlist = new Playlist("Test Playlist", PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(1);
         playlistRepository.savePlaylist(playlist);
         this.playlistService.addSong(playlist.getPlaylistId(), song1.getSongId());
@@ -136,7 +133,7 @@ class PlaylistServicesTest {
         chosenSongs.add(1);
 
         //Act
-        playlistService.createTemporaryPlaylist(chosenSongs);
+        playlistService.createTemporaryPlaylist(chosenSongs, PlaylistEnum.PUBLIC);
         int temporaryPlaylistId = playlistService.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId();
         int firstSongId = playlistService.playlistRepository
                 .getPlaylistById(temporaryPlaylistId).getPlaylistSongsListWithId().getFirst();
@@ -152,7 +149,7 @@ class PlaylistServicesTest {
         LinkedList <Integer> chosenSongs = new LinkedList<>();
         chosenSongs.add(1);
 
-        playlistService.createTemporaryPlaylist(chosenSongs);
+        playlistService.createTemporaryPlaylist(chosenSongs, PlaylistEnum.PUBLIC);
         //Act
         playlistService.deleteTemporaryPlaylist();
         //Assert
@@ -165,14 +162,14 @@ class PlaylistServicesTest {
         LinkedList <Integer> chosenSongs = new LinkedList<>();
         chosenSongs.add(1);
         chosenSongs.add(3);
-        playlistService.createTemporaryPlaylist(chosenSongs);
+        playlistService.createTemporaryPlaylist(chosenSongs, PlaylistEnum.PUBLIC);
         String playlistName = "new Playlist";
         int temporaryPlaylistLength = playlistService.playlistRepository
                 .getPlaylistByName("temporaryPlaylist")
                 .getPlaylistSongsListWithId().size();
 
         //Act
-        playlistService.createPlaylistWithTemporaryPlaylist(playlistName);
+        playlistService.createPlaylistWithTemporaryPlaylist(playlistName, PlaylistEnum.PUBLIC);
         int newPlaylistLength = playlistService.playlistRepository
                 .getPlaylistByName(playlistName)
                 .getPlaylistSongsListWithId().size();

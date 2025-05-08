@@ -2,6 +2,7 @@ package services;
 
 import data.entities.MusicGender;
 import data.entities.Playlist;
+import data.entities.PlaylistEnum;
 import data.entities.User;
 import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
@@ -14,6 +15,7 @@ public class PrintService {
     private final SongRepository songRepository = new SongRepository();
     private final UserRepository userRepository = new UserRepository();
     private final PlaylistRepository playlistRepository = new PlaylistRepository();
+    private final Icon icon = new Icon();
 
     public void printSongFound (List<Integer> songs, String info){
         System.out.println("Songs found with information : " + info);
@@ -37,7 +39,7 @@ public class PrintService {
             for (int playlistId : userRepository.getUserById(userId).getPlaylists()) {
                 Playlist playlist = playlistRepository.getPlaylistById(playlistId);
                 if (playlist != null) {
-                    System.out.println(i + ". " + playlist.getName());
+                    System.out.println(i + ". " + playlist.getName() + " - " + printPlaylistStatus(playlist.getStatus()));
                     i++;
                 }
             }
@@ -45,6 +47,13 @@ public class PrintService {
         else {
             System.out.println("No playlists available.");
         }
+    }
+
+    private String printPlaylistStatus(PlaylistEnum status) {
+        if (status == PlaylistEnum.PUBLIC){
+            return icon.iconEarth();
+        }
+        return icon.iconLock();
     }
 
     public void printGenderList() {

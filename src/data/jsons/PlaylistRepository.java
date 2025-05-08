@@ -3,6 +3,7 @@ package data.jsons;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import data.entities.Playlist;
+import data.entities.PlaylistEnum;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,5 +78,18 @@ public class PlaylistRepository {
             }
         }
         return null;
+    }
+
+    public PlaylistEnum getPlaylistStatus(int playlistId) {
+        Playlist playlist = getPlaylistById(playlistId);
+        return (playlist != null) ? playlist.getStatus() : null;
+    }
+
+    public void setPlaylistStatus(int playlistId, PlaylistEnum status) {
+        Playlist playlist = getPlaylistById(playlistId);
+        if (playlist != null) {
+            playlist.setStatus(status);
+            savePlaylist(playlist);
+        }
     }
 }
