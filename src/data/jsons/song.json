@@ -1,338 +1,338 @@
 [ {
   "title" : "Rehab",
-  "songName" : "Rehab - Amy Winehouse",
+  "titleAndArtist" : "Rehab - Amy Winehouse",
   "artist" : {
     "artistName" : "Amy Winehouse",
-    "artistId" : 1539815031,
+    "artistId" : 960571432,
     "artistSongsID" : [ 1108071776 ]
   },
   "album" : "Back to Black",
-  "seconds" : 214,
+  "durationSeconds" : 214,
   "gender" : "SOUL_RNB",
   "songId" : 1108071776,
   "audioFilePath" : "resources\\songsfiles\\Rehab - Amy Winehouse - Back to Black - 2006 - Soul _ R&B - 0334.mp3"
 }, {
   "title" : "Judas",
-  "songName" : "Judas - Lady Gaga",
+  "titleAndArtist" : "Judas - Lady Gaga",
   "artist" : {
     "artistName" : "Lady Gaga",
-    "artistId" : 214819657,
+    "artistId" : 887780660,
     "artistSongsID" : [ 1986076679 ]
   },
   "album" : "Born This Way",
-  "seconds" : 249,
+  "durationSeconds" : 249,
   "gender" : "POP",
   "songId" : 1986076679,
   "audioFilePath" : "resources\\songsfiles\\Judas - Lady Gaga - Born This Way - 2011 - Pop _ Electro-pop - 0409.mp3"
 }, {
   "title" : "Bloody Mary",
-  "songName" : "Bloody Mary - Lady Gaga",
+  "titleAndArtist" : "Bloody Mary - Lady Gaga",
   "artist" : {
     "artistName" : "Lady Gaga",
-    "artistId" : 214819657,
+    "artistId" : 887780660,
     "artistSongsID" : [ 2084461505 ]
   },
   "album" : "Born This Way",
-  "seconds" : 245,
+  "durationSeconds" : 245,
   "gender" : "POP",
   "songId" : 2084461505,
   "audioFilePath" : "resources\\songsfiles\\Bloody Mary - Lady Gaga - Born This Way - 2011 - Pop _ Dark pop - 0405.mp3"
 }, {
   "title" : "You Know I'm No Good",
-  "songName" : "You Know I'm No Good - Amy Winehouse",
+  "titleAndArtist" : "You Know I'm No Good - Amy Winehouse",
   "artist" : {
     "artistName" : "Amy Winehouse",
-    "artistId" : 1539815031,
+    "artistId" : 960571432,
     "artistSongsID" : [ 342105258 ]
   },
   "album" : "Back to Black",
-  "seconds" : 257,
+  "durationSeconds" : 257,
   "gender" : "SOUL_RNB",
   "songId" : 342105258,
   "audioFilePath" : "resources\\songsfiles\\You Know I'm No Good - Amy Winehouse - Back to Black - 2006 - Soul _ Jazz - 0417.mp3"
 }, {
   "title" : "Me & Mr. Jones",
-  "songName" : "Me & Mr. Jones - Amy Winehouse",
+  "titleAndArtist" : "Me & Mr. Jones - Amy Winehouse",
   "artist" : {
     "artistName" : "Amy Winehouse",
-    "artistId" : 1539815031,
+    "artistId" : 960571432,
     "artistSongsID" : [ 625427469 ]
   },
   "album" : "Back to Black",
-  "seconds" : 153,
+  "durationSeconds" : 153,
   "gender" : "SOUL_RNB",
   "songId" : 625427469,
   "audioFilePath" : "resources\\songsfiles\\Me & Mr. Jones - Amy Winehouse - Back to Black - 2006 - Soul _ Jazz - 0233.mp3"
 }, {
   "title" : "Sunny",
-  "songName" : "Sunny - Boney M.",
+  "titleAndArtist" : "Sunny - Boney M.",
   "artist" : {
     "artistName" : "Boney M.",
-    "artistId" : 1686222828,
+    "artistId" : 1297291487,
     "artistSongsID" : [ 325561970 ]
   },
   "album" : "Sunny",
-  "seconds" : 238,
+  "durationSeconds" : 238,
   "gender" : "DISCO",
   "songId" : 325561970,
   "audioFilePath" : "resources\\songsfiles\\Sunny - Boney M. - Sunny (Official)... - 1976 - Disco - 0358.mp3"
 }, {
   "title" : "Can't Hold Us",
-  "songName" : "Can't Hold Us - Macklemore",
+  "titleAndArtist" : "Can't Hold Us - Macklemore",
   "artist" : {
     "artistName" : "Macklemore",
-    "artistId" : 2122433011,
+    "artistId" : 1088398922,
     "artistSongsID" : [ 321324189 ]
   },
   "album" : "The Heist",
-  "seconds" : 258,
+  "durationSeconds" : 258,
   "gender" : "HIP_HOP",
   "songId" : 321324189,
   "audioFilePath" : "resources\\songsfiles\\Can't Hold Us - Macklemore & Ryan Lewis - The Heist - 2012 - Hip-hop - 0418.mp3"
 }, {
   "title" : "Come When I Call",
-  "songName" : "Come When I Call - John Mayer",
+  "titleAndArtist" : "Come When I Call - John Mayer",
   "artist" : {
     "artistName" : "John Mayer",
-    "artistId" : 948198216,
+    "artistId" : 375990935,
     "artistSongsID" : [ 1280045910 ]
   },
   "album" : "Where the Light Is",
-  "seconds" : 177,
+  "durationSeconds" : 177,
   "gender" : "SOUL_RNB",
   "songId" : 1280045910,
   "audioFilePath" : "resources\\songsfiles\\Come When I Call - John Mayer - Where the Light Is - 2008 - Blues Rock - 0257.mp3"
 }, {
   "title" : "Viens à Saint Germain",
-  "songName" : "Viens à Saint Germain - Dany Brillant",
+  "titleAndArtist" : "Viens à Saint Germain - Dany Brillant",
   "artist" : {
     "artistName" : "Dany Brillant",
-    "artistId" : 2142958884,
+    "artistId" : 375032367,
     "artistSongsID" : [ 354322599 ]
   },
   "album" : "Viens à Saint-Germain",
-  "seconds" : 177,
+  "durationSeconds" : 177,
   "gender" : "FRENCH_VARIETY",
   "songId" : 354322599,
   "audioFilePath" : "resources\\songsfiles\\Viens à Saint Germain - Dany Brillant - Viens à Saint-Germain - 1992 - Chanson française _ Swing - 0257.mp3"
 }, {
   "title" : "Suzette",
-  "songName" : "Suzette - Dany Brillant",
+  "titleAndArtist" : "Suzette - Dany Brillant",
   "artist" : {
     "artistName" : "Dany Brillant",
-    "artistId" : 2142958884,
+    "artistId" : 375032367,
     "artistSongsID" : [ 1925355941 ]
   },
   "album" : "C'est ça qui est bon",
-  "seconds" : 177,
+  "durationSeconds" : 177,
   "gender" : "FRENCH_VARIETY",
   "songId" : 1925355941,
   "audioFilePath" : "resources\\songsfiles\\Suzette - Dany Brillant - C'est ça qui est bon - 1991 - Chanson française _ Swing - 0257.mp3"
 }, {
   "title" : "Diamonds",
-  "songName" : "Diamonds - Rihanna",
+  "titleAndArtist" : "Diamonds - Rihanna",
   "artist" : {
     "artistName" : "Rihanna",
-    "artistId" : 709166158,
+    "artistId" : 1916983454,
     "artistSongsID" : [ 1951451340 ]
   },
   "album" : "Unapologetic",
-  "seconds" : 225,
+  "durationSeconds" : 225,
   "gender" : "SOUL_RNB",
   "songId" : 1951451340,
   "audioFilePath" : "resources\\songsfiles\\Diamonds - Rihanna - Unapologetic - 2012 - Pop _ R&B - 0345.mp3"
 }, {
   "title" : "Free Fallin",
-  "songName" : "Free Fallin - John Mayer",
+  "titleAndArtist" : "Free Fallin - John Mayer",
   "artist" : {
     "artistName" : "John Mayer",
-    "artistId" : 948198216,
+    "artistId" : 375990935,
     "artistSongsID" : [ 243871940 ]
   },
   "album" : "Where the Light Is",
-  "seconds" : 243,
+  "durationSeconds" : 243,
   "gender" : "ROCK",
   "songId" : 243871940,
   "audioFilePath" : "resources\\songsfiles\\Free Fallin - John Mayer - Where the Light Is - 2008 - Soft Rock - 0403.mp3"
 }, {
   "title" : "Give It 2 Me",
-  "songName" : "Give It 2 Me - Madonna",
+  "titleAndArtist" : "Give It 2 Me - Madonna",
   "artist" : {
     "artistName" : "Madonna",
-    "artistId" : 1584794690,
+    "artistId" : 393467085,
     "artistSongsID" : [ 1988790520 ]
   },
   "album" : "Hard Candy",
-  "seconds" : 287,
+  "durationSeconds" : 287,
   "gender" : "POP",
   "songId" : 1988790520,
   "audioFilePath" : "resources\\songsfiles\\Give It 2 Me - Madonna - Hard Candy - 2008 - Dance-pop - 0447.mp3"
 }, {
   "title" : "I'm Gonna Find Another You",
-  "songName" : "I'm Gonna Find Another You - John Mayer",
+  "titleAndArtist" : "I'm Gonna Find Another You - John Mayer",
   "artist" : {
     "artistName" : "John Mayer",
-    "artistId" : 948198216,
+    "artistId" : 375990935,
     "artistSongsID" : [ 719812166 ]
   },
   "album" : "Where the Light Is",
-  "seconds" : 283,
+  "durationSeconds" : 283,
   "gender" : "SOUL_RNB",
   "songId" : 719812166,
   "audioFilePath" : "resources\\songsfiles\\I'm Gonna Find Another You (Live) - John Mayer - Where the Light Is - 2008 - Blues _ Soul - 0443.mp3"
 }, {
   "title" : "La Isla Bonita",
-  "songName" : "La Isla Bonita - Madonna",
+  "titleAndArtist" : "La Isla Bonita - Madonna",
   "artist" : {
     "artistName" : "Madonna",
-    "artistId" : 1584794690,
+    "artistId" : 393467085,
     "artistSongsID" : [ 700468481 ]
   },
   "album" : "True Blue",
-  "seconds" : 241,
+  "durationSeconds" : 241,
   "gender" : "POP",
   "songId" : 700468481,
   "audioFilePath" : "resources\\songsfiles\\La Isla Bonita - Madonna - True Blue - 1986 - Latin pop - 0401.mp3"
 }, {
   "title" : "Man Down",
-  "songName" : "Man Down - Rihanna",
+  "titleAndArtist" : "Man Down - Rihanna",
   "artist" : {
     "artistName" : "Rihanna",
-    "artistId" : 709166158,
+    "artistId" : 1916983454,
     "artistSongsID" : [ 469321884 ]
   },
   "album" : "Loud",
-  "seconds" : 267,
+  "durationSeconds" : 267,
   "gender" : "REGGAE",
   "songId" : 469321884,
   "audioFilePath" : "resources\\songsfiles\\Man Down - Rihanna - Loud - 2010 - Reggae fusion - 0427.mp3"
 }, {
   "title" : "Time is Running Out",
-  "songName" : "Time is Running Out - Muse",
+  "titleAndArtist" : "Time is Running Out - Muse",
   "artist" : {
     "artistName" : "Muse",
-    "artistId" : 1838997097,
+    "artistId" : 202791500,
     "artistSongsID" : [ 1824616046 ]
   },
   "album" : "Absolution",
-  "seconds" : 236,
+  "durationSeconds" : 236,
   "gender" : "ROCK",
   "songId" : 1824616046,
   "audioFilePath" : "resources\\songsfiles\\Time is Running Out - Muse - Absolution - 2003 - Alternative Rock - 0356.mp3"
 }, {
   "title" : "De mes propres ailes (Remix)",
-  "songName" : "De mes propres ailes (Remix) - Olivier Dion",
+  "titleAndArtist" : "De mes propres ailes (Remix) - Olivier Dion",
   "artist" : {
     "artistName" : "Olivier Dion",
-    "artistId" : 499219613,
+    "artistId" : 177334402,
     "artistSongsID" : [ 998984026 ]
   },
   "album" : "Les 3 Mousquetaires",
-  "seconds" : 221,
+  "durationSeconds" : 221,
   "gender" : "POP",
   "songId" : 998984026,
   "audioFilePath" : "resources\\songsfiles\\De mes propres ailes (Remix) - Olivier Dion - Les 3 Mousquetaires - 2016 - Pop française - 0341.mp3"
 }, {
   "title" : "Fuck Me Pumps",
-  "songName" : "Fuck Me Pumps - Amy Winehouse",
+  "titleAndArtist" : "Fuck Me Pumps - Amy Winehouse",
   "artist" : {
     "artistName" : "Amy Winehouse",
-    "artistId" : 1539815031,
+    "artistId" : 960571432,
     "artistSongsID" : [ 661206135 ]
   },
   "album" : "Frank",
-  "seconds" : 198,
+  "durationSeconds" : 198,
   "gender" : "SOUL_RNB",
   "songId" : 661206135,
   "audioFilePath" : "resources\\songsfiles\\Fuck Me Pumps - Amy Winehouse - Frank - 2003 - Soul _ Jazz - 0318.mp3"
 }, {
   "title" : "Poker Face",
-  "songName" : "Poker Face - Lady Gaga",
+  "titleAndArtist" : "Poker Face - Lady Gaga",
   "artist" : {
     "artistName" : "Lady Gaga",
-    "artistId" : 214819657,
+    "artistId" : 887780660,
     "artistSongsID" : [ 1290739974 ]
   },
   "album" : "The Fame Monster",
-  "seconds" : 237,
+  "durationSeconds" : 237,
   "gender" : "POP",
   "songId" : 1290739974,
   "audioFilePath" : "resources\\songsfiles\\Poker Face - Lady Gaga - The Fame Monster - 2008 - Electropop - 0357.mp3"
 }, {
   "title" : "Right Now",
-  "songName" : "Right Now - Rihanna",
+  "titleAndArtist" : "Right Now - Rihanna",
   "artist" : {
     "artistName" : "Rihanna",
-    "artistId" : 709166158,
+    "artistId" : 1916983454,
     "artistSongsID" : [ 1252829874 ]
   },
   "album" : "Unapologetic",
-  "seconds" : 181,
+  "durationSeconds" : 181,
   "gender" : "ELECTRO",
   "songId" : 1252829874,
   "audioFilePath" : "resources\\songsfiles\\Right Now - Rihanna & David Guetta - Unapologetic - 2012 - EDM _ Dance-pop - 0301.mp3"
 }, {
   "title" : "Thrift Shop",
-  "songName" : "Thrift Shop - Macklemore",
+  "titleAndArtist" : "Thrift Shop - Macklemore",
   "artist" : {
     "artistName" : "Macklemore",
-    "artistId" : 2122433011,
+    "artistId" : 1088398922,
     "artistSongsID" : [ 521970022 ]
   },
   "album" : "The Heist",
-  "seconds" : 232,
+  "durationSeconds" : 232,
   "gender" : "HIP_HOP",
   "songId" : 521970022,
   "audioFilePath" : "resources\\songsfiles\\Thrift Shop - Macklemore & Ryan Lewis - The Heist - 2012 - Hip-hop _ Comedy rap - 0352.mp3"
 }, {
   "title" : "Whatever It Takes",
-  "songName" : "Whatever It Takes - Imagine Dragons",
+  "titleAndArtist" : "Whatever It Takes - Imagine Dragons",
   "artist" : {
     "artistName" : "Imagine Dragons",
-    "artistId" : 599252437,
+    "artistId" : 609219333,
     "artistSongsID" : [ 1287974581 ]
   },
   "album" : "Evolve",
-  "seconds" : 219,
+  "durationSeconds" : 219,
   "gender" : "ROCK",
   "songId" : 1287974581,
   "audioFilePath" : "resources\\songsfiles\\Whatever It Takes - Imagine Dragons - Evolve - 2017 - Pop rock - 0339.mp3"
 }, {
   "title" : "Believer",
-  "songName" : "Believer - Imagine Dragons",
+  "titleAndArtist" : "Believer - Imagine Dragons",
   "artist" : {
     "artistName" : "Imagine Dragons",
-    "artistId" : 599252437,
+    "artistId" : 609219333,
     "artistSongsID" : [ 614172035 ]
   },
   "album" : "Evolve",
-  "seconds" : 204,
+  "durationSeconds" : 204,
   "gender" : "ROCK",
   "songId" : 614172035,
   "audioFilePath" : "resources\\songsfiles\\Believer - Imagine Dragons - Evolve - 2017 - Pop rock _ Alt rock - 0324.mp3"
 }, {
   "title" : "Demons",
-  "songName" : "Demons - Imagine Dragons",
+  "titleAndArtist" : "Demons - Imagine Dragons",
   "artist" : {
     "artistName" : "Imagine Dragons",
-    "artistId" : 599252437,
+    "artistId" : 609219333,
     "artistSongsID" : [ 494087492 ]
   },
   "album" : "Night Visions",
-  "seconds" : 177,
+  "durationSeconds" : 177,
   "gender" : "ROCK",
   "songId" : 494087492,
   "audioFilePath" : "resources\\songsfiles\\Demons - Imagine Dragons - Night Visions - 2012 - Pop rock _ Indie pop - 0257.mp3"
 }, {
   "title" : "Not Today",
-  "songName" : "Not Today - Imagine Dragons",
+  "titleAndArtist" : "Not Today - Imagine Dragons",
   "artist" : {
     "artistName" : "Imagine Dragons",
-    "artistId" : 599252437,
+    "artistId" : 609219333,
     "artistSongsID" : [ 515539482 ]
   },
   "album" : "Me Before You",
-  "seconds" : 238,
+  "durationSeconds" : 238,
   "gender" : "ROCK",
   "songId" : 515539482,
   "audioFilePath" : "resources\\songsfiles\\Not Today - Imagine Dragons - Me Before You - 2016 - Pop rock - 0358.mp3"

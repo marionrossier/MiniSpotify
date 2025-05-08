@@ -14,7 +14,9 @@ import java.util.LinkedList;
 public class JsonService {
     public static void main(String[] args) {
 
+        addArtist();
         addSong();
+        addPlaylist();
     }
 
     public static void addArtist() {

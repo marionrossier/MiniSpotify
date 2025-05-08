@@ -103,7 +103,7 @@ public class PlaylistServices {
 
     public void renamePlayList(int playlistId, String newName) {
         Playlist playlist = playlistRepository.getPlaylistById(playlistId);
-        playlist.setPlaylistName(newName);
+        playlist.setName(newName);
 
         playlistRepository.savePlaylist(playlist);
         System.out.println("Playlist renamed to " + newName + " !");
@@ -134,7 +134,7 @@ public class PlaylistServices {
             temporaryPlaylist = new Playlist("temporaryPlaylist");
             playlistRepository.savePlaylist(temporaryPlaylist);
         }
-        temporaryPlaylist.setPlaylistSongsId(chosenSongs);
+        temporaryPlaylist.setListSongsId(chosenSongs);
         temporaryPlaylist.setPlaylistInformation();
 
         playlistRepository.savePlaylist(temporaryPlaylist);
@@ -145,7 +145,7 @@ public class PlaylistServices {
         Playlist newPlaylist = new Playlist(playlistName);
 
         Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
-        newPlaylist.setPlaylistSongsId(temporaryPlaylist.getPlaylistSongsListWithId());
+        newPlaylist.setListSongsId(temporaryPlaylist.getPlaylistSongsListWithId());
         newPlaylist.setPlaylistInformation();
         playlistRepository.savePlaylist(newPlaylist);
 
@@ -210,7 +210,7 @@ public boolean verifyPlaylistName(String playlistName, User user) {
 
     for (Integer playlistId : userPlaylistsIds) {
         Playlist playlist = playlistRepository.getPlaylistById(playlistId);
-        if (playlist != null && playlist.getPlaylistName().equalsIgnoreCase(playlistName)) {
+        if (playlist != null && playlist.getName().equalsIgnoreCase(playlistName)) {
             return false;
         }
     }

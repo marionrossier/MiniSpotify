@@ -72,7 +72,7 @@ public class PlaylistRepository {
     public Playlist getPlaylistByName(String name) {
         List<Playlist> playlists = getAllPlaylists();
         for (Playlist playlist : playlists) {
-            if (playlist.getPlaylistName().equalsIgnoreCase(name)) {
+            if (playlist.getName().equalsIgnoreCase(name)) {
                 return playlist;
             }
         }

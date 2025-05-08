@@ -48,7 +48,7 @@ class PlaylistRepositoryTest {
         Song song = new Song();
         song.setSongId(id);
         song.setTitle(title);
-        song.setSeconds(180);
+        song.setDurationSeconds(180);
         return song;
     }
     
@@ -70,7 +70,7 @@ class PlaylistRepositoryTest {
         // Assert
         List<Playlist> playlists = playlistRepository.getAllPlaylists();
         assertEquals(1, playlists.size());
-        assertEquals("Test Playlist", playlists.get(0).getPlaylistName());
+        assertEquals("Test Playlist", playlists.get(0).getName());
     }
 
     @Test
@@ -87,7 +87,7 @@ class PlaylistRepositoryTest {
         // Assert
         List<Playlist> playlists = playlistRepository.getAllPlaylists();
         assertEquals(1, playlists.size());
-        assertEquals("Test Playlist", playlists.get(0).getPlaylistName());
+        assertEquals("Test Playlist", playlists.get(0).getName());
     }
 
     @Test
@@ -122,7 +122,7 @@ class PlaylistRepositoryTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals("Test Playlist", result.getPlaylistName());
+        assertEquals("Test Playlist", result.getName());
     }
 
     @Test
@@ -154,7 +154,7 @@ class PlaylistRepositoryTest {
 
         // Assert
         Playlist result = playlistRepository.getPlaylistById(playlist.getPlaylistId());
-        assertEquals("Updated Name", result.getPlaylistName());
+        assertEquals("Updated Name", result.getName());
         assertEquals(4, result.getPlaylistSongsListWithId().size());
     }
 

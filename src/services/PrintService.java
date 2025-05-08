@@ -23,7 +23,7 @@ public class PrintService {
     public void printSongList (List<Integer> songs){
         int i = 1;
         for (Integer song : songs) {
-            System.out.println(i + ". " + songRepository.getSongById(song).getSongName());
+            System.out.println(i + ". " + songRepository.getSongById(song).getTitleAndArtist());
             i++;
         }
         System.out.println();
@@ -37,7 +37,7 @@ public class PrintService {
             for (int playlistId : userRepository.getUserById(userId).getPlaylists()) {
                 Playlist playlist = playlistRepository.getPlaylistById(playlistId);
                 if (playlist != null) {
-                    System.out.println(i + ". " + playlist.getPlaylistName());
+                    System.out.println(i + ". " + playlist.getName());
                     i++;
                 }
             }

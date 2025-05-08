@@ -5,36 +5,36 @@ import services.UniqueIdService;
 import java.util.*;
 
 public class Playlist {
-    private String playlistName;
+    private String name;
     private int playlistId;
-    private LinkedList<Integer> playlistSongsId = new LinkedList<>();
-    private int playlistSeconds;
-    private int playlistSize;
+    private LinkedList<Integer> listSongsId = new LinkedList<>();
+    private int durationSeconds;
+    private int size;
     private int ownerId;
     private final UniqueIdService uniqueIdService = new UniqueIdService();
 
     public Playlist (){}
 
-    public Playlist(String playlistName) {
-        this.playlistName = playlistName;
+    public Playlist(String name) {
+        this.name = name;
         this.playlistId = uniqueIdService.setUniqueId();
     }
 
-    public Playlist(String playlistName, LinkedList <Integer> playlistSongsId, int playlistSeconds, int playlistSize) {
-        this.playlistName = playlistName;
+    public Playlist(String name, LinkedList <Integer> listSongsId, int durationSeconds, int size) {
+        this.name = name;
         this.playlistId = uniqueIdService.setUniqueId();
         this.ownerId = 0;
-        this.playlistSongsId = playlistSongsId;
-        this.playlistSeconds = playlistSeconds;
-        this.playlistSize = playlistSize;
+        this.listSongsId = listSongsId;
+        this.durationSeconds = durationSeconds;
+        this.size = size;
     }
 
-    public String getPlaylistName() {
-        return playlistName;
+    public String getName() {
+        return name;
     }
 
-    public void setPlaylistName(String playlistName) {
-        this.playlistName = playlistName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getPlaylistId() {
@@ -46,11 +46,11 @@ public class Playlist {
     }
 
     public LinkedList<Integer> getPlaylistSongsListWithId() {
-        return playlistSongsId;
+        return listSongsId;
     }
 
-    public void setPlaylistSongsId(LinkedList<Integer> playlistSongsId) {
-        this.playlistSongsId = playlistSongsId;
+    public void setListSongsId(LinkedList<Integer> listSongsId) {
+        this.listSongsId = listSongsId;
     }
 
     public int getOwnerId() {
@@ -61,30 +61,26 @@ public class Playlist {
         this.ownerId = ownerId;
     }
 
-    public int getPlaylistSeconds() {
-        return playlistSeconds;
+    public int getDurationSeconds() {
+        return durationSeconds;
     }
 
     public void setPlaylistDuration() {
         int totalSeconds = 0;
-        for (Integer integer : playlistSongsId) {
+        for (Integer integer : listSongsId) {
             Song currentSong = new Song();
             currentSong.setSongId(integer);
-            totalSeconds += currentSong.getSeconds();
+            totalSeconds += currentSong.getDurationSeconds();
         }
-        this.playlistSeconds = totalSeconds;
+        this.durationSeconds = totalSeconds;
     }
 
-    public int getPlaylistSize() {
-        return playlistSize;
+    public int getSize() {
+        return size;
     }
 
     public void setPlaylistSize() {
-        this.playlistSize = playlistSongsId.size();
-    }
-
-    public void setName(String updatedName) {
-        this.playlistName = updatedName;
+        this.size = listSongsId.size();
     }
 
     //TODO : ajuster car ne met pas a jour les informations contenues !

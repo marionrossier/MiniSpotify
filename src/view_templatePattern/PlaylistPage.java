@@ -30,7 +30,7 @@ public class PlaylistPage extends _SimplePageTemplate {
             pageService.playlistHomePage.displayAllPage();
         }
         else {
-        System.out.println("Playlist name : " + playlist.getPlaylistName());
+        System.out.println("Playlist name : " + playlist.getName());
         System.out.println();
         toolbox.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId());
         }

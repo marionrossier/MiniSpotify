@@ -110,7 +110,7 @@ class PlaylistServicesTest {
 
         // Act
         playlistService.renamePlayList(playlistId, newName);
-        String playlistName = playlistService.playlistRepository.getPlaylistById(1).getPlaylistName();
+        String playlistName = playlistService.playlistRepository.getPlaylistById(1).getName();
         // Assert
         assertEquals(newName, playlistName);
     }
@@ -143,7 +143,7 @@ class PlaylistServicesTest {
 
         //Assert
         assertEquals("temporaryPlaylist",
-                playlistService.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistName());
+                playlistService.playlistRepository.getPlaylistByName("temporaryPlaylist").getName());
     }
 
     @Test
