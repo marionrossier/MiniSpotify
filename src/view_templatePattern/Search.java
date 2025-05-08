@@ -1,7 +1,11 @@
 package view_templatePattern;
 
+import data.entities.Playlist;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.PageService;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class Search extends _SimplePageTemplate {
 
@@ -12,7 +16,8 @@ public class Search extends _SimplePageTemplate {
         this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak +
                 icon.iconNbr(1) + "Search by song title" + icon.lineBreak +
                 icon.iconNbr(2) + "Search by artist" + icon.lineBreak +
-                icon.iconNbr(3) + "Search by song gender";
+                icon.iconNbr(3) + "Search by song gender" + icon.lineBreak +
+                icon.iconNbr(4) + "Search by public playlist";
     }
 
     @Override
@@ -38,5 +43,28 @@ public class Search extends _SimplePageTemplate {
     @Override
     public void button3() {
         pageService.searchGender.displayAllPage();
+    }
+
+    @Override
+    public void button4(){
+        System.out.println();
+        System.out.println("Select your Playlist to add by entering their number and press \"enter\" between each song." + icon.lineBreak +
+                "End selection with an \"x\"." + icon.lineBreak);
+
+        List<Playlist> playlist = toolbox.getPlaylistServ().getPublicPlaylists();
+        toolbox.getPrintServ().printPlaylist(playlist);
+        this.displayInput();
+        LinkedList<Integer> chosenPlaylists = toolbox.getPlaylistServ().chooseFoundedPlaylist(playlist, pageService);
+
+        for (Integer playlistIndex : chosenPlaylists) {
+            int playlistId = playlist.get(playlistIndex).getPlaylistId();
+            if (!toolbox.getUserServ().getUserById(toolbox.getUserServ().getCurrentUserId())
+                    .getPlaylists()
+                    .contains(playlistId)) {
+                toolbox.getUserServ().addOnePlaylist(playlistId);
+            }
+        }
+        System.out.println("Playlist.s has been added.");
+        pageService.playlistHomePage.displayAllPage();
     }
 }

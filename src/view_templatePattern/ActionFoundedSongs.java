@@ -1,10 +1,8 @@
 package view_templatePattern;
 
-import data.entities.Playlist;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.PageService;
 
-import java.util.LinkedList;
 
 public class ActionFoundedSongs extends _SimplePageTemplate {
 

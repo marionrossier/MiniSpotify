@@ -67,6 +67,7 @@ public class Icon {
     public String iconGroup (){
         return ("👥");
     }
+    public String iconHouse () {return ("\uD83C\uDFE0");}
     public String iconEarth (){
         return ("🌍");
     }

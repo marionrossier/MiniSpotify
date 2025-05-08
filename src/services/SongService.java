@@ -12,7 +12,7 @@ public class SongService {
 
     Scanner in = new Scanner(System.in);
     private final Icon icon = new Icon();
-    private final SongRepository songRepository;
+    public final SongRepository songRepository;
     private final PrintService printService = new PrintService();
 
     // Constructor
@@ -52,7 +52,7 @@ public class SongService {
             pageService.goBack(pageId);
             return;
         }
-        printService.printSongFound(foundedSongs, input);
+        printService.printSongFound(foundedSongs, input, this);
         LinkedList<Integer> chosenSongs = chooseFoundedSongs(foundedSongs, pageService);
 
         playlistServices.createTemporaryPlaylist(chosenSongs, playlistServices.getPlaylistStatus());
@@ -139,6 +139,8 @@ public class SongService {
             }
         }
 
+
+        //TODO : vérifier si cette dernière partie est vraiement nécessaire ou si on peut faire un return foundedSongs
         LinkedList<Integer> selectedSongs = new LinkedList<>();
 
         for (int index : selectedSongsIndex) {

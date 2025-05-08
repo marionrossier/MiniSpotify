@@ -27,14 +27,23 @@ public class PlaylistServices {
         this.userService = new UserService(userRepository);
     }
 
+    public void removePlaylistFromUser (int playlistId){
+        User user = userRepository.getUserById(userService.getCurrentUserId());
+        List<Integer> actualPlaylists = user.getPlaylists();
+        int playlistIndex = actualPlaylists.indexOf(playlistId);
+
+        actualPlaylists.remove(playlistIndex);
+    }
+
     public void deletePlaylist(int playlistId) {
-        int allSongsPlaylist = getAllSongsPlaylistId();
-        if (playlistId == allSongsPlaylist){
-            System.err.println("You can not delete this playlist.\n");
-        }
-        else {
+        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+        if (playlist.getStatus().equals(PlaylistEnum.PRIVATE)){
             playlistRepository.deletePlaylistById(playlistId);
             System.out.println("Playlist deleted !");
+        }
+        else {
+            removePlaylistFromUser(playlistId);
+            System.out.println("Playlist removed from your list.");
         }
     }
 
@@ -116,11 +125,6 @@ public class PlaylistServices {
         playlistRepository.savePlaylist(playlist);
     }
 
-    public LinkedList<Playlist> getSharedPlaylist(User followedUser) {
-        throw new UnsupportedOperationException("Not implemented yet");
-        /*TODO*/
-    }
-
     public void deleteTemporaryPlaylist() {
         Playlist temporaryPlaylist = playlistRepository.getPlaylistById(getTemporaryPlaylistId());
         if (temporaryPlaylist != null) {
@@ -130,7 +134,6 @@ public class PlaylistServices {
     }
 
     public void createNewPlaylist (String playlistName, PlaylistEnum status){
-        //TODO : Ajouter le status de la playlist
         createPlaylistWithTemporaryPlaylist(playlistName, status);
         int playlistId = getPlaylistByName(playlistName).getPlaylistId();
         setCurrentPlaylistId(playlistId);
@@ -168,7 +171,6 @@ public class PlaylistServices {
         userService.addOnePlaylist(newPlaylist.getPlaylistId());
 
         this.deleteTemporaryPlaylist();
-
     }
     
     public int getCurrentPlaylistId (){
@@ -235,5 +237,48 @@ public class PlaylistServices {
             }
         }
         return true;
+    }
+
+    public List<Playlist> getPublicPlaylists() {
+        List<Playlist> allPlaylists = playlistRepository.getAllPlaylists();
+        List<Playlist> publicPlaylist = new ArrayList<>();
+
+        for (Playlist playlist : allPlaylists){
+            if (playlist.getStatus().equals(PlaylistEnum.PUBLIC)){
+                publicPlaylist.add(playlist);
+            }
+        }
+        return  publicPlaylist;
+    }
+
+    public LinkedList<Playlist> getSharedPlaylist(User followedUser) {
+        throw new UnsupportedOperationException("Not implemented yet");
+        /*TODO*/
+    }
+
+    public LinkedList<Integer> chooseFoundedPlaylist(List<Playlist> playlist, PageService pageService){
+        Scanner scanner = new Scanner(System.in);
+        LinkedList<Integer> selectedPlaylistIndex = new LinkedList<>();
+        String input;
+        while (true) {
+            input = pageService.gotAnInput(scanner.nextLine());
+            if (input.equals("x")) {
+                break;
+            }
+            if (input.equals("0")){
+                pageService.goBack(pageService.getMenuPages().peek());
+            }
+            try {
+                int playlistIndex = Integer.parseInt(input) - 1;
+                if (playlistIndex >= 0 && playlistIndex < playlist.size()) {
+                    selectedPlaylistIndex.add(playlistIndex);
+                } else {
+                    System.err.println("Invalid selection. Please try again.");
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid input. Please enter a number or \"x\" to exit.");
+            }
+        }
+        return selectedPlaylistIndex;
     }
 }
