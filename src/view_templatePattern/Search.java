@@ -9,10 +9,10 @@ public class Search extends _SimplePageTemplate {
         super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Search Page";
-        this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
+        this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak +
                 icon.iconNbr(1) + "Search by song title" + icon.lineBreak +
                 icon.iconNbr(2) + "Search by artist" + icon.lineBreak +
-                icon.iconNbr(3) + "Search by song gender" + icon.goToMusicPlayer;
+                icon.iconNbr(3) + "Search by song gender";
     }
 
     @Override

@@ -141,6 +141,7 @@ public class PlaylistServices {
     }
 
     public void createPlaylistWithTemporaryPlaylist(String playlistName) {
+
         Playlist newPlaylist = new Playlist(playlistName);
 
         Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
@@ -151,6 +152,7 @@ public class PlaylistServices {
         userService.addOnePlaylist(newPlaylist.getPlaylistId());
 
         this.deleteTemporaryPlaylist();
+
     }
     
     public int getCurrentPlaylistId (){
@@ -192,7 +194,7 @@ public class PlaylistServices {
         }
         setCurrentPlaylistId(chosenPlaylist);
         songService.setCurrentSongId(playlistRepository.getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
-        pageService.playlistDisplay.displayAllPage();
+        pageService.playlistPage.displayAllPage();
     }
 
     public Playlist getPlaylistByName(String name) {
@@ -202,4 +204,16 @@ public class PlaylistServices {
     public Playlist getPlaylistById(int id) {
         return playlistRepository.getPlaylistById(id);
     }
+
+public boolean verifyPlaylistName(String playlistName, User user) {
+    List<Integer> userPlaylistsIds = user.getPlaylists();
+
+    for (Integer playlistId : userPlaylistsIds) {
+        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+        if (playlist != null && playlist.getPlaylistName().equalsIgnoreCase(playlistName)) {
+            return false;
+        }
+    }
+    return true;
+}
 }

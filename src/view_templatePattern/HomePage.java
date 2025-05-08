@@ -11,10 +11,10 @@ public class HomePage extends _SimplePageTemplate {
         this.pageId = pageId;
         this.pageTitle = "Home Page";
         this.pageContent =
-                icon.iconNbr(0) + icon.iconLogout() + icon.lineBreak +
+                icon.iconNbr(0) + "Log out" + " | " + icon.goToMusicPlayer + icon.lineBreak +
                 icon.iconNbr(1) + "Go to playlists" + icon.lineBreak +
                 icon.iconNbr(2) + "Search" + icon.lineBreak +
-                icon.iconNbr(3) + "Friends (TODO)" + icon.iconPremium() + icon.goToMusicPlayer;
+                icon.iconNbr(3) + "Friends (TODO)" + icon.iconPremium();
     }
 
     @Override
@@ -40,5 +40,9 @@ public class HomePage extends _SimplePageTemplate {
     @Override
     public void button3() {
         pageService.friendsHomePage.displayAllPage();
+    }
+
+    @Override
+    public void button9(){ //No action !
     }
 }

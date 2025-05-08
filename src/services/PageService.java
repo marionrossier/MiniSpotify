@@ -26,7 +26,7 @@ public class PageService {
     public PlaylistHomePage playlistHomePage;
     public LoginOK login;
     public CreateAccount createAccount;
-    public PlaylistDisplay playlistDisplay;
+    public PlaylistPage playlistPage;
     public Search search;
     public SongPlayer songPlayer;
     public SearchGender searchGender;
@@ -78,8 +78,8 @@ public class PageService {
         this.createAccount = new CreateAccount(this, spotifyPlayer, pageId++);
         pages.add(this.createAccount);
 
-        this.playlistDisplay = new PlaylistDisplay(this, spotifyPlayer, pageId++);
-        pages.add(this.playlistDisplay);
+        this.playlistPage = new PlaylistPage(this, spotifyPlayer, pageId++);
+        pages.add(this.playlistPage);
 
         this.search = new Search(this, spotifyPlayer, pageId++);
         pages.add(this.search);

@@ -6,21 +6,20 @@ import services.PageService;
 
 import java.util.Scanner;
 
-public class PlaylistDisplay extends _SimplePageTemplate {
+public class PlaylistPage extends _SimplePageTemplate {
 
     Scanner in = new Scanner(System.in);
 
-    public PlaylistDisplay(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+    public PlaylistPage(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Playlist Page : ";
-        this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
-                icon.iconNbr(1) + "Play the playlist" + icon.lineBreak +
-                icon.iconNbr(2) + "Rename Playlist" + icon.lineBreak +
-                icon.iconNbr(3) + "Add song" + icon.lineBreak +
-                icon.iconNbr(4) + "Remove song" + icon.lineBreak +
-                icon.iconNbr(5) + "Reorder song (TODO!!)" + icon.iconPremium() + icon.lineBreak +
-                icon.iconNbr(6) + "Delete the playlist";
+        this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak +
+                icon.iconNbr(1) + "Rename Playlist" + icon.lineBreak +
+                icon.iconNbr(2) + "Add song" + icon.lineBreak +
+                icon.iconNbr(3) + "Remove song" + icon.lineBreak +
+                icon.iconNbr(4) + "Reorder song (TODO!!)" + icon.iconPremium() + icon.lineBreak +
+                icon.iconNbr(5) + "Delete the playlist";
     }
 
     @Override
@@ -32,47 +31,41 @@ public class PlaylistDisplay extends _SimplePageTemplate {
         }
         else {
         System.out.println("Playlist name : " + playlist.getPlaylistName());
-        System.out.println("Playlist songs : ");
-
+        System.out.println();
         toolbox.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId());
         }
     }
 
     @Override
     public void button1() {
-        pageService.songPlayer.displayAllPage();
-    }
-
-    @Override
-    public void button2() {
-        System.out.print("Enter the new name of the playlist : ");
-        String newName = in.next();
+        System.out.print(icon.goBack + icon.lineBreak + "Enter the new name of the playlist : ");
+        String newName = pageService.gotAnInput(in.next());
         int playlistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
         toolbox.getPlaylistServ().renamePlayList(playlistId, newName);
     }
 
     @Override
-    public void button3() {
+    public void button2() {
         pageService.search.displayAllPage();
     }
 
     @Override
-    public void button4() {
+    public void button3() {
         System.out.print("Enter the number of the song you want to remove : ");
         int songIndex = in.nextInt()-1;
 
         int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
         toolbox.getPlaylistServ().deleteSongFromPlaylist(currentPlaylistId, songIndex);
-        pageService.playlistDisplay.displayAllPage();
+        pageService.playlistPage.displayAllPage();
     }
 
     @Override
-    public void button5() {
+    public void button4() {
         //TODO : reorder song in playlist
     }
 
     @Override
-    public void button6() {
+    public void button5() {
         pageService.playlistDeletion.displayAllPage();
     }
 }

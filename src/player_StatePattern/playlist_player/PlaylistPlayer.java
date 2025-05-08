@@ -47,16 +47,19 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     @Override
     public void setSequentialMode(){
         currentState = this.sequentialState;
+        System.out.println("Sequential lecture mode activate.");
     }
 
     @Override
     public void setShuffleMode(){
         currentState = this.shuffleState;
+        System.out.println("Shuffle lecture mode activate.");
     }
 
     @Override
     public void setRepeatMode(){
         currentState = this.repeatState;
+        System.out.println("RepeateOne lecture mode activate.");
     }
 
     @Override

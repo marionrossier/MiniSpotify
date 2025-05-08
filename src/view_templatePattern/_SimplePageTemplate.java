@@ -59,7 +59,9 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
 
     public final void displayTitle(String pageTitle){
         System.out.println();
+        System.out.println();
         System.out.println(">>>>>> "+ pageTitle +" <<<<<<<");
+        System.out.println();
     }
 
     public void displayContent(String pageContent){
@@ -69,6 +71,7 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
     public void displaySpecificContent(){}
 
     public final void displayInput (){
+        System.out.println();
         System.out.print("Your input : ");
     }
 
@@ -156,10 +159,10 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
         displayAllPage();
     }
     public void button8(){
-        invalidChoice();
-        displayAllPage();
+        pageService.songPlayer.displayAllPage();
+
     }
     public void button9(){
-        pageService.songPlayer.displayAllPage();
+        pageService.homePage.displayAllPage();
     }
 }
