@@ -79,6 +79,10 @@ public class Icon {
 
     public String lineBreak = "\n";
 
-    public String goToMusicPlayer = this.lineBreak +
-            this.iconNbr(9) + "Go to music player";
+    public String goToMusicPlayer = iconNbr(8) + "Music player";
+    public String goToHomepage = iconNbr(9) + "Home Page";
+    public String goBack = iconNbr(0) + iconBack();
+
+    public String backHomePageMusicPlayer = goBack + " |  " + goToHomepage +  " |  "  + goToMusicPlayer;
+
 }

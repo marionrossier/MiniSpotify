@@ -1,5 +1,6 @@
 package view_templatePattern;
 
+import data.entities.Playlist;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.PageService;
 
@@ -10,14 +11,22 @@ public class SongPlayer extends _SimplePageTemplate {
         this.pageId = pageId;
         this.pageTitle = "Song Player Page";
         this.pageContent =
-                icon.iconNbr(0) + icon.iconBack() + " | " + icon.iconNbr(9) + "Go to Home Page" +icon.lineBreak+
-                "Your song player ! " +icon.lineBreak+
+                icon.iconBack() + " |  " + icon.goToHomepage +icon.lineBreak+
                 icon.iconNbr(1) + ":"+ icon.iconShuffle() + " | " +
                 icon.iconNbr(2) + ":"+ icon.iconPrevious() + " | " +
                 icon.iconNbr(3) + ":"+ icon.iconPlayPause() +" | " +
                 icon.iconNbr(4) + ":"+ icon.iconPlayBack() + " | " +
                 icon.iconNbr(5) + ":"+ icon.iconNext() + " | " +
                 icon.iconNbr(6) + ":"+ icon.iconRepeatOne();
+    }
+
+    @Override
+    public void displaySpecificContent(){
+        Playlist playlist = toolbox.getPlaylistServ().getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId());
+        System.out.println(
+                "Current Playlist : " + playlist.getPlaylistName() +
+                ", duration " + (int)(playlist.getPlaylistSeconds()/60) + ":" + playlist.getPlaylistSeconds()%60 +
+                ", size : " + playlist.getPlaylistSize() + icon.lineBreak);
     }
 
     @Override
@@ -56,6 +65,11 @@ public class SongPlayer extends _SimplePageTemplate {
         loop();
     }
 
+    @Override
+    public void button8(){
+    //No action !
+    }
+
     void loop(){
         while (spotifyPlayer.isPlaying() || spotifyPlayer.isPaused()) {
             System.out.println(toolbox.getSongServ().getSongById(spotifyPlayer.getCurrentSongId()).getSongName());
@@ -63,10 +77,5 @@ public class SongPlayer extends _SimplePageTemplate {
             validateInput();
             switchPage();
         }
-    }
-
-    @Override
-    public void button9(){
-        pageService.homePage.displayAllPage();
     }
 }

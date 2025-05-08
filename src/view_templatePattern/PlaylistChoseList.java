@@ -9,7 +9,8 @@ public class PlaylistChoseList extends _SimplePageTemplate {
         super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Chose Your Playlist Page";
-        this.pageContent = "Chose a Playlist below or press \"0\" to go back !";
+        this.pageContent = icon.goBack + icon.lineBreak +
+                "Chose your Playlist below";
     }
 
     @Override
@@ -20,5 +21,13 @@ public class PlaylistChoseList extends _SimplePageTemplate {
     @Override
     public void validateInput() {
         toolbox.getPlaylistServ().validatePlaylistIdInput(pageService, toolbox.getSongServ());
+    }
+
+    @Override
+    public void button8(){//no action
+    }
+
+    @Override
+    public void button9(){//no action
     }
 }

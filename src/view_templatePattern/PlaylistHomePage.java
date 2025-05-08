@@ -10,9 +10,9 @@ public class PlaylistHomePage extends _SimplePageTemplate {
         this.pageId = pageId;
         this.pageTitle = "Home Page Playlist";
         this.pageContent =
-                icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
+                icon.backHomePageMusicPlayer + icon.lineBreak +
                 icon.iconNbr(1) + "Choose your playlist" + icon.lineBreak +
-                icon.iconNbr(2) + "Create a playlist" + icon.goToMusicPlayer;
+                icon.iconNbr(2) + "Create a playlist";
     }
 
     @Override
@@ -24,5 +24,4 @@ public class PlaylistHomePage extends _SimplePageTemplate {
     public void button2() {
         pageService.search.displayAllPage();
     }
-
 }
