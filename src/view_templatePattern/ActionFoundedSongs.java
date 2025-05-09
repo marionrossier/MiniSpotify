@@ -18,20 +18,31 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
 
     @Override
     public void button1() {
-        toolbox.getPlaylistServ().addSongToPlaylistFromTemporaryPlaylist(toolbox.getPlaylistServ().getCurrentPlaylistId());
-        pageService.playlistPage.displayAllPage();
+        verificationAndThenAction();
     }
 
     @Override
-    public void button2() { //TODO : ajuster car la playlist temporaire ne transmet pas ses chansons à l'autre playlist.
+    public void button2() {
         System.out.println("Your Playlists : ");
         toolbox.getPrintServ().printUserPlaylists(toolbox.getUserServ().getCurrentUserId());
 
         displayInput();
         toolbox.getPlaylistServ().validatePlaylistIdInput(pageService, toolbox.getSongServ());
 
-        toolbox.getPlaylistServ().addSongToPlaylistFromTemporaryPlaylist(toolbox.getPlaylistServ().getCurrentPlaylistId());
-        pageService.playlistPage.displayAllPage();
+        verificationAndThenAction();
+    }
+
+    private void verificationAndThenAction() {
+        int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
+
+        if (toolbox.getPlaylistServ().isCurrentUserOwnerOfPlaylist(currentPlaylistId)) {
+            toolbox.getPlaylistServ().addSongToPlaylistFromTemporaryPlaylist(toolbox.getPlaylistServ().getCurrentPlaylistId());
+            pageService.playlistPageOpen.displayAllPage();
+        }
+        else {
+            System.err.println("You're not the owner of this playlist.");
+            pageService.actionFoundedSongs.displayAllPage();
+        }
     }
 
     @Override

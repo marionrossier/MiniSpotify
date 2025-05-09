@@ -6,11 +6,11 @@ import services.PageService;
 
 import java.util.Scanner;
 
-public class PlaylistPage extends _SimplePageTemplate {
+public class PlaylistPageOpen extends _SimplePageTemplate {
 
     Scanner in = new Scanner(System.in);
 
-    public PlaylistPage(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+    public PlaylistPageOpen(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(pageManager, spotifyPlayer);
         this.pageId = pageId;
         this.pageTitle = "Playlist Page : ";
@@ -56,12 +56,13 @@ public class PlaylistPage extends _SimplePageTemplate {
 
         int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
         toolbox.getPlaylistServ().deleteSongFromPlaylist(currentPlaylistId, songIndex);
-        pageService.playlistPage.displayAllPage();
+        pageService.playlistPageOpen.displayAllPage();
     }
 
     @Override
     public void button4() {
-        //TODO : reorder song in playlist
+        int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
+        toolbox.getPlaylistServ().reorderSongsInPlaylist(currentPlaylistId, pageService);
     }
 
     @Override

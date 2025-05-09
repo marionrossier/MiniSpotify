@@ -26,13 +26,14 @@ public class PageService {
     public PlaylistHomePage playlistHomePage;
     public LoginOK login;
     public CreateAccount createAccount;
-    public PlaylistPage playlistPage;
+    public PlaylistPageOpen playlistPageOpen;
     public Search search;
     public SongPlayer songPlayer;
     public SearchGender searchGender;
     public FriendInformation friendInformation;
     public FriendRemoveAFriend friendRemoveAFriend;
     public ActionFoundedSongs actionFoundedSongs;
+    public PlaylistPageShared playlistPageShared;
 
     public PageService(IPlaylistPlayer spotifyPlayer) {
         this.spotifyPlayer = spotifyPlayer;
@@ -78,8 +79,8 @@ public class PageService {
         this.createAccount = new CreateAccount(this, spotifyPlayer, pageId++);
         pages.add(this.createAccount);
 
-        this.playlistPage = new PlaylistPage(this, spotifyPlayer, pageId++);
-        pages.add(this.playlistPage);
+        this.playlistPageOpen = new PlaylistPageOpen(this, spotifyPlayer, pageId++);
+        pages.add(this.playlistPageOpen);
 
         this.search = new Search(this, spotifyPlayer, pageId++);
         pages.add(this.search);
@@ -98,6 +99,9 @@ public class PageService {
 
         this.actionFoundedSongs = new ActionFoundedSongs(this, spotifyPlayer, pageId++);
         pages.add(this.actionFoundedSongs);
+
+        this.playlistPageShared = new PlaylistPageShared(this, spotifyPlayer, pageId++);
+        pages.add(this.playlistPageShared);
     }
 
     public void startLogin(){

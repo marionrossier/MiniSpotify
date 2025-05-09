@@ -66,31 +66,31 @@ public class Playlist {
     }
 
     public int getDurationSeconds() {
-        return durationSeconds;
+        int totalSeconds = 0;
+        for (Integer integer : this.getPlaylistSongsListWithId()) {
+            Song song = new Song();
+            song.setSongId(integer);
+            totalSeconds += song.getDurationSeconds();
+        }
+        return totalSeconds;
     }
 
-    public void setPlaylistDuration() {
-        int totalSeconds = 0;
-        for (Integer integer : listSongsId) {
-            Song currentSong = new Song();
-            currentSong.setSongId(integer);
-            totalSeconds += currentSong.getDurationSeconds();
-        }
-        this.durationSeconds = totalSeconds;
+    //TODO : Fonctionne pas
+    public void setPlaylistDuration(int durationSeconds) {
+        this.durationSeconds = durationSeconds;
     }
 
     public int getSize() {
-        return size;
+        return this.getPlaylistSongsListWithId().size();
     }
 
-    public void setPlaylistSize() {
-        this.size = listSongsId.size();
+    public void setPlaylistSize(int playlistSize) {
+        this.size = playlistSize;
     }
 
-    //TODO : ajuster car ne met pas a jour les informations contenues !
-    public void setPlaylistInformation(){
-        setPlaylistDuration();
-        setPlaylistSize();
+    public void setPlaylistInformation(int playlistDuration, int playlistSize){
+        setPlaylistDuration(playlistDuration);
+        setPlaylistSize(playlistSize);
     }
 
     public PlaylistEnum getStatus() {

@@ -10,6 +10,7 @@ import java.util.*;
 
 public class PlaylistServices {
 
+    //TODO: optimiser ou séparer cette classe qui devient trop grande
     Scanner scanner = new Scanner(System.in);
     private final UserRepository userRepository;
     final PlaylistRepository playlistRepository;
@@ -42,6 +43,9 @@ public class PlaylistServices {
             System.out.println("Playlist deleted !");
         }
         else {
+            if (playlist.getName().equals("AllSongs")){
+                System.err.println("You cannot delete the AllSongs playlist.");
+            }
             removePlaylistFromUser(playlistId);
             System.out.println("Playlist removed from your list.");
         }
@@ -80,21 +84,14 @@ public class PlaylistServices {
     public void addSong(int currentPlaylistId, int currentSongId) {
         Playlist playlist = this.playlistRepository.getPlaylistById(currentPlaylistId);
         playlist.getPlaylistSongsListWithId().add(currentSongId);
-        playlist.setPlaylistDuration();
+        int playlistDuration = playlist.getDurationSeconds();
+        int playlistSize = playlist.getSize();
+        playlist.setPlaylistInformation(playlistDuration, playlistSize);
 
         this.playlistRepository.savePlaylist(playlist);
     }
 
-    public void reorderSong(int playlistId, int songId, int oldIndex, int newIndex) {
-        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
-        playlist.getPlaylistSongsListWithId().remove(oldIndex);
-        playlist.getPlaylistSongsListWithId().add(newIndex, songId);
-
-        playlistRepository.savePlaylist(playlist);
-    }
-
-    public void reorderSongsInPlaylist(String playlistName) {/*TODO*/}
-
+    //TODO : ajuster car la playlist temporaire ne transmet pas ses chansons à l'autre playlist.
     public void addSongToPlaylistFromTemporaryPlaylist(int playlistId) {
         Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
         Playlist targetPlaylist = playlistRepository.getPlaylistById(playlistId);
@@ -148,7 +145,9 @@ public class PlaylistServices {
             playlistRepository.savePlaylist(temporaryPlaylist);
         }
         temporaryPlaylist.setListSongsId(chosenSongs);
-        temporaryPlaylist.setPlaylistInformation();
+        int playlistDuration = temporaryPlaylist.getDurationSeconds();
+        int playlistSize = temporaryPlaylist.getSize();
+        temporaryPlaylist.setPlaylistInformation(playlistDuration, playlistSize);
         temporaryPlaylist.setOwnerId(userService.getCurrentUserId());
         temporaryPlaylist.setStatus(status);
 
@@ -162,7 +161,9 @@ public class PlaylistServices {
         Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
 
         newPlaylist.setListSongsId(temporaryPlaylist.getPlaylistSongsListWithId());
-        newPlaylist.setPlaylistInformation();
+        int playlistDuration = newPlaylist.getDurationSeconds();
+        int playlistSize = newPlaylist.getSize();
+        newPlaylist.setPlaylistInformation(playlistDuration, playlistSize);
         newPlaylist.setOwnerId(userService.getCurrentUserId());
         newPlaylist.setStatus(status);
 
@@ -216,7 +217,22 @@ public class PlaylistServices {
         }
         setCurrentPlaylistId(chosenPlaylist);
         songService.setCurrentSongId(playlistRepository.getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
-        pageService.playlistPage.displayAllPage();
+
+        if (isCurrentUserOwnerOfPlaylist(chosenPlaylist)){
+            pageService.playlistPageOpen.displayAllPage();
+        }
+        else {
+            pageService.playlistPageShared.displayAllPage();
+        }
+    }
+
+    public boolean isCurrentUserOwnerOfPlaylist(int playlistId) {
+        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+        if (playlist == null) {
+            return false;
+        }
+        int currentUserId = userService.getCurrentUserId();
+        return playlist.getOwnerId() == currentUserId;
     }
 
     public Playlist getPlaylistByName(String name) {
@@ -257,7 +273,6 @@ public class PlaylistServices {
     }
 
     public LinkedList<Integer> chooseFoundedPlaylist(List<Playlist> playlist, PageService pageService){
-        Scanner scanner = new Scanner(System.in);
         LinkedList<Integer> selectedPlaylistIndex = new LinkedList<>();
         String input;
         while (true) {
@@ -280,5 +295,45 @@ public class PlaylistServices {
             }
         }
         return selectedPlaylistIndex;
+    }
+
+    //TODO : TESTER gérer le cas ou on met pas tous les chiffres + si on met plusieurs fois le même.
+    public void reorderSong(int playlistId, int songId, int oldIndex, int newIndex) {
+        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+        playlist.getPlaylistSongsListWithId().remove(oldIndex);
+        playlist.getPlaylistSongsListWithId().add(newIndex, songId);
+
+        playlistRepository.savePlaylist(playlist);
+    }
+
+    public void reorderSongsInPlaylist(int playlistId, PageService pageService) {
+        //TODO : Ajuster pour que cela fonctionne.
+        String input;
+        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+
+        int i = 0;
+        while (true) {
+            input = pageService.gotAnInput(scanner.nextLine());
+
+            if (input.equals("x")) {
+                break;
+            }
+            if (input.equals("0")) {
+                pageService.goBack(pageService.getMenuPages().peek());
+            }
+
+            try {
+                int songIndex = Integer.parseInt(input) - 1;
+                if (songIndex >= 0 && songIndex < playlist.getSize()) {
+                    int songId = playlist.getPlaylistSongsListWithId().get(songIndex);
+                    reorderSong(playlistId, songId, (songIndex+i), i);
+                    i++;
+                } else {
+                    System.err.println("Invalid selection. Please try again.");
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid input. Please enter a number or \"x\" to exit.");
+            }
+        }
     }
 }

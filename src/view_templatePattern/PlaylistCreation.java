@@ -27,13 +27,13 @@ public class PlaylistCreation extends _InversedPageTemplate {
     @Override
     public void button1(){
         toolbox.getPlaylistServ().createNewPlaylist(playlistName, PlaylistEnum.PRIVATE);
-        pageService.playlistPage.displayAllPage();
+        pageService.playlistPageOpen.displayAllPage();
     }
 
     @Override
     public void button2(){
         toolbox.getPlaylistServ().createNewPlaylist(playlistName, PlaylistEnum.PUBLIC);
-        pageService.playlistPage.displayAllPage();
+        pageService.playlistPageOpen.displayAllPage();
     }
 
     private void playlistNameVerification (){
