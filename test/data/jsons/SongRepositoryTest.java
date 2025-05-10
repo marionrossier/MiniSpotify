@@ -1,8 +1,9 @@
 package data.jsons;
 
-import data.entities.Artist;
-import data.entities.MusicGender;
-import data.entities.Song;
+import clientSide.entities.Artist;
+import clientSide.entities.MusicGender;
+import clientSide.entities.Song;
+import clientSide.repositories.SongRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,9 +1,9 @@
 package services;
 
-import data.entities.Playlist;
-import data.entities.PlaylistEnum;
-import data.entities.Song;
-import data.jsons.PlaylistRepository;
+import clientSide.entities.Playlist;
+import clientSide.entities.PlaylistEnum;
+import clientSide.entities.Song;
+import clientSide.repositories.PlaylistRepository;
 
 public class CommuneMethods {
 

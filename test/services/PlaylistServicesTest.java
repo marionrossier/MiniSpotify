@@ -1,14 +1,18 @@
 package services;
 
-import data.entities.*;
-import data.jsons.PlaylistRepository;
-import data.jsons.SongRepository;
-import data.jsons.UserRepository;
+import clientSide.entities.*;
+import clientSide.repositories.PlaylistRepository;
+import clientSide.repositories.SongRepository;
+import clientSide.repositories.UserRepository;
+import clientSide.services.Cookies_SingletonPattern;
+import clientSide.services.PlaylistReorderSongService;
+import clientSide.services.PlaylistServices;
+import clientSide.services.TemporaryPlaylistService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import player_StatePattern.file_player.FakeMusicPlayer;
-import player_StatePattern.playlist_player.PlaylistPlayer;
+import clientSide.player_StatePattern.file_player.FakeMusicPlayer;
+import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

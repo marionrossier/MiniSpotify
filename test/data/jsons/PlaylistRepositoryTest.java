@@ -1,13 +1,13 @@
 package data.jsons;
 
-import data.entities.Playlist;
-import data.entities.PlaylistEnum;
-import data.entities.Song;
+import clientSide.entities.Playlist;
+import clientSide.repositories.PlaylistRepository;
+import clientSide.repositories.SongRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import services.CommuneMethods;
-import services.PlaylistServices;
+import clientSide.services.PlaylistServices;
 
 import java.io.File;
 import java.io.IOException;

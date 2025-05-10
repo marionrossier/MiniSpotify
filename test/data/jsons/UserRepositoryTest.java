@@ -1,7 +1,8 @@
 package data.jsons;
 
-import data.entities.PlanEnum;
-import data.entities.User;
+import clientSide.entities.PlanEnum;
+import clientSide.entities.User;
+import clientSide.repositories.UserRepository;
 import org.junit.jupiter.api.*;
 
 import java.io.File;

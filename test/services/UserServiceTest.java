@@ -1,8 +1,10 @@
 package services;
 
-import data.entities.PlanEnum;
-import data.entities.User;
-import data.jsons.UserRepository;
+import clientSide.entities.PlanEnum;
+import clientSide.entities.User;
+import clientSide.repositories.UserRepository;
+import clientSide.services.PasswordService;
+import clientSide.services.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

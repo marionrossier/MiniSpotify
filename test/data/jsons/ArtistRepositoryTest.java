@@ -1,6 +1,7 @@
 package data.jsons;
 
-import data.entities.Artist;
+import clientSide.entities.Artist;
+import clientSide.repositories.ArtistRepository;
 import org.junit.jupiter.api.*;
 
 import java.io.File;

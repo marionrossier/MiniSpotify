@@ -1,14 +1,19 @@
 package player_StatePattern.playlist_player;
 
-import data.entities.PlaylistEnum;
-import data.entities.Song;
-import data.jsons.PlaylistRepository;
-import data.jsons.SongRepository;
+import clientSide.entities.PlaylistEnum;
+import clientSide.entities.Song;
+import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
+import clientSide.repositories.PlaylistRepository;
+import clientSide.repositories.SongRepository;
+import clientSide.services.Cookies_SingletonPattern;
+import clientSide.services.PlaylistServices;
+import clientSide.services.SearchService;
+import clientSide.services.SongService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import player_StatePattern.file_player.FakeMusicPlayer;
-import data.entities.Playlist;
+import clientSide.player_StatePattern.file_player.FakeMusicPlayer;
+import clientSide.entities.Playlist;
 import services.*;
 
 import static org.junit.jupiter.api.Assertions.*;
