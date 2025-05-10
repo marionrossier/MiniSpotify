@@ -47,9 +47,9 @@ public class PlaylistPlayerTest {
         // Initialize repositories with temp files
         songRepository = new SongRepository(songTempFile.getAbsolutePath());
         songService = new SongService(songRepository);
-        searchService = new SearchService(songRepository);
+        searchService = new SearchService(songRepository, songService);
         playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
-        playlistServices = new PlaylistServices(playlistRepository);
+        playlistServices = new PlaylistServices(playlistRepository, songRepository);
         
         // Create test songs
         Song song1 = createSong(1, "Song 1", "path/to/song1.mp3");
@@ -66,9 +66,9 @@ public class PlaylistPlayerTest {
         playlist.setPlaylistId(1);
         playlistRepository.savePlaylist(playlist);
 
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), playlistRepository);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), playlistRepository);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), playlistRepository);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), playlistRepository, playlistServices);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), playlistRepository, playlistServices);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), playlistRepository, playlistServices);
         
         // Create a FakeMusicPlayer for testing
         fakeMusicPlayer = new FakeMusicPlayer();

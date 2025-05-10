@@ -37,9 +37,9 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         this.musicPlayer = musicPlayer;
         this.songRepository = songRepository;
         this.playlistRepository = playlistRepository;
-        this.searchService = new SearchService(songRepository);
         this.songService = new SongService(songRepository);
-        this.playlistServices = new PlaylistServices(playlistRepository);
+        this.searchService = new SearchService(songRepository, songService);
+        this.playlistServices = new PlaylistServices(playlistRepository, songRepository);
 
         this.sequentialState = new SequentialState(this);
         this.shuffleState = new ShuffleState(this);

@@ -67,13 +67,7 @@ public class Playlist {
     }
 
     public int getDurationSeconds() {
-        SongRepository songRepository = new SongRepository();
-        int totalSeconds = 0;
-        for (Integer integer : this.getPlaylistSongsListWithId()) {
-            Song song = songRepository.getSongById(integer);
-            totalSeconds += song.getDurationSeconds();
-        }
-        return totalSeconds;
+        return durationSeconds;
     }
 
     public void setPlaylistDuration(int durationSeconds) {

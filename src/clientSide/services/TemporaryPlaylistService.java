@@ -27,7 +27,8 @@ public class TemporaryPlaylistService {
         return playlist.getPlaylistId();
     }
 
-    public void createTemporaryPlaylist(LinkedList<Integer> chosenSongs, PlaylistEnum status) {
+    public void createTemporaryPlaylist(LinkedList<Integer> chosenSongs, PlaylistEnum status,
+                                        PlaylistServices playlistServices) {
         int currentUserId = userService.getCurrentUserId();
         Playlist temporaryPlaylist = playlistRepository.getTemporaryPlaylistOfCurrentUser(userService);
 
@@ -37,7 +38,7 @@ public class TemporaryPlaylistService {
         }
         temporaryPlaylist.setListSongsId(chosenSongs);
 
-        int playlistDuration = temporaryPlaylist.getDurationSeconds();
+        int playlistDuration = playlistServices.setDurationSeconds(temporaryPlaylist.getPlaylistId());
         int playlistSize = temporaryPlaylist.getSize();
 
         temporaryPlaylist.setPlaylistInformation(playlistDuration, playlistSize);
@@ -47,14 +48,15 @@ public class TemporaryPlaylistService {
         playlistRepository.savePlaylist(temporaryPlaylist);
     }
 
-    public void createPlaylistWithTemporaryPlaylist(String playlistName, PlaylistEnum status) {
+    public void createPlaylistWithTemporaryPlaylist(String playlistName, PlaylistEnum status,
+                                                    PlaylistServices playlistServices) {
 
         Playlist newPlaylist = new Playlist(playlistName, PlaylistEnum.PRIVATE);
 
         Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
 
         newPlaylist.setListSongsId(temporaryPlaylist.getPlaylistSongsListWithId());
-        int playlistDuration = newPlaylist.getDurationSeconds();
+        int playlistDuration = playlistServices.setDurationSeconds(newPlaylist.getPlaylistId());
         int playlistSize = newPlaylist.getSize();
         newPlaylist.setPlaylistInformation(playlistDuration, playlistSize);
         newPlaylist.setOwnerId(userService.getCurrentUserId());

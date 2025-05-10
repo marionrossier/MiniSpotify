@@ -4,10 +4,7 @@ import clientSide.entities.*;
 import clientSide.repositories.PlaylistRepository;
 import clientSide.repositories.SongRepository;
 import clientSide.repositories.UserRepository;
-import clientSide.services.Cookies_SingletonPattern;
-import clientSide.services.PlaylistReorderSongService;
-import clientSide.services.PlaylistServices;
-import clientSide.services.TemporaryPlaylistService;
+import clientSide.services.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,10 +27,11 @@ class PlaylistServicesTest {
     private File playlistTempFile;
     private File userTempFile;
     private Playlist playlist;
-    private PlaylistServices playlistService;
+    private PlaylistServices playlistServices;
     private TemporaryPlaylistService temporaryPlaylistService;
     private CommuneMethods communeMethods = new CommuneMethods();
     private SongRepository songRepository;
+    private SongService songService;
     private UserRepository userRepository;
     private PlaylistRepository playlistRepository;
 
@@ -51,7 +49,8 @@ class PlaylistServicesTest {
         userRepository = new UserRepository(userTempFile.getAbsolutePath());
         playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
 
-        playlistService = new PlaylistServices(playlistRepository, userRepository);
+        playlistServices = new PlaylistServices(playlistRepository, userRepository, songRepository);
+        songService = new SongService(songRepository);
         temporaryPlaylistService = new TemporaryPlaylistService(playlistRepository, userRepository);
 
         // Create test songs
@@ -68,9 +67,9 @@ class PlaylistServicesTest {
         playlist = new Playlist("Test Playlist", PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(1);
         playlistRepository.savePlaylist(playlist);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), playlistRepository);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), playlistRepository);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), playlistRepository);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), playlistRepository, playlistServices);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), playlistRepository, playlistServices);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), playlistRepository, playlistServices);
 
         // Add playlist to repository
         playlistRepository.savePlaylist(playlist);
@@ -89,8 +88,8 @@ class PlaylistServicesTest {
         // Instantiate the PlaylistPlayer with the fake player and repositories
         PlaylistPlayer playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository);
 
-        // Create playlistService
-        playlistService = new PlaylistServices(playlistRepository, userRepository);
+        // Create playlistServices
+        playlistServices = new PlaylistServices(playlistRepository, userRepository, songRepository);
     }
 
     @AfterEach
@@ -111,8 +110,8 @@ class PlaylistServicesTest {
         int playlistId = this.playlist.getPlaylistId();
 
         // Act
-        playlistService.renamePlayList(playlistId, newName);
-        String playlistName = playlistService.playlistRepository.getPlaylistById(1).getName();
+        playlistServices.renamePlayList(playlistId, newName);
+        String playlistName = playlistServices.playlistRepository.getPlaylistById(1).getName();
         // Assert
         assertEquals(newName, playlistName);
     }
@@ -123,8 +122,8 @@ class PlaylistServicesTest {
         int playlistId = this.playlist.getPlaylistId();
 
         // Act
-        playlistService.deletePlaylist(playlistId);
-        Playlist deletedPlaylist = playlistService.playlistRepository.getPlaylistById(playlistId);
+        playlistServices.deletePlaylist(playlistId);
+        Playlist deletedPlaylist = playlistServices.playlistRepository.getPlaylistById(playlistId);
 
         // Assert
         assertNull(deletedPlaylist, "The playlist should be deleted");
@@ -137,14 +136,14 @@ class PlaylistServicesTest {
         chosenSongs.add(1);
 
         //Act
-        playlistService.createTemporaryPlaylist(chosenSongs, PlaylistEnum.PUBLIC);
-        int temporaryPlaylistId = playlistService.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId();
-        int firstSongId = playlistService.playlistRepository
+        playlistServices.createTemporaryPlaylist(chosenSongs, PlaylistEnum.PUBLIC);
+        int temporaryPlaylistId = playlistServices.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId();
+        int firstSongId = playlistServices.playlistRepository
                 .getPlaylistById(temporaryPlaylistId).getPlaylistSongsListWithId().getFirst();
 
         //Assert
         assertEquals("temporaryPlaylist",
-                playlistService.playlistRepository.getPlaylistByName("temporaryPlaylist").getName());
+                playlistServices.playlistRepository.getPlaylistByName("temporaryPlaylist").getName());
     }
 
     @Test
@@ -153,11 +152,11 @@ class PlaylistServicesTest {
         LinkedList <Integer> chosenSongs = new LinkedList<>();
         chosenSongs.add(1);
 
-        playlistService.createTemporaryPlaylist(chosenSongs, PlaylistEnum.PUBLIC);
+        playlistServices.createTemporaryPlaylist(chosenSongs, PlaylistEnum.PUBLIC);
         //Act
-        playlistService.deleteTemporaryPlaylist();
+        playlistServices.deleteTemporaryPlaylist();
         //Assert
-        assertNull(playlistService.playlistRepository.getPlaylistByName("temporaryPlaylist"), "The playlist should be deleted");
+        assertNull(playlistServices.playlistRepository.getPlaylistByName("temporaryPlaylist"), "The playlist should be deleted");
     }
 
     @Test
@@ -166,15 +165,15 @@ class PlaylistServicesTest {
         LinkedList <Integer> chosenSongs = new LinkedList<>();
         chosenSongs.add(1);
         chosenSongs.add(3);
-        playlistService.createTemporaryPlaylist(chosenSongs, PlaylistEnum.PUBLIC);
+        playlistServices.createTemporaryPlaylist(chosenSongs, PlaylistEnum.PUBLIC);
         String playlistName = "new Playlist";
-        int temporaryPlaylistLength = playlistService.playlistRepository
+        int temporaryPlaylistLength = playlistServices.playlistRepository
                 .getPlaylistByName("temporaryPlaylist")
                 .getPlaylistSongsListWithId().size();
 
         //Act
-        playlistService.createPlaylistWithTemporaryPlaylist(playlistName, PlaylistEnum.PUBLIC);
-        int newPlaylistLength = playlistService.playlistRepository
+        playlistServices.createPlaylistWithTemporaryPlaylist(playlistName, PlaylistEnum.PUBLIC);
+        int newPlaylistLength = playlistServices.playlistRepository
                 .getPlaylistByName(playlistName)
                 .getPlaylistSongsListWithId().size();
 
@@ -185,18 +184,18 @@ class PlaylistServicesTest {
     @Test
     public void testReorderSongsInPlaylist() {
         //Arrange
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), 1, playlistRepository);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), 2, playlistRepository);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), 3, playlistRepository);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), 1, playlistRepository, playlistServices);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), 2, playlistRepository, playlistServices);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), 3, playlistRepository, playlistServices);
 
         // Simuler l'entrée utilisateur
         String input = "2\n1\n3\nx\n";
         Scanner testScanner = new Scanner(new ByteArrayInputStream(input.getBytes()));
 
         PlaylistReorderSongService reorderService = new PlaylistReorderSongService(testScanner);
-        reorderService.reorderSongsInPlaylist(playlist.getPlaylistId(), playlistService);
+        reorderService.reorderSongsInPlaylist(playlist.getPlaylistId(), playlistServices);
 
-        Playlist updated = playlistService.playlistRepository.getPlaylistById(playlist.getPlaylistId());
+        Playlist updated = playlistServices.playlistRepository.getPlaylistById(playlist.getPlaylistId());
         assertEquals(List.of(2, 1, 3), updated.getPlaylistSongsListWithId());
     }
 

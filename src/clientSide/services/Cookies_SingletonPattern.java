@@ -2,6 +2,7 @@ package clientSide.services;
 
 import clientSide.entities.Playlist;
 import clientSide.repositories.PlaylistRepository;
+import clientSide.repositories.SongRepository;
 
 public class Cookies_SingletonPattern {
     private static Cookies_SingletonPattern instance;
@@ -10,7 +11,8 @@ public class Cookies_SingletonPattern {
     private int currentPlaylistId;
     private int currentSongId;
     private final PlaylistRepository playlistRepository = new PlaylistRepository();
-    private final PlaylistServices playlistServices = new PlaylistServices(playlistRepository);
+    private final SongRepository songRepository = new SongRepository();
+    private final PlaylistServices playlistServices = new PlaylistServices(playlistRepository, songRepository);
 
     private Cookies_SingletonPattern(int userId) {
         this.userId = userId;

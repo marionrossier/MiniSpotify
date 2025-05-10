@@ -25,10 +25,10 @@ public class Toolbox {
         artistRepo = new ArtistRepository();
         songRepo = new SongRepository();
 
-        playlistServ = new PlaylistServices(playlistRepo);
+        playlistServ = new PlaylistServices(playlistRepo, songRepo);
         userServ = new UserService(userRepo);
         songServ = new SongService(songRepo);
-        searchService = new SearchService(songRepo);
+        searchService = new SearchService(songRepo, songServ);
         passwordServ = new PasswordService(userRepo);
         printServ = new PrintService();
         playlistReorderSongService = new PlaylistReorderSongService();

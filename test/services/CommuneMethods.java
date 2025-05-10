@@ -4,13 +4,15 @@ import clientSide.entities.Playlist;
 import clientSide.entities.PlaylistEnum;
 import clientSide.entities.Song;
 import clientSide.repositories.PlaylistRepository;
+import clientSide.services.PlaylistServices;
 
 public class CommuneMethods {
 
-    public void addSongToPlaylist(int currentPlaylistId, int currentSongId, PlaylistRepository playlistRepository) {
+    public void addSongToPlaylist(int currentPlaylistId, int currentSongId, PlaylistRepository playlistRepository,
+                                  PlaylistServices playlistServices) {
         Playlist playlist = playlistRepository.getPlaylistById(currentPlaylistId);
         playlist.getPlaylistSongsListWithId().add(currentSongId);
-        int playlistDuration = playlist.getDurationSeconds();
+        int playlistDuration = playlistServices.setDurationSeconds(playlist.getPlaylistId());
         int playlistSize = playlist.getSize();
         playlist.setPlaylistInformation(playlistDuration, playlistSize);
 
@@ -40,10 +42,10 @@ public class CommuneMethods {
         return song;
     }
 
-    public void addSongsToPlaylist(Playlist playlist, PlaylistRepository playlistRepository, int... songIds) {
+    public void addSongsToPlaylist(Playlist playlist, PlaylistRepository playlistRepository, PlaylistServices playlistServices, int... songIds) {
         for (int id : songIds) {
             Song song = createTestSong(id, "Song " + id);
-            this.addSongToPlaylist(playlist.getPlaylistId(), song.getSongId(), playlistRepository);
+            this.addSongToPlaylist(playlist.getPlaylistId(), song.getSongId(), playlistRepository, playlistServices);
         }
     }
 }

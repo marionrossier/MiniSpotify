@@ -2,31 +2,50 @@ package clientSide.services;
 
 import clientSide.entities.Playlist;
 import clientSide.entities.PlaylistEnum;
+import clientSide.entities.Song;
 import clientSide.entities.User;
 import clientSide.repositories.PlaylistRepository;
+import clientSide.repositories.SongRepository;
 import clientSide.repositories.UserRepository;
 
 import java.util.*;
 
 public class PlaylistServices {
 
-    private final UserRepository userRepository;
-    final PlaylistRepository playlistRepository;
-    private final TemporaryPlaylistService temporaryPlaylistService;
-    private final PlaylistFunctionalitiesService playlistFuncService;
+    public final UserRepository userRepository;
+    public final PlaylistRepository playlistRepository;
+    public final TemporaryPlaylistService temporaryPlaylistService;
+    public final PlaylistFunctionalitiesService playlistFuncService;
+    public final SongRepository songRepository;
 
-    public PlaylistServices (PlaylistRepository playlistRepository, UserRepository userRepository){
+    public PlaylistServices (PlaylistRepository playlistRepository, UserRepository userRepository, SongRepository songRepository){
         this.playlistRepository = playlistRepository;
         this.userRepository = userRepository;
         this.temporaryPlaylistService = new TemporaryPlaylistService(playlistRepository, userRepository);
         this.playlistFuncService = new PlaylistFunctionalitiesService(playlistRepository);
+        this.songRepository = songRepository;
     }
 
-    public PlaylistServices (PlaylistRepository playlistRepository) {
+    public PlaylistServices (PlaylistRepository playlistRepository, SongRepository songRepository) {
         this.playlistRepository = playlistRepository;
         this.userRepository = new UserRepository();
         this.temporaryPlaylistService = new TemporaryPlaylistService(playlistRepository, userRepository);
         this.playlistFuncService = new PlaylistFunctionalitiesService(playlistRepository);
+        this.songRepository = songRepository;
+    }
+
+    public int setDurationSeconds(int playlistId) {
+        int totalSeconds = 0;
+        Playlist playlist = this.playlistRepository.getPlaylistById(playlistId);
+        if (playlist != null) {
+            for (Integer songId : playlist.getPlaylistSongsListWithId()) {
+                Song song = songRepository.getSongById(songId);
+                if (song != null) {
+                    totalSeconds += song.getDurationSeconds();
+                }
+            }
+        }
+        return totalSeconds;
     }
 
     public void setCurrentPlaylistId (int playlistId){
@@ -107,10 +126,10 @@ public class PlaylistServices {
         return temporaryPlaylistService.getTemporaryPlaylistId();
     }
     public void createTemporaryPlaylist(LinkedList<Integer> chosenSongs, PlaylistEnum status) {
-        temporaryPlaylistService.createTemporaryPlaylist(chosenSongs,status);
+        temporaryPlaylistService.createTemporaryPlaylist(chosenSongs,status, this);
     }
     public void createPlaylistWithTemporaryPlaylist(String playlistName, PlaylistEnum status) {
-        temporaryPlaylistService.createPlaylistWithTemporaryPlaylist(playlistName,status);
+        temporaryPlaylistService.createPlaylistWithTemporaryPlaylist(playlistName,status, this);
     }
     public void addSongToPlaylistFromTemporaryPlaylist(int temporaryPlaylistId, int finalPlaylistId) {
         temporaryPlaylistService.addSongToPlaylistFromTemporaryPlaylist(temporaryPlaylistId, finalPlaylistId);

@@ -7,7 +7,7 @@ public class NavigationStackService {
     public final Stack<Integer> menuPages = new Stack<>();
     private final PageService pageService;
 
-    protected NavigationStackService(PageService pageService) {
+    public NavigationStackService(PageService pageService) {
         this.pageService = pageService;
     }
 

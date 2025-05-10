@@ -14,11 +14,13 @@ public class SearchService {
     Scanner scanner = new Scanner(System.in);
     private final Icon icon = new Icon();
     public final SongRepository songRepository;
+    public final SongService songService;
     private final PrintService printService = new PrintService();
 
     // Constructor
-    public SearchService(SongRepository songRepo) {
+    public SearchService(SongRepository songRepo, SongService songService) {
         this.songRepository = songRepo;
+        this.songService = songService;
     }
 
     public void searchSong(String input, String type, int pageId, PageService pageService, PlaylistServices playlistServices) {
