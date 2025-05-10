@@ -1,81 +1,52 @@
 package clientSide.repositories;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import clientSide.entities.Artist;
+import com.fasterxml.jackson.core.type.TypeReference;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ArtistRepository {
     private final String filePath;
-    private final ObjectMapper objectMapper;
+    private final Jsons jsons;
+    private List<Artist> data;
 
     public ArtistRepository(String filePath) {
         this.filePath = filePath;
-        this.objectMapper = new ObjectMapper();
+        this.jsons = new Jsons();
+        this.data = jsons.loadFromJson(this.filePath, new TypeReference<>() {});
     }
 
     public ArtistRepository() {
-        this.filePath = "src/clientSide/jsons/artist.json";
-        this.objectMapper = new ObjectMapper();
+        this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/jsons/artist.json");
     }
 
     public List<Artist> getAllArtists() {
-        File file = new File(filePath);
-        if (!file.exists() || file.length() == 0) {
-
-
-
-            return new ArrayList<>();
-        }
-        try {
-            List<Artist> artists = objectMapper.readValue(file, new TypeReference<>() {});
-            if (artists.isEmpty()) {
-                return new ArrayList<>();
-            }
-            return artists;
-        } catch (IOException e) {
-            System.err.println("Error while loading artists: " + e.getMessage());
-            return new ArrayList<>();
-        }
-    }
-
-    private void saveAllArtists(List<Artist> artists) {
-        try {
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), artists);
-        } catch (IOException e) {
-            System.err.println("Error during the saving action for the artists : " + e.getMessage());
-        }
+        return new ArrayList<>(data); // retourne une copie pour éviter modifications directes
     }
 
     public void addArtist(Artist artist) {
-        List<Artist> artists = getAllArtists();
-        artists.add(artist);
-        saveAllArtists(artists);
+        data.add(artist);
+        jsons.saveToJson(filePath, data);
     }
 
     public void deleteArtistById(int artistId) {
-        List<Artist> artists = getAllArtists();
-        artists.removeIf(artist -> artist.getArtistId() == artistId);
-        saveAllArtists(artists);
+        data.removeIf(artist -> artist.getArtistId() == artistId);
+        jsons.saveToJson(filePath, data);
     }
 
     public Artist getArtistById(int artistId) {
-        return getAllArtists().stream()
+        return data.stream()
                 .filter(artist -> artist.getArtistId() == artistId)
                 .findFirst()
                 .orElse(null);
     }
 
     public void updateArtist(Artist updatedArtist) {
-        List<Artist> artists = getAllArtists();
-        for (int i = 0; i < artists.size(); i++) {
-            if (artists.get(i).getArtistId() == updatedArtist.getArtistId()) {
-                artists.set(i, updatedArtist);
-                saveAllArtists(artists);
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getArtistId() == updatedArtist.getArtistId()) {
+                data.set(i, updatedArtist);
+                jsons.saveToJson(filePath, data);
                 return;
             }
         }
@@ -83,12 +54,9 @@ public class ArtistRepository {
     }
 
     public Artist getArtistByName(String name) {
-        List<Artist> artists = getAllArtists();
-        for (Artist artist : artists) {
-            if (artist.getArtistName().equalsIgnoreCase(name)) {
-                return artist;
-            }
-        }
-        return null;
+        return data.stream()
+                .filter(artist -> artist.getArtistName().equalsIgnoreCase(name))
+                .findFirst()
+                .orElse(null);
     }
 }

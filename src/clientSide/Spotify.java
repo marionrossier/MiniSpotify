@@ -1,5 +1,6 @@
 package clientSide;
 
+import clientSide.repositories.Jsons;
 import clientSide.repositories.PlaylistRepository;
 import clientSide.repositories.SongRepository;
 import clientSide.player_StatePattern.file_player.MusicPlayer;
@@ -19,5 +20,16 @@ public class Spotify {
         PageService pageService = new PageService(spotifyPlayer);
 
         pageService.startLogin();
+    }
+
+    public static void copyJsons(){
+        Jsons jsons = new Jsons();
+
+        String directoryPath = jsons.createWritableDirectory("jsons");
+
+        jsons.copyResourceToWritableLocation("jsons/artist.json", "artist.json");
+        jsons.copyResourceToWritableLocation("jsons/user.json", "user.json");
+        jsons.copyResourceToWritableLocation("jsons/song.json", "song.json");
+        jsons.copyResourceToWritableLocation("jsons/playlist.json", "playlist.json");
     }
 }

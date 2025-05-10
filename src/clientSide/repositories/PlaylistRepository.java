@@ -1,83 +1,55 @@
 package clientSide.repositories;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import clientSide.entities.Playlist;
 import clientSide.entities.PlaylistEnum;
 import clientSide.services.UserService;
+import com.fasterxml.jackson.core.type.TypeReference;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlaylistRepository {
     private final String filePath;
-    private final ObjectMapper objectMapper;
+    private final Jsons jsons;
+    private List<Playlist> data;
 
     public PlaylistRepository(String filePath) {
         this.filePath = filePath;
-        this.objectMapper = new ObjectMapper();
+        this.jsons = new Jsons();
+        this.data = jsons.loadFromJson(this.filePath, new TypeReference<>() {});
     }
 
     public PlaylistRepository() {
-        this.filePath = "src/clientSide/jsons/playlist.json";
-        this.objectMapper = new ObjectMapper();
+        this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/jsons/playlist.json");
     }
 
     public List<Playlist> getAllPlaylists() {
-        File file = new File(filePath);
-        if (!file.exists() || file.length() == 0) {
-            return new ArrayList<>();
-        }
-        try {
-            List<Playlist> playlists = objectMapper.readValue(file, new TypeReference<>() {});
-            if (playlists == null || playlists.isEmpty()) {
-                return new ArrayList<>();
-            }
-            return playlists;
-        } catch (IOException e) {
-            System.err.println("Error during the playlists upload : " + e.getMessage());
-            return new ArrayList<>();
-        }
+        return new ArrayList<>(data); // copie défensive
     }
 
     public void savePlaylist(Playlist playlist) {
-        List<Playlist> playlists = getAllPlaylists();
-        playlists.removeIf(p -> p.getPlaylistId() == playlist.getPlaylistId());
-        playlists.add(playlist);
-        saveAllPlaylists(playlists);
-    }
-
-    private void saveAllPlaylists(List<Playlist> playlists) {
-        try {
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), playlists);
-        } catch (IOException e) {
-            System.err.println("Error during the saving process for the playlists : " + e.getMessage());
-        }
+        data.removeIf(p -> p.getPlaylistId() == playlist.getPlaylistId());
+        data.add(playlist);
+        jsons.saveToJson(filePath, data);
     }
 
     public void deletePlaylistById(int playlistId) {
-        List<Playlist> playlists = getAllPlaylists();
-        playlists.removeIf(playlist -> playlist.getPlaylistId() == playlistId);
-        saveAllPlaylists(playlists);
+        data.removeIf(playlist -> playlist.getPlaylistId() == playlistId);
+        jsons.saveToJson(filePath, data);
     }
 
     public Playlist getPlaylistById(int playlistId) {
-        return getAllPlaylists().stream()
+        return data.stream()
                 .filter(playlist -> playlist.getPlaylistId() == playlistId)
                 .findFirst()
                 .orElse(null);
     }
 
     public Playlist getPlaylistByName(String name) {
-        List<Playlist> playlists = getAllPlaylists();
-        for (Playlist playlist : playlists) {
-            if (playlist.getName().equalsIgnoreCase(name)) {
-                return playlist;
-            }
-        }
-        return null;
+        return data.stream()
+                .filter(playlist -> playlist.getName().equalsIgnoreCase(name))
+                .findFirst()
+                .orElse(null);
     }
 
     public PlaylistEnum getPlaylistStatus(int playlistId) {
@@ -89,13 +61,13 @@ public class PlaylistRepository {
         Playlist playlist = getPlaylistById(playlistId);
         if (playlist != null) {
             playlist.setStatus(status);
-            savePlaylist(playlist);
+            jsons.saveToJson(filePath, data);
         }
     }
 
     public Playlist getTemporaryPlaylistOfCurrentUser(UserService userService) {
         int currentUserId = userService.getCurrentUserId();
-        return getAllPlaylists().stream()
+        return data.stream()
                 .filter(playlist -> "temporaryPlaylist".equalsIgnoreCase(playlist.getName())
                         && playlist.getOwnerId() == currentUserId)
                 .findFirst()
