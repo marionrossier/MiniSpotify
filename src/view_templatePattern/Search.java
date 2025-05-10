@@ -26,7 +26,7 @@ public class Search extends _SimplePageTemplate {
         String songTitle = scanner.nextLine();
         System.out.println();
 
-        toolbox.getSongServ().searchSong(songTitle, "byTitle", getPageId(), pageService, toolbox.getPlaylistServ());
+        toolbox.getSearchService().searchSong(songTitle, "byTitle", getPageId(), pageService, toolbox.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
     }
 
@@ -36,7 +36,7 @@ public class Search extends _SimplePageTemplate {
         String artistName = scanner.nextLine();
         System.out.println();
 
-        toolbox.getSongServ().searchSong(artistName, "byArtist", getPageId(), pageService, toolbox.getPlaylistServ());
+        toolbox.getSearchService().searchSong(artistName, "byArtist", getPageId(), pageService, toolbox.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
     }
 
@@ -54,7 +54,7 @@ public class Search extends _SimplePageTemplate {
         List<Playlist> playlist = toolbox.getPlaylistServ().getPublicPlaylists();
         toolbox.getPrintServ().printPlaylist(playlist);
         this.displayInput();
-        LinkedList<Integer> chosenPlaylists = toolbox.getPlaylistServ().chooseFoundedPlaylist(playlist, pageService);
+        LinkedList<Integer> chosenPlaylists = toolbox.getSearchService().chooseFoundedPlaylist(playlist, pageService);
 
         for (Integer playlistIndex : chosenPlaylists) {
             int playlistId = playlist.get(playlistIndex).getPlaylistId();

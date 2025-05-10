@@ -7,6 +7,7 @@ import data.jsons.SongRepository;
 import player_StatePattern.file_player.IMusicPlayer;
 import services.Icon;
 import services.PlaylistServices;
+import services.SearchService;
 import services.SongService;
 
 import java.util.*;
@@ -17,6 +18,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     protected SongRepository songRepository;
     protected final PlaylistRepository playlistRepository;
     protected PlaylistServices playlistServices;
+    protected SearchService searchService;
     protected SongService songService;
     private final Icon icon = new Icon();
 
@@ -35,6 +37,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         this.musicPlayer = musicPlayer;
         this.songRepository = songRepository;
         this.playlistRepository = playlistRepository;
+        this.searchService = new SearchService(songRepository);
         this.songService = new SongService(songRepository);
         this.playlistServices = new PlaylistServices(playlistRepository);
 

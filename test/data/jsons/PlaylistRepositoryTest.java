@@ -56,7 +56,7 @@ class PlaylistRepositoryTest {
     private void addSongsToPlaylist(Playlist playlist, int ... songIds) {
         for (int id : songIds) {
             Song song = createTestSong(id, "Song " + id);
-            playlistService.addSong(playlist.getPlaylistId(), song.getSongId());
+            playlistService.addSongToPlaylist(playlist.getPlaylistId(), song.getSongId());
         }
     }
 

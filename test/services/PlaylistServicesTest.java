@@ -27,6 +27,7 @@ class PlaylistServicesTest {
     private File userTempFile;
     private Playlist playlist;
     private PlaylistServices playlistService;
+    private TemporaryPlaylistService temporaryPlaylistService;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -43,6 +44,7 @@ class PlaylistServicesTest {
         PlaylistRepository playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
 
         playlistService = new PlaylistServices(playlistRepository, userRepository);
+        temporaryPlaylistService = new TemporaryPlaylistService(playlistRepository, userRepository);
 
         // Create test songs
         Song song1 = createSong(1, "Song 1", "path/to/song1.mp3");
@@ -58,9 +60,9 @@ class PlaylistServicesTest {
         playlist = new Playlist("Test Playlist", PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(1);
         playlistRepository.savePlaylist(playlist);
-        this.playlistService.addSong(playlist.getPlaylistId(), song1.getSongId());
-        this.playlistService.addSong(playlist.getPlaylistId(), song2.getSongId());
-        this.playlistService.addSong(playlist.getPlaylistId(), song3.getSongId());
+        this.playlistService.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId());
+        this.playlistService.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId());
+        this.playlistService.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId());
 
         // Add playlist to repository
         playlistRepository.savePlaylist(playlist);
@@ -184,9 +186,9 @@ class PlaylistServicesTest {
     @Test
     public void testReorderSongsInPlaylist() {
         //Arrange
-        playlistService.addSong(playlist.getPlaylistId(), 1);
-        playlistService.addSong(playlist.getPlaylistId(), 2);
-        playlistService.addSong(playlist.getPlaylistId(), 3);
+        playlistService.addSongToPlaylist(playlist.getPlaylistId(), 1);
+        playlistService.addSongToPlaylist(playlist.getPlaylistId(), 2);
+        playlistService.addSongToPlaylist(playlist.getPlaylistId(), 3);
 
         // Simuler l'entrée utilisateur
         String input = "2\n1\n3\nx\n";

@@ -1,6 +1,5 @@
 package view_templatePattern;
 
-import data.entities.MusicGender;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.PageService;
 
@@ -23,49 +22,49 @@ public class SearchGender extends _SimplePageTemplate {
 
     @Override
     public void button1() {
-        toolbox.getSongServ().searchSong("SOUL_RNB", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
+        toolbox.getSearchService().searchSong("SOUL_RNB", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button2() {
-        toolbox.getSongServ().searchSong("POP", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
+        toolbox.getSearchService().searchSong("POP", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button3() {
-        toolbox.getSongServ().searchSong("HIP_HOP", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
+        toolbox.getSearchService().searchSong("HIP_HOP", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button4() {
-        toolbox.getSongServ().searchSong("ROCK", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
+        toolbox.getSearchService().searchSong("ROCK", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button5() {
-        toolbox.getSongServ().searchSong("FRENCH_VARIETY", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
+        toolbox.getSearchService().searchSong("FRENCH_VARIETY", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button6() {
-        toolbox.getSongServ().searchSong("ELECTRO", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
+        toolbox.getSearchService().searchSong("ELECTRO", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button7() {
-        toolbox.getSongServ().searchSong("DISCO", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
+        toolbox.getSearchService().searchSong("DISCO", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
     }
 
     @Override
     public void button8() {
-        toolbox.getSongServ().searchSong("REGGAE", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
+        toolbox.getSearchService().searchSong("REGGAE", "byGender", getPageId(), pageService, toolbox.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
     }
 }

@@ -12,7 +12,6 @@ public class Cookies_SingletonPattern {
     private int currentPlaylistId;
     private int currentSongId;
     private final PlaylistRepository playlistRepository = new PlaylistRepository();
-    private final SongRepository songRepository = new SongRepository();
     private final PlaylistServices playlistServices = new PlaylistServices(playlistRepository);
 
     private Cookies_SingletonPattern(int userId) {

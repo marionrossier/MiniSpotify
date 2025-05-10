@@ -13,10 +13,12 @@ public class Toolbox {
 
     PlaylistServices playlistServ;
     SongService songServ;
+    SearchService searchService;
     UserService userServ;
     PrintService printServ;
     PasswordService passwordServ;
     PlaylistReorderSongService playlistReorderSongService;
+    TemporaryPlaylistService temporaryPlaylistServ;
 
     public Toolbox() {
         userRepo = new UserRepository();
@@ -27,17 +29,19 @@ public class Toolbox {
         playlistServ = new PlaylistServices(playlistRepo);
         userServ = new UserService(userRepo);
         songServ = new SongService(songRepo);
+        searchService = new SearchService(songRepo);
         passwordServ = new PasswordService(userRepo);
         printServ = new PrintService();
         playlistReorderSongService = new PlaylistReorderSongService();
+        temporaryPlaylistServ = new TemporaryPlaylistService(playlistRepo, userRepo);
     }
 
     public PlaylistServices getPlaylistServ() {
         return playlistServ;
     }
 
-    public SongService getSongServ() {
-        return songServ;
+    public SearchService getSearchService() {
+        return searchService;
     }
 
     public UserService getUserServ() {
@@ -54,5 +58,13 @@ public class Toolbox {
 
     public PlaylistReorderSongService getPlaylistReorderSongService() {
         return playlistReorderSongService;
+    }
+
+    public SongService getSongServ(){
+        return songServ;
+    }
+
+    public TemporaryPlaylistService getTemporaryPlaylistServ() {
+        return temporaryPlaylistServ;
     }
 }

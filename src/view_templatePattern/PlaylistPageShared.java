@@ -28,7 +28,7 @@ public class PlaylistPageShared extends _SimplePageTemplate {
         else {
         System.out.println("Playlist name : " + playlist.getName());
         System.out.println();
-        toolbox.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId(), toolbox.getSongServ());
+        toolbox.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId(), toolbox.getSearchService());
         }
     }
 

@@ -11,6 +11,7 @@ import player_StatePattern.file_player.FakeMusicPlayer;
 import data.entities.Playlist;
 import services.Cookies_SingletonPattern;
 import services.PlaylistServices;
+import services.SearchService;
 import services.SongService;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,6 +28,7 @@ public class PlaylistPlayerTest {
     private File playlistTempFile;
     private SongRepository songRepository;
     private SongService songService;
+    private SearchService searchService;
     private PlaylistRepository playlistRepository;
     private PlaylistServices playlistServices;
 
@@ -42,6 +44,7 @@ public class PlaylistPlayerTest {
         // Initialize repositories with temp files
         songRepository = new SongRepository(songTempFile.getAbsolutePath());
         songService = new SongService(songRepository);
+        searchService = new SearchService(songRepository);
         playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
         playlistServices = new PlaylistServices(playlistRepository);
         
@@ -60,9 +63,9 @@ public class PlaylistPlayerTest {
         playlist.setPlaylistId(1);
         playlistRepository.savePlaylist(playlist);
 
-        playlistServices.addSong(playlist.getPlaylistId(), song1.getSongId());
-        playlistServices.addSong(playlist.getPlaylistId(), song2.getSongId());
-        playlistServices.addSong(playlist.getPlaylistId(), song3.getSongId());
+        playlistServices.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId());
+        playlistServices.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId());
+        playlistServices.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId());
         
         // Create a FakeMusicPlayer for testing
         fakeMusicPlayer = new FakeMusicPlayer();

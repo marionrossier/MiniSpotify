@@ -5,7 +5,6 @@ import data.entities.Playlist;
 import data.entities.PlaylistEnum;
 import data.entities.User;
 import data.jsons.PlaylistRepository;
-import data.jsons.SongRepository;
 import data.jsons.UserRepository;
 
 import java.util.List;
@@ -16,15 +15,15 @@ public class PrintService {
     private final PlaylistRepository playlistRepository = new PlaylistRepository();
     private final Icon icon = new Icon();
 
-    public void printSongFound (List<Integer> songs, String info, SongService songService){
+    public void printSongFound (List<Integer> songs, String info, SearchService searchService){
         System.out.println("Songs found with information : " + info);
-        printSongList (songs, songService);
+        printSongList (songs, searchService);
     }
 
-    public void printSongList (List<Integer> songs, SongService songService){
+    public void printSongList (List<Integer> songs, SearchService searchService){
         int i = 1;
         for (Integer song : songs) {
-            System.out.println(i + ". " + songService.songRepository.getSongById(song).getTitleAndArtist());
+            System.out.println(i + ". " + searchService.songRepository.getSongById(song).getTitleAndArtist());
             i++;
         }
         System.out.println();
