@@ -28,7 +28,10 @@ public class CreateAccount extends _InversedPageTemplate {
         password = pageService.gotAnInput(scanner.nextLine());
         System.out.print("Enter your email : ");
         email = pageService.gotAnInput(scanner.nextLine());
-        //TODO : check if email is valid (dans UserService)
+        while (!toolbox.getUserServ().emailValidation(email)){
+            System.err.print("Enter a valid email address, like name@email.com :");
+            email = pageService.gotAnInput(scanner.nextLine());
+        }
         System.out.println(icon.lineBreak + "Choose your plan : ");
     }
 

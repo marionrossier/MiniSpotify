@@ -25,7 +25,7 @@ public class PasswordService {
     }
 
     public String hashPassword(String password, byte[] salt){
-        MessageDigest md = null;
+        MessageDigest md;
         try {
             md = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
@@ -56,10 +56,6 @@ public class PasswordService {
     }
 
     public boolean passwordCheck(String pseudonym, String password) {
-        if(verifyUserAuthentification(pseudonym, password)) {
-            return true;
-        }else{
-            return false;
-        }
+        return verifyUserAuthentification(pseudonym, password);
     }
 }

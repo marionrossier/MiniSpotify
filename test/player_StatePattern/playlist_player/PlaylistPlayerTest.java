@@ -1,5 +1,6 @@
 package player_StatePattern.playlist_player;
 
+import data.entities.PlaylistEnum;
 import data.entities.Song;
 import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
@@ -8,9 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import player_StatePattern.file_player.FakeMusicPlayer;
 import data.entities.Playlist;
-import services.Cookies_SingletonPattern;
-import services.PlaylistServices;
-import services.SongService;
+import services.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,8 +25,10 @@ public class PlaylistPlayerTest {
     private File playlistTempFile;
     private SongRepository songRepository;
     private SongService songService;
+    private SearchService searchService;
     private PlaylistRepository playlistRepository;
     private PlaylistServices playlistServices;
+    private CommuneMethods communeMethods = new CommuneMethods();
 
     @BeforeEach
     void setUp() throws IOException {
@@ -41,6 +42,7 @@ public class PlaylistPlayerTest {
         // Initialize repositories with temp files
         songRepository = new SongRepository(songTempFile.getAbsolutePath());
         songService = new SongService(songRepository);
+        searchService = new SearchService(songRepository);
         playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
         playlistServices = new PlaylistServices(playlistRepository);
         
@@ -55,13 +57,13 @@ public class PlaylistPlayerTest {
         songRepository.addSong(song3);
         
         // Create a test playlist
-        Playlist playlist = new Playlist("Test Playlist");
+        Playlist playlist = new Playlist("Test Playlist", PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(1);
         playlistRepository.savePlaylist(playlist);
 
-        playlistServices.addSong(playlist.getPlaylistId(), song1.getSongId());
-        playlistServices.addSong(playlist.getPlaylistId(), song2.getSongId());
-        playlistServices.addSong(playlist.getPlaylistId(), song3.getSongId());
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), playlistRepository);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), playlistRepository);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), playlistRepository);
         
         // Create a FakeMusicPlayer for testing
         fakeMusicPlayer = new FakeMusicPlayer();

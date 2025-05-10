@@ -2,9 +2,7 @@ package services;
 
 import data.entities.Playlist;
 import data.jsons.PlaylistRepository;
-import data.jsons.SongRepository;
 
-//TODO : séparer pour avoir une classe Cookie pour le user, pour la playlist et pour les songs.
 public class Cookies_SingletonPattern {
     private static Cookies_SingletonPattern instance;
 
@@ -12,7 +10,6 @@ public class Cookies_SingletonPattern {
     private int currentPlaylistId;
     private int currentSongId;
     private final PlaylistRepository playlistRepository = new PlaylistRepository();
-    private final SongRepository songRepository = new SongRepository();
     private final PlaylistServices playlistServices = new PlaylistServices(playlistRepository);
 
     private Cookies_SingletonPattern(int userId) {

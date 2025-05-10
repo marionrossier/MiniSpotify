@@ -5,9 +5,6 @@ import services.Cookies_SingletonPattern;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.PageService;
 
-import java.util.List;
-
-
 public class LoginOK extends _SimplePageTemplate {
 
     public LoginOK(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
@@ -29,11 +26,12 @@ public class LoginOK extends _SimplePageTemplate {
     @Override
     public void button1() {
         System.out.println();
+        System.out.println("For going back, enter \"0\".");
         System.out.print("Enter your pseudonym : ");
-        String pseudonym = scanner.nextLine();
+        String pseudonym = pageService.gotAnInput(scanner.nextLine());
 
         System.out.print("Enter your password : ");
-        String password = scanner.nextLine();
+        String password = pageService.gotAnInput(scanner.nextLine());
 
         //Check the password...
         if (toolbox.getPasswordServ().passwordCheck(pseudonym, password)){

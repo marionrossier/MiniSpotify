@@ -3,6 +3,8 @@ package data.jsons;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import data.entities.Playlist;
+import data.entities.PlaylistEnum;
+import services.UserService;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +43,6 @@ public class PlaylistRepository {
     }
 
     public void savePlaylist(Playlist playlist) {
-        playlist.setPlaylistInformation();
         List<Playlist> playlists = getAllPlaylists();
         playlists.removeIf(p -> p.getPlaylistId() == playlist.getPlaylistId());
         playlists.add(playlist);
@@ -72,10 +73,32 @@ public class PlaylistRepository {
     public Playlist getPlaylistByName(String name) {
         List<Playlist> playlists = getAllPlaylists();
         for (Playlist playlist : playlists) {
-            if (playlist.getPlaylistName().equalsIgnoreCase(name)) {
+            if (playlist.getName().equalsIgnoreCase(name)) {
                 return playlist;
             }
         }
         return null;
+    }
+
+    public PlaylistEnum getPlaylistStatus(int playlistId) {
+        Playlist playlist = getPlaylistById(playlistId);
+        return (playlist != null) ? playlist.getStatus() : null;
+    }
+
+    public void setPlaylistStatus(int playlistId, PlaylistEnum status) {
+        Playlist playlist = getPlaylistById(playlistId);
+        if (playlist != null) {
+            playlist.setStatus(status);
+            savePlaylist(playlist);
+        }
+    }
+
+    public Playlist getTemporaryPlaylistOfCurrentUser(UserService userService) {
+        int currentUserId = userService.getCurrentUserId();
+        return getAllPlaylists().stream()
+                .filter(playlist -> "temporaryPlaylist".equalsIgnoreCase(playlist.getName())
+                        && playlist.getOwnerId() == currentUserId)
+                .findFirst()
+                .orElse(null);
     }
 }

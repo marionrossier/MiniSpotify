@@ -5,10 +5,9 @@ import services.UniqueIdService;
 
 public class Song {
     private String title;
-    private String songName;
+    private String titleAndArtist;
     private Artist artist;
-    private String album;
-    private int seconds;
+    private int durationSeconds;
     private MusicGender gender;
     private int songId;
     private String audioFilePath;
@@ -17,13 +16,12 @@ public class Song {
 
     public Song (){}
 
-    public Song(int id, String title, String artistName, String album, int seconds, MusicGender gender,
+    public Song(int id, String title, String artistName, int durationSeconds, MusicGender gender,
                 String audioFilePath) {
         this.songId = id;
         this.title = title;
-        this.songName = title+" - "+artistName;
-        this.album = album;
-        this.seconds = seconds;
+        this.titleAndArtist = title+" - "+artistName;
+        this.durationSeconds = durationSeconds;
         this.gender = gender;
         this.audioFilePath = "resources\\songsfiles\\"+audioFilePath;
 
@@ -38,12 +36,10 @@ public class Song {
         this.artist.getArtistSongsID().add(this.songId);
     }
 
-    public Song(String title, String artistName, String album, int seconds, MusicGender gender,
+    public Song(String title, String artistName, int durationSeconds, MusicGender gender,
                 String audioFilePath) {
         this.title = title;
-        this.songName = title+" - "+artistName;
-        this.album = album;
-        this.seconds = seconds;
+        this.durationSeconds = durationSeconds;
         this.gender = gender;
         this.songId = uniqueIdService.setUniqueId();
         this.audioFilePath = "resources\\songsfiles\\"+audioFilePath;
@@ -59,12 +55,8 @@ public class Song {
         this.artist.getArtistSongsID().add(this.songId);
     }
 
-    public String getSongName() {
-        return songName;
-    }
-
-    public void setSongName() {
-        this.songName = title+" | "+artist.getArtistName()+" | "+album+" | "+gender+" | "+ seconds;
+    public String getTitleAndArtist() {
+        return titleAndArtist;
     }
 
     public String getTitle() {
@@ -83,20 +75,12 @@ public class Song {
         this.artist = artist;
     }
 
-    public String getAlbum() {
-        return album;
+    public int getDurationSeconds() {
+        return durationSeconds;
     }
 
-    public void setAlbum(String album) {
-        this.album = album;
-    }
-
-    public int getSeconds() {
-        return seconds;
-    }
-
-    public void setSeconds(int seconds) {
-        this.seconds = seconds;
+    public void setDurationSeconds(int durationSeconds) {
+        this.durationSeconds = durationSeconds;
     }
 
     public MusicGender getGender() {

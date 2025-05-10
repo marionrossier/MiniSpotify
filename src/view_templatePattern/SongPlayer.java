@@ -24,9 +24,9 @@ public class SongPlayer extends _SimplePageTemplate {
     public void displaySpecificContent(){
         Playlist playlist = toolbox.getPlaylistServ().getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId());
         System.out.println(
-                "Current Playlist : " + playlist.getPlaylistName() +
-                ", duration " + (int)(playlist.getPlaylistSeconds()/60) + ":" + playlist.getPlaylistSeconds()%60 +
-                ", size : " + playlist.getPlaylistSize() + icon.lineBreak);
+                "Current Playlist : " + playlist.getName() +
+                ", duration " + (playlist.getDurationSeconds()/60) + ":" + playlist.getDurationSeconds()%60 +
+                ", size : " + playlist.getSize() + icon.lineBreak);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class SongPlayer extends _SimplePageTemplate {
 
     void loop(){
         while (spotifyPlayer.isPlaying() || spotifyPlayer.isPaused()) {
-            System.out.println(toolbox.getSongServ().getSongById(spotifyPlayer.getCurrentSongId()).getSongName());
+            System.out.println(toolbox.getSongServ().getSongById(spotifyPlayer.getCurrentSongId()).getTitleAndArtist());
             displayInput();
             validateInput();
             switchPage();

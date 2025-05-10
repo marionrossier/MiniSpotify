@@ -36,24 +36,9 @@ public class Icon {
     public String iconBack (){
         return ("Back ");
     }
-    public String iconLogout(){
-        return ("Logout ");
-    }
-    public String iconNew (){
-        return ("🆕");
-    }
 
-    public String iconUp (){
-        return ("🔼");
-    }
-    public String iconDown (){
-        return ("🔽");
-    }
     public String iconOk (){
         return ("✅");
-    }
-    public String iconCross (){
-        return ("❌");
     }
     public String iconWarning (){
         return ("⚠️");
@@ -69,6 +54,9 @@ public class Icon {
     }
     public String iconGroup (){
         return ("👥");
+    }
+    public String iconHouse () {
+        return ("\uD83C\uDFE0");
     }
     public String iconEarth (){
         return ("🌍");

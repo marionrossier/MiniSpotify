@@ -5,7 +5,9 @@ import data.entities.Song;
 import data.jsons.PlaylistRepository;
 import data.jsons.SongRepository;
 import player_StatePattern.file_player.IMusicPlayer;
+import services.Icon;
 import services.PlaylistServices;
+import services.SearchService;
 import services.SongService;
 
 import java.util.*;
@@ -16,7 +18,9 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     protected SongRepository songRepository;
     protected final PlaylistRepository playlistRepository;
     protected PlaylistServices playlistServices;
+    protected SearchService searchService;
     protected SongService songService;
+    private final Icon icon = new Icon();
 
     protected Stack<Integer> songIdHistory = new Stack<>();
 
@@ -33,6 +37,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         this.musicPlayer = musicPlayer;
         this.songRepository = songRepository;
         this.playlistRepository = playlistRepository;
+        this.searchService = new SearchService(songRepository);
         this.songService = new SongService(songRepository);
         this.playlistServices = new PlaylistServices(playlistRepository);
 
@@ -47,19 +52,19 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     @Override
     public void setSequentialMode(){
         currentState = this.sequentialState;
-        System.out.println("Sequential lecture mode activate.");
+        System.out.println(icon.iconSequential() + " Repeat All lecture mode activate.");
     }
 
     @Override
     public void setShuffleMode(){
         currentState = this.shuffleState;
-        System.out.println("Shuffle lecture mode activate.");
+        System.out.println(icon.iconShuffle() + "Shuffle lecture mode activate.");
     }
 
     @Override
     public void setRepeatMode(){
         currentState = this.repeatState;
-        System.out.println("RepeateOne lecture mode activate.");
+        System.out.println(icon.iconRepeatOne() + " Repeat One lecture mode activate.");
     }
 
     @Override

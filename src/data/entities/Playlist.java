@@ -5,36 +5,40 @@ import services.UniqueIdService;
 import java.util.*;
 
 public class Playlist {
-    private String playlistName;
+    private String name;
     private int playlistId;
-    private LinkedList<Integer> playlistSongsId = new LinkedList<>();
-    private int playlistSeconds;
-    private int playlistSize;
+    private LinkedList<Integer> listSongsId = new LinkedList<>();
+    private int durationSeconds;
+    private int size;
     private int ownerId;
+    private PlaylistEnum status;
     private final UniqueIdService uniqueIdService = new UniqueIdService();
 
     public Playlist (){}
 
-    public Playlist(String playlistName) {
-        this.playlistName = playlistName;
+    public Playlist(String name, PlaylistEnum status) {
+        this.name = name;
         this.playlistId = uniqueIdService.setUniqueId();
+        this.status = status;
     }
 
-    public Playlist(String playlistName, LinkedList <Integer> playlistSongsId, int playlistSeconds, int playlistSize) {
-        this.playlistName = playlistName;
+    public Playlist(String name, LinkedList <Integer> listSongsId, int durationSeconds, int size, int ownerId, PlaylistEnum status) {
+        this.name = name;
         this.playlistId = uniqueIdService.setUniqueId();
         this.ownerId = 0;
-        this.playlistSongsId = playlistSongsId;
-        this.playlistSeconds = playlistSeconds;
-        this.playlistSize = playlistSize;
+        this.listSongsId = listSongsId;
+        this.durationSeconds = durationSeconds;
+        this.size = size;
+        this.ownerId = ownerId;
+        this.status = status;
     }
 
-    public String getPlaylistName() {
-        return playlistName;
+    public String getName() {
+        return name;
     }
 
-    public void setPlaylistName(String playlistName) {
-        this.playlistName = playlistName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getPlaylistId() {
@@ -46,11 +50,11 @@ public class Playlist {
     }
 
     public LinkedList<Integer> getPlaylistSongsListWithId() {
-        return playlistSongsId;
+        return listSongsId;
     }
 
-    public void setPlaylistSongsId(LinkedList<Integer> playlistSongsId) {
-        this.playlistSongsId = playlistSongsId;
+    public void setListSongsId(LinkedList<Integer> listSongsId) {
+        this.listSongsId = listSongsId;
     }
 
     public int getOwnerId() {
@@ -61,35 +65,39 @@ public class Playlist {
         this.ownerId = ownerId;
     }
 
-    public int getPlaylistSeconds() {
-        return playlistSeconds;
-    }
-
-    public void setPlaylistDuration() {
+    public int getDurationSeconds() {
         int totalSeconds = 0;
-        for (Integer integer : playlistSongsId) {
-            Song currentSong = new Song();
-            currentSong.setSongId(integer);
-            totalSeconds += currentSong.getSeconds();
+        for (Integer integer : this.getPlaylistSongsListWithId()) {
+            Song song = new Song();
+            song.setSongId(integer);
+            totalSeconds += song.getDurationSeconds();
         }
-        this.playlistSeconds = totalSeconds;
+        return totalSeconds;
     }
 
-    public int getPlaylistSize() {
-        return playlistSize;
+    //TODO : Fonctionne pas
+    public void setPlaylistDuration(int durationSeconds) {
+        this.durationSeconds = durationSeconds;
     }
 
-    public void setPlaylistSize() {
-        this.playlistSize = playlistSongsId.size();
+    public int getSize() {
+        return this.getPlaylistSongsListWithId().size();
     }
 
-    public void setName(String updatedName) {
-        this.playlistName = updatedName;
+    public void setPlaylistSize(int playlistSize) {
+        this.size = playlistSize;
     }
 
-    //TODO : ajuster car ne met pas a jour les informations contenues !
-    public void setPlaylistInformation(){
-        setPlaylistDuration();
-        setPlaylistSize();
+    public void setPlaylistInformation(int playlistDuration, int playlistSize){
+        setPlaylistDuration(playlistDuration);
+        setPlaylistSize(playlistSize);
+    }
+
+    public PlaylistEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(PlaylistEnum status) {
+        this.status = status;
     }
 }
