@@ -9,10 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class PageServiceTest {
 
     private PageService pageService;
+    private NavigationStackService navigationStackService;
 
     @BeforeEach
     void setUp() {
         pageService = new PageService(null);
+        navigationStackService = new NavigationStackService(pageService);
         System.out.println("");
     }
 
@@ -38,15 +40,15 @@ class PageServiceTest {
 //    @Test
 //    void testGoBack() {
 //        //Arrange
-//        pageService.menuPages.push(pageService.login.pageId);
-//        pageService.menuPages.push(pageService.homePage.pageId);
-//        pageService.menuPages.push(pageService.playlistHomePage.pageId);
-//        pageService.menuPages.push(pageService.playlistDisplay.pageId);
-//        pageService.menuPages.push(pageService.playlistDisplay.pageId);
+//        navigationStackService.menuPages.push(pageService.login.pageId);
+//        navigationStackService.menuPages.push(pageService.homePage.pageId);
+//        navigationStackService.menuPages.push(pageService.playlistHomePage.pageId);
+//        navigationStackService.menuPages.push(pageService.playlistPageOpen.pageId);
+//        navigationStackService.menuPages.push(pageService.playlistPageOpen.pageId);
 //        int playlistHomePageId = pageService.playlistHomePage.pageId;
-//        int playlistDisplayId = pageService.playlistDisplay.pageId;
+//        int playlistPageOpen = pageService.playlistPageOpen.pageId;
 //        //Act
-//        pageService.goBack(playlistDisplayId);
+//        pageService.goBack(playlistPageOpen);
 //        //Assert
 //        assertEquals(playlistHomePageId, pageService.getMenuPages().peek());
 //    }
@@ -54,8 +56,8 @@ class PageServiceTest {
 //    @Test
 //    void testGotAnInput() {
 //        //Arrange
-//        pageService.menuPages.push(pageService.login.pageId);
-//        pageService.menuPages.push(pageService.homePage.pageId);
+//        navigationStackService.menuPages.push(pageService.login.pageId);
+//        navigationStackService.menuPages.push(pageService.homePage.pageId);
 //        String input = "0";
 //
 //        //Act

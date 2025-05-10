@@ -28,6 +28,10 @@ class PlaylistServicesTest {
     private Playlist playlist;
     private PlaylistServices playlistService;
     private TemporaryPlaylistService temporaryPlaylistService;
+    private CommuneMethods communeMethods = new CommuneMethods();
+    private SongRepository songRepository;
+    private UserRepository userRepository;
+    private PlaylistRepository playlistRepository;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -39,17 +43,17 @@ class PlaylistServicesTest {
 
 
         // Initialize repositories with temp files
-        SongRepository songRepository = new SongRepository(songTempFile.getAbsolutePath());
-        UserRepository userRepository = new UserRepository(userTempFile.getAbsolutePath());
-        PlaylistRepository playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
+        songRepository = new SongRepository(songTempFile.getAbsolutePath());
+        userRepository = new UserRepository(userTempFile.getAbsolutePath());
+        playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
 
         playlistService = new PlaylistServices(playlistRepository, userRepository);
         temporaryPlaylistService = new TemporaryPlaylistService(playlistRepository, userRepository);
 
         // Create test songs
-        Song song1 = createSong(1, "Song 1", "path/to/song1.mp3");
-        Song song2 = createSong(2, "Song 2", "path/to/song2.mp3");
-        Song song3 = createSong(3, "Song 3", "path/to/song3.mp3");
+        Song song1 = communeMethods.createSong(1, "Song 1", "path/to/song1.mp3");
+        Song song2 = communeMethods.createSong(2, "Song 2", "path/to/song2.mp3");
+        Song song3 = communeMethods.createSong(3, "Song 3", "path/to/song3.mp3");
 
         // Add songs to repository
         songRepository.addSong(song1);
@@ -60,9 +64,9 @@ class PlaylistServicesTest {
         playlist = new Playlist("Test Playlist", PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(1);
         playlistRepository.savePlaylist(playlist);
-        this.playlistService.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId());
-        this.playlistService.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId());
-        this.playlistService.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId());
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), playlistRepository);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), playlistRepository);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), playlistRepository);
 
         // Add playlist to repository
         playlistRepository.savePlaylist(playlist);
@@ -96,14 +100,6 @@ class PlaylistServicesTest {
         }
     }
 
-    private Song createSong(int id, String title, String path) {
-        Song song = new Song();
-        song.setSongId(id);
-        song.setTitle(title);
-        song.setAudioFilePath(path);
-        return song;
-    }
-
     @Test
     public void testRenamePlayList(){
         // Arrange
@@ -117,19 +113,18 @@ class PlaylistServicesTest {
         assertEquals(newName, playlistName);
     }
 
-    //TODO : ajuster test pour qu'il soit à nouveau ok.
-//    @Test
-//    public void testDeletePlaylist(){
-//        // Arrange
-//        int playlistId = this.playlist.getPlaylistId();
-//
-//        // Act
-//        playlistService.deletePlaylist(playlistId);
-//        Playlist deletedPlaylist = playlistService.playlistRepository.getPlaylistById(playlistId);
-//
-//        // Assert
-//        assertNull(deletedPlaylist, "The playlist should be deleted");
-//    }
+    @Test
+    public void testDeletePlaylist(){
+        // Arrange
+        int playlistId = this.playlist.getPlaylistId();
+
+        // Act
+        playlistService.deletePlaylist(playlistId);
+        Playlist deletedPlaylist = playlistService.playlistRepository.getPlaylistById(playlistId);
+
+        // Assert
+        assertNull(deletedPlaylist, "The playlist should be deleted");
+    }
 
     @Test
     public void testCreateTemporaryPlaylist(){
@@ -186,9 +181,9 @@ class PlaylistServicesTest {
     @Test
     public void testReorderSongsInPlaylist() {
         //Arrange
-        playlistService.addSongToPlaylist(playlist.getPlaylistId(), 1);
-        playlistService.addSongToPlaylist(playlist.getPlaylistId(), 2);
-        playlistService.addSongToPlaylist(playlist.getPlaylistId(), 3);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), 1, playlistRepository);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), 2, playlistRepository);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), 3, playlistRepository);
 
         // Simuler l'entrée utilisateur
         String input = "2\n1\n3\nx\n";

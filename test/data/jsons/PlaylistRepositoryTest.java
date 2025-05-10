@@ -6,6 +6,7 @@ import data.entities.Song;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import services.CommuneMethods;
 import services.PlaylistServices;
 
 import java.io.File;
@@ -21,6 +22,7 @@ class PlaylistRepositoryTest {
     private PlaylistRepository playlistRepository;
     private PlaylistServices playlistService;
     private SongRepository songRepository;
+    private CommuneMethods communeMethods = new CommuneMethods();
 
     @BeforeEach
     void setUp() throws IOException {
@@ -38,32 +40,10 @@ class PlaylistRepositoryTest {
         }
     }
 
-    private Playlist createTestPlaylist(int id, String name) {
-        Playlist playlist = new Playlist(name, PlaylistEnum.PRIVATE);
-        playlist.setPlaylistId(id);
-        playlistRepository.savePlaylist(playlist);
-        return playlist;
-    }
-    
-    private Song createTestSong(int id, String title) {
-        Song song = new Song();
-        song.setSongId(id);
-        song.setTitle(title);
-        song.setDurationSeconds(180);
-        return song;
-    }
-    
-    private void addSongsToPlaylist(Playlist playlist, int ... songIds) {
-        for (int id : songIds) {
-            Song song = createTestSong(id, "Song " + id);
-            playlistService.addSongToPlaylist(playlist.getPlaylistId(), song.getSongId());
-        }
-    }
-
     @Test
     void savePlaylist_shouldSaveThePlaylist() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist");
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Test Playlist", playlistRepository);
 
         // Act
         playlistRepository.savePlaylist(playlist);
@@ -79,8 +59,8 @@ class PlaylistRepositoryTest {
         // Arrange
         int [] songsId = new int []{1, 2, 3};
 
-        Playlist playlist = createTestPlaylist(1, "Test Playlist");
-        addSongsToPlaylist(playlist, songsId);
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Test Playlist", playlistRepository);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository, songsId);
 
         // Act
         playlistRepository.savePlaylist(playlist);
@@ -94,12 +74,12 @@ class PlaylistRepositoryTest {
     @Test
     void deletePlaylistById_shouldRemoveThePlaylist() {
         // Arrange
-        Playlist playlistOne = createTestPlaylist(1, "Playlist One");
-        addSongsToPlaylist(playlistOne, 1,2);
+        Playlist playlistOne = communeMethods.createTestPlaylist(1, "Playlist One", playlistRepository);
+        communeMethods.addSongsToPlaylist(playlistOne, playlistRepository, 1,2);
         playlistRepository.savePlaylist(playlistOne);
 
-        Playlist playlistTwo = createTestPlaylist(2, "Playlist Two");
-        addSongsToPlaylist(playlistTwo, 3,4);
+        Playlist playlistTwo = communeMethods.createTestPlaylist(2, "Playlist Two",playlistRepository);
+        communeMethods.addSongsToPlaylist(playlistTwo, playlistRepository, 3,4);
         playlistRepository.savePlaylist(playlistTwo);
 
         // Act
@@ -114,8 +94,8 @@ class PlaylistRepositoryTest {
     @Test
     void getPlaylistById_shouldFindThePlaylist() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist");
-        addSongsToPlaylist(playlist, 1,2,3);
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Test Playlist", playlistRepository);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository, 1,2,3);
         playlistRepository.savePlaylist(playlist);
 
         // Act
@@ -129,8 +109,8 @@ class PlaylistRepositoryTest {
     @Test
     void getPlaylistById_withNonexistentId_shouldReturnNull() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist");
-        addSongsToPlaylist(playlist, 1,2,3);
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Test Playlist", playlistRepository);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository, 1,2,3);
         playlistRepository.savePlaylist(playlist);
 
         // Act
@@ -143,15 +123,15 @@ class PlaylistRepositoryTest {
     @Test
     void updatePlaylist_shouldModifyThePlaylist() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Original Name");
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Original Name", playlistRepository);
         playlistRepository.savePlaylist(playlist);
-        addSongsToPlaylist(playlist, 1,2);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository, 1,2);
 
         // Act
         playlistService.renamePlayList(playlist.getPlaylistId(), "Updated Name");
 
         // Add more songs
-        addSongsToPlaylist(playlist, 3,4);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository, 3,4);
 
         // Assert
         Playlist result = playlistRepository.getPlaylistById(playlist.getPlaylistId());
@@ -162,8 +142,8 @@ class PlaylistRepositoryTest {
     @Test
     void getPlaylistByName_shouldFindThePlaylist() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist");
-        addSongsToPlaylist(playlist, 1,2,3);
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Test Playlist", playlistRepository);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository, 1,2,3);
         playlistRepository.savePlaylist(playlist);
 
         // Act
@@ -177,8 +157,8 @@ class PlaylistRepositoryTest {
     @Test
     void getPlaylistByName_shouldBeCaseInsensitive() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist");
-        addSongsToPlaylist(playlist, 1,2,3);
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Test Playlist", playlistRepository);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository, 1,2,3);
         playlistRepository.savePlaylist(playlist);
 
         // Act
@@ -192,8 +172,8 @@ class PlaylistRepositoryTest {
     @Test
     void getPlaylistByName_withNonexistentName_shouldReturnNull() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist");
-        addSongsToPlaylist(playlist, 1,2,3);
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Test Playlist", playlistRepository);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository,1,2,3);
         playlistRepository.savePlaylist(playlist);
 
         // Act

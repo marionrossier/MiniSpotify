@@ -10,39 +10,23 @@ import java.util.*;
 
 public class PlaylistServices {
 
-    //TODO: optimiser ou séparer cette classe qui devient trop grande
-    Scanner scanner = new Scanner(System.in);
     private final UserRepository userRepository;
     final PlaylistRepository playlistRepository;
     private final TemporaryPlaylistService temporaryPlaylistService;
     private final PlaylistFunctionalitiesService playlistFuncService;
-    private final UserService userService;
 
     public PlaylistServices (PlaylistRepository playlistRepository, UserRepository userRepository){
         this.playlistRepository = playlistRepository;
         this.userRepository = userRepository;
-        this.userService = new UserService(userRepository);
         this.temporaryPlaylistService = new TemporaryPlaylistService(playlistRepository, userRepository);
         this.playlistFuncService = new PlaylistFunctionalitiesService(playlistRepository);
     }
 
-    public PlaylistServices (PlaylistRepository playlistRepository){
+    public PlaylistServices (PlaylistRepository playlistRepository) {
         this.playlistRepository = playlistRepository;
         this.userRepository = new UserRepository();
-        this.userService = new UserService(userRepository);
         this.temporaryPlaylistService = new TemporaryPlaylistService(playlistRepository, userRepository);
         this.playlistFuncService = new PlaylistFunctionalitiesService(playlistRepository);
-    }
-
-    //TODO : Utilisé que dans les tests...
-    public void addSongToPlaylist(int currentPlaylistId, int currentSongId) {
-        Playlist playlist = this.playlistRepository.getPlaylistById(currentPlaylistId);
-        playlist.getPlaylistSongsListWithId().add(currentSongId);
-        int playlistDuration = playlist.getDurationSeconds();
-        int playlistSize = playlist.getSize();
-        playlist.setPlaylistInformation(playlistDuration, playlistSize);
-
-        this.playlistRepository.savePlaylist(playlist);
     }
 
     public void setCurrentPlaylistId (int playlistId){

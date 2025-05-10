@@ -19,13 +19,6 @@ public class PlaylistFunctionalitiesService {
     final TemporaryPlaylistService temporaryPlaylistService;
     private final UserService userService;
 
-    public PlaylistFunctionalitiesService(PlaylistRepository playlistRepository, UserRepository userRepository){
-        this.playlistRepository = playlistRepository;
-        this.userRepository = userRepository;
-        this.userService = new UserService(userRepository);
-        this.temporaryPlaylistService = new TemporaryPlaylistService(playlistRepository, userRepository);
-    }
-
     public PlaylistFunctionalitiesService(PlaylistRepository playlistRepository){
         this.playlistRepository = playlistRepository;
         this.userRepository = new UserRepository();

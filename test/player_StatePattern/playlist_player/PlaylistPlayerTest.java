@@ -9,10 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import player_StatePattern.file_player.FakeMusicPlayer;
 import data.entities.Playlist;
-import services.Cookies_SingletonPattern;
-import services.PlaylistServices;
-import services.SearchService;
-import services.SongService;
+import services.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,6 +28,7 @@ public class PlaylistPlayerTest {
     private SearchService searchService;
     private PlaylistRepository playlistRepository;
     private PlaylistServices playlistServices;
+    private CommuneMethods communeMethods = new CommuneMethods();
 
     @BeforeEach
     void setUp() throws IOException {
@@ -63,9 +61,9 @@ public class PlaylistPlayerTest {
         playlist.setPlaylistId(1);
         playlistRepository.savePlaylist(playlist);
 
-        playlistServices.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId());
-        playlistServices.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId());
-        playlistServices.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId());
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), playlistRepository);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), playlistRepository);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), playlistRepository);
         
         // Create a FakeMusicPlayer for testing
         fakeMusicPlayer = new FakeMusicPlayer();
