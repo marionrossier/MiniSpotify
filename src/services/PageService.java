@@ -20,7 +20,7 @@ public class PageService {
     public FriendAddAFriend friendAddAFriend;
     public FriendsCommunePlaylists friendsCommunePlaylists;
     public FriendsDisplayFriends friendsDisplayFriends;
-    public FriendsHomePageTemplate friendsHomePage;
+    public FriendsHomePage friendsHomePage;
     public FriendAddPlaylist friendAddPlaylist;
     public HomePage homePage;
     public PlaylistHomePage playlistHomePage;
@@ -61,7 +61,7 @@ public class PageService {
         this.friendsDisplayFriends = new FriendsDisplayFriends(this, spotifyPlayer, pageId++);
         pages.add(this.friendsDisplayFriends);
 
-        this.friendsHomePage = new FriendsHomePageTemplate(this, spotifyPlayer, pageId++);
+        this.friendsHomePage = new FriendsHomePage(this, spotifyPlayer, pageId++);
         pages.add(this.friendsHomePage);
 
         this.friendAddPlaylist = new FriendAddPlaylist(this, spotifyPlayer, pageId++);

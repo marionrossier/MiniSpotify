@@ -3,11 +3,12 @@ package view_templatePattern;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.PageService;
 
-public class FriendsHomePageTemplate extends _SimplePageTemplate {
+public class FriendsHomePage extends _SimplePageTemplate {
 
-    public FriendsHomePageTemplate(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+    public FriendsHomePage(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(pageManager, spotifyPlayer);
         this.pageId = pageId;
+        this.isFree = false;
         this.pageTitle = "Friends Home Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak + //TODO : bien refactorer la classe et ses boutons !
                 icon.iconNbr(1) + "Display friends" + icon.lineBreak +
