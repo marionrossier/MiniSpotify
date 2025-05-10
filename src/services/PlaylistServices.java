@@ -51,7 +51,36 @@ public class PlaylistServices {
         }
     }
 
-    public int validationPlaylistChoice() {
+    public int validationInputSongChoice(int playlistId) {
+        Playlist playlist = getPlaylistById(playlistId);
+        int chosenSong = -1;
+
+        while (true) {
+            String input = this.scanner.nextLine();
+
+            if (input.equals("0")) {
+                return 0;
+            }
+
+            try {
+                int inputNumber = Integer.parseInt(input);
+
+                if (inputNumber < 1 || inputNumber > playlist.getSize()) {
+                    System.err.println("Invalid Playlist number.");
+                    System.out.println("Try again or press \"0\" to go back : ");
+                } else {
+                    chosenSong = inputNumber-1;
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid input, please enter a number : ");
+            }
+        }
+
+        return chosenSong;
+    }
+
+    public int validationInputPlaylistChoice() {
         User currentUser = userRepository.getUserById(userService.getCurrentUserId());
 
         int chosenPlaylist = -1;
@@ -81,6 +110,7 @@ public class PlaylistServices {
         return chosenPlaylist;
     }
 
+    //TODO : Utilisé que dans les tests...
     public void addSong(int currentPlaylistId, int currentSongId) {
         Playlist playlist = this.playlistRepository.getPlaylistById(currentPlaylistId);
         playlist.getPlaylistSongsListWithId().add(currentSongId);
@@ -92,9 +122,9 @@ public class PlaylistServices {
     }
 
     //TODO : ajuster car la playlist temporaire ne transmet pas ses chansons à l'autre playlist.
-    public void addSongToPlaylistFromTemporaryPlaylist(int playlistId) {
-        Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
-        Playlist targetPlaylist = playlistRepository.getPlaylistById(playlistId);
+    public void addSongToPlaylistFromTemporaryPlaylist(int temporaryPlaylistId, int finalPlaylistId) {
+        Playlist temporaryPlaylist = playlistRepository.getPlaylistById(temporaryPlaylistId);
+        Playlist targetPlaylist = playlistRepository.getPlaylistById(finalPlaylistId);
 
         if (targetPlaylist != null && temporaryPlaylist != null) {
             for (Integer songId : temporaryPlaylist.getPlaylistSongsListWithId()) {
@@ -139,16 +169,20 @@ public class PlaylistServices {
     }
 
     public void createTemporaryPlaylist(LinkedList<Integer> chosenSongs, PlaylistEnum status) {
-        Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
+        int currentUserId = userService.getCurrentUserId();
+        Playlist temporaryPlaylist = playlistRepository.getTemporaryPlaylistOfCurrentUser(userService);
+
         if (temporaryPlaylist == null) {
             temporaryPlaylist = new Playlist("temporaryPlaylist", PlaylistEnum.PRIVATE);
             playlistRepository.savePlaylist(temporaryPlaylist);
         }
         temporaryPlaylist.setListSongsId(chosenSongs);
+
         int playlistDuration = temporaryPlaylist.getDurationSeconds();
         int playlistSize = temporaryPlaylist.getSize();
+
         temporaryPlaylist.setPlaylistInformation(playlistDuration, playlistSize);
-        temporaryPlaylist.setOwnerId(userService.getCurrentUserId());
+        temporaryPlaylist.setOwnerId(currentUserId);
         temporaryPlaylist.setStatus(status);
 
         playlistRepository.savePlaylist(temporaryPlaylist);
@@ -208,8 +242,8 @@ public class PlaylistServices {
         userRepository.saveUser(user);
     }
 
-    public void validatePlaylistIdInput(PageService pageService, SongService songService) {
-        int chosenPlaylist = validationPlaylistChoice();
+    public void playlistPageRouter(PageService pageService, SongService songService) {
+        int chosenPlaylist = validationInputPlaylistChoice();
 
         if (chosenPlaylist == 0) {
             pageService.homePage.displayAllPage();

@@ -12,7 +12,7 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
         this.pageTitle = "Chose your action for the selected songs";
         this.pageContent = icon.goBack + " |  " + icon.goToHomepage + icon.lineBreak +
                     icon.iconNbr(1) + "Add to current playlist" + icon.lineBreak +
-                    icon.iconNbr(2) + "Add to an other playlist (Ne fonctionne pas)" +icon.lineBreak +
+                    icon.iconNbr(2) + "Add to an other playlist" +icon.lineBreak +
                     icon.iconNbr(3) + "Create a new playlist" + icon.lineBreak;
     }
 
@@ -27,16 +27,18 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
         toolbox.getPrintServ().printUserPlaylists(toolbox.getUserServ().getCurrentUserId());
 
         displayInput();
-        toolbox.getPlaylistServ().validatePlaylistIdInput(pageService, toolbox.getSongServ());
 
+        int chosenPlaylist = toolbox.getPlaylistServ().validationInputPlaylistChoice();
+        toolbox.getPlaylistServ().setCurrentPlaylistId(chosenPlaylist);
         verificationAndThenAction();
     }
 
     private void verificationAndThenAction() {
         int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
+        int temporaryPlaylistId = toolbox.getPlaylistServ().getTemporaryPlaylistId();
 
         if (toolbox.getPlaylistServ().isCurrentUserOwnerOfPlaylist(currentPlaylistId)) {
-            toolbox.getPlaylistServ().addSongToPlaylistFromTemporaryPlaylist(toolbox.getPlaylistServ().getCurrentPlaylistId());
+            toolbox.getPlaylistServ().addSongToPlaylistFromTemporaryPlaylist(temporaryPlaylistId,currentPlaylistId);
             pageService.playlistPageOpen.displayAllPage();
         }
         else {

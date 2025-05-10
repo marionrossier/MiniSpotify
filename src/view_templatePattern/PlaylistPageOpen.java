@@ -18,7 +18,7 @@ public class PlaylistPageOpen extends _SimplePageTemplate {
                 icon.iconNbr(1) + "Rename Playlist" + icon.lineBreak +
                 icon.iconNbr(2) + "Add song" + icon.lineBreak +
                 icon.iconNbr(3) + "Remove song" + icon.lineBreak +
-                icon.iconNbr(4) + "Reorder song (TODO!!)" + icon.iconPremium() + icon.lineBreak +
+                icon.iconNbr(4) + "Reorder song" + icon.iconPremium() + icon.lineBreak +
                 icon.iconNbr(5) + "Delete the playlist";
     }
 
@@ -52,8 +52,12 @@ public class PlaylistPageOpen extends _SimplePageTemplate {
     @Override
     public void button3() {
         System.out.print("Enter the number of the song you want to remove : ");
-        int songIndex = in.nextInt()-1;
 
+        int playlistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
+        int songIndex = toolbox.getPlaylistServ().validationInputSongChoice(playlistId);
+        if (songIndex == 0){
+            pageService.playlistHomePage.displayAllPage();
+        }
         int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
         toolbox.getPlaylistServ().deleteSongFromPlaylist(currentPlaylistId, songIndex);
         pageService.playlistPageOpen.displayAllPage();

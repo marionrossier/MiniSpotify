@@ -20,7 +20,7 @@ public class PlaylistChoseList extends _SimplePageTemplate {
 
     @Override
     public void validateInput() {
-        toolbox.getPlaylistServ().validatePlaylistIdInput(pageService, toolbox.getSongServ());
+        toolbox.getPlaylistServ().playlistPageRouter(pageService, toolbox.getSongServ());
     }
 
     @Override

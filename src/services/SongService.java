@@ -139,8 +139,7 @@ public class SongService {
             }
         }
 
-
-        //TODO : vérifier si cette dernière partie est vraiement nécessaire ou si on peut faire un return foundedSongs
+        //Transforme songIndexes in songIds
         LinkedList<Integer> selectedSongs = new LinkedList<>();
 
         for (int index : selectedSongsIndex) {

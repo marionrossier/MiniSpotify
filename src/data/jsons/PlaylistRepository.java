@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import data.entities.Playlist;
 import data.entities.PlaylistEnum;
+import services.UserService;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,5 +91,15 @@ public class PlaylistRepository {
             playlist.setStatus(status);
             savePlaylist(playlist);
         }
+    }
+
+    public Playlist getTemporaryPlaylistOfCurrentUser(UserService userService) {
+        int currentUserId = userService.getCurrentUserId();
+        Playlist temporaryPlaylist = getAllPlaylists().stream()
+                .filter(playlist -> "temporaryPlaylist".equalsIgnoreCase(playlist.getName())
+                        && playlist.getOwnerId() == currentUserId)
+                .findFirst()
+                .orElse(null);
+        return temporaryPlaylist;
     }
 }
