@@ -71,12 +71,13 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
 
     private void addToStack() {
         //TODO : compléter la liste des pages sur lesquelles on devrait pas pouvoir faire retour.
+        int createAccount = pageService.createAccount.pageId;
         int actionFoundedSong = pageService.actionFoundedSongs.pageId;
         int playlistCreation = pageService.playlistCreation.pageId;
         int searchGender = pageService.searchGender.pageId;
         int search = pageService.search.pageId;
         int playlistDeletion = pageService.playlistDeletion.pageId;
-        int [] pageIdNotToAdd = new int[] {actionFoundedSong,playlistCreation, search, searchGender, playlistDeletion};
+        int [] pageIdNotToAdd = new int[] {createAccount, actionFoundedSong,playlistCreation, search, searchGender, playlistDeletion};
 
         for (int id : pageIdNotToAdd) {
             if (id == getPageId()) {
