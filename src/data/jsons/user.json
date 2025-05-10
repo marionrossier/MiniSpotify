@@ -2,27 +2,27 @@
   "userId" : 1726370281,
   "pseudonym" : "florent",
   "email" : "florent",
-  "password" : "pPqOvihvKt94M9DEOYdhfjKsVP/xQy1kcnFNbk9g6Sc=",
-  "salt" : "y7Fga85dNFQkamCmVVZ4kw==",
+  "password" : "voMDPvbdUx9qoveChEccDlYyXLlU+EYW4M4eggU8HZI=",
+  "salt" : "jMgn/O9EEU4X2gFxQAN/NA==",
   "planEnum" : "PREMIUM",
-  "playlists" : [ 1543435989, 1850222090, 1204933207, 565450163 ],
+  "playlists" : [ 358838277, 389207123, 1751274619, 1887528009 ],
   "friends" : [ ]
 }, {
   "userId" : 1,
   "pseudonym" : "admin",
   "email" : "admin",
-  "password" : "OmUoxkuand0gOtfzh07/Mh96nn75NzPDdWxaQUKqAKg=",
-  "salt" : "IoTZ2YzI1CHt5G1ss3DpHg==",
+  "password" : "QjcdymJydSX6gywFb7GTyA7o4DKF1zpTRKM/LrDR7rw=",
+  "salt" : "COLdiNn2xgNAYEoHzG6l/w==",
   "planEnum" : "PREMIUM",
-  "playlists" : [ 2119316819, 2032531633, 828811140, 626219963, 289955153 ],
+  "playlists" : [ 1826288874, 1870973866, 1569113515, 642382866, 1488284161 ],
   "friends" : [ ]
 }, {
   "userId" : 232928320,
   "pseudonym" : "marion",
   "email" : "marion",
-  "password" : "7ltS8J88TjLBvaixxXjiesN5o/0MQISltvwWBoJW0Jo=",
-  "salt" : "j28UmnUvkKe2xhA8uTAA/g==",
-  "planEnum" : "PREMIUM",
-  "playlists" : [ 1543435989, 194482233, 933742919, 688353678, 1768640091 ],
+  "password" : "KsFWPM/3g9VjfgPjormuR/8HJ1f6F9cIxb/NSgGt2tQ=",
+  "salt" : "stgXXCk/EStESTt17ZdfnQ==",
+  "planEnum" : "FREE",
+  "playlists" : [ 358838277, 378180562, 425155630, 1148364565 ],
   "friends" : [ ]
 } ]

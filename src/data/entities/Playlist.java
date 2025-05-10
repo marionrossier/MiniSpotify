@@ -1,5 +1,6 @@
 package data.entities;
 
+import data.jsons.SongRepository;
 import services.UniqueIdService;
 
 import java.util.*;
@@ -66,16 +67,15 @@ public class Playlist {
     }
 
     public int getDurationSeconds() {
+        SongRepository songRepository = new SongRepository();
         int totalSeconds = 0;
         for (Integer integer : this.getPlaylistSongsListWithId()) {
-            Song song = new Song();
-            song.setSongId(integer);
+            Song song = songRepository.getSongById(integer);
             totalSeconds += song.getDurationSeconds();
         }
         return totalSeconds;
     }
 
-    //TODO : Fonctionne pas
     public void setPlaylistDuration(int durationSeconds) {
         this.durationSeconds = durationSeconds;
     }
