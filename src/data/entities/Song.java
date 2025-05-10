@@ -7,7 +7,6 @@ public class Song {
     private String title;
     private String titleAndArtist;
     private Artist artist;
-    private String album;
     private int durationSeconds;
     private MusicGender gender;
     private int songId;
@@ -17,12 +16,11 @@ public class Song {
 
     public Song (){}
 
-    public Song(int id, String title, String artistName, String album, int durationSeconds, MusicGender gender,
+    public Song(int id, String title, String artistName, int durationSeconds, MusicGender gender,
                 String audioFilePath) {
         this.songId = id;
         this.title = title;
         this.titleAndArtist = title+" - "+artistName;
-        this.album = album;
         this.durationSeconds = durationSeconds;
         this.gender = gender;
         this.audioFilePath = "resources\\songsfiles\\"+audioFilePath;
@@ -38,11 +36,9 @@ public class Song {
         this.artist.getArtistSongsID().add(this.songId);
     }
 
-    public Song(String title, String artistName, String album, int durationSeconds, MusicGender gender,
+    public Song(String title, String artistName, int durationSeconds, MusicGender gender,
                 String audioFilePath) {
         this.title = title;
-        this.titleAndArtist = title+" - "+artistName;
-        this.album = album;
         this.durationSeconds = durationSeconds;
         this.gender = gender;
         this.songId = uniqueIdService.setUniqueId();
@@ -63,10 +59,6 @@ public class Song {
         return titleAndArtist;
     }
 
-    public void setSongName() {
-        this.titleAndArtist = title+" | "+artist.getArtistName()+" | "+album+" | "+gender+" | "+ durationSeconds;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -81,14 +73,6 @@ public class Song {
 
     public void setArtist(Artist artist) {
         this.artist = artist;
-    }
-
-    public String getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(String album) {
-        this.album = album;
     }
 
     public int getDurationSeconds() {

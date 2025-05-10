@@ -64,7 +64,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     @Override
     public void setRepeatMode(){
         currentState = this.repeatState;
-        System.out.println(icon.iconRepeatOne() + " Repeate One lecture mode activate.");
+        System.out.println(icon.iconRepeatOne() + " Repeat One lecture mode activate.");
     }
 
     @Override

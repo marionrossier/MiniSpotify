@@ -13,7 +13,7 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
 
     public MusicPlayer() {
         player = new BasicPlayer();
-        player.addBasicPlayerListener(this); // ECOUTE les événements du player
+        player.addBasicPlayerListener(this);
     }
 
     public void playOrPause (String songPath) {
@@ -55,7 +55,7 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
     }
 
     @Override
-    public void resume(String songPath) { //Reprendre la lecture de la chanson
+    public void resume(String songPath) {
         if (isPaused) {
             try {
                 player.resume();
@@ -94,7 +94,7 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
         this.onSongEndAction = action;
     }
 
-    /* ===== Implémentation de BasicPlayerListener ===== */
+    /* ===== Implementation of BasicPlayerListener ===== */
 
     @Override
     public void opened(Object stream, Map properties) {
@@ -108,7 +108,7 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
 
     @Override
     public void stateUpdated(BasicPlayerEvent event) {
-        if (event.getCode() == BasicPlayerEvent.EOM) { // FIN DE CHANSON détectée
+        if (event.getCode() == BasicPlayerEvent.EOM) {
             isPlaying = false;
             if (onSongEndAction != null) {
                 onSongEndAction.run();

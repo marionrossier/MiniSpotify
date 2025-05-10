@@ -1,6 +1,5 @@
 package services;
 
-import data.entities.MusicGender;
 import data.entities.Playlist;
 import data.entities.PlaylistEnum;
 import data.entities.User;
@@ -31,7 +30,7 @@ public class PrintService {
 
     public void printPlaylist(List<Playlist> playlists) {
         if (playlists == null || playlists.isEmpty()) {
-            System.out.println("Aucune playlist disponible.");
+            System.out.println("No playlist available.");
             return;
         }
 
@@ -70,13 +69,5 @@ if (currentUser != null && currentUser.getPlaylists() != null) {
             return icon.iconEarth();
         }
         return icon.iconLock();
-    }
-
-    public void printGenderList() {
-        int i = 1;
-        for (MusicGender gender : MusicGender.values()) {
-            System.out.println(i + ". " + gender.getDisplayName());
-            i++;
-        }
     }
 }

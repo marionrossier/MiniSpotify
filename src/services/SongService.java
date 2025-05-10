@@ -2,14 +2,10 @@ package services;
 
 import data.entities.Song;
 import data.jsons.SongRepository;
-import java.util.Scanner;
 
 public class SongService {
 
-    Scanner in = new Scanner(System.in);
-    private final Icon icon = new Icon();
     public final SongRepository songRepository;
-    private final PrintService printService = new PrintService();
 
     // Constructor
     public SongService(SongRepository songRepo) {

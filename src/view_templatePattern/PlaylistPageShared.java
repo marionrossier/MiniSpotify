@@ -4,11 +4,7 @@ import data.entities.Playlist;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.PageService;
 
-import java.util.Scanner;
-
 public class PlaylistPageShared extends _SimplePageTemplate {
-
-    Scanner in = new Scanner(System.in);
 
     public PlaylistPageShared(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(pageManager, spotifyPlayer);

@@ -1,7 +1,6 @@
 package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.Cookies_SingletonPattern;
 import services.PageService;
 
 public class HomePage extends _SimplePageTemplate {

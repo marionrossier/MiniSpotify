@@ -42,7 +42,6 @@ class SongRepositoryTest {
         artist.setArtistId(100 + id); // Unique ID for artist
         song.setArtist(artist);
         
-        song.setAlbum("Test Album");
         song.setDurationSeconds(180);
         song.setGender(gender);
         song.setAudioFilePath("path/to/song" + id + ".mp3");

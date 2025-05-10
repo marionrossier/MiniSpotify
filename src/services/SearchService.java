@@ -94,7 +94,7 @@ public class SearchService {
         return listSongToListInt(songsByGender);
     }
 
-    private static LinkedList<Integer> listSongToListInt(LinkedList<Song> songsByTitle) {
+    private LinkedList<Integer> listSongToListInt(LinkedList<Song> songsByTitle) {
         LinkedList<Integer> songsByTitleId = new LinkedList<>();
         if (songsByTitle.isEmpty()) {
             return songsByTitleId;
@@ -105,34 +105,26 @@ public class SearchService {
         return songsByTitleId;
     }
 
+    private LinkedList<Integer> listPlaylistToListInt(List<Playlist> playlists) {
+        LinkedList<Integer> playlistById = new LinkedList<>();
+        if (playlists.isEmpty()) {
+            return playlistById;
+        }
+        for (Playlist playlist : playlists) {
+            playlistById.add(playlist.getPlaylistId());
+        }
+        return playlistById;
+    }
+
     public LinkedList<Integer> chooseFoundedSongs(List<Integer> foundedSongs, PageService pageService){
+        LinkedList<Integer> selectedSongsIndex = new LinkedList<>();
         System.out.println("Choose your songs by entering their number and press \"enter\" between each song." + icon.lineBreak+
                 "End selection with an \"x\"." + icon.lineBreak);
         System.out.print("Your selection : ");
-        String input;
-        LinkedList<Integer> selectedSongsIndex = new LinkedList<>();
 
-        while (true) {
-            input = pageService.gotAnInput(scanner.nextLine());
-            if (input.equals("x")) {
-                break;
-            }
-            if (input.equals("0")){
-                pageService.goBack(pageService.getMenuPages().peek());
-            }
-            try {
-                int songIndex = Integer.parseInt(input) - 1;
-                if (songIndex >= 0 && songIndex < foundedSongs.size()) {
-                    selectedSongsIndex.add(songIndex);
-                } else {
-                    System.err.println("Invalid selection. Please try again.");
-                }
-            } catch (NumberFormatException e) {
-                System.err.println("Invalid input. Please enter a number or \"x\" to exit.");
-            }
-        }
+        loopIntInputValidation(pageService, selectedSongsIndex, foundedSongs.size());
 
-        //Transforme songIndexes in songIds
+        //Transform songIndexes in songIds
         LinkedList<Integer> selectedSongs = new LinkedList<>();
 
         for (int index : selectedSongsIndex) {
@@ -145,6 +137,11 @@ public class SearchService {
 
     public LinkedList<Integer> chooseFoundedPlaylist(List<Playlist> playlist, PageService pageService){
         LinkedList<Integer> selectedPlaylistIndex = new LinkedList<>();
+        loopIntInputValidation(pageService, selectedPlaylistIndex, playlist.size());
+        return selectedPlaylistIndex;
+    }
+
+    private void loopIntInputValidation(PageService pageService, LinkedList<Integer> selectedSongsIndex, int size) {
         String input;
         while (true) {
             input = pageService.gotAnInput(scanner.nextLine());
@@ -155,9 +152,9 @@ public class SearchService {
                 pageService.goBack(pageService.getMenuPages().peek());
             }
             try {
-                int playlistIndex = Integer.parseInt(input) - 1;
-                if (playlistIndex >= 0 && playlistIndex < playlist.size()) {
-                    selectedPlaylistIndex.add(playlistIndex);
+                int songIndex = Integer.parseInt(input) - 1;
+                if (songIndex >= 0 && songIndex < size) {
+                    selectedSongsIndex.add(songIndex);
                 } else {
                     System.err.println("Invalid selection. Please try again.");
                 }
@@ -165,6 +162,5 @@ public class SearchService {
                 System.err.println("Invalid input. Please enter a number or \"x\" to exit.");
             }
         }
-        return selectedPlaylistIndex;
     }
 }

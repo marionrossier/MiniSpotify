@@ -87,7 +87,7 @@ public class User {
         return salt;
     }
 
-    public void setSalt(byte[] salt) { // Setter for salt
+    public void setSalt(byte[] salt) {
         this.salt = salt;
     }
 

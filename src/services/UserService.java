@@ -80,4 +80,12 @@ public class UserService {
     public User getUserById(int userId) {
         return userRepository.getUserById(userId);
     }
+
+    public boolean emailValidation(String email) {
+        String emailRegex = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
+        if (email != null && email.matches(emailRegex)) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -104,17 +104,6 @@ public class UserRepository {
             }
     }
 
-    public void deletePlaylistFromUser(int userId, int playlistId) {
-        User user = getUserById(userId);
-        if (user != null) {
-            List<Integer> playlists = user.getPlaylists();
-            if (playlists != null && playlists.contains(playlistId)) {
-                playlists.remove(Integer.valueOf(playlistId));
-                saveUser(user);
-            }
-        }
-    }
-
     public void addFriendToUser(int userId, int friendId) {
         User user = getUserById(userId);
         if (user != null) {

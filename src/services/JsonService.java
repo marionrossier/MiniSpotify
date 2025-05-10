@@ -88,32 +88,32 @@ public class JsonService {
     public static void addSong(){
         SongRepository repository = new SongRepository();
 
-        repository.addSong(new Song(1108071776, "Rehab", "Amy Winehouse", "Back to Black", 214, MusicGender.SOUL_RNB, "Rehab - Amy Winehouse - Back to Black - 2006 - Soul _ R&B - 0334.mp3"));
-        repository.addSong(new Song(1986076679, "Judas", "Lady Gaga", "Born This Way", 249, MusicGender.POP, "Judas - Lady Gaga - Born This Way - 2011 - Pop _ Electro-pop - 0409.mp3"));
-        repository.addSong(new Song(2084461505, "Bloody Mary", "Lady Gaga", "Born This Way", 245, MusicGender.POP, "Bloody Mary - Lady Gaga - Born This Way - 2011 - Pop _ Dark pop - 0405.mp3"));
-        repository.addSong(new Song(342105258, "You Know I'm No Good", "Amy Winehouse", "Back to Black", 257, MusicGender.SOUL_RNB, "You Know I'm No Good - Amy Winehouse - Back to Black - 2006 - Soul _ Jazz - 0417.mp3"));
-        repository.addSong(new Song(625427469, "Me & Mr. Jones", "Amy Winehouse", "Back to Black", 153, MusicGender.SOUL_RNB, "Me & Mr. Jones - Amy Winehouse - Back to Black - 2006 - Soul _ Jazz - 0233.mp3"));
-        repository.addSong(new Song(325561970, "Sunny", "Boney M.", "Sunny", 238, MusicGender.DISCO, "Sunny - Boney M. - Sunny (Official)... - 1976 - Disco - 0358.mp3"));
-        repository.addSong(new Song(321324189, "Can't Hold Us", "Macklemore", "The Heist", 258, MusicGender.HIP_HOP, "Can't Hold Us - Macklemore & Ryan Lewis - The Heist - 2012 - Hip-hop - 0418.mp3"));
-        repository.addSong(new Song(1280045910, "Come When I Call", "John Mayer", "Where the Light Is", 177, MusicGender.SOUL_RNB, "Come When I Call - John Mayer - Where the Light Is - 2008 - Blues Rock - 0257.mp3"));
-        repository.addSong(new Song(354322599, "Viens à Saint Germain", "Dany Brillant", "Viens à Saint-Germain", 177, MusicGender.FRENCH_VARIETY, "Viens à Saint Germain - Dany Brillant - Viens à Saint-Germain - 1992 - Chanson française _ Swing - 0257.mp3"));
-        repository.addSong(new Song(1925355941, "Suzette", "Dany Brillant", "C'est ça qui est bon", 177, MusicGender.FRENCH_VARIETY, "Suzette - Dany Brillant - C'est ça qui est bon - 1991 - Chanson française _ Swing - 0257.mp3"));
-        repository.addSong(new Song(1951451340, "Diamonds", "Rihanna", "Unapologetic", 225, MusicGender.SOUL_RNB, "Diamonds - Rihanna - Unapologetic - 2012 - Pop _ R&B - 0345.mp3"));
-        repository.addSong(new Song(243871940, "Free Fallin", "John Mayer", "Where the Light Is", 243, MusicGender.ROCK, "Free Fallin - John Mayer - Where the Light Is - 2008 - Soft Rock - 0403.mp3"));
-        repository.addSong(new Song(1988790520, "Give It 2 Me", "Madonna", "Hard Candy", 287, MusicGender.POP, "Give It 2 Me - Madonna - Hard Candy - 2008 - Dance-pop - 0447.mp3"));
-        repository.addSong(new Song(719812166, "I'm Gonna Find Another You", "John Mayer", "Where the Light Is", 283, MusicGender.SOUL_RNB, "I'm Gonna Find Another You (Live) - John Mayer - Where the Light Is - 2008 - Blues _ Soul - 0443.mp3"));
-        repository.addSong(new Song(700468481, "La Isla Bonita", "Madonna", "True Blue", 241, MusicGender.POP, "La Isla Bonita - Madonna - True Blue - 1986 - Latin pop - 0401.mp3"));
-        repository.addSong(new Song(469321884, "Man Down", "Rihanna", "Loud", 267, MusicGender.REGGAE, "Man Down - Rihanna - Loud - 2010 - Reggae fusion - 0427.mp3"));
-        repository.addSong(new Song(1824616046, "Time is Running Out", "Muse", "Absolution", 236, MusicGender.ROCK, "Time is Running Out - Muse - Absolution - 2003 - Alternative Rock - 0356.mp3"));
-        repository.addSong(new Song(998984026, "De mes propres ailes (Remix)", "Olivier Dion", "Les 3 Mousquetaires", 221, MusicGender.POP, "De mes propres ailes (Remix) - Olivier Dion - Les 3 Mousquetaires - 2016 - Pop française - 0341.mp3"));
-        repository.addSong(new Song(661206135, "Fuck Me Pumps", "Amy Winehouse", "Frank", 198, MusicGender.SOUL_RNB, "Fuck Me Pumps - Amy Winehouse - Frank - 2003 - Soul _ Jazz - 0318.mp3"));
-        repository.addSong(new Song(1290739974, "Poker Face", "Lady Gaga", "The Fame Monster", 237, MusicGender.POP, "Poker Face - Lady Gaga - The Fame Monster - 2008 - Electropop - 0357.mp3"));
-        repository.addSong(new Song(1252829874, "Right Now", "Rihanna", "Unapologetic", 181, MusicGender.ELECTRO, "Right Now - Rihanna & David Guetta - Unapologetic - 2012 - EDM _ Dance-pop - 0301.mp3"));
-        repository.addSong(new Song(521970022, "Thrift Shop", "Macklemore", "The Heist", 232, MusicGender.HIP_HOP, "Thrift Shop - Macklemore & Ryan Lewis - The Heist - 2012 - Hip-hop _ Comedy rap - 0352.mp3"));
-        repository.addSong(new Song(1287974581, "Whatever It Takes", "Imagine Dragons", "Evolve", 219, MusicGender.ROCK, "Whatever It Takes - Imagine Dragons - Evolve - 2017 - Pop rock - 0339.mp3"));
-        repository.addSong(new Song(614172035, "Believer", "Imagine Dragons", "Evolve", 204, MusicGender.ROCK, "Believer - Imagine Dragons - Evolve - 2017 - Pop rock _ Alt rock - 0324.mp3"));
-        repository.addSong(new Song(494087492, "Demons", "Imagine Dragons", "Night Visions", 177, MusicGender.ROCK, "Demons - Imagine Dragons - Night Visions - 2012 - Pop rock _ Indie pop - 0257.mp3"));
-        repository.addSong(new Song(515539482, "Not Today", "Imagine Dragons", "Me Before You", 238, MusicGender.ROCK, "Not Today - Imagine Dragons - Me Before You - 2016 - Pop rock - 0358.mp3"));
+        repository.addSong(new Song(1108071776, "Rehab", "Amy Winehouse", 214, MusicGender.SOUL_RNB, "Rehab - Amy Winehouse - Back to Black - 2006 - Soul _ R&B - 0334.mp3"));
+        repository.addSong(new Song(1986076679, "Judas", "Lady Gaga", 249, MusicGender.POP, "Judas - Lady Gaga - Born This Way - 2011 - Pop _ Electro-pop - 0409.mp3"));
+        repository.addSong(new Song(2084461505, "Bloody Mary", "Lady Gaga", 245, MusicGender.POP, "Bloody Mary - Lady Gaga - Born This Way - 2011 - Pop _ Dark pop - 0405.mp3"));
+        repository.addSong(new Song(342105258, "You Know I'm No Good", "Amy Winehouse", 257, MusicGender.SOUL_RNB, "You Know I'm No Good - Amy Winehouse - Back to Black - 2006 - Soul _ Jazz - 0417.mp3"));
+        repository.addSong(new Song(625427469, "Me & Mr. Jones", "Amy Winehouse", 153, MusicGender.SOUL_RNB, "Me & Mr. Jones - Amy Winehouse - Back to Black - 2006 - Soul _ Jazz - 0233.mp3"));
+        repository.addSong(new Song(325561970, "Sunny", "Boney M.", 238, MusicGender.DISCO, "Sunny - Boney M. - Sunny (Official)... - 1976 - Disco - 0358.mp3"));
+        repository.addSong(new Song(321324189, "Can't Hold Us", "Macklemore", 258, MusicGender.HIP_HOP, "Can't Hold Us - Macklemore & Ryan Lewis - The Heist - 2012 - Hip-hop - 0418.mp3"));
+        repository.addSong(new Song(1280045910, "Come When I Call", "John Mayer", 177, MusicGender.SOUL_RNB, "Come When I Call - John Mayer - Where the Light Is - 2008 - Blues Rock - 0257.mp3"));
+        repository.addSong(new Song(354322599, "Viens à Saint Germain", "Dany Brillant", 177, MusicGender.FRENCH_VARIETY, "Viens à Saint Germain - Dany Brillant - Viens à Saint-Germain - 1992 - Chanson française _ Swing - 0257.mp3"));
+        repository.addSong(new Song(1925355941, "Suzette", "Dany Brillant", 177, MusicGender.FRENCH_VARIETY, "Suzette - Dany Brillant - C'est ça qui est bon - 1991 - Chanson française _ Swing - 0257.mp3"));
+        repository.addSong(new Song(1951451340, "Diamonds", "Rihanna", 225, MusicGender.SOUL_RNB, "Diamonds - Rihanna - Unapologetic - 2012 - Pop _ R&B - 0345.mp3"));
+        repository.addSong(new Song(243871940, "Free Fallin", "John Mayer", 243, MusicGender.ROCK, "Free Fallin - John Mayer - Where the Light Is - 2008 - Soft Rock - 0403.mp3"));
+        repository.addSong(new Song(1988790520, "Give It 2 Me", "Madonna", 287, MusicGender.POP, "Give It 2 Me - Madonna - Hard Candy - 2008 - Dance-pop - 0447.mp3"));
+        repository.addSong(new Song(719812166, "I'm Gonna Find Another You", "John Mayer", 283, MusicGender.SOUL_RNB, "I'm Gonna Find Another You (Live) - John Mayer - Where the Light Is - 2008 - Blues _ Soul - 0443.mp3"));
+        repository.addSong(new Song(700468481, "La Isla Bonita", "Madonna", 241, MusicGender.POP, "La Isla Bonita - Madonna - True Blue - 1986 - Latin pop - 0401.mp3"));
+        repository.addSong(new Song(469321884, "Man Down", "Rihanna", 267, MusicGender.REGGAE, "Man Down - Rihanna - Loud - 2010 - Reggae fusion - 0427.mp3"));
+        repository.addSong(new Song(1824616046, "Time is Running Out", "Muse", 236, MusicGender.ROCK, "Time is Running Out - Muse - Absolution - 2003 - Alternative Rock - 0356.mp3"));
+        repository.addSong(new Song(998984026, "De mes propres ailes (Remix)", "Olivier Dion", 221, MusicGender.POP, "De mes propres ailes (Remix) - Olivier Dion - Les 3 Mousquetaires - 2016 - Pop française - 0341.mp3"));
+        repository.addSong(new Song(661206135, "Fuck Me Pumps", "Amy Winehouse", 198, MusicGender.SOUL_RNB, "Fuck Me Pumps - Amy Winehouse - Frank - 2003 - Soul _ Jazz - 0318.mp3"));
+        repository.addSong(new Song(1290739974, "Poker Face", "Lady Gaga", 237, MusicGender.POP, "Poker Face - Lady Gaga - The Fame Monster - 2008 - Electropop - 0357.mp3"));
+        repository.addSong(new Song(1252829874, "Right Now", "Rihanna", 181, MusicGender.ELECTRO, "Right Now - Rihanna & David Guetta - Unapologetic - 2012 - EDM _ Dance-pop - 0301.mp3"));
+        repository.addSong(new Song(521970022, "Thrift Shop", "Macklemore", 232, MusicGender.HIP_HOP, "Thrift Shop - Macklemore & Ryan Lewis - The Heist - 2012 - Hip-hop _ Comedy rap - 0352.mp3"));
+        repository.addSong(new Song(1287974581, "Whatever It Takes", "Imagine Dragons", 219, MusicGender.ROCK, "Whatever It Takes - Imagine Dragons - Evolve - 2017 - Pop rock - 0339.mp3"));
+        repository.addSong(new Song(614172035, "Believer", "Imagine Dragons", 204, MusicGender.ROCK, "Believer - Imagine Dragons - Evolve - 2017 - Pop rock _ Alt rock - 0324.mp3"));
+        repository.addSong(new Song(494087492, "Demons", "Imagine Dragons", 177, MusicGender.ROCK, "Demons - Imagine Dragons - Night Visions - 2012 - Pop rock _ Indie pop - 0257.mp3"));
+        repository.addSong(new Song(515539482, "Not Today", "Imagine Dragons", 238, MusicGender.ROCK, "Not Today - Imagine Dragons - Me Before You - 2016 - Pop rock - 0358.mp3"));
 
     }
 

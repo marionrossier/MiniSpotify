@@ -6,7 +6,6 @@
     "artistId" : 960571432,
     "artistSongsID" : [ 1108071776 ]
   },
-  "album" : "Back to Black",
   "durationSeconds" : 214,
   "gender" : "SOUL_RNB",
   "songId" : 1108071776,
@@ -19,7 +18,6 @@
     "artistId" : 887780660,
     "artistSongsID" : [ 1986076679 ]
   },
-  "album" : "Born This Way",
   "durationSeconds" : 249,
   "gender" : "POP",
   "songId" : 1986076679,
@@ -32,7 +30,6 @@
     "artistId" : 887780660,
     "artistSongsID" : [ 2084461505 ]
   },
-  "album" : "Born This Way",
   "durationSeconds" : 245,
   "gender" : "POP",
   "songId" : 2084461505,
@@ -45,7 +42,6 @@
     "artistId" : 960571432,
     "artistSongsID" : [ 342105258 ]
   },
-  "album" : "Back to Black",
   "durationSeconds" : 257,
   "gender" : "SOUL_RNB",
   "songId" : 342105258,
@@ -58,7 +54,6 @@
     "artistId" : 960571432,
     "artistSongsID" : [ 625427469 ]
   },
-  "album" : "Back to Black",
   "durationSeconds" : 153,
   "gender" : "SOUL_RNB",
   "songId" : 625427469,
@@ -71,7 +66,6 @@
     "artistId" : 1297291487,
     "artistSongsID" : [ 325561970 ]
   },
-  "album" : "Sunny",
   "durationSeconds" : 238,
   "gender" : "DISCO",
   "songId" : 325561970,
@@ -84,7 +78,6 @@
     "artistId" : 1088398922,
     "artistSongsID" : [ 321324189 ]
   },
-  "album" : "The Heist",
   "durationSeconds" : 258,
   "gender" : "HIP_HOP",
   "songId" : 321324189,
@@ -97,7 +90,6 @@
     "artistId" : 375990935,
     "artistSongsID" : [ 1280045910 ]
   },
-  "album" : "Where the Light Is",
   "durationSeconds" : 177,
   "gender" : "SOUL_RNB",
   "songId" : 1280045910,
@@ -110,7 +102,6 @@
     "artistId" : 375032367,
     "artistSongsID" : [ 354322599 ]
   },
-  "album" : "Viens à Saint-Germain",
   "durationSeconds" : 177,
   "gender" : "FRENCH_VARIETY",
   "songId" : 354322599,
@@ -123,7 +114,6 @@
     "artistId" : 375032367,
     "artistSongsID" : [ 1925355941 ]
   },
-  "album" : "C'est ça qui est bon",
   "durationSeconds" : 177,
   "gender" : "FRENCH_VARIETY",
   "songId" : 1925355941,
@@ -136,7 +126,6 @@
     "artistId" : 1916983454,
     "artistSongsID" : [ 1951451340 ]
   },
-  "album" : "Unapologetic",
   "durationSeconds" : 225,
   "gender" : "SOUL_RNB",
   "songId" : 1951451340,
@@ -149,7 +138,6 @@
     "artistId" : 375990935,
     "artistSongsID" : [ 243871940 ]
   },
-  "album" : "Where the Light Is",
   "durationSeconds" : 243,
   "gender" : "ROCK",
   "songId" : 243871940,
@@ -162,7 +150,6 @@
     "artistId" : 393467085,
     "artistSongsID" : [ 1988790520 ]
   },
-  "album" : "Hard Candy",
   "durationSeconds" : 287,
   "gender" : "POP",
   "songId" : 1988790520,
@@ -175,7 +162,6 @@
     "artistId" : 375990935,
     "artistSongsID" : [ 719812166 ]
   },
-  "album" : "Where the Light Is",
   "durationSeconds" : 283,
   "gender" : "SOUL_RNB",
   "songId" : 719812166,
@@ -188,7 +174,6 @@
     "artistId" : 393467085,
     "artistSongsID" : [ 700468481 ]
   },
-  "album" : "True Blue",
   "durationSeconds" : 241,
   "gender" : "POP",
   "songId" : 700468481,
@@ -201,7 +186,6 @@
     "artistId" : 1916983454,
     "artistSongsID" : [ 469321884 ]
   },
-  "album" : "Loud",
   "durationSeconds" : 267,
   "gender" : "REGGAE",
   "songId" : 469321884,
@@ -214,7 +198,6 @@
     "artistId" : 202791500,
     "artistSongsID" : [ 1824616046 ]
   },
-  "album" : "Absolution",
   "durationSeconds" : 236,
   "gender" : "ROCK",
   "songId" : 1824616046,
@@ -227,7 +210,6 @@
     "artistId" : 177334402,
     "artistSongsID" : [ 998984026 ]
   },
-  "album" : "Les 3 Mousquetaires",
   "durationSeconds" : 221,
   "gender" : "POP",
   "songId" : 998984026,
@@ -240,7 +222,6 @@
     "artistId" : 960571432,
     "artistSongsID" : [ 661206135 ]
   },
-  "album" : "Frank",
   "durationSeconds" : 198,
   "gender" : "SOUL_RNB",
   "songId" : 661206135,
@@ -253,7 +234,6 @@
     "artistId" : 887780660,
     "artistSongsID" : [ 1290739974 ]
   },
-  "album" : "The Fame Monster",
   "durationSeconds" : 237,
   "gender" : "POP",
   "songId" : 1290739974,
@@ -266,7 +246,6 @@
     "artistId" : 1916983454,
     "artistSongsID" : [ 1252829874 ]
   },
-  "album" : "Unapologetic",
   "durationSeconds" : 181,
   "gender" : "ELECTRO",
   "songId" : 1252829874,
@@ -279,7 +258,6 @@
     "artistId" : 1088398922,
     "artistSongsID" : [ 521970022 ]
   },
-  "album" : "The Heist",
   "durationSeconds" : 232,
   "gender" : "HIP_HOP",
   "songId" : 521970022,
@@ -292,7 +270,6 @@
     "artistId" : 609219333,
     "artistSongsID" : [ 1287974581 ]
   },
-  "album" : "Evolve",
   "durationSeconds" : 219,
   "gender" : "ROCK",
   "songId" : 1287974581,
@@ -305,7 +282,6 @@
     "artistId" : 609219333,
     "artistSongsID" : [ 614172035 ]
   },
-  "album" : "Evolve",
   "durationSeconds" : 204,
   "gender" : "ROCK",
   "songId" : 614172035,
@@ -318,7 +294,6 @@
     "artistId" : 609219333,
     "artistSongsID" : [ 494087492 ]
   },
-  "album" : "Night Visions",
   "durationSeconds" : 177,
   "gender" : "ROCK",
   "songId" : 494087492,
@@ -331,7 +306,6 @@
     "artistId" : 609219333,
     "artistSongsID" : [ 515539482 ]
   },
-  "album" : "Me Before You",
   "durationSeconds" : 238,
   "gender" : "ROCK",
   "songId" : 515539482,

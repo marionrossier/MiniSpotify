@@ -1,13 +1,11 @@
 package view_templatePattern;
 
-import data.entities.Playlist;
 import data.entities.PlaylistEnum;
 import data.entities.User;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.PageService;
 
 public class PlaylistCreation extends _InversedPageTemplate {
-    private final Playlist playlist = new Playlist();
     private String playlistName;
 
     public PlaylistCreation(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
@@ -42,7 +40,7 @@ public class PlaylistCreation extends _InversedPageTemplate {
 
         User user = toolbox.getUserServ().getUserById(toolbox.getUserServ().getCurrentUserId());
 
-        Boolean playlistNameOk = toolbox.getPlaylistServ().verifyPlaylistName(playlistName, user);
+        boolean playlistNameOk = toolbox.getPlaylistServ().verifyPlaylistName(playlistName, user);
 
         if (!playlistNameOk){
             System.out.print("Playlist Name already exist in you're playlists. Try again");

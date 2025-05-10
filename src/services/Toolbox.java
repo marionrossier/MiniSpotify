@@ -18,7 +18,6 @@ public class Toolbox {
     PrintService printServ;
     PasswordService passwordServ;
     PlaylistReorderSongService playlistReorderSongService;
-    TemporaryPlaylistService temporaryPlaylistServ;
 
     public Toolbox() {
         userRepo = new UserRepository();
@@ -33,7 +32,6 @@ public class Toolbox {
         passwordServ = new PasswordService(userRepo);
         printServ = new PrintService();
         playlistReorderSongService = new PlaylistReorderSongService();
-        temporaryPlaylistServ = new TemporaryPlaylistService(playlistRepo, userRepo);
     }
 
     public PlaylistServices getPlaylistServ() {
@@ -62,9 +60,5 @@ public class Toolbox {
 
     public SongService getSongServ(){
         return songServ;
-    }
-
-    public TemporaryPlaylistService getTemporaryPlaylistServ() {
-        return temporaryPlaylistServ;
     }
 }

@@ -5,9 +5,6 @@ import data.entities.PlaylistEnum;
 import data.entities.User;
 import data.jsons.PlaylistRepository;
 import data.jsons.UserRepository;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,7 +36,7 @@ public class PlaylistFunctionalitiesService {
         List<Integer> playlists = user.getPlaylists();
 
         if (!playlists.contains(allSongsPlaylistId)) {
-            playlists.add(0, allSongsPlaylistId);
+            playlists.addFirst(allSongsPlaylistId);
         }
         userRepository.saveUser(user);
     }
@@ -104,7 +101,7 @@ public class PlaylistFunctionalitiesService {
 
     public int takeAndValidateInputSongChoice(int playlistId, PlaylistServices playlistServices) {
         Playlist playlist = playlistServices.getPlaylistById(playlistId);
-        int chosenSong = -1;
+        int chosenSong;
 
         while (true) {
             String input = this.scanner.nextLine();
@@ -134,7 +131,7 @@ public class PlaylistFunctionalitiesService {
     public int takeAndValidationInputPlaylistChoice() {
         User currentUser = userRepository.getUserById(userService.getCurrentUserId());
 
-        int chosenPlaylist = -1;
+        int chosenPlaylist;
 
         while (true) {
             String input = this.scanner.nextLine();

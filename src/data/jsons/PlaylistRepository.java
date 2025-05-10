@@ -95,11 +95,10 @@ public class PlaylistRepository {
 
     public Playlist getTemporaryPlaylistOfCurrentUser(UserService userService) {
         int currentUserId = userService.getCurrentUserId();
-        Playlist temporaryPlaylist = getAllPlaylists().stream()
+        return getAllPlaylists().stream()
                 .filter(playlist -> "temporaryPlaylist".equalsIgnoreCase(playlist.getName())
                         && playlist.getOwnerId() == currentUserId)
                 .findFirst()
                 .orElse(null);
-        return temporaryPlaylist;
     }
 }

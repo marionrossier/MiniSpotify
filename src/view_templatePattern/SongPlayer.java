@@ -25,7 +25,7 @@ public class SongPlayer extends _SimplePageTemplate {
         Playlist playlist = toolbox.getPlaylistServ().getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId());
         System.out.println(
                 "Current Playlist : " + playlist.getName() +
-                ", duration " + (int)(playlist.getDurationSeconds()/60) + ":" + playlist.getDurationSeconds()%60 +
+                ", duration " + (playlist.getDurationSeconds()/60) + ":" + playlist.getDurationSeconds()%60 +
                 ", size : " + playlist.getSize() + icon.lineBreak);
     }
 

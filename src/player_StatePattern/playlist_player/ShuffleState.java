@@ -17,8 +17,7 @@ class ShuffleState implements IState {
                 .getPlaylistSongsListWithId();
         int nextIndex = (int) (Math.random() * songsId.size());
         int nextSongId = songsId.get(nextIndex);
-        //TODO : Check if the song is already played and avoid playing it again until all songs are played
-        // Be careful if single song playlist
+
         return playlistPlayer.songRepository.getSongById(nextSongId);
     }
 
