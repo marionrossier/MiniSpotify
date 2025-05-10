@@ -10,10 +10,13 @@ import org.junit.jupiter.api.Test;
 import player_StatePattern.file_player.FakeMusicPlayer;
 import player_StatePattern.playlist_player.PlaylistPlayer;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -178,30 +181,23 @@ class PlaylistServicesTest {
         assertEquals(temporaryPlaylistLength, newPlaylistLength);
     }
 
-    //TODO : faire ces tests
-//    public void deleteSongFromPlaylist(int playlistId, int songIndex) {
-//        Playlist playlist = playlistRepo.getPlaylistById(playlistId);
-//
-//        playlistRepo.getPlaylistById(playlist.getPlaylistId())
-//                .getPlaylistSongsListWithId().remove(songIndex);
-//
-//        playlistRepo.savePlaylist(playlist);
-//
-//    }
-//
-//    public void addSongToPlaylistFromTemporaryPlaylist(int playlistId) {
-//        Playlist temporaryPlaylist = playlistRepo.getPlaylistByName("temporaryPlaylist");
-//        Playlist targetPlaylist = playlistRepo.getPlaylistById(playlistId);
-//
-//        if (targetPlaylist != null && temporaryPlaylist != null) {
-//            targetPlaylist.getPlaylistSongsListWithId().addAll(temporaryPlaylist.getPlaylistSongsListWithId());
-//            playlistRepo.updatePlaylist(targetPlaylist);
-//        } else {
-//            System.err.println("Target playlist or temporary playlist not found.");
-//        }
-//    }
-//
-//    public void reorderSongsInPlaylist(String playlistName) {/*TODO*/}
+    @Test
+    public void testReorderSongsInPlaylist() {
+        //Arrange
+        playlistService.addSong(playlist.getPlaylistId(), 1);
+        playlistService.addSong(playlist.getPlaylistId(), 2);
+        playlistService.addSong(playlist.getPlaylistId(), 3);
+
+        // Simuler l'entrée utilisateur
+        String input = "2\n1\n3\nx\n";
+        Scanner testScanner = new Scanner(new ByteArrayInputStream(input.getBytes()));
+
+        PlaylistReorderSongService reorderService = new PlaylistReorderSongService(testScanner);
+        reorderService.reorderSongsInPlaylist(playlist.getPlaylistId(), playlistService);
+
+        Playlist updated = playlistService.playlistRepository.getPlaylistById(playlist.getPlaylistId());
+        assertEquals(List.of(2, 1, 3), updated.getPlaylistSongsListWithId());
+    }
 
 
 }

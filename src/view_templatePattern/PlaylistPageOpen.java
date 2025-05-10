@@ -66,7 +66,7 @@ public class PlaylistPageOpen extends _SimplePageTemplate {
     @Override
     public void button4() {
         int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
-        toolbox.getPlaylistServ().reorderSongsInPlaylist(currentPlaylistId, pageService);
+        toolbox.getPlaylistReorderSongService().reorderSongsInPlaylist(currentPlaylistId, toolbox.getPlaylistServ());
     }
 
     @Override
