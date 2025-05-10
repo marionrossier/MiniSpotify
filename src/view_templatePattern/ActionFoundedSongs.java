@@ -28,7 +28,7 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
 
         displayInput();
 
-        int chosenPlaylist = toolbox.getPlaylistServ().validationInputPlaylistChoice();
+        int chosenPlaylist = toolbox.getPlaylistServ().takeAndValidationInputPlaylistChoice();
         toolbox.getPlaylistServ().setCurrentPlaylistId(chosenPlaylist);
         verificationAndThenAction();
     }

@@ -54,7 +54,7 @@ public class PlaylistPageOpen extends _SimplePageTemplate {
         System.out.print("Enter the number of the song you want to remove : ");
 
         int playlistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
-        int songIndex = toolbox.getPlaylistServ().validationInputSongChoice(playlistId);
+        int songIndex = toolbox.getPlaylistServ().takeAndValidateInputSongChoice(playlistId);
         if (songIndex == 0){
             pageService.playlistHomePage.displayAllPage();
         }

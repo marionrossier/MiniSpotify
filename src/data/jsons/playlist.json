@@ -87,19 +87,11 @@
   "status" : "PUBLIC",
   "playlistSongsListWithId" : [ 1988790520, 1986076679, 661206135, 2084461505, 1290739974, 469321884, 469321884, 1951451340, 700468481, 1252829874, 469321884, 625427469 ]
 }, {
-  "name" : "temporaryPlaylist",
-  "playlistId" : 711796559,
-  "durationSeconds" : 0,
-  "size" : 4,
-  "ownerId" : 232928320,
-  "status" : "PRIVATE",
-  "playlistSongsListWithId" : [ 1108071776, 342105258, 625427469, 661206135 ]
-}, {
   "name" : "Dance Floor",
   "playlistId" : 194482233,
   "durationSeconds" : 0,
-  "size" : 5,
+  "size" : 8,
   "ownerId" : 232928320,
   "status" : "PRIVATE",
-  "playlistSongsListWithId" : [ 325561970, 1252829874, 321324189, 521970022, 719812166 ]
+  "playlistSongsListWithId" : [ 1252829874, 325561970, 661206135, 625427469, 321324189, 521970022, 1108071776, 342105258 ]
 } ]

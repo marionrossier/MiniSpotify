@@ -51,7 +51,7 @@ public class PlaylistServices {
         }
     }
 
-    public int validationInputSongChoice(int playlistId) {
+    public int takeAndValidateInputSongChoice(int playlistId) {
         Playlist playlist = getPlaylistById(playlistId);
         int chosenSong = -1;
 
@@ -80,7 +80,7 @@ public class PlaylistServices {
         return chosenSong;
     }
 
-    public int validationInputPlaylistChoice() {
+    public int takeAndValidationInputPlaylistChoice() {
         User currentUser = userRepository.getUserById(userService.getCurrentUserId());
 
         int chosenPlaylist = -1;
@@ -121,7 +121,6 @@ public class PlaylistServices {
         this.playlistRepository.savePlaylist(playlist);
     }
 
-    //TODO : ajuster car la playlist temporaire ne transmet pas ses chansons à l'autre playlist.
     public void addSongToPlaylistFromTemporaryPlaylist(int temporaryPlaylistId, int finalPlaylistId) {
         Playlist temporaryPlaylist = playlistRepository.getPlaylistById(temporaryPlaylistId);
         Playlist targetPlaylist = playlistRepository.getPlaylistById(finalPlaylistId);
@@ -243,7 +242,7 @@ public class PlaylistServices {
     }
 
     public void playlistPageRouter(PageService pageService, SongService songService) {
-        int chosenPlaylist = validationInputPlaylistChoice();
+        int chosenPlaylist = takeAndValidationInputPlaylistChoice();
 
         if (chosenPlaylist == 0) {
             pageService.homePage.displayAllPage();
@@ -331,43 +330,71 @@ public class PlaylistServices {
         return selectedPlaylistIndex;
     }
 
-    //TODO : TESTER gérer le cas ou on met pas tous les chiffres + si on met plusieurs fois le même.
-    public void reorderSong(int playlistId, int songId, int oldIndex, int newIndex) {
-        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
-        playlist.getPlaylistSongsListWithId().remove(oldIndex);
-        playlist.getPlaylistSongsListWithId().add(newIndex, songId);
 
+    //TODO : mettre dans une classe différente
+    public void reorderSongsInPlaylist(int playlistId, PageService pageService) {
+        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+        LinkedList<Integer> newOrder = collectNewOrderFromUser(playlist);
+
+        completeWithRemainingSongs(playlist, newOrder);
+        playlist.setListSongsId(newOrder);
         playlistRepository.savePlaylist(playlist);
+
+        printSuccessMessage(playlist, newOrder);
     }
 
-    public void reorderSongsInPlaylist(int playlistId, PageService pageService) {
-        //TODO : Ajuster pour que cela fonctionne.
-        String input;
-        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+    private LinkedList<Integer> collectNewOrderFromUser(Playlist playlist) {
+        LinkedList<Integer> newOrder = new LinkedList<>();
+        int songIndex;
 
-        int i = 0;
+        System.out.println("Enter the new order of songs (one by one). Press \"x\" to finish:");
+
         while (true) {
-            input = pageService.gotAnInput(scanner.nextLine());
+            String input = scanner.nextLine();
 
-            if (input.equals("x")) {
+            if (input.equalsIgnoreCase("x")) {
                 break;
-            }
-            if (input.equals("0")) {
-                pageService.goBack(pageService.getMenuPages().peek());
             }
 
             try {
-                int songIndex = Integer.parseInt(input) - 1;
-                if (songIndex >= 0 && songIndex < playlist.getSize()) {
+                songIndex = Integer.parseInt(input) - 1;
+                if (isValidIndex(songIndex, playlist)) {
                     int songId = playlist.getPlaylistSongsListWithId().get(songIndex);
-                    reorderSong(playlistId, songId, (songIndex+i), i);
-                    i++;
+                    if (!newOrder.contains(songId)) {
+                        newOrder.add(songId);
+                    } else {
+                        System.err.println("This song is already in the new order. Try again.");
+                    }
                 } else {
                     System.err.println("Invalid selection. Please try again.");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Invalid input. Please enter a number or \"x\" to exit.");
+                System.err.println("Invalid input. Please enter a number or \"x\" to finish.");
+            }
+        }
+
+        return newOrder;
+    }
+
+    private boolean isValidIndex(int index, Playlist playlist) {
+        return index >= 0 && index < playlist.getSize();
+    }
+
+    private void completeWithRemainingSongs(Playlist playlist, List<Integer> newOrder) {
+        List<Integer> allSongs = playlist.getPlaylistSongsListWithId();
+        for (Integer songId : allSongs) {
+            if (!newOrder.contains(songId)) {
+                newOrder.add(songId);
             }
         }
     }
+
+    private void printSuccessMessage(Playlist playlist, List<Integer> newOrder) {
+        if (newOrder.size() < playlist.getSize()) {
+            System.out.println("Playlist reordered successfully with remaining songs added at the end!");
+        } else {
+            System.out.println("Playlist reordered successfully!");
+        }
+    }
+
 }
