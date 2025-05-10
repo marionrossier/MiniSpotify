@@ -57,6 +57,10 @@ public class UserService {
         return Cookies_SingletonPattern.getInstance().getUserId();
     }
 
+    public void saveUser (User user){
+        userRepository.saveUser(user);
+    }
+
     public void resetCookie (){
         Cookies_SingletonPattern.resetCookies();
     }

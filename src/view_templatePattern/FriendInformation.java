@@ -7,6 +7,7 @@ public class FriendInformation extends _SimplePageTemplate {
     public FriendInformation(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
         super(pageManager, spotifyPlayer);
         this.pageId = pageId;
+        this.isFree = false;
         this.pageTitle = "Friend information Page";
         this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
                 icon.iconNbr(1) + "Listen to a playlist" + icon.lineBreak+

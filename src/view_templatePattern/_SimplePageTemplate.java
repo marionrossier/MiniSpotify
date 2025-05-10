@@ -1,5 +1,7 @@
 package view_templatePattern;
 
+import data.entities.PlanEnum;
+import data.entities.User;
 import services.Icon;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
 import services.PageService;
@@ -16,6 +18,7 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
     public IPlaylistPlayer spotifyPlayer;
     PageService pageService;
     Scanner scanner = new Scanner(System.in);
+    boolean isFree = true;
 
     protected Icon icon = new Icon();
     protected final Toolbox toolbox;
@@ -27,6 +30,7 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
     }
 
     public void displayAllPage(){
+        pageIsPremium(isFree);
         addToStack();
         displayTitle(pageTitle);
         displayContent(pageContent);
@@ -34,6 +38,35 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
         displayInput();
         validateInput();
         switchPage();
+    }
+
+    public void pageIsPremium (boolean isFree){
+        if (!isFree){
+            int userId = toolbox.getUserServ().getCurrentUserId();
+            User user = toolbox.getUserServ().getUserById(userId);
+
+            if (user.getPlanEnum().equals(PlanEnum.FREE)) {
+
+                System.out.println("Premium Client option only. \nUpgrade to Premium plan now ? YES or NO");
+                String input = scanner.nextLine();
+                int lastPageId = pageService.getMenuPages().pop();
+                input = input.toLowerCase();
+
+                switch (input) {
+                    case "yes":
+                        user.setPlanEnum(PlanEnum.PREMIUM);
+                        toolbox.getUserServ().saveUser(user);
+                        break;
+                    case "no":
+                        pageService.getPageById(lastPageId).displayAllPage();
+                        break;
+                    default:
+                        System.err.println("Invalid input.");
+                        pageService.getPageById(lastPageId).displayAllPage();
+                }
+
+            }
+        }
     }
 
     private void addToStack() {
