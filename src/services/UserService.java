@@ -5,18 +5,20 @@ import data.entities.User;
 import data.jsons.UserRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserService {
     private final UserRepository userRepository;
-    private final PasswordService passwordService = new PasswordService();
+    private final PasswordService passwordService;
 
     public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
+        this.passwordService = new PasswordService(userRepository);
     }
 
     public int getUserIdByPseudo(String pseudo) {
 
-        User searchedUser = userRepository.getUserByPseudonym(pseudo);
+        User searchedUser = getUserByPseudonym(pseudo);
         if (searchedUser == null) {
             return -1; // Return -1 if the pseudo was not found
         }
@@ -27,35 +29,67 @@ public class UserService {
         byte[] salt = passwordService.generateSalt();
         String hashedPassword = passwordService.hashPassword(password, salt);
 
-        User existingUser = userRepository.getUserByPseudonym(pseudonym);
+        User existingUser = getUserByPseudonym(pseudonym);
         if (existingUser != null) {
             System.err.println("The pseudonym \""+pseudonym+ "\" already exists.");
         }
         else {
             User newUser = new User(pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
-            userRepository.addUser(newUser);
+            userRepository.saveUser(newUser);
         }
     }
 
-    public boolean verifyUserAuthentification(String pseudonym, String password) {
+    public void addUser(int id, String pseudonym, String email, String password, PlanEnum plan) {
+        byte[] salt = passwordService.generateSalt();
+        String hashedPassword = passwordService.hashPassword(password, salt);
 
-        User searchedUser = userRepository.getUserByPseudonym(pseudonym);
-
-        if (searchedUser == null) {
-            System.err.println("The user does not exist.");
-            return false;
+        User existingUser = getUserByPseudonym(pseudonym);
+        if (existingUser != null) {
+            System.err.println("The pseudonym \""+pseudonym+ "\" already exists.");
         }
-
-        String givenHashedPassword = passwordService.hashPassword(password, searchedUser.getSalt());
-
-        if (givenHashedPassword.equals(searchedUser.getPassword())) {
-            return true;
-        } else {
-            System.err.println("The password is incorrect.");
-            return false;
+        else {
+            User newUser = new User(id, pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
+            userRepository.saveUser(newUser);
         }
+    }
+
+    public int getCurrentUserId(){
+        return Cookies_SingletonPattern.getInstance().getUserId();
+    }
+
+    public void saveUser (User user){
+        userRepository.saveUser(user);
+    }
+
+    public void resetCookie (){
+        Cookies_SingletonPattern.resetCookies();
+    }
+
+    public void addOnePlaylist(int playlistId) {
+        List<Integer> playlists = userRepository.getUserById(getCurrentUserId()).getPlaylists();
+        if (playlists == null) {
+            playlists = new ArrayList<>();
+            userRepository.getUserById(getCurrentUserId()).setPlaylists(playlists);
+        }
+        userRepository.addPlaylistToUser(getCurrentUserId(),playlistId);
     }
 
     public void followFriend() {/*TODO*/}
     public void unfollowFriend() {/*TODO*/}
+
+    public User getUserByPseudonym(String pseudonym) {
+        return userRepository.getUserByPseudonym(pseudonym);
+    }
+
+    public User getUserById(int userId) {
+        return userRepository.getUserById(userId);
+    }
+
+    public boolean emailValidation(String email) {
+        String emailRegex = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
+        if (email != null && email.matches(emailRegex)) {
+            return true;
+        }
+        return false;
+    }
 }

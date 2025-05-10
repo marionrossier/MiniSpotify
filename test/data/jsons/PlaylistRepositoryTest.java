@@ -1,10 +1,13 @@
 package data.jsons;
 
 import data.entities.Playlist;
+import data.entities.PlaylistEnum;
 import data.entities.Song;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import services.CommuneMethods;
+import services.PlaylistServices;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,12 +19,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlaylistRepositoryTest {
 
     private File tempFile;
-    private PlaylistRepository repo;
+    private PlaylistRepository playlistRepository;
+    private PlaylistServices playlistService;
+    private SongRepository songRepository;
+    private CommuneMethods communeMethods = new CommuneMethods();
 
     @BeforeEach
     void setUp() throws IOException {
         tempFile = Files.createTempFile("playlists", ".json").toFile();
-        repo = new PlaylistRepository(tempFile.getAbsolutePath());
+        playlistRepository = new PlaylistRepository(tempFile.getAbsolutePath());
+        tempFile = Files.createTempFile("songs", ".json").toFile();
+        songRepository = new SongRepository(tempFile.getAbsolutePath());
+        playlistService = new PlaylistServices(playlistRepository);
     }
 
     @AfterEach
@@ -31,74 +40,53 @@ class PlaylistRepositoryTest {
         }
     }
 
-    private Playlist createTestPlaylist(int id, String name) {
-        Playlist playlist = new Playlist(name);
-        playlist.setPlaylistId(id);
-        return playlist;
-    }
-    
-    private Song createTestSong(int id, String title) {
-        Song song = new Song();
-        song.setSongId(id);
-        song.setTitle(title);
-        song.setSeconds(180);
-        return song;
-    }
-    
-    private void addSongsToPlaylist(Playlist playlist, int... songIds) {
-        for (int id : songIds) {
-            playlist.addSong(createTestSong(id, "Song " + id));
-        }
-    }
-
     @Test
-    void addPlaylist_shouldSaveThePlaylist() {
+    void savePlaylist_shouldSaveThePlaylist() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist");
-        addSongsToPlaylist(playlist, 1, 2, 3);
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Test Playlist", playlistRepository);
 
         // Act
-        repo.addPlaylist(playlist);
+        playlistRepository.savePlaylist(playlist);
 
         // Assert
-        List<Playlist> playlists = repo.getAllPlaylists();
+        List<Playlist> playlists = playlistRepository.getAllPlaylists();
         assertEquals(1, playlists.size());
-        assertEquals("Test Playlist", playlists.get(0).getPlaylistName());
-        assertEquals(3, playlists.get(0).getPlaylistSongsListWithId().size());
+        assertEquals("Test Playlist", playlists.get(0).getName());
     }
 
     @Test
     void savePlaylist_shouldAddPlaylistToRepository() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist");
-        addSongsToPlaylist(playlist, 1, 2, 3);
+        int [] songsId = new int []{1, 2, 3};
+
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Test Playlist", playlistRepository);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository, songsId);
 
         // Act
-        repo.savePlaylist(playlist);
+        playlistRepository.savePlaylist(playlist);
 
         // Assert
-        List<Playlist> playlists = repo.getAllPlaylists();
+        List<Playlist> playlists = playlistRepository.getAllPlaylists();
         assertEquals(1, playlists.size());
-        assertEquals("Test Playlist", playlists.get(0).getPlaylistName());
+        assertEquals("Test Playlist", playlists.get(0).getName());
     }
 
     @Test
     void deletePlaylistById_shouldRemoveThePlaylist() {
         // Arrange
-        Playlist playlistOne = createTestPlaylist(1, "Playlist One");
-        addSongsToPlaylist(playlistOne, 1, 2);
-        
-        Playlist playlistTwo = createTestPlaylist(2, "Playlist Two");
-        addSongsToPlaylist(playlistTwo, 3, 4);
-        
-        repo.addPlaylist(playlistOne);
-        repo.addPlaylist(playlistTwo);
+        Playlist playlistOne = communeMethods.createTestPlaylist(1, "Playlist One", playlistRepository);
+        communeMethods.addSongsToPlaylist(playlistOne, playlistRepository, 1,2);
+        playlistRepository.savePlaylist(playlistOne);
+
+        Playlist playlistTwo = communeMethods.createTestPlaylist(2, "Playlist Two",playlistRepository);
+        communeMethods.addSongsToPlaylist(playlistTwo, playlistRepository, 3,4);
+        playlistRepository.savePlaylist(playlistTwo);
 
         // Act
-        repo.deletePlaylistById(playlistOne.getPlaylistId());
+        playlistRepository.deletePlaylistById(playlistOne.getPlaylistId());
 
         // Assert
-        List<Playlist> result = repo.getAllPlaylists();
+        List<Playlist> result = playlistRepository.getAllPlaylists();
         assertEquals(1, result.size());
         assertEquals(playlistTwo.getPlaylistId(), result.get(0).getPlaylistId());
     }
@@ -106,27 +94,27 @@ class PlaylistRepositoryTest {
     @Test
     void getPlaylistById_shouldFindThePlaylist() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist");
-        addSongsToPlaylist(playlist, 1, 2, 3);
-        repo.addPlaylist(playlist);
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Test Playlist", playlistRepository);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository, 1,2,3);
+        playlistRepository.savePlaylist(playlist);
 
         // Act
-        Playlist result = repo.getPlaylistById(playlist.getPlaylistId());
+        Playlist result = playlistRepository.getPlaylistById(playlist.getPlaylistId());
 
         // Assert
         assertNotNull(result);
-        assertEquals("Test Playlist", result.getPlaylistName());
+        assertEquals("Test Playlist", result.getName());
     }
 
     @Test
     void getPlaylistById_withNonexistentId_shouldReturnNull() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist");
-        addSongsToPlaylist(playlist, 1, 2, 3);
-        repo.addPlaylist(playlist);
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Test Playlist", playlistRepository);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository, 1,2,3);
+        playlistRepository.savePlaylist(playlist);
 
         // Act
-        Playlist result = repo.getPlaylistById(999);
+        Playlist result = playlistRepository.getPlaylistById(999);
 
         // Assert
         assertNull(result);
@@ -135,31 +123,31 @@ class PlaylistRepositoryTest {
     @Test
     void updatePlaylist_shouldModifyThePlaylist() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Original Name");
-        addSongsToPlaylist(playlist, 1, 2);
-        repo.addPlaylist(playlist);
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Original Name", playlistRepository);
+        playlistRepository.savePlaylist(playlist);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository, 1,2);
 
         // Act
-        playlist.setName("Updated Name");
+        playlistService.renamePlayList(playlist.getPlaylistId(), "Updated Name");
+
         // Add more songs
-        addSongsToPlaylist(playlist, 3, 4);
-        repo.updatePlaylist(playlist);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository, 3,4);
 
         // Assert
-        Playlist result = repo.getPlaylistById(playlist.getPlaylistId());
-        assertEquals("Updated Name", result.getPlaylistName());
+        Playlist result = playlistRepository.getPlaylistById(playlist.getPlaylistId());
+        assertEquals("Updated Name", result.getName());
         assertEquals(4, result.getPlaylistSongsListWithId().size());
     }
 
     @Test
     void getPlaylistByName_shouldFindThePlaylist() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist");
-        addSongsToPlaylist(playlist, 1, 2, 3);
-        repo.addPlaylist(playlist);
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Test Playlist", playlistRepository);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository, 1,2,3);
+        playlistRepository.savePlaylist(playlist);
 
         // Act
-        Playlist result = repo.getPlaylistByName("Test Playlist");
+        Playlist result = playlistRepository.getPlaylistByName("Test Playlist");
 
         // Assert
         assertNotNull(result);
@@ -169,12 +157,12 @@ class PlaylistRepositoryTest {
     @Test
     void getPlaylistByName_shouldBeCaseInsensitive() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist");
-        addSongsToPlaylist(playlist, 1, 2, 3);
-        repo.addPlaylist(playlist);
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Test Playlist", playlistRepository);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository, 1,2,3);
+        playlistRepository.savePlaylist(playlist);
 
         // Act
-        Playlist result = repo.getPlaylistByName("test PLAYLIST");
+        Playlist result = playlistRepository.getPlaylistByName("test PLAYLIST");
 
         // Assert
         assertNotNull(result);
@@ -184,12 +172,12 @@ class PlaylistRepositoryTest {
     @Test
     void getPlaylistByName_withNonexistentName_shouldReturnNull() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist");
-        addSongsToPlaylist(playlist, 1, 2, 3);
-        repo.addPlaylist(playlist);
+        Playlist playlist = communeMethods.createTestPlaylist(1, "Test Playlist", playlistRepository);
+        communeMethods.addSongsToPlaylist(playlist, playlistRepository,1,2,3);
+        playlistRepository.savePlaylist(playlist);
 
         // Act
-        Playlist result = repo.getPlaylistByName("Nonexistent Playlist");
+        Playlist result = playlistRepository.getPlaylistByName("Nonexistent Playlist");
 
         // Assert
         assertNull(result);
@@ -198,7 +186,7 @@ class PlaylistRepositoryTest {
     @Test
     void getAllPlaylists_withEmptyRepository_shouldReturnEmptyList() {
         // Act
-        List<Playlist> result = repo.getAllPlaylists();
+        List<Playlist> result = playlistRepository.getAllPlaylists();
 
         // Assert
         assertNotNull(result);

@@ -1,46 +1,47 @@
 package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.Cookies_SingletonPattern;
+import services.PageService;
 
-public class HomePage extends AbstractMenuPage {
+public class HomePage extends _SimplePageTemplate {
 
-    public HomePage(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public HomePage(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Home Page";
         this.pageContent =
-                icon.iconNbr(0) + icon.iconLogout() + icon.lineBreak +
-                icon.iconNbr(1) + "Go to playlists" + icon.lineBreak +
+                icon.iconNbr(0) + "Log out" + " | " + icon.goToMusicPlayer + icon.lineBreak +
+                icon.iconNbr(1) + "Playlists" + icon.lineBreak +
                 icon.iconNbr(2) + "Search" + icon.lineBreak +
-                icon.iconNbr(3) + "Friends" + icon.lineBreak +
-                icon.iconNbr(4) + "Go to music player";
+                icon.iconNbr(3) + "Friends (TODO)" + icon.iconPremium();
     }
 
     @Override
-    void button0() {
+    public void button0() {
         System.out.println("Logging you out ...");
-        spotifyPageFactory.login.templateMethode();
-        Cookies_SingletonPattern.resetCookies();
+        spotifyPlayer.stop();
 
+        toolbox.getUserServ().resetCookie();
+
+        pageService.login.displayAllPage();
     }
 
     @Override
-    void button1() {
-        spotifyPageFactory.playlistChoseList.templateMethode();
+    public void button1() {
+        pageService.playlistHomePage.displayAllPage();
     }
 
     @Override
-    void button2() {
-        spotifyPageFactory.search.templateMethode();
+    public void button2() {
+        pageService.search.displayAllPage();
     }
 
     @Override
-    void button3() {
-        spotifyPageFactory.friendsHomePage.templateMethode();
+    public void button3() {
+        pageService.friendsHomePage.displayAllPage();
     }
 
     @Override
-    void button4(){
-        spotifyPageFactory.songPlayer.templateMethode();
+    public void button9(){ //No action !
     }
 }

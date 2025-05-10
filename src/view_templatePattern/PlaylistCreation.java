@@ -1,30 +1,52 @@
 package view_templatePattern;
 
-import data.entities.Playlist;
-import data.jsons.PlaylistRepository;
+import data.entities.PlaylistEnum;
+import data.entities.User;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.PageService;
 
-public class PlaylistCreation extends AbstractMenuPage {
-    private final Playlist playlist = new Playlist();
-    private final PlaylistRepository playlistRepository = new PlaylistRepository();
+public class PlaylistCreation extends _InversedPageTemplate {
+    private String playlistName;
 
-    public PlaylistCreation(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public PlaylistCreation(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Create Playlist Page";
-        this.pageContent = "Enter the name of the playlist : ";
+        this.pageContent = "You're playlist will be : " + icon.lineBreak +
+                icon.iconNbr(1) + "Private" + icon.lineBreak +
+                icon.iconNbr(2) + "Public";
     }
     @Override
-    void displayContent(String pageContent) {
-        System.out.print(pageContent);
-        String playlistName = in.nextLine();
+    public void displaySpecificContent() {
+        System.out.println("Enter the name of the playlist : ");
+        playlistNameVerification();
+    }
 
-        playlist.setPlaylistName(playlistName);
-        playlistRepository.addPlaylist(playlist);
+    @Override
+    public void button1(){
+        toolbox.getPlaylistServ().createNewPlaylist(playlistName, PlaylistEnum.PRIVATE);
+        pageService.playlistPageOpen.displayAllPage();
+    }
 
-        System.out.println(icon.iconOk() + "Playlist saved successfully !");
+    @Override
+    public void button2(){
+        toolbox.getPlaylistServ().createNewPlaylist(playlistName, PlaylistEnum.PUBLIC);
+        pageService.playlistPageOpen.displayAllPage();
+    }
 
-        //TODO : search a song by songName !
-        //TODO : add back to the menu "icon.iconNbr(0) + icon.iconBack() + icon.lineBreak"
+    private void playlistNameVerification (){
+
+        this.playlistName = pageService.gotAnInput(scanner.nextLine());
+
+        User user = toolbox.getUserServ().getUserById(toolbox.getUserServ().getCurrentUserId());
+
+        boolean playlistNameOk = toolbox.getPlaylistServ().verifyPlaylistName(playlistName, user);
+
+        if (!playlistNameOk){
+            System.out.print("Playlist Name already exist in you're playlists. Try again");
+            this.displayInput();
+            playlistNameVerification();
+        }
     }
 
 }

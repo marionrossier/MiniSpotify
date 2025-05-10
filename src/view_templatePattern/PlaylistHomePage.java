@@ -1,26 +1,27 @@
 package view_templatePattern;
 
 import player_StatePattern.playlist_player.IPlaylistPlayer;
+import services.PageService;
 
-public class PlaylistHomePage extends AbstractMenuPage {
+public class PlaylistHomePage extends _SimplePageTemplate {
 
-    public PlaylistHomePage(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public PlaylistHomePage(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Home Page Playlist";
         this.pageContent =
-                icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
+                icon.backHomePageMusicPlayer + icon.lineBreak +
                 icon.iconNbr(1) + "Choose your playlist" + icon.lineBreak +
                 icon.iconNbr(2) + "Create a playlist";
     }
 
     @Override
-    void button1() {
-        spotifyPageFactory.playlistChoseList.templateMethode();
+    public void button1() {
+        pageService.playlistChoseList.displayAllPage();
     }
 
     @Override
-    void button2() {
-        spotifyPageFactory.playlistCreation.templateMethode();
+    public void button2() {
+        pageService.search.displayAllPage();
     }
-
 }

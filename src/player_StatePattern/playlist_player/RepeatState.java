@@ -13,4 +13,9 @@ class RepeatState implements IState{
     public Song getNextSong() {
         return context.currentSong;
     }
+
+    @Override
+    public Song getPreviousSong (){
+        return context.currentSong;
+    }
 }

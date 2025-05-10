@@ -1,7 +1,5 @@
 package player_StatePattern.playlist_player;
 
-import player_StatePattern.file_player.IMusicPlayer;
-
 public interface IPlaylistPlayer {
 
     void playOrPause(int songId);
@@ -22,9 +20,13 @@ public interface IPlaylistPlayer {
     void setRepeatMode();
     void setSequentialMode();
 
-    int getRunningPlaylistId();
+    int getCurrentPlaylistId();
 
-    int getRunningSongId();
+    int getCurrentSongId();
 
-    IMusicPlayer getMusicPlayer();
+    void stop();
+
+    boolean isPlaying();
+
+    boolean isPaused();
 }

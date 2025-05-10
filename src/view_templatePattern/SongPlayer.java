@@ -1,65 +1,78 @@
 package view_templatePattern;
 
-import data.jsons.SongRepository;
+import data.entities.Playlist;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.Cookies_SingletonPattern;
+import services.PageService;
 
-public class SongPlayer extends AbstractMenuPage {
+public class SongPlayer extends _SimplePageTemplate {
 
-    SongRepository songRepository = new SongRepository();
-
-    public SongPlayer(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
-        super(spotifyPageFactory, spotifyPlayer);
+    public SongPlayer(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
+        this.pageId = pageId;
         this.pageTitle = "Song Player Page";
-        this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak+
-                "Your song player ! " +icon.lineBreak+
-                icon.iconNbr(1) + ":"+ icon.iconShuffle() + " |" +
-                icon.iconNbr(2) + ":"+ icon.iconPrevious() + " |" +
-                icon.iconNbr(3) + ":"+ icon.iconPlayPause() +" |" +
-                icon.iconNbr(4) + ":"+ icon.iconPlayBack() + " |" +
-                icon.iconNbr(5) + ":"+ icon.iconNext() + " |" +
-                icon.iconNbr(6) + ":"+ icon.iconRepeatOne() + " |";
+        this.pageContent =
+                icon.iconBack() + " |  " + icon.goToHomepage +icon.lineBreak+
+                icon.iconNbr(1) + ":"+ icon.iconShuffle() + " | " +
+                icon.iconNbr(2) + ":"+ icon.iconPrevious() + " | " +
+                icon.iconNbr(3) + ":"+ icon.iconPlayPause() +" | " +
+                icon.iconNbr(4) + ":"+ icon.iconPlayBack() + " | " +
+                icon.iconNbr(5) + ":"+ icon.iconNext() + " | " +
+                icon.iconNbr(6) + ":"+ icon.iconRepeatOne();
     }
 
     @Override
-    void button1() {
+    public void displaySpecificContent(){
+        Playlist playlist = toolbox.getPlaylistServ().getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId());
+        System.out.println(
+                "Current Playlist : " + playlist.getName() +
+                ", duration " + (playlist.getDurationSeconds()/60) + ":" + playlist.getDurationSeconds()%60 +
+                ", size : " + playlist.getSize() + icon.lineBreak);
+    }
+
+    @Override
+    public void button1() {
         spotifyPlayer.setShuffleMode();
         loop();
     }
 
     @Override
-    void button2() {
+    public void button2() {
         spotifyPlayer.previous();
         loop();
     }
 
     @Override
-    void button3() {
-        spotifyPlayer.playOrPause(Cookies_SingletonPattern.getInstance().getCurrentSongId());
+    public void button3() {
+        spotifyPlayer.playOrPause(toolbox.getSongServ().getCurrentSongId());
         loop();
     }
 
     @Override
-    void button4() {
+    public void button4() {
         spotifyPlayer.playback();
         loop();
     }
 
     @Override
-    void button5() {
+    public void button5() {
         spotifyPlayer.next();
         loop();
     }
 
     @Override
-    void button6() {
+    public void button6() {
         spotifyPlayer.setRepeatMode();
         loop();
     }
 
+    @Override
+    public void button8(){
+    //No action !
+    }
+
     void loop(){
-        while (spotifyPlayer.getMusicPlayer().isPlaying() || spotifyPlayer.getMusicPlayer().isPaused()) {
-            System.out.println(this.songRepository.getSongById(spotifyPlayer.getRunningSongId()).getSongName());
+        while (spotifyPlayer.isPlaying() || spotifyPlayer.isPaused()) {
+            System.out.println(toolbox.getSongServ().getSongById(spotifyPlayer.getCurrentSongId()).getTitleAndArtist());
             displayInput();
             validateInput();
             switchPage();

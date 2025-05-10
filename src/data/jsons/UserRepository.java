@@ -2,6 +2,7 @@ package data.jsons;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import data.entities.PlanEnum;
 import data.entities.User;
 
 import java.io.File;
@@ -33,7 +34,8 @@ public class UserRepository {
             return new ArrayList<>();
         }
         try {
-            List<User> users = objectMapper.readValue(file, new TypeReference<>() {});
+            List<User> users = objectMapper.readValue(file, new TypeReference<>() {
+            });
             if (users == null || users.isEmpty()) {
                 return new ArrayList<>();
             }
@@ -44,18 +46,19 @@ public class UserRepository {
         }
     }
 
+    public void saveUser(User user) {
+        List<User> users = getAllUsers();
+        users.removeIf(u -> u.getUserId() == user.getUserId());
+        users.add(user);
+        saveAllUsers(users);
+    }
+
     private void saveAllUsers(List<User> users) {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), users);
         } catch (IOException e) {
             System.err.println("Error during the saving of the users : " + e.getMessage());
         }
-    }
-
-    public void addUser(User user) {
-        List<User> users = getAllUsers();
-        users.add(user);
-        saveAllUsers(users);
     }
 
     public void removeUserById(int userId) {
@@ -78,16 +81,52 @@ public class UserRepository {
                 .orElse(null);
     }
 
-    public User updateAccount(User user) {
-        List<User> users = getAllUsers();
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUserId() == user.getUserId()) {
-                users.set(i, user);
-                saveAllUsers(users);
-                return user;
+    public void updatePlanEnum(int userId, PlanEnum newPlan) {
+        User user = getUserById(userId);
+        if (user != null) {
+            user.setPlanEnum(newPlan);
+            saveUser(user);
+        }
+    }
+
+    public void addPlaylistToUser(int userId, int playlistId) {
+            User user = getUserById(userId);
+            if (user != null) {
+                List<Integer> playlists = user.getPlaylists();
+                if (playlists == null) {
+                    playlists = new ArrayList<>();
+                    user.setPlaylists(playlists);
+                }
+                if (!playlists.contains(playlistId)) {
+                    playlists.add(playlistId);
+                    saveUser(user);
+                }
+            }
+    }
+
+    public void addFriendToUser(int userId, int friendId) {
+        User user = getUserById(userId);
+        if (user != null) {
+            List<Integer> friends = user.getFriends();
+            if (friends == null) {
+                friends = new ArrayList<>();
+                user.setFriends(friends);
+            }
+            if (!friends.contains(friendId)) {
+                friends.add(friendId);
+                saveUser(user);
             }
         }
-        System.err.println("User not found.");
-        return null;
+    }
+
+    public void deleteFriendFromUser(int userId, int friendId) {
+        User user = getUserById(userId);
+        if (user != null) {
+            List<Integer> friends = user.getFriends();
+            if (friends != null && friends.contains(friendId)) {
+                friends.remove(Integer.valueOf(friendId));
+                saveUser(user);
+            }
+        }
     }
 }

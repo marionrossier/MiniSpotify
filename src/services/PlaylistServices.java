@@ -1,6 +1,7 @@
 package services;
 
 import data.entities.Playlist;
+import data.entities.PlaylistEnum;
 import data.entities.User;
 import data.jsons.PlaylistRepository;
 import data.jsons.UserRepository;
@@ -9,98 +10,112 @@ import java.util.*;
 
 public class PlaylistServices {
 
-    UserRepository userRepository = new UserRepository();
-    Scanner in = new Scanner(System.in);
-    PlaylistRepository playlistRepository;
+    private final UserRepository userRepository;
+    final PlaylistRepository playlistRepository;
+    private final TemporaryPlaylistService temporaryPlaylistService;
+    private final PlaylistFunctionalitiesService playlistFuncService;
 
-    public PlaylistServices (PlaylistRepository playlistRepository){
+    public PlaylistServices (PlaylistRepository playlistRepository, UserRepository userRepository){
         this.playlistRepository = playlistRepository;
+        this.userRepository = userRepository;
+        this.temporaryPlaylistService = new TemporaryPlaylistService(playlistRepository, userRepository);
+        this.playlistFuncService = new PlaylistFunctionalitiesService(playlistRepository);
     }
 
-    public void deletePlaylist(int playlistId) {
-        playlistRepository.deletePlaylistById(playlistId);
+    public PlaylistServices (PlaylistRepository playlistRepository) {
+        this.playlistRepository = playlistRepository;
+        this.userRepository = new UserRepository();
+        this.temporaryPlaylistService = new TemporaryPlaylistService(playlistRepository, userRepository);
+        this.playlistFuncService = new PlaylistFunctionalitiesService(playlistRepository);
     }
 
-    public void createPlaylist(String playlistName) {/*TODO*/}
+    public void setCurrentPlaylistId (int playlistId){
+        Cookies_SingletonPattern.setCurrentPlaylistId(playlistId);
+    }
 
-    //TODO : dans une classe printService
-    public void printUserPlaylists(){
-        int i = 1;
-        for (int playlistId : userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId()).getPlaylists()) {
-            Playlist playlist = playlistRepository.getPlaylistById(playlistId);
-            if (playlist != null) {
-                System.out.println(i + ". " + playlist.getPlaylistName());
-                i++;
+    public int getCurrentPlaylistId (){
+        return Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
+    }
+
+    public PlaylistEnum getPlaylistStatus (){
+        return playlistRepository.getPlaylistStatus(getCurrentPlaylistId());
+    }
+
+    public int getAllSongsPlaylistId (){
+        return playlistRepository.getPlaylistByName("AllSongs").getPlaylistId();
+    }
+
+    public Playlist getPlaylistByName(String name) {
+        return playlistRepository.getPlaylistByName(name);
+    }
+
+    public Playlist getPlaylistById(int id) {
+        return playlistRepository.getPlaylistById(id);
+    }
+
+    public List<Playlist> getPublicPlaylists() {
+        List<Playlist> allPlaylists = playlistRepository.getAllPlaylists();
+        List<Playlist> publicPlaylist = new ArrayList<>();
+
+        for (Playlist playlist : allPlaylists){
+            if (playlist.getStatus().equals(PlaylistEnum.PUBLIC)){
+                publicPlaylist.add(playlist);
             }
         }
+        return  publicPlaylist;
     }
 
-    public int validationPlaylistChoice() {
-        Scanner scanner = new Scanner(System.in);
-        User currentUser = userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId());
-
-        int chosenPlaylist = -1;
-
-        while (true) {
-            String input = scanner.nextLine();
-
-            if (input.equals("0")) {
-                return 0;
-            }
-
-            try {
-                int inputNumber = Integer.parseInt(input);
-
-                if (inputNumber < 1 || inputNumber > currentUser.getPlaylists().size()) {
-                    System.err.println("Invalid Playlist number.");
-                    System.out.println("Try again or press \"0\" to go back : ");
-                } else {
-                    chosenPlaylist = currentUser.getPlaylists().get(inputNumber - 1);
-                    break;
-                }
-            } catch (NumberFormatException e) {
-                System.err.println("Invalid input, please enter a number : ");
-            }
-        }
-
-        return chosenPlaylist;
-    }
-
-    public void addSongToPlaylist(int songId) {
-        playlistRepository.getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId())
-                .getPlaylistSongsListWithId().add(songId);
-    }
-
-    public void addSongToPlaylistFromTemporaryPlaylist(int playlistId) {
-        Playlist temporaryPlaylist = playlistRepository.getPlaylistByName("temporaryPlaylist");
-        Playlist targetPlaylist = playlistRepository.getPlaylistById(playlistId);
-
-        if (targetPlaylist != null && temporaryPlaylist != null) {
-            targetPlaylist.getPlaylistSongsListWithId().addAll(temporaryPlaylist.getPlaylistSongsListWithId());
-            playlistRepository.updatePlaylist(targetPlaylist);
-        } else {
-            System.err.println("Target playlist or temporary playlist not found.");
-        }
-    }
-
-    public void editPlayListName(int playlistId, String newName) {
-        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
-        playlist.setPlaylistName(newName);
-        playlistRepository.savePlaylist(playlist);
-        System.out.println("Playlist renamed to " + newName + " !");
-    }
-
-    public void removeSongFromPlaylist(int songIndex) {
-        Playlist playlist = playlistRepository.getPlaylistById(Cookies_SingletonPattern.getInstance().getCurrentPlaylistId());
-        playlistRepository.getPlaylistById(playlist.getPlaylistId())
-                .getPlaylistSongsListWithId().remove(songIndex);
-        playlistRepository.savePlaylist(playlist);
-
-    }
-
-    public void reorderSongsInPlaylist(String playlistName) {/*TODO*/}
     public LinkedList<Playlist> getSharedPlaylist(User followedUser) {
         throw new UnsupportedOperationException("Not implemented yet");
         /*TODO*/
+    }
+
+    //PLAYLIST FUNCTIONALITIES :
+    public void createNewPlaylist (String playlistName, PlaylistEnum status){
+        playlistFuncService.createNewPlaylist(playlistName,status, this);
+    }
+    public void createAllSongPlaylist (User user){
+        playlistFuncService.createAllSongPlaylist(user, this);
+    }
+    public void deletePlaylist(int playlistId) {
+        playlistFuncService.deletePlaylist(playlistId);
+    }
+    public void renamePlayList(int playlistId, String newName) {
+        playlistFuncService.renamePlayList(playlistId, newName);
+    }
+    public boolean verifyPlaylistName(String playlistName, User user) {
+        return playlistFuncService.verifyPlaylistName(playlistName, user);
+    }
+    public void deleteSongFromPlaylist(int playlistId, int songIndex) {
+       playlistFuncService.deleteSongFromPlaylist(playlistId, songIndex);
+    }
+    public boolean isCurrentUserOwnerOfPlaylist(int playlistId) {
+        return playlistFuncService.isCurrentUserOwnerOfPlaylist(playlistId);
+    }
+    public int takeAndValidateInputSongChoice(int playlistId) {
+       return playlistFuncService.takeAndValidateInputSongChoice(playlistId, this);
+    }
+    public int takeAndValidationInputPlaylistChoice() {
+        return playlistFuncService.takeAndValidationInputPlaylistChoice();
+    }
+    public void playlistPageRouter(PageService pageService, SongService songService) {
+        playlistFuncService.playlistPageRouter(pageService, songService, this);
+    }
+
+    //TEMPORARY PLAYLIST :
+    public int getTemporaryPlaylistId() {
+        return temporaryPlaylistService.getTemporaryPlaylistId();
+    }
+    public void createTemporaryPlaylist(LinkedList<Integer> chosenSongs, PlaylistEnum status) {
+        temporaryPlaylistService.createTemporaryPlaylist(chosenSongs,status);
+    }
+    public void createPlaylistWithTemporaryPlaylist(String playlistName, PlaylistEnum status) {
+        temporaryPlaylistService.createPlaylistWithTemporaryPlaylist(playlistName,status);
+    }
+    public void addSongToPlaylistFromTemporaryPlaylist(int temporaryPlaylistId, int finalPlaylistId) {
+        temporaryPlaylistService.addSongToPlaylistFromTemporaryPlaylist(temporaryPlaylistId, finalPlaylistId);
+    }
+    public void deleteTemporaryPlaylist() {
+        temporaryPlaylistService.deleteTemporaryPlaylist();
     }
 }

@@ -1,85 +1,113 @@
 [ {
-  "playlistName" : "AllSongs",
-  "playlistId" : 2010779858,
-  "playlistSeconds" : 6286,
-  "playlistSize" : 26,
-  "ownerId" : 0,
-  "playlistSongsListWithId" : [ 1108071776, 1986076679, 2084461505, 342105258, 625427469, 325561970, 321324189, 1280045910, 354322599, 1925355941, 1951451340, 243871940, 1988790520, 719812166, 700468481, 469321884, 1824616046, 998984026, 661206135, 1290739974, 1252829874, 521970022, 1287974581, 614172035, 494087492, 515539482 ]
-}, {
-  "playlistName" : "POP Vibes",
-  "playlistId" : 1723864887,
-  "playlistSeconds" : 1480,
-  "playlistSize" : 6,
-  "ownerId" : 0,
+  "name" : "POP Vibes",
+  "playlistId" : 2119316819,
+  "durationSeconds" : 0,
+  "size" : 6,
+  "ownerId" : 1,
+  "status" : "PUBLIC",
   "playlistSongsListWithId" : [ 1986076679, 2084461505, 1988790520, 700468481, 998984026, 1290739974 ]
 }, {
-  "playlistName" : "Rock Legends",
-  "playlistId" : 91026931,
-  "playlistSeconds" : 1317,
-  "playlistSize" : 6,
-  "ownerId" : 0,
+  "name" : "Rock Legends",
+  "playlistId" : 2032531633,
+  "durationSeconds" : 0,
+  "size" : 6,
+  "ownerId" : 1,
+  "status" : "PUBLIC",
   "playlistSongsListWithId" : [ 243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482 ]
 }, {
-  "playlistName" : "Amy Forever",
-  "playlistId" : 507157566,
-  "playlistSeconds" : 822,
-  "playlistSize" : 4,
-  "ownerId" : 0,
+  "name" : "Amy Forever",
+  "playlistId" : 828811140,
+  "durationSeconds" : 0,
+  "size" : 4,
+  "ownerId" : 1,
+  "status" : "PUBLIC",
   "playlistSongsListWithId" : [ 1108071776, 342105258, 625427469, 661206135 ]
 }, {
-  "playlistName" : "Imagine This",
-  "playlistId" : 479327418,
-  "playlistSeconds" : 838,
-  "playlistSize" : 4,
-  "ownerId" : 0,
+  "name" : "Imagine This",
+  "playlistId" : 565450163,
+  "durationSeconds" : 0,
+  "size" : 4,
+  "ownerId" : 1726370281,
+  "status" : "PUBLIC",
   "playlistSongsListWithId" : [ 1287974581, 614172035, 494087492, 515539482 ]
 }, {
-  "playlistName" : "Quick Hits",
-  "playlistId" : 106575472,
-  "playlistSeconds" : 1240,
-  "playlistSize" : 7,
-  "ownerId" : 0,
+  "name" : "Quick Hits",
+  "playlistId" : 626219963,
+  "durationSeconds" : 0,
+  "size" : 7,
+  "ownerId" : 1,
+  "status" : "PUBLIC",
   "playlistSongsListWithId" : [ 625427469, 1280045910, 354322599, 1925355941, 661206135, 1252829874, 494087492 ]
 }, {
-  "playlistName" : "Girls",
-  "playlistId" : 275850304,
-  "playlistSeconds" : 2754,
-  "playlistSize" : 12,
-  "ownerId" : 0,
-  "playlistSongsListWithId" : [ 1108071776, 342105258, 625427469, 661206135, 1986076679, 2084461505, 1290739974, 1951451340, 469321884, 1252829874, 1988790520, 700468481 ]
-}, {
-  "playlistName" : "Boys",
-  "playlistId" : 87371119,
-  "playlistSeconds" : 2726,
-  "playlistSize" : 12,
-  "ownerId" : 0,
-  "playlistSongsListWithId" : [ 325561970, 321324189, 521970022, 1280045910, 719812166, 243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482, 998984026 ]
-}, {
-  "playlistName" : "Soul & RnB Grooves",
-  "playlistId" : 1077548532,
-  "playlistSeconds" : 1507,
-  "playlistSize" : 7,
-  "ownerId" : 0,
+  "name" : "Soul & RnB Grooves",
+  "playlistId" : 289955153,
+  "durationSeconds" : 0,
+  "size" : 7,
+  "ownerId" : 1,
+  "status" : "PUBLIC",
   "playlistSongsListWithId" : [ 1108071776, 342105258, 625427469, 1280045910, 1951451340, 719812166, 661206135 ]
 }, {
-  "playlistName" : "Dance Floor",
-  "playlistId" : 1386898919,
-  "playlistSeconds" : 909,
-  "playlistSize" : 4,
-  "ownerId" : 0,
-  "playlistSongsListWithId" : [ 325561970, 1252829874, 321324189, 521970022 ]
-}, {
-  "playlistName" : "Random Favorites",
-  "playlistId" : 1123430232,
-  "playlistSeconds" : 1114,
-  "playlistSize" : 5,
-  "ownerId" : 0,
+  "name" : "Random Favorites",
+  "playlistId" : 1204933207,
+  "durationSeconds" : 0,
+  "size" : 5,
+  "ownerId" : 1726370281,
+  "status" : "PUBLIC",
   "playlistSongsListWithId" : [ 1280045910, 1951451340, 1252829874, 719812166, 521970022 ]
 }, {
-  "playlistName" : "Before 2000",
-  "playlistId" : 621042657,
-  "playlistSeconds" : 833,
-  "playlistSize" : 4,
-  "ownerId" : 0,
+  "name" : "Before 2000",
+  "playlistId" : 1850222090,
+  "durationSeconds" : 0,
+  "size" : 4,
+  "ownerId" : 1726370281,
+  "status" : "PRIVATE",
   "playlistSongsListWithId" : [ 325561970, 354322599, 1925355941, 700468481 ]
+}, {
+  "name" : "AllSongs",
+  "playlistId" : 1543435989,
+  "durationSeconds" : 0,
+  "size" : 26,
+  "ownerId" : 1,
+  "status" : "PUBLIC",
+  "playlistSongsListWithId" : [ 1108071776, 1986076679, 2084461505, 342105258, 625427469, 325561970, 321324189, 1280045910, 354322599, 1925355941, 1951451340, 243871940, 1988790520, 719812166, 700468481, 469321884, 1824616046, 998984026, 661206135, 1290739974, 1252829874, 521970022, 1287974581, 614172035, 494087492, 515539482 ]
+}, {
+  "name" : "Girls",
+  "playlistId" : 933742919,
+  "durationSeconds" : 0,
+  "size" : 12,
+  "ownerId" : 232928320,
+  "status" : "PUBLIC",
+  "playlistSongsListWithId" : [ 1988790520, 1986076679, 661206135, 2084461505, 1290739974, 469321884, 469321884, 1951451340, 700468481, 1252829874, 469321884, 625427469 ]
+}, {
+  "name" : "Dance Floor",
+  "playlistId" : 194482233,
+  "durationSeconds" : 0,
+  "size" : 8,
+  "ownerId" : 232928320,
+  "status" : "PRIVATE",
+  "playlistSongsListWithId" : [ 1252829874, 325561970, 661206135, 625427469, 321324189, 521970022, 1108071776, 342105258 ]
+}, {
+  "name" : "Boys",
+  "playlistId" : 688353678,
+  "durationSeconds" : 0,
+  "size" : 13,
+  "ownerId" : 232928320,
+  "status" : "PUBLIC",
+  "playlistSongsListWithId" : [ 1108071776, 719812166, 1287974581, 614172035, 243871940, 1280045910, 325561970, 321324189, 521970022, 1824616046, 494087492, 515539482, 998984026 ]
+}, {
+  "name" : "temporaryPlaylist",
+  "playlistId" : 1220346103,
+  "durationSeconds" : 0,
+  "size" : 4,
+  "ownerId" : 232928320,
+  "status" : "PRIVATE",
+  "playlistSongsListWithId" : [ 342105258, 661206135, 1290739974, 1287974581 ]
+}, {
+  "name" : "ElectroLovers",
+  "playlistId" : 1768640091,
+  "durationSeconds" : 0,
+  "size" : 5,
+  "ownerId" : 232928320,
+  "status" : "PRIVATE",
+  "playlistSongsListWithId" : [ 1252829874, 342105258, 661206135, 1290739974, 1287974581 ]
 } ]

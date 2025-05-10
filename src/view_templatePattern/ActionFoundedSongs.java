@@ -1,75 +1,58 @@
 package view_templatePattern;
 
-import data.entities.Playlist;
-import data.entities.User;
-import data.jsons.PlaylistRepository;
-import data.jsons.UserRepository;
 import player_StatePattern.playlist_player.IPlaylistPlayer;
-import services.Cookies_SingletonPattern;
-import services.PlaylistServices;
+import services.PageService;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
 
-public class ActionFoundedSongs extends AbstractMenuPage {
+public class ActionFoundedSongs extends _SimplePageTemplate {
 
-    Scanner in = new Scanner(System.in);
-    PlaylistRepository playlistRepository = new PlaylistRepository();
-    PlaylistServices playlistService = new PlaylistServices(playlistRepository);
-    UserRepository userRepository = new UserRepository();
-
-    public ActionFoundedSongs(SpotifyPageFactory spotifyPageFactory, IPlaylistPlayer spotifyPlayer) {
-        super(spotifyPageFactory, spotifyPlayer);
-
-        this.pageTitle = "Chose your action for the founded songs";
-        this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
-                    icon.iconNbr(1) + "Play Temporary Playlist" + icon.lineBreak +
-                    icon.iconNbr(2) + "Add to playlist" + icon.lineBreak +
-                    icon.iconNbr(3) + "Create a playlist";
+    public ActionFoundedSongs(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
+        super(pageManager, spotifyPlayer);
+        this.pageId = pageId;
+        this.pageTitle = "Chose your action for the selected songs";
+        this.pageContent = icon.goBack + " |  " + icon.goToHomepage + icon.lineBreak +
+                    icon.iconNbr(1) + "Add to current playlist" + icon.lineBreak +
+                    icon.iconNbr(2) + "Add to an other playlist" +icon.lineBreak +
+                    icon.iconNbr(3) + "Create a new playlist" + icon.lineBreak;
     }
 
     @Override
-    void button0() {
-        spotifyPageFactory.search.templateMethode();
+    public void button1() {
+        verificationAndThenAction();
     }
 
     @Override
-    void button1() {
-        List<Integer> songs = Cookies_SingletonPattern.getInstance().getTemporaryPlaylist();
-        Playlist temporaryPlaylist = new Playlist("temporaryPlaylist");
-        temporaryPlaylist.setPlaylistSongsId((LinkedList<Integer>) Cookies_SingletonPattern.getInstance().getTemporaryPlaylist());
+    public void button2() {
+        System.out.println("Your Playlists : ");
+        toolbox.getPrintServ().printUserPlaylists(toolbox.getUserServ().getCurrentUserId());
 
-        Cookies_SingletonPattern.setCurrentPlaylistId(temporaryPlaylist.getPlaylistId());
-
-        if (songs != null && !songs.isEmpty()) {
-                spotifyPageFactory.songPlayer.templateMethode();
-        } else {
-            System.out.println("No songs found to play.");
-        }
-        spotifyPageFactory.search.templateMethode();
-    }
-
-    @Override
-    void button2() {
-        System.out.println("Select your playlist : ");
-        playlistService.printUserPlaylists();
         displayInput();
-        int playlistId = playlistService.validationPlaylistChoice();
 
-        playlistService.addSongToPlaylistFromTemporaryPlaylist(playlistId);
+        int chosenPlaylist = toolbox.getPlaylistServ().takeAndValidationInputPlaylistChoice();
+        toolbox.getPlaylistServ().setCurrentPlaylistId(chosenPlaylist);
+        verificationAndThenAction();
+    }
+
+    private void verificationAndThenAction() {
+        int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
+        int temporaryPlaylistId = toolbox.getPlaylistServ().getTemporaryPlaylistId();
+
+        if (toolbox.getPlaylistServ().isCurrentUserOwnerOfPlaylist(currentPlaylistId)) {
+            toolbox.getPlaylistServ().addSongToPlaylistFromTemporaryPlaylist(temporaryPlaylistId,currentPlaylistId);
+            pageService.playlistPageOpen.displayAllPage();
+        }
+        else {
+            System.err.println("You're not the owner of this playlist.");
+            pageService.actionFoundedSongs.displayAllPage();
+        }
     }
 
     @Override
-    void button3() {
-        System.out.println("Playlist Name : ");
-
-        Playlist newPlaylist = new Playlist(in.nextLine());
-        newPlaylist.setPlaylistSongsId((LinkedList<Integer>) Cookies_SingletonPattern.getInstance().getTemporaryPlaylist());
-        User user = userRepository.getUserById(Cookies_SingletonPattern.getInstance().getUserId());
-        userRepository.updateAccount(user).addOnePlaylist(newPlaylist.getPlaylistId());
-
-        spotifyPageFactory.playlistHomePage.templateMethode();
+    public void button3() {
+        pageService.playlistCreation.displayAllPage();
     }
 
+    @Override
+    public void button8(){//no action !
+    }
 }

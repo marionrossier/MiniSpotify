@@ -70,30 +70,21 @@ public class SongRepository {
     }
 
     public LinkedList<Song> getSongsByTitle(String title) {
-        if (title == null || title.isEmpty()) {
-            System.out.println("No result.");
-            return new LinkedList<>();
-        }
         return new LinkedList<>(getAllSongs().stream()
                 .filter(song -> song.getTitle().toLowerCase().contains(title.toLowerCase()))
                 .toList());
     }
 
-    public List<Song> getSongsByArtist(String artist) {
-        if (artist == null || artist.isEmpty()) {
-            System.out.println("No result.");
-            return new ArrayList<>();
-        }
-
-        return getAllSongs().stream()
+    public LinkedList<Song> getSongsByArtist(String artist) {
+        return new LinkedList<>(getAllSongs().stream()
                 .filter(song -> song.getArtist().getArtistName().toLowerCase().contains(artist.toLowerCase()))
-                .toList();
+                .toList());
     }
 
-    public List<Song> getSongsByGender(MusicGender gender) {
-        return getAllSongs().stream()
+    public LinkedList<Song> getSongsByGender(MusicGender gender) {
+        return new LinkedList<>(getAllSongs().stream()
                 .filter(song -> song.getGender() == gender)
-                .toList();
+                .toList());
     }
 
     public String getFilePath() {
