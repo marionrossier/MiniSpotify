@@ -1,0 +1,157 @@
+package utilsAndFakes;
+
+import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
+import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
+import clientSide.services.*;
+import serverSide.StockageService;
+import serverSide.entities.*;
+import serverSide.repositories.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Scanner;
+
+public abstract class CommuneMethods {
+
+    Scanner scanner = new Scanner(System.in);
+    protected File tempPlaylistsFile;
+    protected File tempSongsFile;
+    protected File tempUsersFile;
+    protected File tempArtistFile;
+
+    protected PlaylistLocalRepository playlistLocalRepository;
+    protected SongLocalRepository songLocalRepository;
+    protected UserLocalRepository userLocalRepository;
+    protected IAudioRepository audioLocalRepository;
+    protected ArtistLocalRepository artistLocalRepository;
+
+    protected ServiceToolBox serviceToolBox;
+    protected PlaylistServices playlistService;
+    protected StockageService stockageService;
+    protected PlaylistFunctionalitiesService playlistFunctionalitiesService;
+    protected TemporaryPlaylistService temporaryPlaylistService;
+    protected UserService userService;
+    protected PasswordService passwordService;
+    protected ArtistService artistService;
+    protected PrintService printService;
+    protected SearchService searchService;
+    protected PlaylistReorderSongService playlistReorderSongService;
+    protected UniqueIdService uniqueIdService;
+    protected SongService songService;
+
+    protected ViewToolBox viewToolBox;
+
+    protected IPlaylistPlayer playlistPlayer;
+    protected FakeMusicPlayer fakeMusicPlayer;
+
+    protected PageService pageService;
+
+    private NavigationStackService navigationStackService;
+
+
+    public CommuneMethods() throws IOException {
+
+        tempPlaylistsFile = Files.createTempFile("playlist", ".json").toFile();
+        playlistLocalRepository = new PlaylistLocalRepository(tempPlaylistsFile.getAbsolutePath());
+
+        tempArtistFile = Files.createTempFile("artist", ".json").toFile();
+        artistLocalRepository = new ArtistLocalRepository(tempPlaylistsFile.getAbsolutePath());
+
+        tempUsersFile = Files.createTempFile("user", ".json").toFile();
+        userLocalRepository = new UserLocalRepository(tempUsersFile.getAbsolutePath());
+
+        stockageService = new StockageService();
+        tempSongsFile = Files.createTempFile("song", ".json").toFile();
+        songLocalRepository = new SongLocalRepository(tempSongsFile.getAbsolutePath(),
+                stockageService, artistLocalRepository);
+
+        audioLocalRepository = new AudioLocalRepository();
+        passwordService = new PasswordService(userLocalRepository);
+        serviceToolBox = new ServiceToolBox(playlistLocalRepository, userLocalRepository, songLocalRepository,
+                artistLocalRepository, audioLocalRepository);
+
+        userService = new UserService(serviceToolBox,passwordService);
+        temporaryPlaylistService = new TemporaryPlaylistService(serviceToolBox,userService);
+        songService = new SongService(serviceToolBox);
+        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(serviceToolBox, userLocalRepository, userService);
+        playlistService = new PlaylistServices(serviceToolBox, playlistFunctionalitiesService, temporaryPlaylistService);
+        artistService = new ArtistService(serviceToolBox);
+        printService = new PrintService(songService, artistService, playlistService, userService);
+        searchService = new SearchService(songService, printService);
+        playlistReorderSongService = new PlaylistReorderSongService(serviceToolBox, scanner);
+        uniqueIdService = new UniqueIdService();
+        songService = new SongService(serviceToolBox);
+        navigationStackService = new NavigationStackService();
+
+        fakeMusicPlayer = new FakeMusicPlayer();
+        playlistPlayer = new PlaylistPlayer(
+                fakeMusicPlayer, audioLocalRepository, songService, playlistService);
+
+        viewToolBox = new ViewToolBox(playlistService, userService, songService, artistService, printService,
+                searchService, passwordService, playlistReorderSongService, temporaryPlaylistService, uniqueIdService, passwordService);
+
+        pageService = new PageService(playlistPlayer, viewToolBox, navigationStackService, userService);
+
+    }
+
+    public void addSongToPlaylist(int currentPlaylistId, int currentSongId, PlaylistLocalRepository playlistLocalRepository,
+                                  PlaylistServices playlistServices) {
+        Playlist playlist = playlistLocalRepository.getPlaylistById(currentPlaylistId);
+        playlist.getPlaylistSongsListWithId().add(currentSongId);
+        int playlistDuration = playlistServices.setDurationSeconds(playlist.getPlaylistId());
+        int playlistSize = playlist.getSize();
+        playlist.setPlaylistInformation(playlistDuration, playlistSize);
+
+        playlistLocalRepository.savePlaylist(playlist);
+    }
+
+    public void addSongsToPlaylist(Playlist playlist, int... songIds) {
+        for (int id : songIds) {
+            Song song = createTestSong(id, "Song " + id);
+            this.addSongToPlaylist(playlist.getPlaylistId(), song.getSongId(), playlistLocalRepository, playlistService);
+        }
+    }
+
+    protected Song createSong(int id, String title, String fileName) {
+        Song song = new Song();
+        song.setSongId(id);
+        song.setTitle(title);
+        song.setAudioFileName(fileName);
+        return song;
+    }
+
+    public Playlist createTestPlaylist(int id, String name, PlaylistLocalRepository playlistLocalRepository) {
+        Playlist playlist = new Playlist(name, PlaylistEnum.PRIVATE);
+        playlist.setPlaylistId(id);
+        playlistLocalRepository.savePlaylist(playlist);
+        return playlist;
+    }
+
+    private Song createTestSong(int id, String title) {
+        Song song = new Song();
+        song.setSongId(id);
+        song.setTitle(title);
+        song.setDurationSeconds(180);
+        return song;
+    }
+
+    public Song createTestSong(int id, String title, String artistName, MusicGender gender,
+                               ArtistLocalRepository artistLocalRepository) {
+        Song song = new Song();
+        song.setSongId(id);
+        song.setTitle(title);
+
+        Artist artist = new Artist(artistName);
+        artist.setArtistId(100 + id); // Unique ID for artist
+        artistLocalRepository.saveArtist(artist);
+
+        song.setArtistId(artist.getArtistId());
+
+        song.setDurationSeconds(180);
+        song.setGender(gender);
+
+        return song;
+    }
+
+}

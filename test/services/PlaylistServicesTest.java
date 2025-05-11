@@ -1,80 +1,56 @@
 package services;
 
-import data.entities.*;
-import data.jsons.PlaylistRepository;
-import data.jsons.SongRepository;
-import data.jsons.UserRepository;
+import utilsAndFakes.CommuneMethods;
+import serverSide.entities.*;
+import clientSide.services.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import player_StatePattern.file_player.FakeMusicPlayer;
-import player_StatePattern.playlist_player.PlaylistPlayer;
+import utilsAndFakes.FakeMusicPlayer;
+import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlaylistServicesTest {
+class PlaylistServicesTest extends CommuneMethods{
 
-    private File songTempFile;
-    private File playlistTempFile;
-    private File userTempFile;
     private Playlist playlist;
-    private PlaylistServices playlistService;
-    private TemporaryPlaylistService temporaryPlaylistService;
-    private CommuneMethods communeMethods = new CommuneMethods();
-    private SongRepository songRepository;
-    private UserRepository userRepository;
-    private PlaylistRepository playlistRepository;
+
+    public PlaylistServicesTest() throws IOException {
+    }
 
     @BeforeEach
     void setUp() throws IOException {
-
-        // Create temporary files for repositories
-        songTempFile = Files.createTempFile("songs", ".json").toFile();
-        playlistTempFile = Files.createTempFile("playlists", ".json").toFile();
-        userTempFile = Files.createTempFile("users", ".json").toFile();
-
-
-        // Initialize repositories with temp files
-        songRepository = new SongRepository(songTempFile.getAbsolutePath());
-        userRepository = new UserRepository(userTempFile.getAbsolutePath());
-        playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
-
-        playlistService = new PlaylistServices(playlistRepository, userRepository);
-        temporaryPlaylistService = new TemporaryPlaylistService(playlistRepository, userRepository);
-
         // Create test songs
-        Song song1 = communeMethods.createSong(1, "Song 1", "path/to/song1.mp3");
-        Song song2 = communeMethods.createSong(2, "Song 2", "path/to/song2.mp3");
-        Song song3 = communeMethods.createSong(3, "Song 3", "path/to/song3.mp3");
+        Song song1 = createSong(1, "Song 1", "song1.mp3");
+        Song song2 = createSong(2, "Song 2", "song2.mp3");
+        Song song3 = createSong(3, "Song 3", "song3.mp3");
 
         // Add songs to repository
-        songRepository.addSong(song1);
-        songRepository.addSong(song2);
-        songRepository.addSong(song3);
+        songLocalRepository.addSong(song1);
+        songLocalRepository.addSong(song2);
+        songLocalRepository.addSong(song3);
 
         // Create a test playlist
         playlist = new Playlist("Test Playlist", PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(1);
-        playlistRepository.savePlaylist(playlist);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), playlistRepository);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), playlistRepository);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), playlistRepository);
+        playlistLocalRepository.savePlaylist(playlist);
+        addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), playlistLocalRepository, playlistService);
+        addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), playlistLocalRepository, playlistService);
+        addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), playlistLocalRepository, playlistService);
 
         // Add playlist to repository
-        playlistRepository.savePlaylist(playlist);
+        playlistLocalRepository.savePlaylist(playlist);
 
         // Create a test user
         User user = new User("testUsers","email", "testUsers", PlanEnum.FREE);
         user.setUserId(400953820);
-        userRepository.saveUser(user);
+        userLocalRepository.saveUser(user);
 
         // Create Cookies_SingeltonPattern instance
         Cookies_SingletonPattern.setInstance(400953820); //testUsers
@@ -83,20 +59,21 @@ class PlaylistServicesTest {
         FakeMusicPlayer fakeMusicPlayer = new FakeMusicPlayer();
 
         // Instantiate the PlaylistPlayer with the fake player and repositories
-        PlaylistPlayer playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository);
+        PlaylistPlayer playlistPlayer = new PlaylistPlayer(
+                fakeMusicPlayer, audioLocalRepository, songService, playlistService);
 
-        // Create playlistService
-        playlistService = new PlaylistServices(playlistRepository, userRepository);
+        // Create playlistServices
+        playlistService = new PlaylistServices(serviceToolBox, playlistFunctionalitiesService, temporaryPlaylistService);
     }
 
     @AfterEach
     void tearDown() {
         // Delete temporary files
-        if (songTempFile != null && songTempFile.exists()) {
-            songTempFile.delete();
+        if (tempSongsFile != null && tempSongsFile.exists()) {
+            tempSongsFile.delete();
         }
-        if (playlistTempFile != null && playlistTempFile.exists()) {
-            playlistTempFile.delete();
+        if (tempPlaylistsFile != null && tempPlaylistsFile.exists()) {
+            tempPlaylistsFile.delete();
         }
     }
 
@@ -108,7 +85,7 @@ class PlaylistServicesTest {
 
         // Act
         playlistService.renamePlayList(playlistId, newName);
-        String playlistName = playlistService.playlistRepository.getPlaylistById(1).getName();
+        String playlistName = playlistLocalRepository.getPlaylistById(1).getName();
         // Assert
         assertEquals(newName, playlistName);
     }
@@ -120,7 +97,7 @@ class PlaylistServicesTest {
 
         // Act
         playlistService.deletePlaylist(playlistId);
-        Playlist deletedPlaylist = playlistService.playlistRepository.getPlaylistById(playlistId);
+        Playlist deletedPlaylist = playlistLocalRepository.getPlaylistById(playlistId);
 
         // Assert
         assertNull(deletedPlaylist, "The playlist should be deleted");
@@ -134,13 +111,13 @@ class PlaylistServicesTest {
 
         //Act
         playlistService.createTemporaryPlaylist(chosenSongs, PlaylistEnum.PUBLIC);
-        int temporaryPlaylistId = playlistService.playlistRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId();
-        int firstSongId = playlistService.playlistRepository
+        int temporaryPlaylistId = playlistLocalRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId();
+        int firstSongId = playlistLocalRepository
                 .getPlaylistById(temporaryPlaylistId).getPlaylistSongsListWithId().getFirst();
 
         //Assert
         assertEquals("temporaryPlaylist",
-                playlistService.playlistRepository.getPlaylistByName("temporaryPlaylist").getName());
+                playlistLocalRepository.getPlaylistByName("temporaryPlaylist").getName());
     }
 
     @Test
@@ -153,7 +130,7 @@ class PlaylistServicesTest {
         //Act
         playlistService.deleteTemporaryPlaylist();
         //Assert
-        assertNull(playlistService.playlistRepository.getPlaylistByName("temporaryPlaylist"), "The playlist should be deleted");
+        assertNull(playlistLocalRepository.getPlaylistByName("temporaryPlaylist"), "The playlist should be deleted");
     }
 
     @Test
@@ -164,13 +141,13 @@ class PlaylistServicesTest {
         chosenSongs.add(3);
         playlistService.createTemporaryPlaylist(chosenSongs, PlaylistEnum.PUBLIC);
         String playlistName = "new Playlist";
-        int temporaryPlaylistLength = playlistService.playlistRepository
+        int temporaryPlaylistLength = playlistLocalRepository
                 .getPlaylistByName("temporaryPlaylist")
                 .getPlaylistSongsListWithId().size();
 
         //Act
         playlistService.createPlaylistWithTemporaryPlaylist(playlistName, PlaylistEnum.PUBLIC);
-        int newPlaylistLength = playlistService.playlistRepository
+        int newPlaylistLength = playlistLocalRepository
                 .getPlaylistByName(playlistName)
                 .getPlaylistSongsListWithId().size();
 
@@ -181,18 +158,18 @@ class PlaylistServicesTest {
     @Test
     public void testReorderSongsInPlaylist() {
         //Arrange
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), 1, playlistRepository);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), 2, playlistRepository);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), 3, playlistRepository);
+        addSongToPlaylist(playlist.getPlaylistId(), 1, playlistLocalRepository, playlistService);
+        addSongToPlaylist(playlist.getPlaylistId(), 2, playlistLocalRepository, playlistService);
+        addSongToPlaylist(playlist.getPlaylistId(), 3, playlistLocalRepository, playlistService);
 
         // Simuler l'entrée utilisateur
         String input = "2\n1\n3\nx\n";
         Scanner testScanner = new Scanner(new ByteArrayInputStream(input.getBytes()));
 
-        PlaylistReorderSongService reorderService = new PlaylistReorderSongService(testScanner);
+        PlaylistReorderSongService reorderService = new PlaylistReorderSongService(serviceToolBox, testScanner);
         reorderService.reorderSongsInPlaylist(playlist.getPlaylistId(), playlistService);
 
-        Playlist updated = playlistService.playlistRepository.getPlaylistById(playlist.getPlaylistId());
+        Playlist updated = playlistLocalRepository.getPlaylistById(playlist.getPlaylistId());
         assertEquals(List.of(2, 1, 3), updated.getPlaylistSongsListWithId());
     }
 

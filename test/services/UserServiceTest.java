@@ -1,39 +1,34 @@
 package services;
 
-import data.entities.PlanEnum;
-import data.entities.User;
-import data.jsons.UserRepository;
+import serverSide.entities.PlanEnum;
+import serverSide.entities.User;
+import serverSide.repositories.UserLocalRepository;
+import clientSide.services.PasswordService;
+import clientSide.services.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utilsAndFakes.CommuneMethods;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserServiceTest {
+public class UserServiceTest extends CommuneMethods {
 
-    private File tempFile;
-    private UserService userService;
-    private UserRepository userRepository;
-    private PasswordService passwordService;
+    public UserServiceTest() throws IOException {
+    }
 
     @BeforeEach
     void setUp() throws IOException {
-        tempFile = Files.createTempFile("user", ".json").toFile();
-        userRepository = new UserRepository(tempFile.getAbsolutePath());
-        userService = new UserService(userRepository);
-        passwordService = new PasswordService(userRepository);
-
     }
 
     @AfterEach
     void tearDown() {
-        if (tempFile.exists()) {
-            tempFile.delete();
+        if (tempUsersFile.exists()) {
+            tempUsersFile.delete();
         }
     }
 
@@ -43,7 +38,7 @@ public class UserServiceTest {
         userService.addUser("TestUser", "test@test.com", "TestPassword", PlanEnum.FREE);
 
         // Assert
-        List<User> users = userRepository.getAllUsers();
+        List<User> users = userLocalRepository.getAllUsers();
         assertEquals(1, users.size());
     }
 

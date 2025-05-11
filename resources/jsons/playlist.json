@@ -1,0 +1,97 @@
+[ {
+  "name" : "POP Vibes",
+  "playlistId" : 1727211475,
+  "durationSeconds" : 1480,
+  "size" : 6,
+  "ownerId" : 1,
+  "status" : "PUBLIC",
+  "playlistSongsListWithId" : [ 1986076679, 2084461505, 1988790520, 700468481, 998984026, 1290739974 ]
+}, {
+  "name" : "Rock Legends",
+  "playlistId" : 546441990,
+  "durationSeconds" : 1317,
+  "size" : 6,
+  "ownerId" : 1,
+  "status" : "PUBLIC",
+  "playlistSongsListWithId" : [ 243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482 ]
+}, {
+  "name" : "Amy Forever",
+  "playlistId" : 1335825382,
+  "durationSeconds" : 822,
+  "size" : 4,
+  "ownerId" : 1,
+  "status" : "PUBLIC",
+  "playlistSongsListWithId" : [ 1108071776, 342105258, 625427469, 661206135 ]
+}, {
+  "name" : "Imagine This",
+  "playlistId" : 1293611417,
+  "durationSeconds" : 838,
+  "size" : 4,
+  "ownerId" : 1726370281,
+  "status" : "PUBLIC",
+  "playlistSongsListWithId" : [ 1287974581, 614172035, 494087492, 515539482 ]
+}, {
+  "name" : "Quick Hits",
+  "playlistId" : 739698447,
+  "durationSeconds" : 1240,
+  "size" : 7,
+  "ownerId" : 1,
+  "status" : "PUBLIC",
+  "playlistSongsListWithId" : [ 625427469, 1280045910, 354322599, 1925355941, 661206135, 1252829874, 494087492 ]
+}, {
+  "name" : "Girls",
+  "playlistId" : 1940298216,
+  "durationSeconds" : 2754,
+  "size" : 12,
+  "ownerId" : 232928320,
+  "status" : "PUBLIC",
+  "playlistSongsListWithId" : [ 1108071776, 342105258, 625427469, 661206135, 1986076679, 2084461505, 1290739974, 1951451340, 469321884, 1252829874, 1988790520, 700468481 ]
+}, {
+  "name" : "Boys",
+  "playlistId" : 777340335,
+  "durationSeconds" : 2726,
+  "size" : 12,
+  "ownerId" : 232928320,
+  "status" : "PUBLIC",
+  "playlistSongsListWithId" : [ 325561970, 321324189, 521970022, 1280045910, 719812166, 243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482, 998984026 ]
+}, {
+  "name" : "Soul & RnB Grooves",
+  "playlistId" : 435500639,
+  "durationSeconds" : 1507,
+  "size" : 7,
+  "ownerId" : 1,
+  "status" : "PUBLIC",
+  "playlistSongsListWithId" : [ 1108071776, 342105258, 625427469, 1280045910, 1951451340, 719812166, 661206135 ]
+}, {
+  "name" : "Dance Floor",
+  "playlistId" : 1527642452,
+  "durationSeconds" : 909,
+  "size" : 4,
+  "ownerId" : 232928320,
+  "status" : "PRIVATE",
+  "playlistSongsListWithId" : [ 325561970, 1252829874, 321324189, 521970022 ]
+}, {
+  "name" : "Random Favorites",
+  "playlistId" : 1044676789,
+  "durationSeconds" : 1114,
+  "size" : 5,
+  "ownerId" : 1726370281,
+  "status" : "PUBLIC",
+  "playlistSongsListWithId" : [ 1280045910, 1951451340, 1252829874, 719812166, 521970022 ]
+}, {
+  "name" : "Before 2000",
+  "playlistId" : 1290311318,
+  "durationSeconds" : 833,
+  "size" : 4,
+  "ownerId" : 1726370281,
+  "status" : "PRIVATE",
+  "playlistSongsListWithId" : [ 325561970, 354322599, 1925355941, 700468481 ]
+}, {
+  "name" : "AllSongs",
+  "playlistId" : 1120436763,
+  "durationSeconds" : 6286,
+  "size" : 26,
+  "ownerId" : 1,
+  "status" : "PUBLIC",
+  "playlistSongsListWithId" : [ 1108071776, 1986076679, 2084461505, 342105258, 625427469, 325561970, 321324189, 1280045910, 354322599, 1925355941, 1951451340, 243871940, 1988790520, 719812166, 700468481, 469321884, 1824616046, 998984026, 661206135, 1290739974, 1252829874, 521970022, 1287974581, 614172035, 494087492, 515539482 ]
+} ]
