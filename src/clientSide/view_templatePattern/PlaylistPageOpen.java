@@ -1,5 +1,6 @@
 package clientSide.view_templatePattern;
 
+import clientSide.services.ViewToolBox;
 import serverSide.entities.Playlist;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
@@ -10,38 +11,39 @@ public class PlaylistPageOpen extends _SimplePageTemplate {
 
     Scanner in = new Scanner(System.in);
 
-    public PlaylistPageOpen(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(pageManager, spotifyPlayer);
+    public PlaylistPageOpen(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+        super(pageService, spotifyPlayer);
+        this.viewToolBox = viewToolBox;
         this.pageId = pageId;
         this.pageTitle = "Playlist Page : ";
         this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak +
-                icon.iconNbr(1) + "Rename Playlist" + icon.lineBreak +
-                icon.iconNbr(2) + "Add song" + icon.lineBreak +
-                icon.iconNbr(3) + "Remove song" + icon.lineBreak +
-                icon.iconNbr(4) + "Reorder song" + icon.iconPremium() + icon.lineBreak +
-                icon.iconNbr(5) + "Delete the playlist";
+                icon.nbr(1) + "Rename Playlist" + icon.lineBreak +
+                icon.nbr(2) + "Add song" + icon.lineBreak +
+                icon.nbr(3) + "Remove song" + icon.lineBreak +
+                icon.nbr(4) + "Reorder song" + icon.premium() + icon.lineBreak +
+                icon.nbr(5) + "Delete the playlist";
     }
 
     @Override
     public void displaySpecificContent(){
         System.out.println();
-        Playlist playlist = toolbox.getPlaylistServ().getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId());
+        Playlist playlist = viewToolBox.getPlaylistServ().getPlaylistById(viewToolBox.getPlaylistServ().getCurrentPlaylistId());
         if (playlist == null){
             pageService.playlistHomePage.displayAllPage();
         }
         else {
         System.out.println("Playlist name : " + playlist.getName());
         System.out.println();
-        toolbox.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId());
+        viewToolBox.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId());
         }
     }
 
     @Override
     public void button1() {
-        System.out.print(icon.goBack + icon.lineBreak + "Enter the new name of the playlist : ");
+        System.out.print(icon.zeroBack + icon.lineBreak + "Enter the new name of the playlist : ");
         String newName = pageService.gotAnInput(in.next());
-        int playlistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
-        toolbox.getPlaylistServ().renamePlayList(playlistId, newName);
+        int playlistId = viewToolBox.getPlaylistServ().getCurrentPlaylistId();
+        viewToolBox.getPlaylistServ().renamePlayList(playlistId, newName);
         pageService.playlistPageOpen.displayAllPage();
     }
 
@@ -54,20 +56,20 @@ public class PlaylistPageOpen extends _SimplePageTemplate {
     public void button3() {
         System.out.print("Enter the number of the song you want to remove : ");
 
-        int playlistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
-        int songIndex = toolbox.getPlaylistServ().takeAndValidateInputSongChoice(playlistId);
+        int playlistId = viewToolBox.getPlaylistServ().getCurrentPlaylistId();
+        int songIndex = viewToolBox.getPlaylistServ().takeAndValidateInputSongChoice(playlistId);
         if (songIndex == 0){
             pageService.playlistHomePage.displayAllPage();
         }
-        int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
-        toolbox.getPlaylistServ().deleteSongFromPlaylist(currentPlaylistId, songIndex);
+        int currentPlaylistId = viewToolBox.getPlaylistServ().getCurrentPlaylistId();
+        viewToolBox.getPlaylistServ().deleteSongFromPlaylist(currentPlaylistId, songIndex);
         pageService.playlistPageOpen.displayAllPage();
     }
 
     @Override
     public void button4() {
-        int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
-        toolbox.getPlaylistReorderSongService().reorderSongsInPlaylist(currentPlaylistId, toolbox.getPlaylistServ());
+        int currentPlaylistId = viewToolBox.getPlaylistServ().getCurrentPlaylistId();
+        viewToolBox.getPlaylistReorderSongServ().reorderSongsInPlaylist(currentPlaylistId, viewToolBox.getPlaylistServ());
         pageService.playlistPageOpen.displayAllPage();
     }
 

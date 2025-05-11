@@ -3,20 +3,17 @@ package clientSide.services;
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 import serverSide.repositories.PlaylistLocalRepository;
-import serverSide.repositories.UserLocalRepository;
 
 import java.util.LinkedList;
 
 public class TemporaryPlaylistService {
 
-    private final UserLocalRepository userLocalRepository;
-    final PlaylistLocalRepository playlistLocalRepository;
+    private final PlaylistLocalRepository playlistLocalRepository;
     private final UserService userService;
 
-    public TemporaryPlaylistService(PlaylistLocalRepository playlistLocalRepository, UserLocalRepository userLocalRepository){
-        this.playlistLocalRepository = playlistLocalRepository;
-        this.userLocalRepository = userLocalRepository;
-        this.userService = new UserService(userLocalRepository);
+    public TemporaryPlaylistService(ServiceToolBox serviceToolBox, UserService userService){
+        this.playlistLocalRepository = serviceToolBox.playlistLocalRepository;
+        this.userService = userService;
     }
 
     public int getTemporaryPlaylistId() {
@@ -53,7 +50,7 @@ public class TemporaryPlaylistService {
 
         Playlist newPlaylist = new Playlist(playlistName, PlaylistEnum.PRIVATE);
 
-        Playlist temporaryPlaylist = playlistLocalRepository.getPlaylistByName("temporaryPlaylist");
+        Playlist temporaryPlaylist = playlistLocalRepository.getTemporaryPlaylistOfCurrentUser(userService);
 
         newPlaylist.setListSongsId(temporaryPlaylist.getPlaylistSongsListWithId());
         int playlistDuration = playlistServices.setDurationSeconds(newPlaylist.getPlaylistId());

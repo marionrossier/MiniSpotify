@@ -2,19 +2,21 @@ package clientSide.view_templatePattern;
 
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import clientSide.services.ViewToolBox;
 
 public class FriendsHomePage extends _SimplePageTemplate {
 
-    public FriendsHomePage(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(pageManager, spotifyPlayer);
+    public FriendsHomePage(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+        super(pageService, spotifyPlayer);
+        this.viewToolBox = viewToolBox;
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Friends Home Page";
-        this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak + //TODO : bien refactorer la classe et ses boutons !
-                icon.iconNbr(1) + "Display friends" + icon.lineBreak +
-                icon.iconNbr(2) + "Add a friend" + icon.lineBreak +
-                icon.iconNbr(3) + "Remove a friend" + icon.lineBreak +
-                icon.iconNbr(4) + "Commune Playlists" + icon.lineBreak  + icon.goToMusicPlayer;
+        this.pageContent = icon.zeroBack + icon.lineBreak + //TODO : bien refactorer la classe et ses boutons !
+                icon.nbr(1) + "Display friends" + icon.lineBreak +
+                icon.nbr(2) + "Add a friend" + icon.lineBreak +
+                icon.nbr(3) + "Remove a friend" + icon.lineBreak +
+                icon.nbr(4) + "Commune Playlists" + icon.lineBreak  + icon.eightMusicPlayer;
     }
 
     @Override

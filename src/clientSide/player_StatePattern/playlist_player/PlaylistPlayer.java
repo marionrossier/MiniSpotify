@@ -11,8 +11,6 @@ import java.util.*;
 public class PlaylistPlayer implements IPlaylistPlayer {
 
     private final IMusicPlayer musicPlayer;
-    protected SongLocalRepository songLocalRepository;
-    protected final PlaylistLocalRepository playlistLocalRepository;
     protected PlaylistServices playlistServices;
     protected SongService songService;
     protected IAudioRepository audioRepository;
@@ -29,14 +27,12 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     private final IState shuffleState;
     private final IState repeatState;
 
-    public PlaylistPlayer(IMusicPlayer musicPlayer, SongLocalRepository songLocalRepository, PlaylistLocalRepository playlistLocalRepository,
-                          IAudioRepository audioRepository, UserLocalRepository userRepository) {
+    public PlaylistPlayer(IMusicPlayer musicPlayer, IAudioRepository audioRepository, SongService songService,
+                          PlaylistServices playlistServices) {
         this.musicPlayer = musicPlayer;
-        this.songLocalRepository = songLocalRepository;
-        this.playlistLocalRepository = playlistLocalRepository;
+        this.songService = songService;
+        this.playlistServices = playlistServices;
         this.audioRepository = audioRepository;
-        this.songService = new SongService(songLocalRepository);
-        this.playlistServices = new PlaylistServices(playlistLocalRepository, userRepository, songLocalRepository);
 
         this.sequentialState = new SequentialState(this);
         this.shuffleState = new ShuffleState(this);
@@ -49,19 +45,19 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     @Override
     public void setSequentialMode(){
         currentState = this.sequentialState;
-        System.out.println(icon.iconSequential() + " Repeat All lecture mode activate.");
+        System.out.println(icon.sequential() + " Repeat All lecture mode activate.");
     }
 
     @Override
     public void setShuffleMode(){
         currentState = this.shuffleState;
-        System.out.println(icon.iconShuffle() + "Shuffle lecture mode activate.");
+        System.out.println(icon.shuffle() + "Shuffle lecture mode activate.");
     }
 
     @Override
     public void setRepeatMode(){
         currentState = this.repeatState;
-        System.out.println(icon.iconRepeatOne() + " Repeat One lecture mode activate.");
+        System.out.println(icon.repeatOne() + " Repeat One lecture mode activate.");
     }
 
     @Override
@@ -76,16 +72,16 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     @Override
     public void playOrPause(int songId) {
-        this.currentSong = songLocalRepository.getSongById(songId);
+        this.currentSong = songService.getSongById(songId);
         musicPlayer.playOrPause(this.currentSong.getAudioFileName());
     }
 
     @Override
     public void play(int playlistId, int songId) {
-        this.currentPlaylist = playlistLocalRepository.getPlaylistById(playlistId);
+        this.currentPlaylist = playlistServices.getPlaylistById(playlistId);
         playlistServices.setCurrentPlaylistId(this.currentPlaylist.getPlaylistId());
 
-        this.currentSong = songLocalRepository.getSongById(songId);
+        this.currentSong = songService.getSongById(songId);
         musicPlayer.play(this.currentSong.getAudioFileName());
     }
 
@@ -96,7 +92,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     @Override
     public void resume(int currentSongId) {
-        this.currentSong = songLocalRepository.getSongById(currentSongId);
+        this.currentSong = songService.getSongById(currentSongId);
         musicPlayer.resume(this.currentSong.getAudioFileName());
     }
 
@@ -121,7 +117,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         else {
             if (songIdHistory.isEmpty()) return;
             int previousSongId = songIdHistory.pop();
-            this.currentSong = songLocalRepository.getSongById(previousSongId);
+            this.currentSong = songService.getSongById(previousSongId);
         }
         songService.setCurrentSongId(this.currentSong.getSongId());
         this.musicPlayer.play(this.currentSong.getAudioFileName());

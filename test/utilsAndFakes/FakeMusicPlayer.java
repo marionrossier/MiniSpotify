@@ -1,4 +1,4 @@
-package fakes;
+package utilsAndFakes;
 
 import clientSide.player_StatePattern.file_player.IMusicPlayer;
 

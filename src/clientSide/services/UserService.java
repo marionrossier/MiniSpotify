@@ -11,9 +11,9 @@ public class UserService {
     private final UserLocalRepository userLocalRepository;
     private final PasswordService passwordService;
 
-    public UserService(UserLocalRepository userLocalRepository){
-        this.userLocalRepository = userLocalRepository;
-        this.passwordService = new PasswordService(userLocalRepository);
+    public UserService(ServiceToolBox serviceToolBox, PasswordService passwordService){
+        this.userLocalRepository = serviceToolBox.userLocalRepository;
+        this.passwordService = passwordService;
     }
 
     public int getUserIdByPseudo(String pseudo) {

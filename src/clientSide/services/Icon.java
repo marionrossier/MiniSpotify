@@ -2,75 +2,69 @@ package clientSide.services;
 
 public class Icon {
 
-    public String iconNbr(int x){
+    public String nbr(int x){
         return (x+"\uFE0F⃣");
     }
 
-    public String iconPlay (){
+    public String play (){
         return ("▶\uFE0F");
     }
-    public String iconPlayPause (){
+    public String playPause(){
         return ("⏯️");
     }
-    public String iconPlayBack (){
+    public String playBack(){
         return ("⏮️");
     }
-    public String iconPause (){
-        return ("⏸️");
-    }
-    public String iconNext(){
+    public String next(){
         return ("⏩");
     }
-    public String iconPrevious(){
+    public String previous(){
         return ("⏪");
     }
-    public String iconShuffle (){
+    public String shuffle(){
         return ("🔀");
     }
-    public String iconSequential (){
+    public String sequential(){
         return ("🔁");
     }
-    public String iconRepeatOne (){
+    public String repeatOne(){
         return ("🔂");
     }
-    public String iconBack (){
-        return ("Back ");
-    }
 
-    public String iconOk (){
+    public String ok(){
         return ("✅");
     }
-    public String iconWarning (){
+    public String warning(){
         return ("⚠️");
     }
-    public String iconLock (){
+    public String lock(){
         return ("🔒");
     }
-    public String iconPremium (){
+    public String premium(){
         return ("💎");
     }
-    public String iconFree (){
+    public String free(){
         return ("🆓");
     }
-    public String iconGroup (){
+    public String group (){
         return ("👥");
     }
-    public String iconHouse () {
+    public String house() {
         return ("\uD83C\uDFE0");
     }
-    public String iconEarth (){
+    public String earth(){
         return ("🌍");
     }
-    public String iconSearch (){
+    public String search(){
         return ("🔍");
     }
 
     public String lineBreak = "\n";
 
-    public String goToMusicPlayer = iconNbr(8) + "Music player";
-    public String goToHomepage = iconNbr(9) + "Home Page";
-    public String goBack = iconNbr(0) + iconBack();
+    public String eightMusicPlayer = nbr(8) + "Music player";
+    public String nineHomepage = nbr(9) + "Home Page";
+    public String zeroBack = nbr(0) + "Back ";
 
-    public String backHomePageMusicPlayer = goBack + " |  " + goToHomepage +  " |  "  + goToMusicPlayer;
+    public String backHomePageMusicPlayer = zeroBack + " |  " + nineHomepage +  " |  "  + eightMusicPlayer;
 
 }

@@ -2,18 +2,20 @@ package clientSide.view_templatePattern;
 
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import clientSide.services.ViewToolBox;
 
 
 public class ActionFoundedSongs extends _SimplePageTemplate {
 
-    public ActionFoundedSongs(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(pageManager, spotifyPlayer);
+    public ActionFoundedSongs(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+        super(pageService, spotifyPlayer);
+        this.viewToolBox = viewToolBox;
         this.pageId = pageId;
         this.pageTitle = "Chose your action for the selected songs";
-        this.pageContent = icon.goBack + " |  " + icon.goToHomepage + icon.lineBreak +
-                    icon.iconNbr(1) + "Add to current playlist" + icon.lineBreak +
-                    icon.iconNbr(2) + "Add to an other playlist" +icon.lineBreak +
-                    icon.iconNbr(3) + "Create a new playlist" + icon.lineBreak;
+        this.pageContent = icon.zeroBack + " |  " + icon.nineHomepage + icon.lineBreak +
+                    icon.nbr(1) + "Add to current playlist" + icon.lineBreak +
+                    icon.nbr(2) + "Add to an other playlist" +icon.lineBreak +
+                    icon.nbr(3) + "Create a new playlist" + icon.lineBreak;
     }
 
     @Override
@@ -24,21 +26,21 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
     @Override
     public void button2() {
         System.out.println("Your Playlists : ");
-        toolbox.getPrintServ().printUserPlaylists(toolbox.getUserServ().getCurrentUserId());
+        viewToolBox.getPrintServ().printUserPlaylists(viewToolBox.getUserServ().getCurrentUserId());
 
         displayInput();
 
-        int chosenPlaylist = toolbox.getPlaylistServ().takeAndValidationInputPlaylistChoice();
-        toolbox.getPlaylistServ().setCurrentPlaylistId(chosenPlaylist);
+        int chosenPlaylist = viewToolBox.getPlaylistServ().takeAndValidationInputPlaylistChoice();
+        viewToolBox.getPlaylistServ().setCurrentPlaylistId(chosenPlaylist);
         verificationAndThenAction();
     }
 
     private void verificationAndThenAction() {
-        int currentPlaylistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
-        int temporaryPlaylistId = toolbox.getPlaylistServ().getTemporaryPlaylistId();
+        int currentPlaylistId = viewToolBox.getPlaylistServ().getCurrentPlaylistId();
+        int temporaryPlaylistId = viewToolBox.getPlaylistServ().getTemporaryPlaylistId();
 
-        if (toolbox.getPlaylistServ().isCurrentUserOwnerOfPlaylist(currentPlaylistId)) {
-            toolbox.getPlaylistServ().addSongToPlaylistFromTemporaryPlaylist(temporaryPlaylistId,currentPlaylistId);
+        if (viewToolBox.getPlaylistServ().isCurrentUserOwnerOfPlaylist(currentPlaylistId)) {
+            viewToolBox.getPlaylistServ().addSongToPlaylistFromTemporaryPlaylist(temporaryPlaylistId,currentPlaylistId);
             pageService.playlistPageOpen.displayAllPage();
         }
         else {

@@ -9,13 +9,13 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
     private final IAudioRepository audioRepository;
     private boolean isPlaying = false;
     private boolean isPaused = false;
-    private final BasicPlayer player;
+    private final BasicPlayer basicPlayer;
     private Runnable onSongEndAction;
 
-    public MusicPlayer(IAudioRepository audioRepository) {
+    public MusicPlayer(IAudioRepository audioRepository, BasicPlayer basicPlayer) {
         this.audioRepository = audioRepository;
-        player = new BasicPlayer();
-        player.addBasicPlayerListener(this);
+        this.basicPlayer = basicPlayer;
+        this.basicPlayer.addBasicPlayerListener(this);
     }
 
     public void playOrPause (String songPath) {
@@ -34,8 +34,8 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
     public void play(String songFileName) {
         stop();
         try {
-            player.open(audioRepository.getStream(songFileName));
-            player.play();
+            basicPlayer.open(audioRepository.getStream(songFileName));
+            basicPlayer.play();
             isPlaying = true;
             isPaused = false;
         } catch (BasicPlayerException e) {
@@ -47,7 +47,7 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
     public void pause() {
         if (isPlaying && !isPaused) {
             try {
-                player.pause();
+                basicPlayer.pause();
                 isPaused = true;
                 isPlaying = false;
             } catch (BasicPlayerException e) {
@@ -60,7 +60,7 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
     public void resume(String songPath) {
         if (isPaused) {
             try {
-                player.resume();
+                basicPlayer.resume();
                 isPaused = false;
                 isPlaying = true;
             } catch (BasicPlayerException e) {
@@ -72,7 +72,7 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
     @Override
     public void stop() {
         try {
-            player.stop();
+            basicPlayer.stop();
         } catch (BasicPlayerException e) {
             e.printStackTrace();
         }

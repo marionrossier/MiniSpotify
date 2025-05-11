@@ -2,15 +2,17 @@ package clientSide.view_templatePattern;
 
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import clientSide.services.ViewToolBox;
 
 public class FriendInformation extends _SimplePageTemplate {
-    public FriendInformation(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(pageManager, spotifyPlayer);
+    public FriendInformation(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+        super(pageService, spotifyPlayer);
+        this.viewToolBox = viewToolBox;
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Friend information Page";
-        this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
-                icon.iconNbr(1) + "Listen to a playlist" + icon.lineBreak+
-                icon.iconNbr(2) + "Add a playlist to my playlist" + icon.goToMusicPlayer; //TODO : selectionner l'option, puis récuperer le numéro de la playlist
+        this.pageContent = icon.zeroBack + icon.lineBreak +
+                icon.nbr(1) + "Listen to a playlist" + icon.lineBreak+
+                icon.nbr(2) + "Add a playlist to my playlist" + icon.eightMusicPlayer; //TODO : selectionner l'option, puis récuperer le numéro de la playlist
     }
 }

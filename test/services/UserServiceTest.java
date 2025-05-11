@@ -8,34 +8,27 @@ import clientSide.services.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utilsAndFakes.CommuneMethods;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserServiceTest {
+public class UserServiceTest extends CommuneMethods {
 
-    private File tempFile;
-    private UserService userService;
-    private UserLocalRepository userLocalRepository;
-    private PasswordService passwordService;
+    public UserServiceTest() throws IOException {
+    }
 
     @BeforeEach
     void setUp() throws IOException {
-        tempFile = Files.createTempFile("user", ".json").toFile();
-        userLocalRepository = new UserLocalRepository(tempFile.getAbsolutePath());
-        userService = new UserService(userLocalRepository);
-        passwordService = new PasswordService(userLocalRepository);
-
     }
 
     @AfterEach
     void tearDown() {
-        if (tempFile.exists()) {
-            tempFile.delete();
+        if (tempUsersFile.exists()) {
+            tempUsersFile.delete();
         }
     }
 

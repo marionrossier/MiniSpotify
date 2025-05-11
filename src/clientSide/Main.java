@@ -2,8 +2,10 @@ package clientSide;
 
 public class Main {
     public static void main(String[] args) {
-        Spotify.copySongs();
-        Spotify.copyJsons();
-        Spotify.startApp();
+        CompositionRootPattern compositionRootPattern = new CompositionRootPattern();
+
+        compositionRootPattern.copySongs();
+        compositionRootPattern.copyJsons();
+        compositionRootPattern.startApp();
     }
 }

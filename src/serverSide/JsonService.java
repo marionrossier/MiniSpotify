@@ -1,10 +1,11 @@
-package clientSide.services;
+package serverSide;
 
+import clientSide.services.AudioService;
+import clientSide.services.PasswordService;
+import clientSide.services.ServiceToolBox;
+import clientSide.services.UserService;
 import serverSide.entities.*;
-import serverSide.repositories.ArtistLocalRepository;
-import serverSide.repositories.PlaylistLocalRepository;
-import serverSide.repositories.SongLocalRepository;
-import serverSide.repositories.UserLocalRepository;
+import serverSide.repositories.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,11 +29,21 @@ public class JsonService {
         File artistJsonFile = Files.createFile(Path.of("resources/jsons/artist.json")).toFile();
         File playlistJsonFile = Files.createFile(Path.of("resources/jsons/playlist.json")).toFile();
 
+        StockageService stockageService = new StockageService();
+
+        ArtistLocalRepository artistLocalRepository = new ArtistLocalRepository(artistJsonFile.getAbsolutePath());
         UserLocalRepository userLocalRepository = new UserLocalRepository(userJsonFile.getAbsolutePath());
         PlaylistLocalRepository playlistLocalRepository = new PlaylistLocalRepository(playlistJsonFile.getAbsolutePath());
-        UserService userService = new UserService(userLocalRepository);
-        SongLocalRepository songLocalRepository = new SongLocalRepository(songJsonFile.getAbsolutePath());
-        ArtistLocalRepository artistLocalRepository = new ArtistLocalRepository(artistJsonFile.getAbsolutePath());
+        SongLocalRepository songLocalRepository = new SongLocalRepository(songJsonFile.getAbsolutePath(),
+                stockageService, artistLocalRepository);
+
+        AudioLocalRepository audioLocalRepository = new AudioLocalRepository();
+        PasswordService passwordService = new PasswordService(userLocalRepository);
+
+        ServiceToolBox serviceToolBox = new ServiceToolBox(playlistLocalRepository, userLocalRepository,
+                songLocalRepository, artistLocalRepository, audioLocalRepository);
+
+        UserService userService = new UserService(serviceToolBox, passwordService);
 
         JsonService.addUser(userService);
         addArtist(artistLocalRepository);

@@ -12,16 +12,20 @@ import java.util.List;
 public class SongLocalRepository {
     private final String filePath;
     private final StockageService stockageService;
+    private final ArtistLocalRepository artistLocalRepository;
     private List<Song> data;
 
-    public SongLocalRepository(String filePath) {
+    public SongLocalRepository(String filePath, StockageService stockageService, ArtistLocalRepository artistLocalRepository) {
         this.filePath = filePath;
-        this.stockageService = new StockageService();
+        this.stockageService = stockageService;
+        this.artistLocalRepository = artistLocalRepository;
         this.data = stockageService.loadFromJson(this.filePath, new TypeReference<>() {});
     }
 
-    public SongLocalRepository() {
-        this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/jsons/song.json");
+    public SongLocalRepository(StockageService stockageService, ArtistLocalRepository artistLocalRepository) {
+        this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/jsons/song.json",
+                stockageService, artistLocalRepository);
+
     }
 
     public List<Song> getAllSongs() {
@@ -51,7 +55,7 @@ public class SongLocalRepository {
                 .toList());
     }
 
-    public LinkedList<Song> getSongsByArtist(String artistName, ArtistLocalRepository artistLocalRepository) {
+    public LinkedList<Song> getSongsByArtist(String artistName) {
         return new LinkedList<>(data.stream()
                 .filter(song -> artistLocalRepository.getArtistById(song.getArtistId()).getArtistName().toLowerCase().contains(artistName.toLowerCase()))
                 .toList());
