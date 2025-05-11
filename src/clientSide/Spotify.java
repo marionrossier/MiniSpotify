@@ -1,25 +1,29 @@
 package clientSide;
 
+import clientSide.services.*;
 import serverSide.StockageService;
-import serverSide.repositories.ArtistRepository;
-import serverSide.repositories.AudioRepository;
-import serverSide.repositories.PlaylistRepository;
-import serverSide.repositories.SongRepository;
+import serverSide.repositories.*;
 import clientSide.player_StatePattern.file_player.MusicPlayer;
 import clientSide.player_StatePattern.file_player.IMusicPlayer;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
-import clientSide.services.PageService;
 
 public class Spotify {
     public static void startApp(){
-        PlaylistRepository playlistRepository = new PlaylistRepository();
-        SongRepository songRepository = new SongRepository();
-        ArtistRepository artistRepository = new ArtistRepository();
-        AudioRepository audioRepository = new AudioRepository(songRepository);
-        IMusicPlayer musicPlayer = new MusicPlayer();
+        PlaylistLocalRepository playlistLocalRepository = new PlaylistLocalRepository();
+        SongLocalRepository songLocalRepository = new SongLocalRepository();
+        ArtistLocalRepository artistLocalRepository = new ArtistLocalRepository();
+        AudioLocalRepository audioLocalRepository = new AudioLocalRepository();
+        UserLocalRepository userLocalRepository = new UserLocalRepository();
+        IMusicPlayer musicPlayer = new MusicPlayer(audioLocalRepository);
+        SongService songService = new SongService(songLocalRepository);
+        ArtistService artistService = new ArtistService(artistLocalRepository);
+        UserService userService = new UserService(userLocalRepository);
+        PlaylistServices playlistServices = new PlaylistServices(playlistLocalRepository, userLocalRepository,songLocalRepository);
+        PrintService printService = new PrintService(songService, artistService, playlistServices, userService);
 
-        IPlaylistPlayer spotifyPlayer = new PlaylistPlayer(musicPlayer, songRepository, playlistRepository, artistRepository, audioRepository);
+        IPlaylistPlayer spotifyPlayer = new PlaylistPlayer(musicPlayer, songLocalRepository, playlistLocalRepository,
+                artistLocalRepository, audioLocalRepository, printService);
 
         PageService pageService = new PageService(spotifyPlayer);
 

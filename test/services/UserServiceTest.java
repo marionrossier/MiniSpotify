@@ -2,7 +2,7 @@ package services;
 
 import serverSide.entities.PlanEnum;
 import serverSide.entities.User;
-import serverSide.repositories.UserRepository;
+import serverSide.repositories.UserLocalRepository;
 import clientSide.services.PasswordService;
 import clientSide.services.UserService;
 import org.junit.jupiter.api.AfterEach;
@@ -20,15 +20,15 @@ public class UserServiceTest {
 
     private File tempFile;
     private UserService userService;
-    private UserRepository userRepository;
+    private UserLocalRepository userLocalRepository;
     private PasswordService passwordService;
 
     @BeforeEach
     void setUp() throws IOException {
         tempFile = Files.createTempFile("user", ".json").toFile();
-        userRepository = new UserRepository(tempFile.getAbsolutePath());
-        userService = new UserService(userRepository);
-        passwordService = new PasswordService(userRepository);
+        userLocalRepository = new UserLocalRepository(tempFile.getAbsolutePath());
+        userService = new UserService(userLocalRepository);
+        passwordService = new PasswordService(userLocalRepository);
 
     }
 
@@ -45,7 +45,7 @@ public class UserServiceTest {
         userService.addUser("TestUser", "test@test.com", "TestPassword", PlanEnum.FREE);
 
         // Assert
-        List<User> users = userRepository.getAllUsers();
+        List<User> users = userLocalRepository.getAllUsers();
         assertEquals(1, users.size());
     }
 

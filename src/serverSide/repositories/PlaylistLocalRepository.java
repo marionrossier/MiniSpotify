@@ -9,18 +9,18 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaylistRepository {
+public class PlaylistLocalRepository {
     private final String filePath;
     private final StockageService stockageService;
     private List<Playlist> data;
 
-    public PlaylistRepository(String filePath) {
+    public PlaylistLocalRepository(String filePath) {
         this.filePath = filePath;
         this.stockageService = new StockageService();
         this.data = stockageService.loadFromJson(this.filePath, new TypeReference<>() {});
     }
 
-    public PlaylistRepository() {
+    public PlaylistLocalRepository() {
         this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/jsons/playlist.json");
     }
 

@@ -12,13 +12,13 @@ class ShuffleState implements IState {
 
     @Override
     public Song getNextSong() {
-        LinkedList<Integer> songsId = playlistPlayer.playlistRepository
+        LinkedList<Integer> songsId = playlistPlayer.playlistLocalRepository
                 .getPlaylistById(playlistPlayer.getCurrentPlaylistId())
                 .getPlaylistSongsListWithId();
         int nextIndex = (int) (Math.random() * songsId.size());
         int nextSongId = songsId.get(nextIndex);
 
-        return playlistPlayer.songRepository.getSongById(nextSongId);
+        return playlistPlayer.songLocalRepository.getSongById(nextSongId);
     }
 
     @Override

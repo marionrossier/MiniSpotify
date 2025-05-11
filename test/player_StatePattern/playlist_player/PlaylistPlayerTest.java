@@ -1,20 +1,15 @@
 package player_StatePattern.playlist_player;
 
+import clientSide.services.*;
+import fakes.FakeAudioRepository;
 import serverSide.entities.PlaylistEnum;
 import serverSide.entities.Song;
 import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
-import serverSide.repositories.ArtistRepository;
-import serverSide.repositories.AudioRepository;
-import serverSide.repositories.PlaylistRepository;
-import serverSide.repositories.SongRepository;
-import clientSide.services.Cookies_SingletonPattern;
-import clientSide.services.PlaylistServices;
-import clientSide.services.SearchService;
-import clientSide.services.SongService;
+import serverSide.repositories.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import clientSide.player_StatePattern.file_player.FakeMusicPlayer;
+import fakes.FakeMusicPlayer;
 import serverSide.entities.Playlist;
 import services.*;
 
@@ -31,15 +26,17 @@ public class PlaylistPlayerTest {
     private File songTempFile;
     private File playlistTempFile;
     private File artistTempFile;
-    private File audioTempFile;
-    private SongRepository songRepository;
+    private SongLocalRepository songLocalRepository;
     private SongService songService;
-    private SearchService searchService;
-    private PlaylistRepository playlistRepository;
+    private ArtistService artistService;
+    private UserLocalRepository userLocalRepository;
+    private UserService userService;
+    private PlaylistLocalRepository playlistLocalRepository;
     private PlaylistServices playlistServices;
-    private ArtistRepository artistRepository;
-    private AudioRepository audioRepository;
+    private ArtistLocalRepository artistLocalRepository;
+    private IAudioRepository audioRepository;
     private CommuneMethods communeMethods = new CommuneMethods();
+    private PrintService printService;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -50,41 +47,44 @@ public class PlaylistPlayerTest {
         songTempFile = Files.createTempFile("songs", ".json").toFile();
         playlistTempFile = Files.createTempFile("playlists", ".json").toFile();
         artistTempFile = Files.createTempFile("artist",".json").toFile();
-        artistTempFile = Files.createTempFile("path/to/");
 
         // Initialize repositories with temp files
-        songRepository = new SongRepository(songTempFile.getAbsolutePath());
-        songService = new SongService(songRepository);
-        searchService = new SearchService(songRepository, songService, artistRepository);
-        playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
-        playlistServices = new PlaylistServices(playlistRepository, songRepository);
-        artistRepository = new ArtistRepository(artistTempFile.getAbsolutePath());
-        audioRepository = new AudioRepository(songRepository);
-        
+        songLocalRepository = new SongLocalRepository(songTempFile.getAbsolutePath());
+        songService = new SongService(songLocalRepository);
+        playlistLocalRepository = new PlaylistLocalRepository(playlistTempFile.getAbsolutePath());
+        playlistServices = new PlaylistServices(playlistLocalRepository, songLocalRepository);
+        userLocalRepository = new UserLocalRepository();
+        userService = new UserService(userLocalRepository);
+        artistService = new ArtistService(artistLocalRepository);
+        artistLocalRepository = new ArtistLocalRepository(artistTempFile.getAbsolutePath());
+        audioRepository = new FakeAudioRepository();
+        printService = new PrintService(songService, artistService, playlistServices, userService);
+
         // Create test songs
-        Song song1 = createSong(1, "Song 1", "path/to/song1.mp3");
-        Song song2 = createSong(2, "Song 2", "path/to/song2.mp3");
-        Song song3 = createSong(3, "Song 3", "path/to/song3.mp3");
+        Song song1 = createSong(1, "Song 1", "song1.mp3");
+        Song song2 = createSong(2, "Song 2", "song2.mp3");
+        Song song3 = createSong(3, "Song 3", "song3.mp3");
         
         // Add songs to repository
-        songRepository.addSong(song1);
-        songRepository.addSong(song2);
-        songRepository.addSong(song3);
+        songLocalRepository.addSong(song1);
+        songLocalRepository.addSong(song2);
+        songLocalRepository.addSong(song3);
         
         // Create a test playlist
         Playlist playlist = new Playlist("Test Playlist", PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(1);
-        playlistRepository.savePlaylist(playlist);
+        playlistLocalRepository.savePlaylist(playlist);
 
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), playlistRepository, playlistServices);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), playlistRepository, playlistServices);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), playlistRepository, playlistServices);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), playlistLocalRepository, playlistServices);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), playlistLocalRepository, playlistServices);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), playlistLocalRepository, playlistServices);
         
         // Create a FakeMusicPlayer for testing
         fakeMusicPlayer = new FakeMusicPlayer();
         
         // Instantiate the PlaylistPlayer with the fake player and repositories
-        playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository, artistRepository, audioRepository);
+        playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songLocalRepository, playlistLocalRepository,
+                artistLocalRepository, audioRepository, printService);
     }
     
     @AfterEach
@@ -98,11 +98,11 @@ public class PlaylistPlayerTest {
         }
     }
     
-    private Song createSong(int id, String title, String path) {
+    private Song createSong(int id, String title, String fileName) {
         Song song = new Song();
         song.setSongId(id);
         song.setTitle(title);
-        audioRepository.setAudioFilePathAndName(id, path);
+        song.setAudioFileName(fileName);
         return song;
     }
 
@@ -115,7 +115,7 @@ public class PlaylistPlayerTest {
         assertEquals(1, playlistPlayer.getCurrentPlaylistId());
         assertEquals(1, playlistPlayer.getCurrentSongId());
         assertTrue(fakeMusicPlayer.isPlaying());
-        assertEquals("path/to/song1.mp3", fakeMusicPlayer.getCurrentSongPath());
+        assertEquals("song1.mp3", fakeMusicPlayer.getCurrentSongFileName());
     }
 
     @Test
@@ -153,12 +153,12 @@ public class PlaylistPlayerTest {
     void testPlayback() {
         // First play a song
         playlistPlayer.play(1, 2);
-        assertEquals("path/to/song2.mp3", fakeMusicPlayer.getCurrentSongPath());
+        assertEquals("song2.mp3", fakeMusicPlayer.getCurrentSongFileName());
         
         // Test playback
         playlistPlayer.playback();
         assertTrue(fakeMusicPlayer.isPlaying());
-        assertEquals("path/to/song2.mp3", fakeMusicPlayer.getCurrentSongPath());
+        assertEquals("song2.mp3", fakeMusicPlayer.getCurrentSongFileName());
     }
 
     @Test
@@ -171,17 +171,17 @@ public class PlaylistPlayerTest {
         // Test next song
         fakeMusicPlayer.triggerSongEnd();
         assertEquals(2, playlistPlayer.getCurrentSongId());
-        assertEquals("path/to/song2.mp3", fakeMusicPlayer.getCurrentSongPath());
+        assertEquals("song2.mp3", fakeMusicPlayer.getCurrentSongFileName());
         
         // Test next song again
         fakeMusicPlayer.triggerSongEnd();
         assertEquals(3, playlistPlayer.getCurrentSongId());
-        assertEquals("path/to/song3.mp3", fakeMusicPlayer.getCurrentSongPath());
+        assertEquals("song3.mp3", fakeMusicPlayer.getCurrentSongFileName());
 
         // Test next song loop
         fakeMusicPlayer.triggerSongEnd();
         assertEquals(1, playlistPlayer.getCurrentSongId());
-        assertEquals("path/to/song1.mp3", fakeMusicPlayer.getCurrentSongPath());
+        assertEquals("song1.mp3", fakeMusicPlayer.getCurrentSongFileName());
     }
 
     @Test
@@ -196,17 +196,17 @@ public class PlaylistPlayerTest {
         // Test previous
         playlistPlayer.previous();
         assertEquals(3, playlistPlayer.getCurrentSongId());
-        assertEquals("path/to/song3.mp3", fakeMusicPlayer.getCurrentSongPath());
+        assertEquals("song3.mp3", fakeMusicPlayer.getCurrentSongFileName());
 
         // Test previous
         playlistPlayer.previous();
         assertEquals(2, playlistPlayer.getCurrentSongId());
-        assertEquals("path/to/song2.mp3", fakeMusicPlayer.getCurrentSongPath());
+        assertEquals("song2.mp3", fakeMusicPlayer.getCurrentSongFileName());
 
         // Test previous
         playlistPlayer.previous();
         assertEquals(1, playlistPlayer.getCurrentSongId());
-        assertEquals("path/to/song1.mp3", fakeMusicPlayer.getCurrentSongPath());
+        assertEquals("song1.mp3", fakeMusicPlayer.getCurrentSongFileName());
     }
 
     @Test
@@ -234,7 +234,7 @@ public class PlaylistPlayerTest {
         
         // Do another next and ensure we get a valid song path
         fakeMusicPlayer.triggerSongEnd();
-        assertNotNull(fakeMusicPlayer.getCurrentSongPath());
+        assertNotNull(fakeMusicPlayer.getCurrentSongFileName());
     }
 
     @Test
@@ -247,12 +247,12 @@ public class PlaylistPlayerTest {
         // In repeat mode, next should play the same song again
         fakeMusicPlayer.triggerSongEnd();
         assertEquals(2, playlistPlayer.getCurrentSongId());
-        assertEquals("path/to/song2.mp3", fakeMusicPlayer.getCurrentSongPath());
+        assertEquals("song2.mp3", fakeMusicPlayer.getCurrentSongFileName());
 
         // In repeat mode, next should play the same song again
         fakeMusicPlayer.triggerSongEnd();
         assertEquals(2, playlistPlayer.getCurrentSongId());
-        assertEquals("path/to/song2.mp3", fakeMusicPlayer.getCurrentSongPath());
+        assertEquals("song2.mp3", fakeMusicPlayer.getCurrentSongFileName());
     }
 
     @Test
@@ -265,7 +265,7 @@ public class PlaylistPlayerTest {
         
         // Should auto-advance to song 2
         assertEquals(2, playlistPlayer.getCurrentSongId());
-        assertEquals("path/to/song2.mp3", fakeMusicPlayer.getCurrentSongPath());
+        assertEquals("song2.mp3", fakeMusicPlayer.getCurrentSongFileName());
     }
 
     @Test
@@ -287,6 +287,6 @@ public class PlaylistPlayerTest {
         playlistPlayer.setShuffleMode();
         fakeMusicPlayer.triggerSongEnd();
         // We can't assert exact song ID due to randomness, but we can verify it's a valid song
-        assertNotNull(fakeMusicPlayer.getCurrentSongPath());
+        assertNotNull(fakeMusicPlayer.getCurrentSongFileName());
     }
 }

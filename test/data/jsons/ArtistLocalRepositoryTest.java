@@ -1,7 +1,7 @@
 package data.jsons;
 
 import serverSide.entities.Artist;
-import serverSide.repositories.ArtistRepository;
+import serverSide.repositories.ArtistLocalRepository;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
@@ -11,15 +11,15 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ArtistRepositoryTest {
+class ArtistLocalRepositoryTest {
 
     private File tempFile;
-    private ArtistRepository repo;
+    private ArtistLocalRepository repo;
 
     @BeforeEach
     void setUp() throws IOException {
         tempFile = Files.createTempFile("artist", ".json").toFile();
-        repo = new ArtistRepository(tempFile.getAbsolutePath());
+        repo = new ArtistLocalRepository(tempFile.getAbsolutePath());
     }
 
     @AfterEach

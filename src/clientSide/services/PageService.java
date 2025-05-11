@@ -1,7 +1,7 @@
 package clientSide.services;
 
 import clientSide.view_templatePattern.*;
-import serverSide.repositories.UserRepository;
+import serverSide.repositories.UserLocalRepository;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.Stack;
 public class PageService {
 
     ArrayList<_MenuInterface> pages = new ArrayList<>();
-    private final UserService userService = new UserService(new UserRepository());
+    private final UserService userService = new UserService(new UserLocalRepository());
     private final NavigationStackService navigationStackService = new NavigationStackService(this);
 
     private final IPlaylistPlayer spotifyPlayer;

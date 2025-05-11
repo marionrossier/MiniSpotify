@@ -24,7 +24,7 @@ public class PlaylistReorderSongService {
 
         completeWithRemainingSongs(playlist, newOrder);
         playlist.setListSongsId(newOrder);
-        playlistServices.playlistRepository.savePlaylist(playlist);
+        playlistServices.playlistLocalRepository.savePlaylist(playlist);
 
         printSuccessMessage(playlist, newOrder);
     }

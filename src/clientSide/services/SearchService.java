@@ -3,8 +3,8 @@ package clientSide.services;
 import serverSide.entities.MusicGender;
 import serverSide.entities.Playlist;
 import serverSide.entities.Song;
-import serverSide.repositories.ArtistRepository;
-import serverSide.repositories.SongRepository;
+import serverSide.repositories.ArtistLocalRepository;
+import serverSide.repositories.SongLocalRepository;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,16 +14,15 @@ public class SearchService {
 
     Scanner scanner = new Scanner(System.in);
     private final Icon icon = new Icon();
-    public final SongRepository songRepository;
     public final SongService songService;
-    public final ArtistRepository artistRepository;
-    private final PrintService printService = new PrintService();
+    public final ArtistLocalRepository artistLocalRepository;
+    private final PrintService printService;
 
     // Constructor
-    public SearchService(SongRepository songRepo, SongService songService, ArtistRepository artistRepository) {
-        this.songRepository = songRepo;
+    public SearchService(SongService songService, ArtistLocalRepository artistLocalRepository, PrintService printService) {
         this.songService = songService;
-        this.artistRepository = artistRepository;
+        this.artistLocalRepository = artistLocalRepository;
+        this.printService = printService;
     }
 
     public void searchSong(String input, String type, int pageId, PageService pageService, PlaylistServices playlistServices) {
@@ -65,7 +64,7 @@ public class SearchService {
             return new LinkedList<>();
         }
         else {
-            songsByTitle = songRepository.getSongsByTitle(songTitle);
+            songsByTitle = songService.songLocalRepository.getSongsByTitle(songTitle);
         }
 
         return listSongToListInt(songsByTitle);
@@ -79,7 +78,7 @@ public class SearchService {
             return new LinkedList<>();
         }
         else {
-            songsByArtist = songRepository.getSongsByArtist(artistName, artistRepository);
+            songsByArtist = songService.songLocalRepository.getSongsByArtist(artistName, artistLocalRepository);
         }
 
         return listSongToListInt(songsByArtist);
@@ -93,7 +92,7 @@ public class SearchService {
             return new LinkedList<>();
         }
         else {
-            songsByGender = songRepository.getSongsByGender(genderName);
+            songsByGender = songService.songLocalRepository.getSongsByGender(genderName);
         }
 
         return listSongToListInt(songsByGender);

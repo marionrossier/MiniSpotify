@@ -1,7 +1,7 @@
 package clientSide.services;
 
 import serverSide.entities.User;
-import serverSide.repositories.UserRepository;
+import serverSide.repositories.UserLocalRepository;
 
 import java.util.*;
 
@@ -11,10 +11,10 @@ import java.security.SecureRandom;
 
 public class PasswordService {
 
-    private final UserRepository userRepository;
+    private final UserLocalRepository userLocalRepository;
 
-    public PasswordService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public PasswordService(UserLocalRepository userLocalRepository) {
+        this.userLocalRepository = userLocalRepository;
     }
 
     public byte[] generateSalt() {
@@ -38,7 +38,7 @@ public class PasswordService {
 
     public boolean verifyUserAuthentification(String pseudonym, String password) {
 
-        User searchedUser = userRepository.getUserByPseudonym(pseudonym);
+        User searchedUser = userLocalRepository.getUserByPseudonym(pseudonym);
 
         if (searchedUser == null) {
             System.err.println("The user does not exist.");

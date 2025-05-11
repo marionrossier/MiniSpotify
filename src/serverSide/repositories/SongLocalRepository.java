@@ -9,18 +9,18 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SongRepository {
+public class SongLocalRepository {
     private final String filePath;
     private final StockageService stockageService;
     private List<Song> data;
 
-    public SongRepository(String filePath) {
+    public SongLocalRepository(String filePath) {
         this.filePath = filePath;
         this.stockageService = new StockageService();
         this.data = stockageService.loadFromJson(this.filePath, new TypeReference<>() {});
     }
 
-    public SongRepository() {
+    public SongLocalRepository() {
         this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/jsons/song.json");
     }
 
@@ -51,9 +51,9 @@ public class SongRepository {
                 .toList());
     }
 
-    public LinkedList<Song> getSongsByArtist(String artistName, ArtistRepository artistRepository ) {
+    public LinkedList<Song> getSongsByArtist(String artistName, ArtistLocalRepository artistLocalRepository) {
         return new LinkedList<>(data.stream()
-                .filter(song -> artistRepository.getArtistById(song.getArtistId()).getArtistName().toLowerCase().contains(artistName.toLowerCase()))
+                .filter(song -> artistLocalRepository.getArtistById(song.getArtistId()).getArtistName().toLowerCase().contains(artistName.toLowerCase()))
                 .toList());
     }
 

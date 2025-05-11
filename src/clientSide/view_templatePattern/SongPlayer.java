@@ -73,7 +73,9 @@ public class SongPlayer extends _SimplePageTemplate {
 
     void loop(){
         while (spotifyPlayer.isPlaying() || spotifyPlayer.isPaused()) {
-            System.out.println(toolbox.getSongServ().getSongById(spotifyPlayer.getCurrentSongId()).getTitleAndArtist());
+            int currentSongId = spotifyPlayer.getCurrentSongId();
+            System.out.println(toolbox.getSongServ().getSongById(currentSongId).getTitle()+
+                    toolbox.getArtistServ().getArtistNameBySong(currentSongId));
             displayInput();
             validateInput();
             switchPage();

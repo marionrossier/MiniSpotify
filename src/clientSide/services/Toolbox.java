@@ -1,15 +1,15 @@
 package clientSide.services;
 
-import serverSide.repositories.ArtistRepository;
-import serverSide.repositories.PlaylistRepository;
-import serverSide.repositories.SongRepository;
-import serverSide.repositories.UserRepository;
+import serverSide.repositories.ArtistLocalRepository;
+import serverSide.repositories.PlaylistLocalRepository;
+import serverSide.repositories.SongLocalRepository;
+import serverSide.repositories.UserLocalRepository;
 
 public class Toolbox {
-    UserRepository userRepository;
-    PlaylistRepository playlistRepository;
-    ArtistRepository artistRepository;
-    SongRepository songRepository;
+    UserLocalRepository userLocalRepository;
+    PlaylistLocalRepository playlistLocalRepository;
+    ArtistLocalRepository artistLocalRepository;
+    SongLocalRepository songLocalRepository;
 
     PlaylistServices playlistServ;
     SongService songServ;
@@ -18,20 +18,22 @@ public class Toolbox {
     PrintService printServ;
     PasswordService passwordServ;
     PlaylistReorderSongService playlistReorderSongService;
+    ArtistService artistService;
 
     public Toolbox() {
-        userRepository = new UserRepository();
-        playlistRepository = new PlaylistRepository();
-        artistRepository = new ArtistRepository();
-        songRepository = new SongRepository();
+        userLocalRepository = new UserLocalRepository();
+        playlistLocalRepository = new PlaylistLocalRepository();
+        artistLocalRepository = new ArtistLocalRepository();
+        songLocalRepository = new SongLocalRepository();
 
-        playlistServ = new PlaylistServices(playlistRepository, songRepository);
-        userServ = new UserService(userRepository);
-        songServ = new SongService(songRepository);
-        searchService = new SearchService(songRepository, songServ, artistRepository);
-        passwordServ = new PasswordService(userRepository);
-        printServ = new PrintService();
+        playlistServ = new PlaylistServices(playlistLocalRepository, songLocalRepository);
+        userServ = new UserService(userLocalRepository);
+        songServ = new SongService(songLocalRepository);
+        searchService = new SearchService(songServ, artistLocalRepository, printServ);
+        passwordServ = new PasswordService(userLocalRepository);
+        printServ = new PrintService(songServ, artistService, playlistServ, userServ);
         playlistReorderSongService = new PlaylistReorderSongService();
+        artistService = new ArtistService(artistLocalRepository);
     }
 
     public PlaylistServices getPlaylistServ() {
@@ -60,5 +62,9 @@ public class Toolbox {
 
     public SongService getSongServ(){
         return songServ;
+    }
+
+    public ArtistService getArtistServ() {
+        return artistService;
     }
 }

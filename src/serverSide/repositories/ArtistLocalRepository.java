@@ -7,18 +7,18 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArtistRepository {
+public class ArtistLocalRepository {
     private final String filePath;
     private final StockageService stockageService;
     private List<Artist> data;
 
-    public ArtistRepository(String filePath) {
+    public ArtistLocalRepository(String filePath) {
         this.filePath = filePath;
         this.stockageService = new StockageService();
         this.data = stockageService.loadFromJson(this.filePath, new TypeReference<>() {});
     }
 
-    public ArtistRepository() {
+    public ArtistLocalRepository() {
         this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/jsons/artist.json");
     }
 
@@ -62,6 +62,13 @@ public class ArtistRepository {
     public Artist getArtistByName(String name) {
         return data.stream()
                 .filter(artist -> artist.getArtistName().equalsIgnoreCase(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Artist getArtistBySongId(int songId) {
+        return data.stream()
+                .filter(artist -> artist.getArtistSongsID().contains(songId))
                 .findFirst()
                 .orElse(null);
     }

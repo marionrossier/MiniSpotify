@@ -1,8 +1,8 @@
 package clientSide.services;
 
 import serverSide.entities.Playlist;
-import serverSide.repositories.PlaylistRepository;
-import serverSide.repositories.SongRepository;
+import serverSide.repositories.PlaylistLocalRepository;
+import serverSide.repositories.SongLocalRepository;
 
 public class Cookies_SingletonPattern {
     private static Cookies_SingletonPattern instance;
@@ -10,14 +10,14 @@ public class Cookies_SingletonPattern {
     private final int userId;
     private int currentPlaylistId;
     private int currentSongId;
-    private final PlaylistRepository playlistRepository = new PlaylistRepository();
-    private final SongRepository songRepository = new SongRepository();
-    private final PlaylistServices playlistServices = new PlaylistServices(playlistRepository, songRepository);
+    private final PlaylistLocalRepository playlistLocalRepository = new PlaylistLocalRepository();
+    private final SongLocalRepository songLocalRepository = new SongLocalRepository();
+    private final PlaylistServices playlistServices = new PlaylistServices(playlistLocalRepository, songLocalRepository);
 
     private Cookies_SingletonPattern(int userId) {
         this.userId = userId;
         this.currentPlaylistId = playlistServices.getAllSongsPlaylistId();
-        this.currentSongId = playlistRepository.getPlaylistByName("AllSongs").getPlaylistSongsListWithId().getFirst();
+        this.currentSongId = playlistLocalRepository.getPlaylistByName("AllSongs").getPlaylistSongsListWithId().getFirst();
     }
 
     public static Cookies_SingletonPattern setUser(int userId) {
@@ -49,7 +49,7 @@ public class Cookies_SingletonPattern {
 
     public static void resetCookies() {
         if (instance != null) {
-            Playlist playlist = instance.playlistRepository.getPlaylistById(instance.playlistServices.getTemporaryPlaylistId());
+            Playlist playlist = instance.playlistLocalRepository.getPlaylistById(instance.playlistServices.getTemporaryPlaylistId());
             if (playlist != null) {
                 instance.playlistServices.deleteTemporaryPlaylist();
             }

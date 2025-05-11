@@ -1,17 +1,19 @@
 package clientSide.player_StatePattern.file_player;
 
 import javazoom.jlgui.basicplayer.*;
+import serverSide.repositories.AudioLocalRepository;
 
-import java.io.File;
 import java.util.Map;
 
 public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
+    private final AudioLocalRepository audioLocalRepository;
     private boolean isPlaying = false;
     private boolean isPaused = false;
     private final BasicPlayer player;
     private Runnable onSongEndAction;
 
-    public MusicPlayer() {
+    public MusicPlayer(AudioLocalRepository audioLocalRepository) {
+        this.audioLocalRepository = audioLocalRepository;
         player = new BasicPlayer();
         player.addBasicPlayerListener(this);
     }
@@ -29,10 +31,10 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
     }
 
     @Override
-    public void play(String songPath) {
+    public void play(String songFileName) {
         stop();
         try {
-            player.open(new File(songPath));
+            player.open(audioLocalRepository.getStream(songFileName));
             player.play();
             isPlaying = true;
             isPaused = false;

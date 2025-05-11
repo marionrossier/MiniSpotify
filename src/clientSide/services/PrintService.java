@@ -3,26 +3,39 @@ package clientSide.services;
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 import serverSide.entities.User;
-import serverSide.repositories.PlaylistRepository;
-import serverSide.repositories.UserRepository;
+import serverSide.repositories.ArtistLocalRepository;
+import serverSide.repositories.PlaylistLocalRepository;
+import serverSide.repositories.SongLocalRepository;
+import serverSide.repositories.UserLocalRepository;
 
 import java.util.List;
 
 public class PrintService {
 
-    private final UserRepository userRepository = new UserRepository();
-    private final PlaylistRepository playlistRepository = new PlaylistRepository();
     private final Icon icon = new Icon();
+    private final UserService userService;
+    private final PlaylistServices playlistService;
+    private final SongService songService;
+    private final ArtistService artistService;
+
+    public PrintService(SongService songService, ArtistService artistService, PlaylistServices playlistServices,
+                        UserService userService) {
+        this.artistService = artistService;
+        this.songService = songService;
+        this.userService = userService;
+        this.playlistService = playlistServices;
+    }
 
     public void printSongFound (List<Integer> songs, String info, SearchService searchService){
         System.out.println("Songs found with information : " + info);
-        printSongList (songs, searchService);
+        printSongList (songs);
     }
 
-    public void printSongList (List<Integer> songs, SearchService searchService){
+    public void printSongList (List<Integer> songs){
         int i = 1;
         for (Integer song : songs) {
-            System.out.println(i + ". " + searchService.songRepository.getSongById(song).getTitleAndArtist());
+            System.out.println(i + ". " + songService.getSongById(song).getTitle()+
+                            artistService.getArtistNameBySong(song));
             i++;
         }
         System.out.println();
@@ -43,11 +56,11 @@ public class PrintService {
 
     public void printUserPlaylists(int userId){
         int i = 1;
-        User currentUser = userRepository.getUserById(userId);
+        User currentUser = userService.getUserById(userId);
 
 if (currentUser != null && currentUser.getPlaylists() != null) {
-    for (int playlistId : userRepository.getUserById(userId).getPlaylists()) {
-        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+    for (int playlistId : userService.getUserById(userId).getPlaylists()) {
+        Playlist playlist = playlistService.getPlaylistById(playlistId);
 
         if (playlist != null) {
             boolean isUserOwner = playlist.getOwnerId() == currentUser.getUserId();

@@ -1,28 +1,22 @@
 package clientSide.player_StatePattern.playlist_player;
 
+import clientSide.services.*;
 import serverSide.entities.Playlist;
 import serverSide.entities.Song;
-import serverSide.repositories.ArtistRepository;
-import serverSide.repositories.AudioRepository;
-import serverSide.repositories.PlaylistRepository;
-import serverSide.repositories.SongRepository;
+import serverSide.repositories.*;
 import clientSide.player_StatePattern.file_player.IMusicPlayer;
-import clientSide.services.Icon;
-import clientSide.services.PlaylistServices;
-import clientSide.services.SearchService;
-import clientSide.services.SongService;
 
 import java.util.*;
 
 public class PlaylistPlayer implements IPlaylistPlayer {
 
     private final IMusicPlayer musicPlayer;
-    protected SongRepository songRepository;
-    protected final PlaylistRepository playlistRepository;
+    protected SongLocalRepository songLocalRepository;
+    protected final PlaylistLocalRepository playlistLocalRepository;
     protected PlaylistServices playlistServices;
     protected SearchService searchService;
     protected SongService songService;
-    protected AudioRepository audioRepository;
+    protected IAudioRepository audioRepository;
     private final Icon icon = new Icon();
 
     protected Stack<Integer> songIdHistory = new Stack<>();
@@ -36,15 +30,15 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     private final IState shuffleState;
     private final IState repeatState;
 
-    public PlaylistPlayer(IMusicPlayer musicPlayer, SongRepository songRepository, PlaylistRepository playlistRepository,
-                          ArtistRepository artistRepository, AudioRepository audioRepository) {
+    public PlaylistPlayer(IMusicPlayer musicPlayer, SongLocalRepository songLocalRepository, PlaylistLocalRepository playlistLocalRepository,
+                          ArtistLocalRepository artistLocalRepository, IAudioRepository audioRepository, PrintService printService) {
         this.musicPlayer = musicPlayer;
-        this.songRepository = songRepository;
-        this.playlistRepository = playlistRepository;
+        this.songLocalRepository = songLocalRepository;
+        this.playlistLocalRepository = playlistLocalRepository;
         this.audioRepository = audioRepository;
-        this.songService = new SongService(songRepository);
-        this.searchService = new SearchService(songRepository, songService, artistRepository);
-        this.playlistServices = new PlaylistServices(playlistRepository, songRepository);
+        this.songService = new SongService(songLocalRepository);
+        this.searchService = new SearchService(songService, artistLocalRepository, printService);
+        this.playlistServices = new PlaylistServices(playlistLocalRepository, songLocalRepository);
 
         this.sequentialState = new SequentialState(this);
         this.shuffleState = new ShuffleState(this);
@@ -84,17 +78,17 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     @Override
     public void playOrPause(int songId) {
-        this.currentSong = songRepository.getSongById(songId);
-        musicPlayer.playOrPause(audioRepository.getAudioFilePathAndName(currentSong.getSongId()));
+        this.currentSong = songLocalRepository.getSongById(songId);
+        musicPlayer.playOrPause(this.currentSong.getAudioFileName());
     }
 
     @Override
     public void play(int playlistId, int songId) {
-        this.currentPlaylist = playlistRepository.getPlaylistById(playlistId);
+        this.currentPlaylist = playlistLocalRepository.getPlaylistById(playlistId);
         playlistServices.setCurrentPlaylistId(this.currentPlaylist.getPlaylistId());
 
-        this.currentSong = songRepository.getSongById(songId);
-        musicPlayer.play(audioRepository.getAudioFilePathAndName(currentSong.getSongId()));
+        this.currentSong = songLocalRepository.getSongById(songId);
+        musicPlayer.play(this.currentSong.getAudioFileName());
     }
 
     @Override
@@ -104,13 +98,13 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     @Override
     public void resume(int currentSongId) {
-        this.currentSong = songRepository.getSongById(currentSongId);
-        musicPlayer.resume((audioRepository.getAudioFilePathAndName(currentSong.getSongId())));
+        this.currentSong = songLocalRepository.getSongById(currentSongId);
+        musicPlayer.resume(this.currentSong.getAudioFileName());
     }
 
     @Override
     public void playback() {
-        musicPlayer.play(audioRepository.getAudioFilePathAndName(this.currentSong.getSongId()));
+        musicPlayer.play(this.currentSong.getAudioFileName());
     }
 
     @Override
@@ -118,7 +112,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         this.songIdHistory.push(currentSong.getSongId());
         this.currentSong = currentState.getNextSong();
         songService.setCurrentSongId(this.currentSong.getSongId());
-        this.musicPlayer.play(audioRepository.getAudioFilePathAndName(this.currentSong.getSongId()));
+        this.musicPlayer.play(this.currentSong.getAudioFileName());
     }
 
     @Override
@@ -129,10 +123,10 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         else {
             if (songIdHistory.isEmpty()) return;
             int previousSongId = songIdHistory.pop();
-            this.currentSong = songRepository.getSongById(previousSongId);
+            this.currentSong = songLocalRepository.getSongById(previousSongId);
         }
         songService.setCurrentSongId(this.currentSong.getSongId());
-        this.musicPlayer.play(audioRepository.getAudioFilePathAndName(this.currentSong.getSongId()));
+        this.musicPlayer.play(this.currentSong.getAudioFileName());
     }
 
     public void stop (){

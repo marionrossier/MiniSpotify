@@ -3,24 +3,24 @@ package clientSide.services;
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 import serverSide.entities.User;
-import serverSide.repositories.PlaylistRepository;
-import serverSide.repositories.UserRepository;
+import serverSide.repositories.PlaylistLocalRepository;
+import serverSide.repositories.UserLocalRepository;
 import java.util.List;
 import java.util.Scanner;
 
 public class PlaylistFunctionalitiesService {
 
     Scanner scanner = new Scanner(System.in);
-    private final UserRepository userRepository;
-    final PlaylistRepository playlistRepository;
+    private final UserLocalRepository userLocalRepository;
+    final PlaylistLocalRepository playlistLocalRepository;
     final TemporaryPlaylistService temporaryPlaylistService;
     private final UserService userService;
 
-    public PlaylistFunctionalitiesService(PlaylistRepository playlistRepository){
-        this.playlistRepository = playlistRepository;
-        this.userRepository = new UserRepository();
-        this.userService = new UserService(userRepository);
-        this.temporaryPlaylistService = new TemporaryPlaylistService(playlistRepository, userRepository);
+    public PlaylistFunctionalitiesService(PlaylistLocalRepository playlistLocalRepository){
+        this.playlistLocalRepository = playlistLocalRepository;
+        this.userLocalRepository = new UserLocalRepository();
+        this.userService = new UserService(userLocalRepository);
+        this.temporaryPlaylistService = new TemporaryPlaylistService(playlistLocalRepository, userLocalRepository);
     }
 
     public void createNewPlaylist (String playlistName, PlaylistEnum status, PlaylistServices playlistServices){
@@ -38,11 +38,11 @@ public class PlaylistFunctionalitiesService {
         if (!playlists.contains(allSongsPlaylistId)) {
             playlists.addFirst(allSongsPlaylistId);
         }
-        userRepository.saveUser(user);
+        userLocalRepository.saveUser(user);
     }
 
     public void removePlaylistFromUser (int playlistId){
-        User user = userRepository.getUserById(userService.getCurrentUserId());
+        User user = userLocalRepository.getUserById(userService.getCurrentUserId());
         List<Integer> actualPlaylists = user.getPlaylists();
         int playlistIndex = actualPlaylists.indexOf(playlistId);
 
@@ -50,9 +50,9 @@ public class PlaylistFunctionalitiesService {
     }
 
     public void deletePlaylist(int playlistId) {
-        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+        Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
         if (playlist.getStatus().equals(PlaylistEnum.PRIVATE)){
-            playlistRepository.deletePlaylistById(playlistId);
+            playlistLocalRepository.deletePlaylistById(playlistId);
             System.out.println("Playlist deleted !");
         }
         else {
@@ -65,10 +65,10 @@ public class PlaylistFunctionalitiesService {
     }
 
     public void renamePlayList(int playlistId, String newName) {
-        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+        Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
         playlist.setName(newName);
 
-        playlistRepository.savePlaylist(playlist);
+        playlistLocalRepository.savePlaylist(playlist);
         System.out.println("Playlist renamed to " + newName + " !");
     }
 
@@ -76,7 +76,7 @@ public class PlaylistFunctionalitiesService {
         List<Integer> userPlaylistsIds = user.getPlaylists();
 
         for (Integer playlistId : userPlaylistsIds) {
-            Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+            Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
             if (playlist != null && playlist.getName().equalsIgnoreCase(playlistName)) {
                 return false;
             }
@@ -85,13 +85,13 @@ public class PlaylistFunctionalitiesService {
     }
 
     public void deleteSongFromPlaylist(int playlistId, int songIndex) {
-        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+        Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
         playlist.getPlaylistSongsListWithId().remove(songIndex);
-        playlistRepository.savePlaylist(playlist);
+        playlistLocalRepository.savePlaylist(playlist);
     }
 
     public boolean isCurrentUserOwnerOfPlaylist(int playlistId) {
-        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+        Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
         if (playlist == null) {
             return false;
         }
@@ -129,7 +129,7 @@ public class PlaylistFunctionalitiesService {
     }
 
     public int takeAndValidationInputPlaylistChoice() {
-        User currentUser = userRepository.getUserById(userService.getCurrentUserId());
+        User currentUser = userLocalRepository.getUserById(userService.getCurrentUserId());
 
         int chosenPlaylist;
 
@@ -166,7 +166,7 @@ public class PlaylistFunctionalitiesService {
             return;
         }
         playlistServices.setCurrentPlaylistId(chosenPlaylist);
-        songService.setCurrentSongId(playlistRepository.getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
+        songService.setCurrentSongId(playlistLocalRepository.getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
 
         if (isCurrentUserOwnerOfPlaylist(chosenPlaylist)){
             pageService.playlistPageOpen.displayAllPage();

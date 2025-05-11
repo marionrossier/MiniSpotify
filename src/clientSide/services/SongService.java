@@ -1,15 +1,15 @@
 package clientSide.services;
 
 import serverSide.entities.Song;
-import serverSide.repositories.SongRepository;
+import serverSide.repositories.SongLocalRepository;
 
 public class SongService {
 
-    public final SongRepository songRepository;
+    public final SongLocalRepository songLocalRepository;
 
     // Constructor
-    public SongService(SongRepository songRepo) {
-        this.songRepository = songRepo;
+    public SongService(SongLocalRepository songRepo) {
+        this.songLocalRepository = songRepo;
     }
 
     public void setCurrentSongId (int songId){
@@ -21,6 +21,6 @@ public class SongService {
     }
 
     public Song getSongById(int songId) {
-        return songRepository.getSongById(songId);
+        return songLocalRepository.getSongById(songId);
     }
 }
