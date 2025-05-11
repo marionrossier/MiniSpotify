@@ -1,9 +1,10 @@
 package clientSide.services;
 
-import clientSide.entities.MusicGender;
-import clientSide.entities.Playlist;
-import clientSide.entities.Song;
-import clientSide.repositories.SongRepository;
+import serverSide.entities.MusicGender;
+import serverSide.entities.Playlist;
+import serverSide.entities.Song;
+import serverSide.repositories.ArtistRepository;
+import serverSide.repositories.SongRepository;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,12 +16,14 @@ public class SearchService {
     private final Icon icon = new Icon();
     public final SongRepository songRepository;
     public final SongService songService;
+    public final ArtistRepository artistRepository;
     private final PrintService printService = new PrintService();
 
     // Constructor
-    public SearchService(SongRepository songRepo, SongService songService) {
+    public SearchService(SongRepository songRepo, SongService songService, ArtistRepository artistRepository) {
         this.songRepository = songRepo;
         this.songService = songService;
+        this.artistRepository = artistRepository;
     }
 
     public void searchSong(String input, String type, int pageId, PageService pageService, PlaylistServices playlistServices) {
@@ -76,7 +79,7 @@ public class SearchService {
             return new LinkedList<>();
         }
         else {
-            songsByArtist = songRepository.getSongsByArtist(artistName);
+            songsByArtist = songRepository.getSongsByArtist(artistName, artistRepository);
         }
 
         return listSongToListInt(songsByArtist);

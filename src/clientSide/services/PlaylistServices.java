@@ -1,12 +1,12 @@
 package clientSide.services;
 
-import clientSide.entities.Playlist;
-import clientSide.entities.PlaylistEnum;
-import clientSide.entities.Song;
-import clientSide.entities.User;
-import clientSide.repositories.PlaylistRepository;
-import clientSide.repositories.SongRepository;
-import clientSide.repositories.UserRepository;
+import serverSide.entities.Playlist;
+import serverSide.entities.PlaylistEnum;
+import serverSide.entities.Song;
+import serverSide.entities.User;
+import serverSide.repositories.PlaylistRepository;
+import serverSide.repositories.SongRepository;
+import serverSide.repositories.UserRepository;
 
 import java.util.*;
 

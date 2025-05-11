@@ -1,6 +1,6 @@
 package clientSide.services;
 
-import clientSide.entities.Playlist;
+import serverSide.entities.Playlist;
 
 import java.util.LinkedList;
 import java.util.List;

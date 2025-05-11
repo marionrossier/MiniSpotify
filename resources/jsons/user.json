@@ -1,28 +1,28 @@
 [ {
+  "userId" : 232928320,
+  "pseudonym" : "marion",
+  "email" : "marion",
+  "password" : "RT8sFyjRz2Jv2NGw1mrkL6kDwkMVt+xXvEQNR8L1r+g=",
+  "salt" : "ypvouT/pM24glkQnirQz7w==",
+  "planEnum" : "FREE",
+  "playlists" : [ 1272197808, 616669315, 951792442, 1165589286 ],
+  "friends" : [ ]
+}, {
   "userId" : 1726370281,
   "pseudonym" : "florent",
   "email" : "florent",
-  "password" : "voMDPvbdUx9qoveChEccDlYyXLlU+EYW4M4eggU8HZI=",
-  "salt" : "jMgn/O9EEU4X2gFxQAN/NA==",
+  "password" : "KDbpc+W5yORYkG6rNrKJdgq1ANWjOU28chCMjVG2aG4=",
+  "salt" : "MeeC0/tJ7h5Hlv7T/11VyA==",
   "planEnum" : "PREMIUM",
-  "playlists" : [ 358838277, 389207123, 1751274619, 1887528009 ],
+  "playlists" : [ 1272197808, 724931503, 439041823, 1699866336 ],
   "friends" : [ ]
 }, {
   "userId" : 1,
   "pseudonym" : "admin",
   "email" : "admin",
-  "password" : "QjcdymJydSX6gywFb7GTyA7o4DKF1zpTRKM/LrDR7rw=",
-  "salt" : "COLdiNn2xgNAYEoHzG6l/w==",
+  "password" : "vFhGCWpvBLk4zINWifobOJNiwM3qnC1qrbbBAnYLFZQ=",
+  "salt" : "4WHFb9wA+76NQdV1NlyUTw==",
   "planEnum" : "PREMIUM",
-  "playlists" : [ 1826288874, 1870973866, 1569113515, 642382866, 1488284161 ],
-  "friends" : [ ]
-}, {
-  "userId" : 232928320,
-  "pseudonym" : "marion",
-  "email" : "marion",
-  "password" : "KsFWPM/3g9VjfgPjormuR/8HJ1f6F9cIxb/NSgGt2tQ=",
-  "salt" : "stgXXCk/EStESTt17ZdfnQ==",
-  "planEnum" : "FREE",
-  "playlists" : [ 358838277, 378180562, 425155630, 1148364565 ],
+  "playlists" : [ 1523761256, 1033030297, 1274729146, 1476486772, 766769217 ],
   "friends" : [ ]
 } ]

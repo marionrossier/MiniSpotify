@@ -1,10 +1,11 @@
 package player_StatePattern.playlist_player;
 
-import clientSide.entities.PlaylistEnum;
-import clientSide.entities.Song;
+import serverSide.entities.PlaylistEnum;
+import serverSide.entities.Song;
 import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
-import clientSide.repositories.PlaylistRepository;
-import clientSide.repositories.SongRepository;
+import serverSide.repositories.ArtistRepository;
+import serverSide.repositories.PlaylistRepository;
+import serverSide.repositories.SongRepository;
 import clientSide.services.Cookies_SingletonPattern;
 import clientSide.services.PlaylistServices;
 import clientSide.services.SearchService;
@@ -13,7 +14,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import clientSide.player_StatePattern.file_player.FakeMusicPlayer;
-import clientSide.entities.Playlist;
+import serverSide.entities.Playlist;
 import services.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,11 +29,13 @@ public class PlaylistPlayerTest {
     private FakeMusicPlayer fakeMusicPlayer;
     private File songTempFile;
     private File playlistTempFile;
+    private File artistTempFile;
     private SongRepository songRepository;
     private SongService songService;
     private SearchService searchService;
     private PlaylistRepository playlistRepository;
     private PlaylistServices playlistServices;
+    private ArtistRepository artistRepository;
     private CommuneMethods communeMethods = new CommuneMethods();
 
     @BeforeEach
@@ -43,13 +46,15 @@ public class PlaylistPlayerTest {
         // Create temporary files for repositories
         songTempFile = Files.createTempFile("songs", ".json").toFile();
         playlistTempFile = Files.createTempFile("playlists", ".json").toFile();
+        artistTempFile = Files.createTempFile("artist",".json").toFile();
         
         // Initialize repositories with temp files
         songRepository = new SongRepository(songTempFile.getAbsolutePath());
         songService = new SongService(songRepository);
-        searchService = new SearchService(songRepository, songService);
+        searchService = new SearchService(songRepository, songService, artistRepository);
         playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
         playlistServices = new PlaylistServices(playlistRepository, songRepository);
+        artistRepository = new ArtistRepository(artistTempFile.getAbsolutePath());
         
         // Create test songs
         Song song1 = createSong(1, "Song 1", "path/to/song1.mp3");
@@ -74,7 +79,7 @@ public class PlaylistPlayerTest {
         fakeMusicPlayer = new FakeMusicPlayer();
         
         // Instantiate the PlaylistPlayer with the fake player and repositories
-        playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository);
+        playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository, artistRepository);
     }
     
     @AfterEach

@@ -1,9 +1,10 @@
 package clientSide.player_StatePattern.playlist_player;
 
-import clientSide.entities.Playlist;
-import clientSide.entities.Song;
-import clientSide.repositories.PlaylistRepository;
-import clientSide.repositories.SongRepository;
+import serverSide.entities.Playlist;
+import serverSide.entities.Song;
+import serverSide.repositories.ArtistRepository;
+import serverSide.repositories.PlaylistRepository;
+import serverSide.repositories.SongRepository;
 import clientSide.player_StatePattern.file_player.IMusicPlayer;
 import clientSide.services.Icon;
 import clientSide.services.PlaylistServices;
@@ -33,12 +34,12 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     private final IState shuffleState;
     private final IState repeatState;
 
-    public PlaylistPlayer(IMusicPlayer musicPlayer, SongRepository songRepository, PlaylistRepository playlistRepository) {
+    public PlaylistPlayer(IMusicPlayer musicPlayer, SongRepository songRepository, PlaylistRepository playlistRepository, ArtistRepository artistRepository) {
         this.musicPlayer = musicPlayer;
         this.songRepository = songRepository;
         this.playlistRepository = playlistRepository;
         this.songService = new SongService(songRepository);
-        this.searchService = new SearchService(songRepository, songService);
+        this.searchService = new SearchService(songRepository, songService, artistRepository);
         this.playlistServices = new PlaylistServices(playlistRepository, songRepository);
 
         this.sequentialState = new SequentialState(this);

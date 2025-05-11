@@ -1,10 +1,10 @@
 package services;
 
-import clientSide.entities.Playlist;
-import clientSide.entities.PlaylistEnum;
-import clientSide.entities.Song;
-import clientSide.repositories.PlaylistRepository;
+import serverSide.entities.*;
+import serverSide.repositories.ArtistRepository;
+import serverSide.repositories.PlaylistRepository;
 import clientSide.services.PlaylistServices;
+import serverSide.repositories.SongRepository;
 
 public class CommuneMethods {
 
@@ -47,5 +47,23 @@ public class CommuneMethods {
             Song song = createTestSong(id, "Song " + id);
             this.addSongToPlaylist(playlist.getPlaylistId(), song.getSongId(), playlistRepository, playlistServices);
         }
+    }
+
+    public Song createTestSong(int id, String title, String artistName, MusicGender gender, ArtistRepository artistRepository) {
+        Song song = new Song();
+        song.setSongId(id);
+        song.setTitle(title);
+
+        Artist artist = new Artist(artistName);
+        artist.setArtistId(100 + id); // Unique ID for artist
+        artistRepository.saveArtist(artist);
+
+        song.setArtistId(artist.getArtistId());
+
+        song.setDurationSeconds(180);
+        song.setGender(gender);
+        song.setAudioFilePath("path/to/song" + id + ".mp3");
+
+        return song;
     }
 }

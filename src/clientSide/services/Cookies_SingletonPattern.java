@@ -1,8 +1,8 @@
 package clientSide.services;
 
-import clientSide.entities.Playlist;
-import clientSide.repositories.PlaylistRepository;
-import clientSide.repositories.SongRepository;
+import serverSide.entities.Playlist;
+import serverSide.repositories.PlaylistRepository;
+import serverSide.repositories.SongRepository;
 
 public class Cookies_SingletonPattern {
     private static Cookies_SingletonPattern instance;

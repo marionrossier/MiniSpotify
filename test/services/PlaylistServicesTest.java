@@ -1,9 +1,10 @@
 package services;
 
-import clientSide.entities.*;
-import clientSide.repositories.PlaylistRepository;
-import clientSide.repositories.SongRepository;
-import clientSide.repositories.UserRepository;
+import serverSide.entities.*;
+import serverSide.repositories.ArtistRepository;
+import serverSide.repositories.PlaylistRepository;
+import serverSide.repositories.SongRepository;
+import serverSide.repositories.UserRepository;
 import clientSide.services.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +27,7 @@ class PlaylistServicesTest {
     private File songTempFile;
     private File playlistTempFile;
     private File userTempFile;
+    private File artistTempFile;
     private Playlist playlist;
     private PlaylistServices playlistServices;
     private TemporaryPlaylistService temporaryPlaylistService;
@@ -34,6 +36,7 @@ class PlaylistServicesTest {
     private SongService songService;
     private UserRepository userRepository;
     private PlaylistRepository playlistRepository;
+    private ArtistRepository artistRepository;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -42,12 +45,14 @@ class PlaylistServicesTest {
         songTempFile = Files.createTempFile("songs", ".json").toFile();
         playlistTempFile = Files.createTempFile("playlists", ".json").toFile();
         userTempFile = Files.createTempFile("users", ".json").toFile();
+        artistTempFile = Files.createTempFile("artist", ".json").toFile();
 
 
         // Initialize repositories with temp files
         songRepository = new SongRepository(songTempFile.getAbsolutePath());
         userRepository = new UserRepository(userTempFile.getAbsolutePath());
         playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
+        artistRepository = new ArtistRepository(artistTempFile.getAbsolutePath());
 
         playlistServices = new PlaylistServices(playlistRepository, userRepository, songRepository);
         songService = new SongService(songRepository);
@@ -86,7 +91,7 @@ class PlaylistServicesTest {
         FakeMusicPlayer fakeMusicPlayer = new FakeMusicPlayer();
 
         // Instantiate the PlaylistPlayer with the fake player and repositories
-        PlaylistPlayer playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository);
+        PlaylistPlayer playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository, artistRepository);
 
         // Create playlistServices
         playlistServices = new PlaylistServices(playlistRepository, userRepository, songRepository);

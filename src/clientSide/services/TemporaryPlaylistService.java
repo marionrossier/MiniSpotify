@@ -1,9 +1,9 @@
 package clientSide.services;
 
-import clientSide.entities.Playlist;
-import clientSide.entities.PlaylistEnum;
-import clientSide.repositories.PlaylistRepository;
-import clientSide.repositories.UserRepository;
+import serverSide.entities.Playlist;
+import serverSide.entities.PlaylistEnum;
+import serverSide.repositories.PlaylistRepository;
+import serverSide.repositories.UserRepository;
 
 import java.util.LinkedList;
 

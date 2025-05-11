@@ -1,7 +1,7 @@
 package clientSide.services;
 
-import clientSide.entities.Song;
-import clientSide.repositories.SongRepository;
+import serverSide.entities.Song;
+import serverSide.repositories.SongRepository;
 
 public class SongService {
 

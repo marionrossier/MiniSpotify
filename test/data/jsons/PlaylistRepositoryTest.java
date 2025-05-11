@@ -1,8 +1,8 @@
 package data.jsons;
 
-import clientSide.entities.Playlist;
-import clientSide.repositories.PlaylistRepository;
-import clientSide.repositories.SongRepository;
+import serverSide.entities.Playlist;
+import serverSide.repositories.PlaylistRepository;
+import serverSide.repositories.SongRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

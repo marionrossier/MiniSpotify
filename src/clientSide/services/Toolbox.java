@@ -1,15 +1,15 @@
 package clientSide.services;
 
-import clientSide.repositories.ArtistRepository;
-import clientSide.repositories.PlaylistRepository;
-import clientSide.repositories.SongRepository;
-import clientSide.repositories.UserRepository;
+import serverSide.repositories.ArtistRepository;
+import serverSide.repositories.PlaylistRepository;
+import serverSide.repositories.SongRepository;
+import serverSide.repositories.UserRepository;
 
 public class Toolbox {
-    UserRepository userRepo;
-    PlaylistRepository playlistRepo;
-    ArtistRepository artistRepo;
-    SongRepository songRepo;
+    UserRepository userRepository;
+    PlaylistRepository playlistRepository;
+    ArtistRepository artistRepository;
+    SongRepository songRepository;
 
     PlaylistServices playlistServ;
     SongService songServ;
@@ -20,16 +20,16 @@ public class Toolbox {
     PlaylistReorderSongService playlistReorderSongService;
 
     public Toolbox() {
-        userRepo = new UserRepository();
-        playlistRepo = new PlaylistRepository();
-        artistRepo = new ArtistRepository();
-        songRepo = new SongRepository();
+        userRepository = new UserRepository();
+        playlistRepository = new PlaylistRepository();
+        artistRepository = new ArtistRepository();
+        songRepository = new SongRepository();
 
-        playlistServ = new PlaylistServices(playlistRepo, songRepo);
-        userServ = new UserService(userRepo);
-        songServ = new SongService(songRepo);
-        searchService = new SearchService(songRepo, songServ);
-        passwordServ = new PasswordService(userRepo);
+        playlistServ = new PlaylistServices(playlistRepository, songRepository);
+        userServ = new UserService(userRepository);
+        songServ = new SongService(songRepository);
+        searchService = new SearchService(songRepository, songServ, artistRepository);
+        passwordServ = new PasswordService(userRepository);
         printServ = new PrintService();
         playlistReorderSongService = new PlaylistReorderSongService();
     }

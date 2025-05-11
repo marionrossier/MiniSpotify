@@ -1,8 +1,9 @@
 package clientSide;
 
-import clientSide.repositories.Jsons;
-import clientSide.repositories.PlaylistRepository;
-import clientSide.repositories.SongRepository;
+import serverSide.StockageService;
+import serverSide.repositories.ArtistRepository;
+import serverSide.repositories.PlaylistRepository;
+import serverSide.repositories.SongRepository;
 import clientSide.player_StatePattern.file_player.MusicPlayer;
 import clientSide.player_StatePattern.file_player.IMusicPlayer;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
@@ -13,9 +14,10 @@ public class Spotify {
     public static void startApp(){
         PlaylistRepository playlistRepository = new PlaylistRepository();
         SongRepository songRepository = new SongRepository();
+        ArtistRepository artistRepository = new ArtistRepository();
         IMusicPlayer musicPlayer = new MusicPlayer();
 
-        IPlaylistPlayer spotifyPlayer = new PlaylistPlayer(musicPlayer, songRepository, playlistRepository);
+        IPlaylistPlayer spotifyPlayer = new PlaylistPlayer(musicPlayer, songRepository, playlistRepository, artistRepository);
 
         PageService pageService = new PageService(spotifyPlayer);
 
@@ -23,13 +25,17 @@ public class Spotify {
     }
 
     public static void copyJsons(){
-        Jsons jsons = new Jsons();
+        StockageService stockageService = new StockageService();
 
-        String directoryPath = jsons.createWritableDirectory("jsons");
+        String directoryPath = stockageService.createWritableDirectory("jsons");
 
-        jsons.copyResourceToWritableLocation("jsons/artist.json", "artist.json");
-        jsons.copyResourceToWritableLocation("jsons/user.json", "user.json");
-        jsons.copyResourceToWritableLocation("jsons/song.json", "song.json");
-        jsons.copyResourceToWritableLocation("jsons/playlist.json", "playlist.json");
+        stockageService.copyResourceToWritableLocation("jsons/artist.json", "artist.json");
+        stockageService.copyResourceToWritableLocation("jsons/user.json", "user.json");
+        stockageService.copyResourceToWritableLocation("jsons/song.json", "song.json");
+        stockageService.copyResourceToWritableLocation("jsons/playlist.json", "playlist.json");
+    }
+
+    public static void copySongs(){
+
     }
 }

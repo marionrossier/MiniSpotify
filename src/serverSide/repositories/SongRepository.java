@@ -1,0 +1,69 @@
+package serverSide.repositories;
+
+import serverSide.StockageService;
+import serverSide.entities.MusicGender;
+import serverSide.entities.Song;
+import com.fasterxml.jackson.core.type.TypeReference;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+public class SongRepository {
+    private final String filePath;
+    private final StockageService stockageService;
+    private List<Song> data;
+
+    public SongRepository(String filePath) {
+        this.filePath = filePath;
+        this.stockageService = new StockageService();
+        this.data = stockageService.loadFromJson(this.filePath, new TypeReference<>() {});
+    }
+
+    public SongRepository() {
+        this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/jsons/song.json");
+    }
+
+    public List<Song> getAllSongs() {
+        return new ArrayList<>(data);
+    }
+
+    public void addSong(Song song) {
+        data.add(song);
+        stockageService.saveToJson(filePath, data);
+    }
+
+    public void removeSongById(int songId) {
+        data.removeIf(song -> song.getSongId() == songId);
+        stockageService.saveToJson(filePath, data);
+    }
+
+    public Song getSongById(int songId) {
+        return data.stream()
+                .filter(song -> song.getSongId() == songId)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public LinkedList<Song> getSongsByTitle(String title) {
+        return new LinkedList<>(data.stream()
+                .filter(song -> song.getTitle().toLowerCase().contains(title.toLowerCase()))
+                .toList());
+    }
+
+    public LinkedList<Song> getSongsByArtist(String artistName, ArtistRepository artistRepository ) {
+        return new LinkedList<>(data.stream()
+                .filter(song -> artistRepository.getArtistById(song.getArtistId()).getArtistName().toLowerCase().contains(artistName.toLowerCase()))
+                .toList());
+    }
+
+    public LinkedList<Song> getSongsByGender(MusicGender gender) {
+        return new LinkedList<>(data.stream()
+                .filter(song -> song.getGender() == gender)
+                .toList());
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+}

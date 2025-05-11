@@ -1,12 +1,13 @@
 package data.jsons;
 
-import clientSide.entities.Artist;
-import clientSide.entities.MusicGender;
-import clientSide.entities.Song;
-import clientSide.repositories.SongRepository;
+import serverSide.entities.MusicGender;
+import serverSide.entities.Song;
+import serverSide.repositories.ArtistRepository;
+import serverSide.repositories.SongRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import services.CommuneMethods;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,66 +19,58 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SongRepositoryTest {
 
-    private File tempFile;
-    private SongRepository repo;
+    private File tempFileSong;
+    private SongRepository songRepository;
+    private File tempFileArtist;
+    private ArtistRepository artistRepository;
+    private CommuneMethods communeMethods = new CommuneMethods();
 
     @BeforeEach
     void setUp() throws IOException {
-        tempFile = Files.createTempFile("songs", ".json").toFile();
-        repo = new SongRepository(tempFile.getAbsolutePath());
+        tempFileSong = Files.createTempFile("songs", ".json").toFile();
+        songRepository = new SongRepository(tempFileSong.getAbsolutePath());
+        tempFileArtist = Files.createTempFile("artist", ".json").toFile();
+        artistRepository = new ArtistRepository(tempFileArtist.getAbsolutePath());
     }
 
     @AfterEach
     void tearDown() {
-        if (tempFile.exists()) {
-            tempFile.delete();
+        if (tempFileSong.exists()) {
+            tempFileSong.delete();
         }
-    }
-
-    private Song createTestSong(int id, String title, String artistName, MusicGender gender) {
-        Song song = new Song();
-        song.setSongId(id);
-        song.setTitle(title);
-        
-        Artist artist = new Artist(artistName);
-        artist.setArtistId(100 + id); // Unique ID for artist
-        song.setArtist(artist);
-        
-        song.setDurationSeconds(180);
-        song.setGender(gender);
-        song.setAudioFilePath("path/to/song" + id + ".mp3");
-        
-        return song;
+        if (tempFileArtist.exists()) {
+            tempFileArtist.delete();
+        }
     }
 
     @Test
     void addSong_shouldSaveTheSong() {
         // Arrange
-        Song song = createTestSong(1, "Test Song", "Test Artist", MusicGender.POP);
+        Song song = communeMethods.createTestSong(1, "Test Song", "Test Artist", MusicGender.POP, artistRepository);
 
         // Act
-        repo.addSong(song);
+        songRepository.addSong(song);
 
         // Assert
-        List<Song> songs = repo.getAllSongs();
+        List<Song> songs = songRepository.getAllSongs();
         assertEquals(1, songs.size());
         assertEquals("Test Song", songs.get(0).getTitle());
-        assertEquals("Test Artist", songs.get(0).getArtist().getArtistName());
+        assertEquals("Test Artist", artistRepository.getArtistById(songs.get(0).getArtistId()).getArtistName());
     }
 
     @Test
     void removeSongById_shouldDeleteTheSong() {
         // Arrange
-        Song songOne = createTestSong(1, "Song One", "Artist One", MusicGender.POP);
-        Song songTwo = createTestSong(2, "Song Two", "Artist Two", MusicGender.ROCK);
-        repo.addSong(songOne);
-        repo.addSong(songTwo);
+        Song songOne = communeMethods.createTestSong(1, "Song One", "Artist One", MusicGender.POP, artistRepository);
+        Song songTwo = communeMethods.createTestSong(2, "Song Two", "Artist Two", MusicGender.ROCK, artistRepository);
+        songRepository.addSong(songOne);
+        songRepository.addSong(songTwo);
 
         // Act
-        repo.removeSongById(songOne.getSongId());
+        songRepository.removeSongById(songOne.getSongId());
 
         // Assert
-        List<Song> result = repo.getAllSongs();
+        List<Song> result = songRepository.getAllSongs();
         assertEquals(1, result.size());
         assertEquals(songTwo.getSongId(), result.get(0).getSongId());
     }
@@ -85,11 +78,11 @@ class SongRepositoryTest {
     @Test
     void getSongById_shouldFindTheSong() {
         // Arrange
-        Song song = createTestSong(1, "Test Song", "Test Artist", MusicGender.POP);
-        repo.addSong(song);
+        Song song = communeMethods.createTestSong(1, "Test Song", "Test Artist", MusicGender.POP, artistRepository);
+        songRepository.addSong(song);
 
         // Act
-        Song result = repo.getSongById(song.getSongId());
+        Song result = songRepository.getSongById(song.getSongId());
 
         // Assert
         assertNotNull(result);
@@ -99,15 +92,15 @@ class SongRepositoryTest {
     @Test
     void getSongsByTitle_shouldReturnMatchingSongs() {
         // Arrange
-        Song songOne = createTestSong(1, "Love Song", "Artist One", MusicGender.POP);
-        Song songTwo = createTestSong(2, "Rock Song", "Artist Two", MusicGender.ROCK);
-        Song songThree = createTestSong(3, "Another Love Song", "Artist Three", MusicGender.POP);
-        repo.addSong(songOne);
-        repo.addSong(songTwo);
-        repo.addSong(songThree);
+        Song songOne = communeMethods.createTestSong(1, "Love Song", "Artist One", MusicGender.POP, artistRepository);
+        Song songTwo = communeMethods.createTestSong(2, "Rock Song", "Artist Two", MusicGender.ROCK, artistRepository);
+        Song songThree = communeMethods.createTestSong(3, "Another Love Song", "Artist Three", MusicGender.POP, artistRepository);
+        songRepository.addSong(songOne);
+        songRepository.addSong(songTwo);
+        songRepository.addSong(songThree);
 
         // Act
-        LinkedList<Song> result = repo.getSongsByTitle("Love");
+        LinkedList<Song> result = songRepository.getSongsByTitle("Love");
 
         // Assert
         assertEquals(2, result.size());
@@ -118,34 +111,34 @@ class SongRepositoryTest {
     @Test
     void getSongsByArtist_shouldReturnMatchingSongs() {
         // Arrange
-        Song songOne = createTestSong(1, "Song One", "John Doe", MusicGender.POP);
-        Song songTwo = createTestSong(2, "Song Two", "Jane Doe", MusicGender.ROCK);
-        Song songThree = createTestSong(3, "Song Three", "John Smith", MusicGender.DISCO);
-        repo.addSong(songOne);
-        repo.addSong(songTwo);
-        repo.addSong(songThree);
+        Song songOne = communeMethods.createTestSong(1, "Song One", "John Doe", MusicGender.POP, artistRepository);
+        Song songTwo = communeMethods.createTestSong(2, "Song Two", "Jane Doe", MusicGender.ROCK, artistRepository);
+        Song songThree = communeMethods.createTestSong(3, "Song Three", "John Smith", MusicGender.DISCO, artistRepository);
+        songRepository.addSong(songOne);
+        songRepository.addSong(songTwo);
+        songRepository.addSong(songThree);
 
         // Act
-        List<Song> result = repo.getSongsByArtist("John");
+        List<Song> result = songRepository.getSongsByArtist("John", artistRepository);
 
         // Assert
         assertEquals(2, result.size());
-        assertTrue(result.stream().anyMatch(s -> s.getArtist().getArtistName().equals("John Doe")));
-        assertTrue(result.stream().anyMatch(s -> s.getArtist().getArtistName().equals("John Smith")));
+        assertTrue(result.stream().anyMatch(s -> artistRepository.getArtistById(s.getArtistId()).getArtistName().equals("John Doe")));
+        assertTrue(result.stream().anyMatch(s -> artistRepository.getArtistById(s.getArtistId()).getArtistName().equals("John Smith")));
     }
 
     @Test
     void getSongsByGender_shouldReturnMatchingSongs() {
         // Arrange
-        Song songOne = createTestSong(1, "Pop Song 1", "Artist One", MusicGender.POP);
-        Song songTwo = createTestSong(2, "Rock Song", "Artist Two", MusicGender.ROCK);
-        Song songThree = createTestSong(3, "Pop Song 2", "Artist Three", MusicGender.POP);
-        repo.addSong(songOne);
-        repo.addSong(songTwo);
-        repo.addSong(songThree);
+        Song songOne = communeMethods.createTestSong(1, "Pop Song 1", "Artist One", MusicGender.POP, artistRepository);
+        Song songTwo = communeMethods.createTestSong(2, "Rock Song", "Artist Two", MusicGender.ROCK, artistRepository);
+        Song songThree = communeMethods.createTestSong(3, "Pop Song 2", "Artist Three", MusicGender.POP, artistRepository);
+        songRepository.addSong(songOne);
+        songRepository.addSong(songTwo);
+        songRepository.addSong(songThree);
 
         // Act
-        List<Song> result = repo.getSongsByGender(MusicGender.POP);
+        List<Song> result = songRepository.getSongsByGender(MusicGender.POP);
 
         // Assert
         assertEquals(2, result.size());
@@ -155,13 +148,13 @@ class SongRepositoryTest {
     @Test
     void getFilePath_shouldReturnCorrectPath() {
         // Assert
-        assertEquals(tempFile.getAbsolutePath(), repo.getFilePath());
+        assertEquals(tempFileSong.getAbsolutePath(), songRepository.getFilePath());
     }
 
     @Test
     void getAllSongs_withEmptyRepository_shouldReturnEmptyList() {
         // Act
-        List<Song> result = repo.getAllSongs();
+        List<Song> result = songRepository.getAllSongs();
 
         // Assert
         assertNotNull(result);

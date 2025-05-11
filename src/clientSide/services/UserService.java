@@ -1,8 +1,8 @@
 package clientSide.services;
 
-import clientSide.entities.PlanEnum;
-import clientSide.entities.User;
-import clientSide.repositories.UserRepository;
+import serverSide.entities.PlanEnum;
+import serverSide.entities.User;
+import serverSide.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
