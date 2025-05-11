@@ -4,42 +4,34 @@ import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 import serverSide.entities.Song;
 import serverSide.entities.User;
-import serverSide.repositories.PlaylistRepository;
-import serverSide.repositories.SongRepository;
-import serverSide.repositories.UserRepository;
+import serverSide.repositories.PlaylistLocalRepository;
+import serverSide.repositories.SongLocalRepository;
 
 import java.util.*;
 
 public class PlaylistServices {
 
-    public final UserRepository userRepository;
-    public final PlaylistRepository playlistRepository;
-    public final TemporaryPlaylistService temporaryPlaylistService;
-    public final PlaylistFunctionalitiesService playlistFuncService;
-    public final SongRepository songRepository;
+    private final PlaylistLocalRepository playlistLocalRepository;
+    private final TemporaryPlaylistService temporaryPlaylistService;
+    private final PlaylistFunctionalitiesService playlistFuncService;
+    private final SongLocalRepository songLocalRepository;
 
-    public PlaylistServices (PlaylistRepository playlistRepository, UserRepository userRepository, SongRepository songRepository){
-        this.playlistRepository = playlistRepository;
-        this.userRepository = userRepository;
-        this.temporaryPlaylistService = new TemporaryPlaylistService(playlistRepository, userRepository);
-        this.playlistFuncService = new PlaylistFunctionalitiesService(playlistRepository);
-        this.songRepository = songRepository;
-    }
 
-    public PlaylistServices (PlaylistRepository playlistRepository, SongRepository songRepository) {
-        this.playlistRepository = playlistRepository;
-        this.userRepository = new UserRepository();
-        this.temporaryPlaylistService = new TemporaryPlaylistService(playlistRepository, userRepository);
-        this.playlistFuncService = new PlaylistFunctionalitiesService(playlistRepository);
-        this.songRepository = songRepository;
+    public PlaylistServices (ServiceToolBox serviceToolBox,
+                             PlaylistFunctionalitiesService playlistFuncService,
+                             TemporaryPlaylistService temporaryPlaylistService){
+        this.playlistLocalRepository = serviceToolBox.playlistLocalRepository;
+        this.temporaryPlaylistService = temporaryPlaylistService;
+        this.playlistFuncService = playlistFuncService;
+        this.songLocalRepository = serviceToolBox.songLocalRepository;
     }
 
     public int setDurationSeconds(int playlistId) {
         int totalSeconds = 0;
-        Playlist playlist = this.playlistRepository.getPlaylistById(playlistId);
+        Playlist playlist = this.playlistLocalRepository.getPlaylistById(playlistId);
         if (playlist != null) {
             for (Integer songId : playlist.getPlaylistSongsListWithId()) {
-                Song song = songRepository.getSongById(songId);
+                Song song = songLocalRepository.getSongById(songId);
                 if (song != null) {
                     totalSeconds += song.getDurationSeconds();
                 }
@@ -57,23 +49,23 @@ public class PlaylistServices {
     }
 
     public PlaylistEnum getPlaylistStatus (){
-        return playlistRepository.getPlaylistStatus(getCurrentPlaylistId());
+        return playlistLocalRepository.getPlaylistStatus(getCurrentPlaylistId());
     }
 
     public int getAllSongsPlaylistId (){
-        return playlistRepository.getPlaylistByName("AllSongs").getPlaylistId();
+        return playlistLocalRepository.getPlaylistByName("AllSongs").getPlaylistId();
     }
 
     public Playlist getPlaylistByName(String name) {
-        return playlistRepository.getPlaylistByName(name);
+        return playlistLocalRepository.getPlaylistByName(name);
     }
 
     public Playlist getPlaylistById(int id) {
-        return playlistRepository.getPlaylistById(id);
+        return playlistLocalRepository.getPlaylistById(id);
     }
 
     public List<Playlist> getPublicPlaylists() {
-        List<Playlist> allPlaylists = playlistRepository.getAllPlaylists();
+        List<Playlist> allPlaylists = playlistLocalRepository.getAllPlaylists();
         List<Playlist> publicPlaylist = new ArrayList<>();
 
         for (Playlist playlist : allPlaylists){

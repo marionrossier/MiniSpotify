@@ -9,19 +9,23 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SongRepository {
+public class SongLocalRepository {
     private final String filePath;
     private final StockageService stockageService;
+    private final ArtistLocalRepository artistLocalRepository;
     private List<Song> data;
 
-    public SongRepository(String filePath) {
+    public SongLocalRepository(String filePath, StockageService stockageService, ArtistLocalRepository artistLocalRepository) {
         this.filePath = filePath;
-        this.stockageService = new StockageService();
+        this.stockageService = stockageService;
+        this.artistLocalRepository = artistLocalRepository;
         this.data = stockageService.loadFromJson(this.filePath, new TypeReference<>() {});
     }
 
-    public SongRepository() {
-        this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/jsons/song.json");
+    public SongLocalRepository(StockageService stockageService, ArtistLocalRepository artistLocalRepository) {
+        this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/jsons/song.json",
+                stockageService, artistLocalRepository);
+
     }
 
     public List<Song> getAllSongs() {
@@ -51,9 +55,9 @@ public class SongRepository {
                 .toList());
     }
 
-    public LinkedList<Song> getSongsByArtist(String artistName, ArtistRepository artistRepository ) {
+    public LinkedList<Song> getSongsByArtist(String artistName) {
         return new LinkedList<>(data.stream()
-                .filter(song -> artistRepository.getArtistById(song.getArtistId()).getArtistName().toLowerCase().contains(artistName.toLowerCase()))
+                .filter(song -> artistLocalRepository.getArtistById(song.getArtistId()).getArtistName().toLowerCase().contains(artistName.toLowerCase()))
                 .toList());
     }
 
@@ -63,7 +67,7 @@ public class SongRepository {
                 .toList());
     }
 
-    public String getFilePath() {
+    public String getSongFilePath() {
         return filePath;
     }
 }

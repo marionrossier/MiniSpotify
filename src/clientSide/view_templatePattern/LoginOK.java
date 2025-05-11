@@ -1,5 +1,6 @@
 package clientSide.view_templatePattern;
 
+import clientSide.services.ViewToolBox;
 import serverSide.entities.User;
 import clientSide.services.Cookies_SingletonPattern;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
@@ -7,15 +8,16 @@ import clientSide.services.PageService;
 
 public class LoginOK extends _SimplePageTemplate {
 
-    public LoginOK(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(pageManager, spotifyPlayer);
+    public LoginOK(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+        super(pageService, spotifyPlayer);
+        this.viewToolBox = viewToolBox;
         this.pageId = pageId;
         this.pageTitle = "Login Page";
         this.pageContent =
-                icon.iconNbr(0) + "End process" + icon.lineBreak +
-                icon.iconNbr(1)+ "Sign in"+icon.lineBreak +
-                icon.iconNbr(2)+ "Create an account";
-        toolbox.getUserServ().resetCookie();
+                icon.nbr(0) + "End process" + icon.lineBreak +
+                icon.nbr(1)+ "Sign in"+icon.lineBreak +
+                icon.nbr(2)+ "Create an account";
+        viewToolBox.getUserServ().resetCookie();
     }
 
     @Override
@@ -34,15 +36,15 @@ public class LoginOK extends _SimplePageTemplate {
         String password = pageService.gotAnInput(scanner.nextLine());
 
         //Check the password...
-        if (toolbox.getPasswordServ().passwordCheck(pseudonym, password)){
-            User user = toolbox.getUserServ().getUserByPseudonym(pseudonym);
+        if (viewToolBox.getPasswordServ().passwordCheck(pseudonym, password)){
+            User user = viewToolBox.getUserServ().getUserByPseudonym(pseudonym);
             Cookies_SingletonPattern.setUser(user.getUserId());
-            System.out.println(icon.lineBreak + icon.iconOk() + "Login successful !");
-            toolbox.getPlaylistServ().createAllSongPlaylist(user);
+            System.out.println(icon.lineBreak + icon.ok() + "Login successful !");
+            viewToolBox.getPlaylistServ().createAllSongPlaylist(user);
             pageService.homePage.displayAllPage();
         }
         else {
-            System.out.println(icon.iconWarning() + "Login failed ! Please try again.");
+            System.out.println(icon.warning() + "Login failed ! Please try again.");
             button1();
         }
     }

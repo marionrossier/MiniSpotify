@@ -2,7 +2,7 @@ package data.jsons;
 
 import serverSide.entities.PlanEnum;
 import serverSide.entities.User;
-import serverSide.repositories.UserRepository;
+import serverSide.repositories.UserLocalRepository;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
@@ -12,15 +12,15 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserRepositoryTest {
+class UserLocalRepositoryTest {
 
     private File tempFile;
-    private UserRepository userRepository;
+    private UserLocalRepository userLocalRepository;
 
     @BeforeEach
     void setUp() throws IOException {
         tempFile = Files.createTempFile("user", ".json").toFile();
-        userRepository = new UserRepository(tempFile.getAbsolutePath());
+        userLocalRepository = new UserLocalRepository(tempFile.getAbsolutePath());
     }
 
     @AfterEach
@@ -36,10 +36,10 @@ class UserRepositoryTest {
         User user = new User("TestUser", "test@example.com", "1234", PlanEnum.FREE);
 
         // Act
-        userRepository.saveUser(user);
+        userLocalRepository.saveUser(user);
 
         // Assert
-        List<User> users = userRepository.getAllUsers();
+        List<User> users = userLocalRepository.getAllUsers();
         assertEquals(1, users.size());
         assertEquals("TestUser", users.get(0).getPseudonym());
     }
@@ -49,14 +49,14 @@ class UserRepositoryTest {
         // Arrange
         User userOne = new User("UserOne", "one@example.com", "1234", PlanEnum.FREE);
         User userTwo = new User("UserTwo", "two@example.com", "1234", PlanEnum.FREE);
-        userRepository.saveUser(userOne);
-        userRepository.saveUser(userTwo);
+        userLocalRepository.saveUser(userOne);
+        userLocalRepository.saveUser(userTwo);
 
         // Act
-        userRepository.removeUserById(userOne.getUserId());
+        userLocalRepository.removeUserById(userOne.getUserId());
 
         // Assert
-        List<User> result = userRepository.getAllUsers();
+        List<User> result = userLocalRepository.getAllUsers();
         assertEquals(1, result.size());
         assertEquals(userTwo.getUserId(), result.get(0).getUserId());
     }
@@ -65,10 +65,10 @@ class UserRepositoryTest {
     void getUserById_shouldFindTheUser() {
         // Arrange
         User user = new User("TestUser", "test@example.com", "1234", PlanEnum.FREE);
-        userRepository.saveUser(user);
+        userLocalRepository.saveUser(user);
 
         // Act
-        User result = userRepository.getUserById(user.getUserId());
+        User result = userLocalRepository.getUserById(user.getUserId());
 
         // Assert
         assertNotNull(result);
@@ -79,10 +79,10 @@ class UserRepositoryTest {
     void getUserByPseudonym_shouldFindTheUser() {
         // Arrange
         User user = new User("TestUser", "test@example.com", "1234", PlanEnum.FREE);
-        userRepository.saveUser(user);
+        userLocalRepository.saveUser(user);
 
         // Act
-        User result = userRepository.getUserByPseudonym("TestUser");
+        User result = userLocalRepository.getUserByPseudonym("TestUser");
 
         // Assert
         assertNotNull(result);
@@ -93,16 +93,16 @@ class UserRepositoryTest {
     void updateAccount_shouldModifyTheUser() {
         // Arrange
         User user = new User("OldUser", "old@example.com", "1234", PlanEnum.FREE);
-        userRepository.saveUser(user);
+        userLocalRepository.saveUser(user);
         int userId = user.getUserId();
 
         // Act
         user.setPseudonym("NewUser");
-        userRepository.saveUser(user);
-        User updatedUser = userRepository.getUserById(userId);
+        userLocalRepository.saveUser(user);
+        User updatedUser = userLocalRepository.getUserById(userId);
 
         // Assert
         assertNotNull(updatedUser);
-        assertEquals("NewUser", userRepository.getUserById(user.getUserId()).getPseudonym());
+        assertEquals("NewUser", userLocalRepository.getUserById(user.getUserId()).getPseudonym());
     }
 }

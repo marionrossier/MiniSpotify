@@ -1,6 +1,6 @@
 package serverSide.entities;
 
-import serverSide.repositories.ArtistRepository;
+import serverSide.repositories.ArtistLocalRepository;
 import clientSide.services.UniqueIdService;
 
 public class Song {
@@ -10,55 +10,29 @@ public class Song {
     private int durationSeconds;
     private MusicGender gender;
     private int songId;
-    private String audioFilePath;
     private String audioFileName;
     private final UniqueIdService uniqueIdService = new UniqueIdService();
-    ArtistRepository artistRepository = new ArtistRepository();
 
     public Song (){}
 
-    public Song(int id, String title, String artistName, int durationSeconds, MusicGender gender,
+    public Song(int id, String title, int artistId, int durationSeconds, MusicGender gender,
                 String audioFileName) {
         this.songId = id;
         this.title = title;
-        this.titleAndArtist = title+" - "+artistName;
         this.durationSeconds = durationSeconds;
         this.gender = gender;
         this.audioFileName = audioFileName;
-        this.audioFilePath = "resources\\songsfiles\\"+ this.audioFileName; //TODO : ICI la mention du chemin de la chanson
-
-
-        Artist existingArtist = artistRepository.getArtistByName(artistName);
-        if (existingArtist != null) {
-            this.artistId = existingArtist.getArtistId();
-        } else {
-            this.artistId = new Artist(artistName).getArtistId();
-            artistRepository.addArtist(new Artist(artistName));
-        }
-        artistRepository.getArtistById(this.artistId).getArtistSongsID().add(this.songId);
+        this.artistId = artistId;
     }
 
-    public Song(String title, String artistName, int durationSeconds, MusicGender gender,
+    public Song(String title, int artistId, int durationSeconds, MusicGender gender,
                 String audioFileName) {
         this.title = title;
         this.durationSeconds = durationSeconds;
         this.gender = gender;
         this.songId = uniqueIdService.setUniqueId();
         this.audioFileName = audioFileName;
-        this.audioFilePath = "resources\\songsfiles\\"+ this.audioFileName; //TODO : ICI la mention du chemin de la chanson
-
-        Artist existingArtist = artistRepository.getArtistByName(artistName);
-        if (existingArtist != null) {
-            this.artistId = existingArtist.getArtistId();
-        } else {
-            this.artistId = new Artist(artistName).getArtistId();
-            artistRepository.addArtist(new Artist(artistName));
-        }
-        artistRepository.getArtistById(this.artistId).getArtistSongsID().add(this.songId);
-    }
-
-    public String getTitleAndArtist() {
-        return titleAndArtist;
+        this.artistId = artistId;
     }
 
     public String getTitle() {
@@ -101,11 +75,11 @@ public class Song {
         this.songId = songId;
     }
 
-    public String getAudioFilePath() {
-        return audioFilePath;
+    public String getAudioFileName() {
+        return audioFileName;
     }
 
-    public void setAudioFilePath(String audioFilePath) {
-        this.audioFilePath = audioFilePath;
+    public void setAudioFileName(String audioFileName) {
+        this.audioFileName = audioFileName;
     }
 }

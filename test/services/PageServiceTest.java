@@ -1,23 +1,21 @@
 package services;
 
-import clientSide.services.NavigationStackService;
-import clientSide.services.PageService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utilsAndFakes.CommuneMethods;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PageServiceTest {
+class PageServiceTest extends CommuneMethods {
 
-    private PageService pageService;
-    private NavigationStackService navigationStackService;
+    public PageServiceTest() throws IOException {
+    }
 
     @BeforeEach
     void setUp() {
-        pageService = new PageService(null);
-        navigationStackService = new NavigationStackService(pageService);
-        System.out.println("");
     }
 
     @AfterEach

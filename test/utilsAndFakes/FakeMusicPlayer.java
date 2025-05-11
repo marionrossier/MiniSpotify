@@ -1,9 +1,11 @@
-package clientSide.player_StatePattern.file_player;
+package utilsAndFakes;
+
+import clientSide.player_StatePattern.file_player.IMusicPlayer;
 
 public class FakeMusicPlayer implements IMusicPlayer {
     private boolean isPlaying = false;
     private boolean isPaused = false;
-    private String currentSongPath = null;
+    private String currentSongFileName = null;
     private Runnable onSongEndCallback;
 
     @Override
@@ -20,9 +22,9 @@ public class FakeMusicPlayer implements IMusicPlayer {
     }
 
     @Override
-    public void play(String songPath) {
-        currentSongPath = songPath;
-        System.out.println("[FakeMusicPlayer] Playing: " + currentSongPath);
+    public void play(String songFileName) {
+        currentSongFileName = songFileName;
+        System.out.println("[FakeMusicPlayer] Playing: " + currentSongFileName);
         isPlaying = true;
         isPaused = false;
     }
@@ -30,7 +32,7 @@ public class FakeMusicPlayer implements IMusicPlayer {
     @Override
     public void pause() {
         if (isPlaying && !isPaused) {
-            System.out.println("[FakeMusicPlayer] Paused: " + currentSongPath);
+            System.out.println("[FakeMusicPlayer] Paused: " + currentSongFileName);
             isPaused = true;
             isPlaying = false;
         }
@@ -39,7 +41,7 @@ public class FakeMusicPlayer implements IMusicPlayer {
     @Override
     public void resume(String songPath) {
         if (isPaused) {
-            System.out.println("[FakeMusicPlayer] Resumed: " + currentSongPath);
+            System.out.println("[FakeMusicPlayer] Resumed: " + currentSongFileName);
             isPaused = false;
             isPlaying = true;
         }
@@ -50,8 +52,8 @@ public class FakeMusicPlayer implements IMusicPlayer {
 
     @Override
     public void stop() {
-        System.out.println("[FakeMusicPlayer] Stopped: " + currentSongPath);
-        currentSongPath = null;
+        System.out.println("[FakeMusicPlayer] Stopped: " + currentSongFileName);
+        currentSongFileName = null;
         isPlaying = false;
         isPaused = false;
     }
@@ -72,14 +74,14 @@ public class FakeMusicPlayer implements IMusicPlayer {
     }
 
     public void triggerSongEnd() {
-        System.out.println("[FakeMusicPlayer] Song ended: " + currentSongPath);
+        System.out.println("[FakeMusicPlayer] Song ended: " + currentSongFileName);
         isPlaying = false;
         if (onSongEndCallback != null) {
             onSongEndCallback.run();
         }
     }
 
-    public String getCurrentSongPath() {
-        return currentSongPath;
+    public String getCurrentSongFileName() {
+        return currentSongFileName;
     }
 }

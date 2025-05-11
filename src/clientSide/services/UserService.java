@@ -2,18 +2,18 @@ package clientSide.services;
 
 import serverSide.entities.PlanEnum;
 import serverSide.entities.User;
-import serverSide.repositories.UserRepository;
+import serverSide.repositories.UserLocalRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
-    private final UserRepository userRepository;
+    private final UserLocalRepository userLocalRepository;
     private final PasswordService passwordService;
 
-    public UserService(UserRepository userRepository){
-        this.userRepository = userRepository;
-        this.passwordService = new PasswordService(userRepository);
+    public UserService(ServiceToolBox serviceToolBox, PasswordService passwordService){
+        this.userLocalRepository = serviceToolBox.userLocalRepository;
+        this.passwordService = passwordService;
     }
 
     public int getUserIdByPseudo(String pseudo) {
@@ -35,7 +35,7 @@ public class UserService {
         }
         else {
             User newUser = new User(pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
-            userRepository.saveUser(newUser);
+            userLocalRepository.saveUser(newUser);
         }
     }
 
@@ -49,7 +49,7 @@ public class UserService {
         }
         else {
             User newUser = new User(id, pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
-            userRepository.saveUser(newUser);
+            userLocalRepository.saveUser(newUser);
         }
     }
 
@@ -58,7 +58,7 @@ public class UserService {
     }
 
     public void saveUser (User user){
-        userRepository.saveUser(user);
+        userLocalRepository.saveUser(user);
     }
 
     public void resetCookie (){
@@ -66,23 +66,23 @@ public class UserService {
     }
 
     public void addOnePlaylist(int playlistId) {
-        List<Integer> playlists = userRepository.getUserById(getCurrentUserId()).getPlaylists();
+        List<Integer> playlists = userLocalRepository.getUserById(getCurrentUserId()).getPlaylists();
         if (playlists == null) {
             playlists = new ArrayList<>();
-            userRepository.getUserById(getCurrentUserId()).setPlaylists(playlists);
+            userLocalRepository.getUserById(getCurrentUserId()).setPlaylists(playlists);
         }
-        userRepository.addPlaylistToUser(getCurrentUserId(),playlistId);
+        userLocalRepository.addPlaylistToUser(getCurrentUserId(),playlistId);
     }
 
     public void followFriend() {/*TODO*/}
     public void unfollowFriend() {/*TODO*/}
 
     public User getUserByPseudonym(String pseudonym) {
-        return userRepository.getUserByPseudonym(pseudonym);
+        return userLocalRepository.getUserByPseudonym(pseudonym);
     }
 
     public User getUserById(int userId) {
-        return userRepository.getUserById(userId);
+        return userLocalRepository.getUserById(userId);
     }
 
     public boolean emailValidation(String email) {

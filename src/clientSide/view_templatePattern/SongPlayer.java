@@ -1,32 +1,34 @@
 package clientSide.view_templatePattern;
 
+import clientSide.services.ViewToolBox;
 import serverSide.entities.Playlist;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 
 public class SongPlayer extends _SimplePageTemplate {
 
-    public SongPlayer(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(pageManager, spotifyPlayer);
+    public SongPlayer(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+        super(pageService, spotifyPlayer);
+        this.viewToolBox = viewToolBox;
         this.pageId = pageId;
         this.pageTitle = "Song Player Page";
         this.pageContent =
-                icon.iconBack() + " |  " + icon.goToHomepage +icon.lineBreak+
-                icon.iconNbr(1) + ":"+ icon.iconShuffle() + " | " +
-                icon.iconNbr(2) + ":"+ icon.iconPrevious() + " | " +
-                icon.iconNbr(3) + ":"+ icon.iconPlayPause() +" | " +
-                icon.iconNbr(4) + ":"+ icon.iconPlayBack() + " | " +
-                icon.iconNbr(5) + ":"+ icon.iconNext() + " | " +
-                icon.iconNbr(6) + ":"+ icon.iconRepeatOne();
+                icon.zeroBack + " |  " + icon.nineHomepage +icon.lineBreak+
+                icon.nbr(1) + ":"+ icon.shuffle() + " | " +
+                icon.nbr(2) + ":"+ icon.previous() + " | " +
+                icon.nbr(3) + ":"+ icon.playPause() +" | " +
+                icon.nbr(4) + ":"+ icon.playBack() + " | " +
+                icon.nbr(5) + ":"+ icon.next() + " | " +
+                icon.nbr(6) + ":"+ icon.repeatOne();
     }
 
     @Override
     public void displaySpecificContent(){
-        Playlist playlist = toolbox.getPlaylistServ().getPlaylistById(toolbox.getPlaylistServ().getCurrentPlaylistId());
+        Playlist playlist = viewToolBox.getPlaylistServ().getPlaylistById(viewToolBox.getPlaylistServ().getCurrentPlaylistId());
         System.out.println(
                 "Current Playlist : " + playlist.getName() +
-                ", duration " + (toolbox.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())/60) + ":" +
-                        toolbox.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())%60 +
+                ", duration " + (viewToolBox.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())/60) + ":" +
+                        viewToolBox.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())%60 +
                 ", size : " + playlist.getSize() + icon.lineBreak);
     }
 
@@ -44,7 +46,7 @@ public class SongPlayer extends _SimplePageTemplate {
 
     @Override
     public void button3() {
-        spotifyPlayer.playOrPause(toolbox.getSongServ().getCurrentSongId());
+        spotifyPlayer.playOrPause(viewToolBox.getSongServ().getCurrentSongId());
         loop();
     }
 
@@ -73,7 +75,9 @@ public class SongPlayer extends _SimplePageTemplate {
 
     void loop(){
         while (spotifyPlayer.isPlaying() || spotifyPlayer.isPaused()) {
-            System.out.println(toolbox.getSongServ().getSongById(spotifyPlayer.getCurrentSongId()).getTitleAndArtist());
+            int currentSongId = spotifyPlayer.getCurrentSongId();
+            System.out.println("Current lecture : " + viewToolBox.getSongServ().getSongById(currentSongId).getTitle() + " - " +
+                    viewToolBox.getArtistServ().getArtistNameBySong(currentSongId));
             displayInput();
             validateInput();
             switchPage();

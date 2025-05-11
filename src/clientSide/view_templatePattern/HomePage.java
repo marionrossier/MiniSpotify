@@ -2,18 +2,20 @@ package clientSide.view_templatePattern;
 
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import clientSide.services.ViewToolBox;
 
 public class HomePage extends _SimplePageTemplate {
 
-    public HomePage(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(pageManager, spotifyPlayer);
+    public HomePage(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+        super(pageService, spotifyPlayer);
+        this.viewToolBox = viewToolBox;
         this.pageId = pageId;
         this.pageTitle = "Home Page";
         this.pageContent =
-                icon.iconNbr(0) + "Log out" + " | " + icon.goToMusicPlayer + icon.lineBreak +
-                icon.iconNbr(1) + "Playlists" + icon.lineBreak +
-                icon.iconNbr(2) + "Search" + icon.lineBreak +
-                icon.iconNbr(3) + "Friends (TODO)" + icon.iconPremium();
+                icon.nbr(0) + "Log out" + " | " + icon.eightMusicPlayer + icon.lineBreak +
+                icon.nbr(1) + "Playlists" + icon.lineBreak +
+                icon.nbr(2) + "Search" + icon.lineBreak +
+                icon.nbr(3) + "Friends (TODO)" + icon.premium();
     }
 
     @Override
@@ -21,7 +23,7 @@ public class HomePage extends _SimplePageTemplate {
         System.out.println("Logging you out ...");
         spotifyPlayer.stop();
 
-        toolbox.getUserServ().resetCookie();
+        viewToolBox.getUserServ().resetCookie();
 
         pageService.login.displayAllPage();
     }

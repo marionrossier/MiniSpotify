@@ -1,8 +1,9 @@
 package data.jsons;
 
 import serverSide.entities.Artist;
-import serverSide.repositories.ArtistRepository;
+import serverSide.repositories.ArtistLocalRepository;
 import org.junit.jupiter.api.*;
+import utilsAndFakes.CommuneMethods;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,15 +12,18 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ArtistRepositoryTest {
+class ArtistLocalRepositoryTest extends CommuneMethods {
 
     private File tempFile;
-    private ArtistRepository repo;
+    private ArtistLocalRepository repo;
+
+    public ArtistLocalRepositoryTest() throws IOException {
+    }
 
     @BeforeEach
     void setUp() throws IOException {
         tempFile = Files.createTempFile("artist", ".json").toFile();
-        repo = new ArtistRepository(tempFile.getAbsolutePath());
+        repo = new ArtistLocalRepository(tempFile.getAbsolutePath());
     }
 
     @AfterEach

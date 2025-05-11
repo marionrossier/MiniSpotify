@@ -8,18 +8,18 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserRepository {
+public class UserLocalRepository {
     private final String filePath;
     private final StockageService stockageService;
     private List<User> data;
 
-    public UserRepository(String filePath) {
+    public UserLocalRepository(String filePath) {
         this.filePath = filePath;
         this.stockageService = new StockageService();
         this.data = stockageService.loadFromJson(this.filePath, new TypeReference<>() {});
     }
 
-    public UserRepository() {
+    public UserLocalRepository() {
         this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/jsons/user.json");
     }
 

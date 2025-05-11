@@ -3,26 +3,37 @@ package clientSide.services;
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 import serverSide.entities.User;
-import serverSide.repositories.PlaylistRepository;
-import serverSide.repositories.UserRepository;
 
 import java.util.List;
 
 public class PrintService {
 
-    private final UserRepository userRepository = new UserRepository();
-    private final PlaylistRepository playlistRepository = new PlaylistRepository();
     private final Icon icon = new Icon();
+    private final UserService userService;
+    private final PlaylistServices playlistService;
+    private final SongService songService;
+    private final ArtistService artistService;
 
-    public void printSongFound (List<Integer> songs, String info, SearchService searchService){
-        System.out.println("Songs found with information : " + info);
-        printSongList (songs, searchService);
+    public PrintService(SongService songService,
+                        ArtistService artistService,
+                        PlaylistServices playlistServices,
+                        UserService userService) {
+        this.artistService = artistService;
+        this.songService = songService;
+        this.userService = userService;
+        this.playlistService = playlistServices;
     }
 
-    public void printSongList (List<Integer> songs, SearchService searchService){
+    public void printSongFound (List<Integer> songs, String info){
+        System.out.println("Songs found with information : " + info);
+        printSongList (songs);
+    }
+
+    public void printSongList (List<Integer> songs){
         int i = 1;
         for (Integer song : songs) {
-            System.out.println(i + ". " + searchService.songRepository.getSongById(song).getTitleAndArtist());
+            System.out.println(i + ". " + songService.getSongById(song).getTitle()+ " " +
+                            artistService.getArtistNameBySong(song));
             i++;
         }
         System.out.println();
@@ -43,31 +54,31 @@ public class PrintService {
 
     public void printUserPlaylists(int userId){
         int i = 1;
-        User currentUser = userRepository.getUserById(userId);
+        User currentUser = userService.getUserById(userId);
 
-if (currentUser != null && currentUser.getPlaylists() != null) {
-    for (int playlistId : userRepository.getUserById(userId).getPlaylists()) {
-        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+        if (currentUser != null && currentUser.getPlaylists() != null) {
+            for (int playlistId : userService.getUserById(userId).getPlaylists()) {
+                Playlist playlist = playlistService.getPlaylistById(playlistId);
 
-        if (playlist != null) {
-            boolean isUserOwner = playlist.getOwnerId() == currentUser.getUserId();
-            System.out.println(i + ". " +
-                    playlist.getName() + " - " +
-                    printPlaylistStatus(playlist.getStatus()) +
-                    (isUserOwner ? icon.iconHouse() : ""));
-            i++;
+                if (playlist != null) {
+                    boolean isUserOwner = playlist.getOwnerId() == currentUser.getUserId();
+                    System.out.println(i + ". " +
+                            playlist.getName() + " - " +
+                            printPlaylistStatus(playlist.getStatus()) +
+                            (isUserOwner ? icon.house() : ""));
+                    i++;
+                }
+            }
+        } else {
+            System.out.println("No playlists available.");
         }
-    }
-} else {
-    System.out.println("No playlists available.");
-}
     }
 
     private String printPlaylistStatus(PlaylistEnum status) {
 
         if (status == PlaylistEnum.PUBLIC){
-            return icon.iconEarth();
+            return icon.earth();
         }
-        return icon.iconLock();
+        return icon.lock();
     }
 }

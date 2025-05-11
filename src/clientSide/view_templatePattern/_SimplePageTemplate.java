@@ -1,11 +1,9 @@
 package clientSide.view_templatePattern;
 
-import serverSide.entities.PlanEnum;
-import serverSide.entities.User;
 import clientSide.services.Icon;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
-import clientSide.services.Toolbox;
+import clientSide.services.ViewToolBox;
 
 import java.util.Scanner;
 
@@ -19,18 +17,17 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
     PageService pageService;
     Scanner scanner = new Scanner(System.in);
     boolean isFree = true;
+    public ViewToolBox viewToolBox;
 
     protected Icon icon = new Icon();
-    protected final Toolbox toolbox;
 
     public _SimplePageTemplate(PageService pageService, IPlaylistPlayer spotifyPlayer) {
         this.pageService = pageService;
         this.spotifyPlayer = spotifyPlayer;
-        this.toolbox = new Toolbox();
     }
 
     public void displayAllPage(){
-        pageIsPremium(isFree);
+        pageService.pageIsPremium(isFree);
         addToStack();
         displayTitle(pageTitle);
         displayContent(pageContent);
@@ -38,35 +35,6 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
         displayInput();
         validateInput();
         switchPage();
-    }
-
-    public void pageIsPremium (boolean isFree){
-        if (!isFree){
-            int userId = toolbox.getUserServ().getCurrentUserId();
-            User user = toolbox.getUserServ().getUserById(userId);
-
-            if (user.getPlanEnum().equals(PlanEnum.FREE)) {
-
-                System.out.println("Premium Client option only. \nUpgrade to Premium plan now ? YES or NO");
-                String input = scanner.nextLine();
-                int lastPageId = pageService.getMenuPages().pop();
-                input = input.toLowerCase();
-
-                switch (input) {
-                    case "yes":
-                        user.setPlanEnum(PlanEnum.PREMIUM);
-                        toolbox.getUserServ().saveUser(user);
-                        break;
-                    case "no":
-                        pageService.getPageById(lastPageId).displayAllPage();
-                        break;
-                    default:
-                        System.err.println("Invalid input.");
-                        pageService.getPageById(lastPageId).displayAllPage();
-                }
-
-            }
-        }
     }
 
     private void addToStack() {
@@ -158,7 +126,7 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
     }
 
     private void invalidChoice(){
-        System.out.println(icon.iconWarning() + "Invalid choice, try again." + icon.iconWarning() + icon.lineBreak);
+        System.out.println(icon.warning() + "Invalid choice, try again." + icon.warning() + icon.lineBreak);
     }
 
     public void button0() {

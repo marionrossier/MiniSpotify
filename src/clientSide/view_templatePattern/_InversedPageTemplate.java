@@ -7,9 +7,9 @@ public abstract class _InversedPageTemplate extends _SimplePageTemplate {
 
     private final PageService pageManager;
 
-    public _InversedPageTemplate(PageService pageManager, IPlaylistPlayer spotifyPlayer) {
-        super(pageManager, spotifyPlayer);
-        this.pageManager = pageManager;
+    public _InversedPageTemplate(PageService pageService, IPlaylistPlayer spotifyPlayer) {
+        super(pageService, spotifyPlayer);
+        this.pageManager = pageService;
     }
 
     @Override
