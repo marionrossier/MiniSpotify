@@ -12,18 +12,12 @@ public class Spotify {
     public static void startApp(){
         PlaylistLocalRepository playlistLocalRepository = new PlaylistLocalRepository();
         SongLocalRepository songLocalRepository = new SongLocalRepository();
-        ArtistLocalRepository artistLocalRepository = new ArtistLocalRepository();
         AudioLocalRepository audioLocalRepository = new AudioLocalRepository();
         UserLocalRepository userLocalRepository = new UserLocalRepository();
         IMusicPlayer musicPlayer = new MusicPlayer(audioLocalRepository);
-        SongService songService = new SongService(songLocalRepository);
-        ArtistService artistService = new ArtistService(artistLocalRepository);
-        UserService userService = new UserService(userLocalRepository);
-        PlaylistServices playlistServices = new PlaylistServices(playlistLocalRepository, userLocalRepository,songLocalRepository);
-        PrintService printService = new PrintService(songService, artistService, playlistServices, userService);
 
         IPlaylistPlayer spotifyPlayer = new PlaylistPlayer(musicPlayer, songLocalRepository, playlistLocalRepository,
-                artistLocalRepository, audioLocalRepository, printService);
+                audioLocalRepository, userLocalRepository);
 
         PageService pageService = new PageService(spotifyPlayer);
 

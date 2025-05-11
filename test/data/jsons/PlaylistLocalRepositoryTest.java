@@ -6,6 +6,7 @@ import serverSide.repositories.SongLocalRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import serverSide.repositories.UserLocalRepository;
 import services.CommuneMethods;
 import clientSide.services.PlaylistServices;
 
@@ -18,25 +19,39 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlaylistLocalRepositoryTest {
 
-    private File tempFile;
+    private File tempPlaylistsFile;
+    private File tempSongsFile;
+    private File tempUsersFile;
     private PlaylistLocalRepository playlistLocalRepository;
-    private PlaylistServices playlistService;
     private SongLocalRepository songLocalRepository;
+    private UserLocalRepository userLocalRepository;
+    private PlaylistServices playlistService;
     private CommuneMethods communeMethods = new CommuneMethods();
 
     @BeforeEach
     void setUp() throws IOException {
-        tempFile = Files.createTempFile("playlists", ".json").toFile();
-        playlistLocalRepository = new PlaylistLocalRepository(tempFile.getAbsolutePath());
-        tempFile = Files.createTempFile("songs", ".json").toFile();
-        songLocalRepository = new SongLocalRepository(tempFile.getAbsolutePath());
-        playlistService = new PlaylistServices(playlistLocalRepository, songLocalRepository);
+        tempPlaylistsFile = Files.createTempFile("playlists", ".json").toFile();
+        playlistLocalRepository = new PlaylistLocalRepository(tempPlaylistsFile.getAbsolutePath());
+
+        tempSongsFile = Files.createTempFile("songs", ".json").toFile();
+        songLocalRepository = new SongLocalRepository(tempSongsFile.getAbsolutePath());
+
+        tempUsersFile = Files.createTempFile("users", ".json").toFile();
+        userLocalRepository = new UserLocalRepository(tempUsersFile.getAbsolutePath());
+
+        playlistService = new PlaylistServices(playlistLocalRepository, userLocalRepository, songLocalRepository);
     }
 
     @AfterEach
     void tearDown() {
-        if (tempFile.exists()) {
-            tempFile.delete();
+        if (tempPlaylistsFile.exists()) {
+            tempPlaylistsFile.delete();
+        }
+        if (tempSongsFile.exists()) {
+            tempSongsFile.delete();
+        }
+        if (tempUsersFile.exists()) {
+            tempUsersFile.delete();
         }
     }
 

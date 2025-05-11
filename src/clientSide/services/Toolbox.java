@@ -26,14 +26,14 @@ public class Toolbox {
         artistLocalRepository = new ArtistLocalRepository();
         songLocalRepository = new SongLocalRepository();
 
-        playlistServ = new PlaylistServices(playlistLocalRepository, songLocalRepository);
+        playlistServ = new PlaylistServices(playlistLocalRepository, userLocalRepository, songLocalRepository);
         userServ = new UserService(userLocalRepository);
         songServ = new SongService(songLocalRepository);
-        searchService = new SearchService(songServ, artistLocalRepository, printServ);
         passwordServ = new PasswordService(userLocalRepository);
-        printServ = new PrintService(songServ, artistService, playlistServ, userServ);
         playlistReorderSongService = new PlaylistReorderSongService();
         artistService = new ArtistService(artistLocalRepository);
+        printServ = new PrintService(songServ, artistService, playlistServ, userServ);
+        searchService = new SearchService(songServ, artistLocalRepository, printServ);
     }
 
     public PlaylistServices getPlaylistServ() {

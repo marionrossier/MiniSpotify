@@ -14,7 +14,6 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     protected SongLocalRepository songLocalRepository;
     protected final PlaylistLocalRepository playlistLocalRepository;
     protected PlaylistServices playlistServices;
-    protected SearchService searchService;
     protected SongService songService;
     protected IAudioRepository audioRepository;
     private final Icon icon = new Icon();
@@ -31,14 +30,13 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     private final IState repeatState;
 
     public PlaylistPlayer(IMusicPlayer musicPlayer, SongLocalRepository songLocalRepository, PlaylistLocalRepository playlistLocalRepository,
-                          ArtistLocalRepository artistLocalRepository, IAudioRepository audioRepository, PrintService printService) {
+                          IAudioRepository audioRepository, UserLocalRepository userRepository) {
         this.musicPlayer = musicPlayer;
         this.songLocalRepository = songLocalRepository;
         this.playlistLocalRepository = playlistLocalRepository;
         this.audioRepository = audioRepository;
         this.songService = new SongService(songLocalRepository);
-        this.searchService = new SearchService(songService, artistLocalRepository, printService);
-        this.playlistServices = new PlaylistServices(playlistLocalRepository, songLocalRepository);
+        this.playlistServices = new PlaylistServices(playlistLocalRepository, userRepository, songLocalRepository);
 
         this.sequentialState = new SequentialState(this);
         this.shuffleState = new ShuffleState(this);

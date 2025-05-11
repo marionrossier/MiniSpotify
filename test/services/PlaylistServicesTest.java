@@ -100,7 +100,7 @@ class PlaylistServicesTest {
 
         // Instantiate the PlaylistPlayer with the fake player and repositories
         PlaylistPlayer playlistPlayer = new PlaylistPlayer(
-                fakeMusicPlayer, songLocalRepository, playlistLocalRepository, artistLocalRepository, audioRepository, printService);
+                fakeMusicPlayer, songLocalRepository, playlistLocalRepository, audioRepository, userLocalRepository);
 
         // Create playlistServices
         playlistServices = new PlaylistServices(playlistLocalRepository, userLocalRepository, songLocalRepository);

@@ -42,6 +42,7 @@ public class PlaylistPageOpen extends _SimplePageTemplate {
         String newName = pageService.gotAnInput(in.next());
         int playlistId = toolbox.getPlaylistServ().getCurrentPlaylistId();
         toolbox.getPlaylistServ().renamePlayList(playlistId, newName);
+        pageService.playlistPageOpen.displayAllPage();
     }
 
     @Override

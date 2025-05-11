@@ -49,7 +49,7 @@ public class SearchService {
             pageService.goBack(pageId);
             return;
         }
-        printService.printSongFound(foundedSongs, input, this);
+        printService.printSongFound(foundedSongs, input);
         LinkedList<Integer> chosenSongs = chooseFoundedSongs(foundedSongs, pageService);
 
         playlistServices.createTemporaryPlaylist(chosenSongs, playlistServices.getPlaylistStatus());

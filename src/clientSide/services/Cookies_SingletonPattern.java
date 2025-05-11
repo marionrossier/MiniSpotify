@@ -1,23 +1,16 @@
 package clientSide.services;
 
-import serverSide.entities.Playlist;
-import serverSide.repositories.PlaylistLocalRepository;
-import serverSide.repositories.SongLocalRepository;
-
 public class Cookies_SingletonPattern {
     private static Cookies_SingletonPattern instance;
 
     private final int userId;
     private int currentPlaylistId;
     private int currentSongId;
-    private final PlaylistLocalRepository playlistLocalRepository = new PlaylistLocalRepository();
-    private final SongLocalRepository songLocalRepository = new SongLocalRepository();
-    private final PlaylistServices playlistServices = new PlaylistServices(playlistLocalRepository, songLocalRepository);
 
     private Cookies_SingletonPattern(int userId) {
         this.userId = userId;
-        this.currentPlaylistId = playlistServices.getAllSongsPlaylistId();
-        this.currentSongId = playlistLocalRepository.getPlaylistByName("AllSongs").getPlaylistSongsListWithId().getFirst();
+        this.currentPlaylistId = 598327402; //AllSongs
+        this.currentSongId = 1108071776; //Amy Rehab
     }
 
     public static Cookies_SingletonPattern setUser(int userId) {
@@ -49,10 +42,6 @@ public class Cookies_SingletonPattern {
 
     public static void resetCookies() {
         if (instance != null) {
-            Playlist playlist = instance.playlistLocalRepository.getPlaylistById(instance.playlistServices.getTemporaryPlaylistId());
-            if (playlist != null) {
-                instance.playlistServices.deleteTemporaryPlaylist();
-            }
             instance = null;
         }
     }

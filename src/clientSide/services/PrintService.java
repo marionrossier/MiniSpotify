@@ -26,7 +26,7 @@ public class PrintService {
         this.playlistService = playlistServices;
     }
 
-    public void printSongFound (List<Integer> songs, String info, SearchService searchService){
+    public void printSongFound (List<Integer> songs, String info){
         System.out.println("Songs found with information : " + info);
         printSongList (songs);
     }
@@ -34,7 +34,7 @@ public class PrintService {
     public void printSongList (List<Integer> songs){
         int i = 1;
         for (Integer song : songs) {
-            System.out.println(i + ". " + songService.getSongById(song).getTitle()+
+            System.out.println(i + ". " + songService.getSongById(song).getTitle()+ " " +
                             artistService.getArtistNameBySong(song));
             i++;
         }

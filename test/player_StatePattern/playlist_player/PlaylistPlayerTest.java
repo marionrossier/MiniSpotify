@@ -52,7 +52,7 @@ public class PlaylistPlayerTest {
         songLocalRepository = new SongLocalRepository(songTempFile.getAbsolutePath());
         songService = new SongService(songLocalRepository);
         playlistLocalRepository = new PlaylistLocalRepository(playlistTempFile.getAbsolutePath());
-        playlistServices = new PlaylistServices(playlistLocalRepository, songLocalRepository);
+        playlistServices = new PlaylistServices(playlistLocalRepository, userLocalRepository, songLocalRepository);
         userLocalRepository = new UserLocalRepository();
         userService = new UserService(userLocalRepository);
         artistService = new ArtistService(artistLocalRepository);
@@ -84,7 +84,7 @@ public class PlaylistPlayerTest {
         
         // Instantiate the PlaylistPlayer with the fake player and repositories
         playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songLocalRepository, playlistLocalRepository,
-                artistLocalRepository, audioRepository, printService);
+                audioRepository, userLocalRepository);
     }
     
     @AfterEach

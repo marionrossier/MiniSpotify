@@ -1,5 +1,6 @@
 package serverSide.repositories;
 
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -20,7 +21,7 @@ public class AudioLocalRepository implements IAudioRepository {
     public InputStream getStream(String fileName){
         String filePath = folderPath + "/" + fileName;
         try {
-            return new FileInputStream(filePath);
+            return new BufferedInputStream(new FileInputStream(filePath));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
