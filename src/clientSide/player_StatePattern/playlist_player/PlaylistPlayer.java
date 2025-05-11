@@ -3,6 +3,7 @@ package clientSide.player_StatePattern.playlist_player;
 import serverSide.entities.Playlist;
 import serverSide.entities.Song;
 import serverSide.repositories.ArtistRepository;
+import serverSide.repositories.AudioRepository;
 import serverSide.repositories.PlaylistRepository;
 import serverSide.repositories.SongRepository;
 import clientSide.player_StatePattern.file_player.IMusicPlayer;
@@ -21,6 +22,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     protected PlaylistServices playlistServices;
     protected SearchService searchService;
     protected SongService songService;
+    protected AudioRepository audioRepository;
     private final Icon icon = new Icon();
 
     protected Stack<Integer> songIdHistory = new Stack<>();
@@ -34,10 +36,12 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     private final IState shuffleState;
     private final IState repeatState;
 
-    public PlaylistPlayer(IMusicPlayer musicPlayer, SongRepository songRepository, PlaylistRepository playlistRepository, ArtistRepository artistRepository) {
+    public PlaylistPlayer(IMusicPlayer musicPlayer, SongRepository songRepository, PlaylistRepository playlistRepository,
+                          ArtistRepository artistRepository, AudioRepository audioRepository) {
         this.musicPlayer = musicPlayer;
         this.songRepository = songRepository;
         this.playlistRepository = playlistRepository;
+        this.audioRepository = audioRepository;
         this.songService = new SongService(songRepository);
         this.searchService = new SearchService(songRepository, songService, artistRepository);
         this.playlistServices = new PlaylistServices(playlistRepository, songRepository);
@@ -81,7 +85,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     @Override
     public void playOrPause(int songId) {
         this.currentSong = songRepository.getSongById(songId);
-        musicPlayer.playOrPause(currentSong.getAudioFilePath());
+        musicPlayer.playOrPause(audioRepository.getAudioFilePathAndName(currentSong.getSongId()));
     }
 
     @Override
@@ -90,7 +94,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         playlistServices.setCurrentPlaylistId(this.currentPlaylist.getPlaylistId());
 
         this.currentSong = songRepository.getSongById(songId);
-        musicPlayer.play(currentSong.getAudioFilePath());
+        musicPlayer.play(audioRepository.getAudioFilePathAndName(currentSong.getSongId()));
     }
 
     @Override
@@ -101,12 +105,12 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     @Override
     public void resume(int currentSongId) {
         this.currentSong = songRepository.getSongById(currentSongId);
-        musicPlayer.resume(currentSong.getAudioFilePath());
+        musicPlayer.resume((audioRepository.getAudioFilePathAndName(currentSong.getSongId())));
     }
 
     @Override
     public void playback() {
-        musicPlayer.play(this.currentSong.getAudioFilePath());
+        musicPlayer.play(audioRepository.getAudioFilePathAndName(this.currentSong.getSongId()));
     }
 
     @Override
@@ -114,7 +118,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         this.songIdHistory.push(currentSong.getSongId());
         this.currentSong = currentState.getNextSong();
         songService.setCurrentSongId(this.currentSong.getSongId());
-        this.musicPlayer.play(this.currentSong.getAudioFilePath());
+        this.musicPlayer.play(audioRepository.getAudioFilePathAndName(this.currentSong.getSongId()));
     }
 
     @Override
@@ -128,7 +132,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
             this.currentSong = songRepository.getSongById(previousSongId);
         }
         songService.setCurrentSongId(this.currentSong.getSongId());
-        this.musicPlayer.play(this.currentSong.getAudioFilePath());
+        this.musicPlayer.play(audioRepository.getAudioFilePathAndName(this.currentSong.getSongId()));
     }
 
     public void stop (){

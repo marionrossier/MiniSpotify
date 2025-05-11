@@ -4,6 +4,7 @@ import serverSide.entities.PlaylistEnum;
 import serverSide.entities.Song;
 import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
 import serverSide.repositories.ArtistRepository;
+import serverSide.repositories.AudioRepository;
 import serverSide.repositories.PlaylistRepository;
 import serverSide.repositories.SongRepository;
 import clientSide.services.Cookies_SingletonPattern;
@@ -30,12 +31,14 @@ public class PlaylistPlayerTest {
     private File songTempFile;
     private File playlistTempFile;
     private File artistTempFile;
+    private File audioTempFile;
     private SongRepository songRepository;
     private SongService songService;
     private SearchService searchService;
     private PlaylistRepository playlistRepository;
     private PlaylistServices playlistServices;
     private ArtistRepository artistRepository;
+    private AudioRepository audioRepository;
     private CommuneMethods communeMethods = new CommuneMethods();
 
     @BeforeEach
@@ -47,7 +50,8 @@ public class PlaylistPlayerTest {
         songTempFile = Files.createTempFile("songs", ".json").toFile();
         playlistTempFile = Files.createTempFile("playlists", ".json").toFile();
         artistTempFile = Files.createTempFile("artist",".json").toFile();
-        
+        artistTempFile = Files.createTempFile("path/to/");
+
         // Initialize repositories with temp files
         songRepository = new SongRepository(songTempFile.getAbsolutePath());
         songService = new SongService(songRepository);
@@ -55,6 +59,7 @@ public class PlaylistPlayerTest {
         playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
         playlistServices = new PlaylistServices(playlistRepository, songRepository);
         artistRepository = new ArtistRepository(artistTempFile.getAbsolutePath());
+        audioRepository = new AudioRepository(songRepository);
         
         // Create test songs
         Song song1 = createSong(1, "Song 1", "path/to/song1.mp3");
@@ -79,7 +84,7 @@ public class PlaylistPlayerTest {
         fakeMusicPlayer = new FakeMusicPlayer();
         
         // Instantiate the PlaylistPlayer with the fake player and repositories
-        playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository, artistRepository);
+        playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository, artistRepository, audioRepository);
     }
     
     @AfterEach
@@ -97,7 +102,7 @@ public class PlaylistPlayerTest {
         Song song = new Song();
         song.setSongId(id);
         song.setTitle(title);
-        song.setAudioFilePath(path);
+        audioRepository.setAudioFilePathAndName(id, path);
         return song;
     }
 

@@ -10,7 +10,6 @@ public class Song {
     private int durationSeconds;
     private MusicGender gender;
     private int songId;
-    private String audioFilePath;
     private String audioFileName;
     private final UniqueIdService uniqueIdService = new UniqueIdService();
     ArtistRepository artistRepository = new ArtistRepository();
@@ -25,8 +24,6 @@ public class Song {
         this.durationSeconds = durationSeconds;
         this.gender = gender;
         this.audioFileName = audioFileName;
-        this.audioFilePath = "resources\\songsfiles\\"+ this.audioFileName; //TODO : ICI la mention du chemin de la chanson
-
 
         Artist existingArtist = artistRepository.getArtistByName(artistName);
         if (existingArtist != null) {
@@ -45,7 +42,6 @@ public class Song {
         this.gender = gender;
         this.songId = uniqueIdService.setUniqueId();
         this.audioFileName = audioFileName;
-        this.audioFilePath = "resources\\songsfiles\\"+ this.audioFileName; //TODO : ICI la mention du chemin de la chanson
 
         Artist existingArtist = artistRepository.getArtistByName(artistName);
         if (existingArtist != null) {
@@ -101,11 +97,7 @@ public class Song {
         this.songId = songId;
     }
 
-    public String getAudioFilePath() {
-        return audioFilePath;
-    }
-
-    public void setAudioFilePath(String audioFilePath) {
-        this.audioFilePath = audioFilePath;
+    public String getAudioFileName() {
+        return audioFileName;
     }
 }

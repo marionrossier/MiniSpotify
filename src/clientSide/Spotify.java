@@ -2,6 +2,7 @@ package clientSide;
 
 import serverSide.StockageService;
 import serverSide.repositories.ArtistRepository;
+import serverSide.repositories.AudioRepository;
 import serverSide.repositories.PlaylistRepository;
 import serverSide.repositories.SongRepository;
 import clientSide.player_StatePattern.file_player.MusicPlayer;
@@ -15,9 +16,10 @@ public class Spotify {
         PlaylistRepository playlistRepository = new PlaylistRepository();
         SongRepository songRepository = new SongRepository();
         ArtistRepository artistRepository = new ArtistRepository();
+        AudioRepository audioRepository = new AudioRepository(songRepository);
         IMusicPlayer musicPlayer = new MusicPlayer();
 
-        IPlaylistPlayer spotifyPlayer = new PlaylistPlayer(musicPlayer, songRepository, playlistRepository, artistRepository);
+        IPlaylistPlayer spotifyPlayer = new PlaylistPlayer(musicPlayer, songRepository, playlistRepository, artistRepository, audioRepository);
 
         PageService pageService = new PageService(spotifyPlayer);
 
@@ -36,6 +38,8 @@ public class Spotify {
     }
 
     public static void copySongs(){
+        StockageService stockageService = new StockageService();
 
+        stockageService.copyAllSongsToWritableLocation("songsfiles");
     }
 }

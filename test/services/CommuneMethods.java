@@ -2,6 +2,7 @@ package services;
 
 import serverSide.entities.*;
 import serverSide.repositories.ArtistRepository;
+import serverSide.repositories.AudioRepository;
 import serverSide.repositories.PlaylistRepository;
 import clientSide.services.PlaylistServices;
 import serverSide.repositories.SongRepository;
@@ -19,11 +20,11 @@ public class CommuneMethods {
         playlistRepository.savePlaylist(playlist);
     }
 
-    Song createSong(int id, String title, String path) {
+    Song createSong(int id, String title, String path, AudioRepository audioRepository) {
         Song song = new Song();
         song.setSongId(id);
         song.setTitle(title);
-        song.setAudioFilePath(path);
+        audioRepository.setAudioFilePathAndName(id,path);
         return song;
     }
 
@@ -49,7 +50,8 @@ public class CommuneMethods {
         }
     }
 
-    public Song createTestSong(int id, String title, String artistName, MusicGender gender, ArtistRepository artistRepository) {
+    public Song createTestSong(int id, String title, String artistName, MusicGender gender,
+                               ArtistRepository artistRepository, AudioRepository audioRepository) {
         Song song = new Song();
         song.setSongId(id);
         song.setTitle(title);
@@ -62,7 +64,7 @@ public class CommuneMethods {
 
         song.setDurationSeconds(180);
         song.setGender(gender);
-        song.setAudioFilePath("path/to/song" + id + ".mp3");
+        audioRepository.setAudioFilePathAndName(id, "path/to/song" + id + ".mp3");
 
         return song;
     }

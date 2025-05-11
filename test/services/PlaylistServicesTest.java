@@ -1,10 +1,7 @@
 package services;
 
 import serverSide.entities.*;
-import serverSide.repositories.ArtistRepository;
-import serverSide.repositories.PlaylistRepository;
-import serverSide.repositories.SongRepository;
-import serverSide.repositories.UserRepository;
+import serverSide.repositories.*;
 import clientSide.services.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,6 +34,7 @@ class PlaylistServicesTest {
     private UserRepository userRepository;
     private PlaylistRepository playlistRepository;
     private ArtistRepository artistRepository;
+    private AudioRepository audioRepository;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -53,15 +51,16 @@ class PlaylistServicesTest {
         userRepository = new UserRepository(userTempFile.getAbsolutePath());
         playlistRepository = new PlaylistRepository(playlistTempFile.getAbsolutePath());
         artistRepository = new ArtistRepository(artistTempFile.getAbsolutePath());
+        audioRepository = new AudioRepository(songRepository);
 
         playlistServices = new PlaylistServices(playlistRepository, userRepository, songRepository);
         songService = new SongService(songRepository);
         temporaryPlaylistService = new TemporaryPlaylistService(playlistRepository, userRepository);
 
         // Create test songs
-        Song song1 = communeMethods.createSong(1, "Song 1", "path/to/song1.mp3");
-        Song song2 = communeMethods.createSong(2, "Song 2", "path/to/song2.mp3");
-        Song song3 = communeMethods.createSong(3, "Song 3", "path/to/song3.mp3");
+        Song song1 = communeMethods.createSong(1, "Song 1", "path/to/song1.mp3", audioRepository);
+        Song song2 = communeMethods.createSong(2, "Song 2", "path/to/song2.mp3", audioRepository);
+        Song song3 = communeMethods.createSong(3, "Song 3", "path/to/song3.mp3", audioRepository);
 
         // Add songs to repository
         songRepository.addSong(song1);
@@ -91,7 +90,8 @@ class PlaylistServicesTest {
         FakeMusicPlayer fakeMusicPlayer = new FakeMusicPlayer();
 
         // Instantiate the PlaylistPlayer with the fake player and repositories
-        PlaylistPlayer playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songRepository, playlistRepository, artistRepository);
+        PlaylistPlayer playlistPlayer = new PlaylistPlayer(
+                fakeMusicPlayer, songRepository, playlistRepository, artistRepository, audioRepository);
 
         // Create playlistServices
         playlistServices = new PlaylistServices(playlistRepository, userRepository, songRepository);

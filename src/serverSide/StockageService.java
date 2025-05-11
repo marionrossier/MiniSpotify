@@ -78,6 +78,32 @@ public class StockageService {
             throw new RuntimeException("Error when copying file from resources : "+ e.getMessage());
         }
     }
+
+    public void copyAllSongsToWritableLocation(String resourceFolderPath) {
+        try {
+            Path targetDirectory = Paths.get(userHome, fileName, "songsfiles");
+            Files.createDirectories(targetDirectory);
+
+            // Charger les ressources du dossier
+            InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(resourceFolderPath);
+            if (resourceStream == null) {
+                throw new IllegalArgumentException("Resource folder not found: " + resourceFolderPath);
+            }
+
+            // Parcourir les fichiers dans le dossier
+            File resourceFolder = new File(getClass().getClassLoader().getResource(resourceFolderPath).toURI());
+            File[] files = resourceFolder.listFiles((dir, name) -> name.endsWith(".mp3"));
+
+            if (files != null) {
+                for (File file : files) {
+                    Path targetPath = targetDirectory.resolve(file.getName());
+                    Files.copy(file.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error copying .mp3 files: " + e.getMessage());
+        }
+    }
 }
 
 

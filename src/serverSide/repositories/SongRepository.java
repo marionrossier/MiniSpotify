@@ -63,7 +63,7 @@ public class SongRepository {
                 .toList());
     }
 
-    public String getFilePath() {
+    public String getSongFilePath() {
         return filePath;
     }
 }
