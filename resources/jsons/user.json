@@ -1,0 +1,28 @@
+[ {
+  "userId" : 232928320,
+  "pseudonym" : "marion",
+  "email" : "marion",
+  "password" : "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
+  "salt" : "QP/Bhr9fLv1ywanP5aND9w==",
+  "planEnum" : "FREE",
+  "playlists" : [ 1120436763, 1527642452, 1940298216, 777340335 ],
+  "friends" : [ ]
+}, {
+  "userId" : 1726370281,
+  "pseudonym" : "florent",
+  "email" : "florent",
+  "password" : "6Hz/4TgZsRJeY7aXzML1t6b4qO+YIQAVUlRQ/dqE0Zs=",
+  "salt" : "qFErMtcqWlWTeEef+Z+Z3A==",
+  "planEnum" : "PREMIUM",
+  "playlists" : [ 1120436763, 1290311318, 1044676789, 1293611417 ],
+  "friends" : [ ]
+}, {
+  "userId" : 1,
+  "pseudonym" : "admin",
+  "email" : "admin",
+  "password" : "tMDT1yOwISuD3M6h1so7SLX4yPmfM1M4OOt8bqWCm5E=",
+  "salt" : "eu9D+1wiuW2Zrg0fR0x7Mw==",
+  "planEnum" : "PREMIUM",
+  "playlists" : [ 1727211475, 546441990, 1335825382, 739698447, 435500639 ],
+  "friends" : [ ]
+} ]
