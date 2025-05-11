@@ -3,8 +3,6 @@ package clientSide.services;
 import serverSide.entities.MusicGender;
 import serverSide.entities.Playlist;
 import serverSide.entities.Song;
-import serverSide.repositories.ArtistLocalRepository;
-import serverSide.repositories.SongLocalRepository;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,14 +12,13 @@ public class SearchService {
 
     Scanner scanner = new Scanner(System.in);
     private final Icon icon = new Icon();
-    public final SongService songService;
-    public final ArtistLocalRepository artistLocalRepository;
+    private final SongService songService;
     private final PrintService printService;
 
     // Constructor
-    public SearchService(SongService songService, ArtistLocalRepository artistLocalRepository, PrintService printService) {
+    public SearchService(SongService songService,
+                         PrintService printService) {
         this.songService = songService;
-        this.artistLocalRepository = artistLocalRepository;
         this.printService = printService;
     }
 
@@ -64,7 +61,7 @@ public class SearchService {
             return new LinkedList<>();
         }
         else {
-            songsByTitle = songService.songLocalRepository.getSongsByTitle(songTitle);
+            songsByTitle = songService.getSongByTitle(songTitle);
         }
 
         return listSongToListInt(songsByTitle);
@@ -78,7 +75,7 @@ public class SearchService {
             return new LinkedList<>();
         }
         else {
-            songsByArtist = songService.songLocalRepository.getSongsByArtist(artistName, artistLocalRepository);
+            songsByArtist = songService.getSongsByArtist(artistName);
         }
 
         return listSongToListInt(songsByArtist);
@@ -92,7 +89,7 @@ public class SearchService {
             return new LinkedList<>();
         }
         else {
-            songsByGender = songService.songLocalRepository.getSongsByGender(genderName);
+            songsByGender = songService.getSongsByGender(genderName);
         }
 
         return listSongToListInt(songsByGender);

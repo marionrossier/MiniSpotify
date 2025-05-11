@@ -1,5 +1,6 @@
 package clientSide.view_templatePattern;
 
+import clientSide.services.ViewToolBox;
 import serverSide.entities.PlanEnum;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
@@ -11,14 +12,15 @@ public class CreateAccount extends _InversedPageTemplate {
     private String email;
     private PlanEnum planEnum;
 
-    public CreateAccount(PageService pageManager, IPlaylistPlayer spotifyPlayer, int pageId) {
-        super(pageManager, spotifyPlayer);
+    public CreateAccount(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+        super(pageService, spotifyPlayer);
+        this.viewToolBox = viewToolBox;
         this.pageId = pageId;
         this.pageTitle = "Create Account Page";
-        this.pageContent = icon.iconNbr(0) + icon.iconBack() + icon.lineBreak +
-                icon.iconNbr(1) + "FREE " + icon.iconFree() + icon.lineBreak +
-                icon.iconNbr(2) + "PREMIUM " + icon.iconPremium();
-        toolbox.getUserServ().resetCookie();
+        this.pageContent = icon.zeroBack + icon.lineBreak +
+                icon.nbr(1) + "FREE " + icon.free() + icon.lineBreak +
+                icon.nbr(2) + "PREMIUM " + icon.premium();
+        viewToolBox.getUserServ().resetCookie();
     }
 
     public void displaySpecificContent () {
@@ -28,7 +30,7 @@ public class CreateAccount extends _InversedPageTemplate {
         password = pageService.gotAnInput(scanner.nextLine());
         System.out.print("Enter your email : ");
         email = pageService.gotAnInput(scanner.nextLine());
-        while (!toolbox.getUserServ().emailValidation(email)){
+        while (!viewToolBox.getUserServ().emailValidation(email)){
             System.err.print("Enter a valid email address, like name@email.com :");
             email = pageService.gotAnInput(scanner.nextLine());
         }
@@ -48,7 +50,7 @@ public class CreateAccount extends _InversedPageTemplate {
     }
 
     private void createAccount() {
-        toolbox.getUserServ().addUser(pseudonym,email,password, planEnum);
+        viewToolBox.getUserServ().addUser(pseudonym,email,password, planEnum);
         System.out.println("Account created successfully !");
         pageService.login.displayAllPage();
     }

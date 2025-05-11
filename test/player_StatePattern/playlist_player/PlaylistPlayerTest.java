@@ -1,17 +1,16 @@
 package player_StatePattern.playlist_player;
 
+import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.*;
-import fakes.FakeAudioRepository;
+import utilsAndFakes.CommuneMethods;
 import serverSide.entities.PlaylistEnum;
 import serverSide.entities.Song;
 import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
-import serverSide.repositories.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import fakes.FakeMusicPlayer;
+import utilsAndFakes.FakeMusicPlayer;
 import serverSide.entities.Playlist;
-import services.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,46 +18,15 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class PlaylistPlayerTest {
+public class PlaylistPlayerTest extends CommuneMethods{
 
-    private PlaylistPlayer playlistPlayer;
-    private FakeMusicPlayer fakeMusicPlayer;
-    private File songTempFile;
-    private File playlistTempFile;
-    private File artistTempFile;
-    private SongLocalRepository songLocalRepository;
-    private SongService songService;
-    private ArtistService artistService;
-    private UserLocalRepository userLocalRepository;
-    private UserService userService;
-    private PlaylistLocalRepository playlistLocalRepository;
-    private PlaylistServices playlistServices;
-    private ArtistLocalRepository artistLocalRepository;
-    private IAudioRepository audioRepository;
-    private CommuneMethods communeMethods = new CommuneMethods();
-    private PrintService printService;
+    public PlaylistPlayerTest() throws IOException {
+    }
 
     @BeforeEach
     void setUp() throws IOException {
         // Create Cookies_SingeltonPattern instance
         Cookies_SingletonPattern.setInstance(400953820); //testUsers
-
-        // Create temporary files for repositories
-        songTempFile = Files.createTempFile("songs", ".json").toFile();
-        playlistTempFile = Files.createTempFile("playlists", ".json").toFile();
-        artistTempFile = Files.createTempFile("artist",".json").toFile();
-
-        // Initialize repositories with temp files
-        songLocalRepository = new SongLocalRepository(songTempFile.getAbsolutePath());
-        songService = new SongService(songLocalRepository);
-        playlistLocalRepository = new PlaylistLocalRepository(playlistTempFile.getAbsolutePath());
-        playlistServices = new PlaylistServices(playlistLocalRepository, userLocalRepository, songLocalRepository);
-        userLocalRepository = new UserLocalRepository();
-        userService = new UserService(userLocalRepository);
-        artistService = new ArtistService(artistLocalRepository);
-        artistLocalRepository = new ArtistLocalRepository(artistTempFile.getAbsolutePath());
-        audioRepository = new FakeAudioRepository();
-        printService = new PrintService(songService, artistService, playlistServices, userService);
 
         // Create test songs
         Song song1 = createSong(1, "Song 1", "song1.mp3");
@@ -75,35 +43,20 @@ public class PlaylistPlayerTest {
         playlist.setPlaylistId(1);
         playlistLocalRepository.savePlaylist(playlist);
 
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), playlistLocalRepository, playlistServices);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), playlistLocalRepository, playlistServices);
-        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), playlistLocalRepository, playlistServices);
-        
-        // Create a FakeMusicPlayer for testing
-        fakeMusicPlayer = new FakeMusicPlayer();
-        
-        // Instantiate the PlaylistPlayer with the fake player and repositories
-        playlistPlayer = new PlaylistPlayer(fakeMusicPlayer, songLocalRepository, playlistLocalRepository,
-                audioRepository, userLocalRepository);
+        addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), playlistLocalRepository, playlistService);
+        addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), playlistLocalRepository, playlistService);
+        addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), playlistLocalRepository, playlistService);
     }
     
     @AfterEach
     void tearDown() {
         // Delete temporary files
-        if (songTempFile != null && songTempFile.exists()) {
-            songTempFile.delete();
+        if (tempSongsFile != null && tempSongsFile.exists()) {
+            tempSongsFile.delete();
         }
-        if (playlistTempFile != null && playlistTempFile.exists()) {
-            playlistTempFile.delete();
+        if (tempPlaylistsFile != null && tempPlaylistsFile.exists()) {
+            tempPlaylistsFile.delete();
         }
-    }
-    
-    private Song createSong(int id, String title, String fileName) {
-        Song song = new Song();
-        song.setSongId(id);
-        song.setTitle(title);
-        song.setAudioFileName(fileName);
-        return song;
     }
 
     @Test

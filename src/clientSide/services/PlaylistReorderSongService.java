@@ -1,6 +1,7 @@
 package clientSide.services;
 
 import serverSide.entities.Playlist;
+import serverSide.repositories.PlaylistLocalRepository;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,14 +9,13 @@ import java.util.Scanner;
 
 public class PlaylistReorderSongService {
 
-    Scanner scanner;
+    private final Scanner scanner;
+    private final PlaylistLocalRepository playlistLocalRepository;
 
-    public PlaylistReorderSongService() {
-        this.scanner = new Scanner(System.in);
-    }
-
-    public PlaylistReorderSongService(Scanner scanner) {
+    public PlaylistReorderSongService(ServiceToolBox serviceToolBox, Scanner scanner) {
+        this.playlistLocalRepository = serviceToolBox.playlistLocalRepository;
         this.scanner = scanner;
+
     }
 
     public void reorderSongsInPlaylist(int playlistId, PlaylistServices playlistServices) {
@@ -24,7 +24,7 @@ public class PlaylistReorderSongService {
 
         completeWithRemainingSongs(playlist, newOrder);
         playlist.setListSongsId(newOrder);
-        playlistServices.playlistLocalRepository.savePlaylist(playlist);
+        playlistLocalRepository.savePlaylist(playlist);
 
         printSuccessMessage(playlist, newOrder);
     }

@@ -3,10 +3,6 @@ package clientSide.services;
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 import serverSide.entities.User;
-import serverSide.repositories.ArtistLocalRepository;
-import serverSide.repositories.PlaylistLocalRepository;
-import serverSide.repositories.SongLocalRepository;
-import serverSide.repositories.UserLocalRepository;
 
 import java.util.List;
 
@@ -18,7 +14,9 @@ public class PrintService {
     private final SongService songService;
     private final ArtistService artistService;
 
-    public PrintService(SongService songService, ArtistService artistService, PlaylistServices playlistServices,
+    public PrintService(SongService songService,
+                        ArtistService artistService,
+                        PlaylistServices playlistServices,
                         UserService userService) {
         this.artistService = artistService;
         this.songService = songService;
@@ -58,29 +56,29 @@ public class PrintService {
         int i = 1;
         User currentUser = userService.getUserById(userId);
 
-if (currentUser != null && currentUser.getPlaylists() != null) {
-    for (int playlistId : userService.getUserById(userId).getPlaylists()) {
-        Playlist playlist = playlistService.getPlaylistById(playlistId);
+        if (currentUser != null && currentUser.getPlaylists() != null) {
+            for (int playlistId : userService.getUserById(userId).getPlaylists()) {
+                Playlist playlist = playlistService.getPlaylistById(playlistId);
 
-        if (playlist != null) {
-            boolean isUserOwner = playlist.getOwnerId() == currentUser.getUserId();
-            System.out.println(i + ". " +
-                    playlist.getName() + " - " +
-                    printPlaylistStatus(playlist.getStatus()) +
-                    (isUserOwner ? icon.iconHouse() : ""));
-            i++;
+                if (playlist != null) {
+                    boolean isUserOwner = playlist.getOwnerId() == currentUser.getUserId();
+                    System.out.println(i + ". " +
+                            playlist.getName() + " - " +
+                            printPlaylistStatus(playlist.getStatus()) +
+                            (isUserOwner ? icon.house() : ""));
+                    i++;
+                }
+            }
+        } else {
+            System.out.println("No playlists available.");
         }
-    }
-} else {
-    System.out.println("No playlists available.");
-}
     }
 
     private String printPlaylistStatus(PlaylistEnum status) {
 
         if (status == PlaylistEnum.PUBLIC){
-            return icon.iconEarth();
+            return icon.earth();
         }
-        return icon.iconLock();
+        return icon.lock();
     }
 }

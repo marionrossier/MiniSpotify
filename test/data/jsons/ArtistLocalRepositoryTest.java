@@ -3,6 +3,7 @@ package data.jsons;
 import serverSide.entities.Artist;
 import serverSide.repositories.ArtistLocalRepository;
 import org.junit.jupiter.api.*;
+import utilsAndFakes.CommuneMethods;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,10 +12,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ArtistLocalRepositoryTest {
+class ArtistLocalRepositoryTest extends CommuneMethods {
 
     private File tempFile;
     private ArtistLocalRepository repo;
+
+    public ArtistLocalRepositoryTest() throws IOException {
+    }
 
     @BeforeEach
     void setUp() throws IOException {

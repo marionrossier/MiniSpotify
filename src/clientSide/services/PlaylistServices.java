@@ -6,34 +6,25 @@ import serverSide.entities.Song;
 import serverSide.entities.User;
 import serverSide.repositories.PlaylistLocalRepository;
 import serverSide.repositories.SongLocalRepository;
-import serverSide.repositories.UserLocalRepository;
 
 import java.util.*;
 
 public class PlaylistServices {
 
-    public final UserLocalRepository userLocalRepository;
-    public final PlaylistLocalRepository playlistLocalRepository;
-    public final TemporaryPlaylistService temporaryPlaylistService;
-    public final PlaylistFunctionalitiesService playlistFuncService;
-    public final SongLocalRepository songLocalRepository;
+    private final PlaylistLocalRepository playlistLocalRepository;
+    private final TemporaryPlaylistService temporaryPlaylistService;
+    private final PlaylistFunctionalitiesService playlistFuncService;
+    private final SongLocalRepository songLocalRepository;
 
-    public PlaylistServices (PlaylistLocalRepository playlistLocalRepository, UserLocalRepository userLocalRepository,
-                             SongLocalRepository songLocalRepository){
-        this.playlistLocalRepository = playlistLocalRepository;
-        this.userLocalRepository = userLocalRepository;
-        this.temporaryPlaylistService = new TemporaryPlaylistService(playlistLocalRepository, userLocalRepository);
-        this.playlistFuncService = new PlaylistFunctionalitiesService(playlistLocalRepository);
-        this.songLocalRepository = songLocalRepository;
+
+    public PlaylistServices (ServiceToolBox serviceToolBox,
+                             PlaylistFunctionalitiesService playlistFuncService,
+                             TemporaryPlaylistService temporaryPlaylistService){
+        this.playlistLocalRepository = serviceToolBox.playlistLocalRepository;
+        this.temporaryPlaylistService = temporaryPlaylistService;
+        this.playlistFuncService = playlistFuncService;
+        this.songLocalRepository = serviceToolBox.songLocalRepository;
     }
-
-//    public PlaylistServices (PlaylistLocalRepository playlistLocalRepository, SongLocalRepository songLocalRepository) {
-//        this.playlistLocalRepository = playlistLocalRepository;
-//        this.userLocalRepository = new UserLocalRepository();
-//        this.temporaryPlaylistService = new TemporaryPlaylistService(playlistLocalRepository, userLocalRepository);
-//        this.playlistFuncService = new PlaylistFunctionalitiesService(playlistLocalRepository);
-//        this.songLocalRepository = songLocalRepository;
-//    }
 
     public int setDurationSeconds(int playlistId) {
         int totalSeconds = 0;

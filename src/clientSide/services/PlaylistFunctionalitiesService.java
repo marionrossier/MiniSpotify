@@ -12,15 +12,13 @@ public class PlaylistFunctionalitiesService {
 
     Scanner scanner = new Scanner(System.in);
     private final UserLocalRepository userLocalRepository;
-    final PlaylistLocalRepository playlistLocalRepository;
-    final TemporaryPlaylistService temporaryPlaylistService;
+    private final PlaylistLocalRepository playlistLocalRepository;
     private final UserService userService;
 
-    public PlaylistFunctionalitiesService(PlaylistLocalRepository playlistLocalRepository){
-        this.playlistLocalRepository = playlistLocalRepository;
-        this.userLocalRepository = new UserLocalRepository();
-        this.userService = new UserService(userLocalRepository);
-        this.temporaryPlaylistService = new TemporaryPlaylistService(playlistLocalRepository, userLocalRepository);
+    public PlaylistFunctionalitiesService(ServiceToolBox serviceToolBox, UserLocalRepository userLocalRepository, UserService userService){
+        this.playlistLocalRepository = serviceToolBox.playlistLocalRepository;
+        this.userLocalRepository = userLocalRepository;
+        this.userService = userService;
     }
 
     public void createNewPlaylist (String playlistName, PlaylistEnum status, PlaylistServices playlistServices){
