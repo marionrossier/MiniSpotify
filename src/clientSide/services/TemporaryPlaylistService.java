@@ -11,8 +11,8 @@ public class TemporaryPlaylistService {
     private final PlaylistLocalRepository playlistLocalRepository;
     private final UserService userService;
 
-    public TemporaryPlaylistService(ServiceToolBox serviceToolBox, UserService userService){
-        this.playlistLocalRepository = serviceToolBox.playlistLocalRepository;
+    public TemporaryPlaylistService(ToolBoxService toolBoxService, UserService userService){
+        this.playlistLocalRepository = toolBoxService.playlistLocalRepository;
         this.userService = userService;
     }
 

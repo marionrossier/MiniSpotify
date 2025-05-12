@@ -39,12 +39,12 @@ public class PageService {
 
     private final UserService userService;
     private final NavigationStackService navigationStackService;
-    private final ViewToolBox viewToolBox;
+    private final ToolBoxView toolBoxView;
 
-    public PageService(IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox,
+    public PageService(IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView,
                        NavigationStackService navigationStackService, UserService userService) {
         this.spotifyPlayer = spotifyPlayer;
-        this.viewToolBox = viewToolBox;
+        this.toolBoxView = toolBoxView;
         this.navigationStackService = navigationStackService;
         this.userService = userService;
         setUpPages();
@@ -53,64 +53,64 @@ public class PageService {
     private void setUpPages() {
         int pageId = 1;
 
-        this.playlistChoseList = new PlaylistChoseList(this, spotifyPlayer, viewToolBox, pageId++);
+        this.playlistChoseList = new PlaylistChoseList(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.playlistChoseList);
 
-        this.playlistCreation = new PlaylistCreation(this, spotifyPlayer, viewToolBox, pageId++);
+        this.playlistCreation = new PlaylistCreation(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.playlistCreation);
 
-        this.playlistDeletion = new PlaylistDeletion(this, spotifyPlayer, viewToolBox, pageId++);
+        this.playlistDeletion = new PlaylistDeletion(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.playlistDeletion);
 
-        this.friendAddAFriend = new FriendAddAFriend(this, spotifyPlayer, viewToolBox, pageId++);
+        this.friendAddAFriend = new FriendAddAFriend(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.friendAddAFriend);
 
-        this.friendsCommunePlaylists = new FriendsCommunePlaylists(this, spotifyPlayer, viewToolBox, pageId++);
+        this.friendsCommunePlaylists = new FriendsCommunePlaylists(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.friendsCommunePlaylists);
 
-        this.friendsDisplayFriends = new FriendsDisplayFriends(this, spotifyPlayer, viewToolBox, pageId++);
+        this.friendsDisplayFriends = new FriendsDisplayFriends(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.friendsDisplayFriends);
 
-        this.friendsHomePage = new FriendsHomePage(this, spotifyPlayer, viewToolBox, pageId++);
+        this.friendsHomePage = new FriendsHomePage(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.friendsHomePage);
 
-        this.friendAddPlaylist = new FriendAddPlaylist(this, spotifyPlayer, viewToolBox, pageId++);
+        this.friendAddPlaylist = new FriendAddPlaylist(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.friendAddPlaylist);
 
-        this.homePage = new HomePage(this, spotifyPlayer, viewToolBox, pageId++);
+        this.homePage = new HomePage(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.homePage);
 
-        this.playlistHomePage = new PlaylistHomePage(this, spotifyPlayer, viewToolBox, pageId++);
+        this.playlistHomePage = new PlaylistHomePage(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.playlistHomePage);
 
-        this.login = new LoginOK(this, spotifyPlayer, viewToolBox, pageId++);
+        this.login = new LoginOK(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.login);
 
-        this.createAccount = new CreateAccount(this, spotifyPlayer, viewToolBox, pageId++);
+        this.createAccount = new CreateAccount(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.createAccount);
 
-        this.playlistPageOpen = new PlaylistPageOpen(this, spotifyPlayer, viewToolBox, pageId++);
+        this.playlistPageOpen = new PlaylistPageOpen(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.playlistPageOpen);
 
-        this.search = new Search(this, spotifyPlayer, viewToolBox, pageId++);
+        this.search = new Search(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.search);
 
-        this.songPlayer = new SongPlayer(this, spotifyPlayer, viewToolBox, pageId++);
+        this.songPlayer = new SongPlayer(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.songPlayer);
 
-        this.searchGender = new SearchGender(this, spotifyPlayer, viewToolBox, pageId++);
+        this.searchGender = new SearchGender(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.searchGender);
 
-        this.friendInformation = new FriendInformation(this, spotifyPlayer, viewToolBox, pageId++);
+        this.friendInformation = new FriendInformation(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.friendInformation);
 
-        this.friendRemoveAFriend = new FriendRemoveAFriend(this, spotifyPlayer, viewToolBox, pageId++);
+        this.friendRemoveAFriend = new FriendRemoveAFriend(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.friendRemoveAFriend);
 
-        this.actionFoundedSongs = new ActionFoundedSongs(this, spotifyPlayer, viewToolBox, pageId++);
+        this.actionFoundedSongs = new ActionFoundedSongs(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.actionFoundedSongs);
 
-        this.playlistPageShared = new PlaylistPageShared(this, spotifyPlayer, viewToolBox, pageId++);
+        this.playlistPageShared = new PlaylistPageShared(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.playlistPageShared);
     }
 
@@ -153,8 +153,8 @@ public class PageService {
 
     public void pageIsPremium (boolean isFree){
         if (!isFree){
-            int userId = viewToolBox.getUserServ().getCurrentUserId();
-            User user = viewToolBox.getUserServ().getUserById(userId);
+            int userId = toolBoxView.getUserServ().getCurrentUserId();
+            User user = toolBoxView.getUserServ().getUserById(userId);
 
             if (user.getPlanEnum().equals(PlanEnum.FREE)) {
 
@@ -166,7 +166,7 @@ public class PageService {
                 switch (input) {
                     case "yes":
                         user.setPlanEnum(PlanEnum.PREMIUM);
-                        viewToolBox.getUserServ().saveUser(user);
+                        toolBoxView.getUserServ().saveUser(user);
                         break;
                     case "no":
                         getPageById(lastPageId).displayAllPage();

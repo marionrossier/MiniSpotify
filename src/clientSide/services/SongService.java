@@ -11,8 +11,8 @@ public class SongService {
     private final SongLocalRepository songLocalRepository;
 
     // Constructor
-    public SongService(ServiceToolBox serviceToolBox) {
-        this.songLocalRepository = serviceToolBox.songLocalRepository;
+    public SongService(ToolBoxService toolBoxService) {
+        this.songLocalRepository = toolBoxService.songLocalRepository;
     }
 
     public void setCurrentSongId (int songId){

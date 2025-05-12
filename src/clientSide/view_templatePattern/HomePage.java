@@ -2,13 +2,13 @@ package clientSide.view_templatePattern;
 
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
-import clientSide.services.ViewToolBox;
+import clientSide.services.ToolBoxView;
 
 public class HomePage extends _SimplePageTemplate {
 
-    public HomePage(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+    public HomePage(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
-        this.viewToolBox = viewToolBox;
+        this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Home Page";
         this.pageContent =
@@ -23,7 +23,7 @@ public class HomePage extends _SimplePageTemplate {
         System.out.println("Logging you out ...");
         spotifyPlayer.stop();
 
-        viewToolBox.getUserServ().resetCookie();
+        toolBoxView.getUserServ().resetCookie();
 
         pageService.login.displayAllPage();
     }

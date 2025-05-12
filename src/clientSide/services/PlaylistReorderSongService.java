@@ -12,8 +12,8 @@ public class PlaylistReorderSongService {
     private final Scanner scanner;
     private final PlaylistLocalRepository playlistLocalRepository;
 
-    public PlaylistReorderSongService(ServiceToolBox serviceToolBox, Scanner scanner) {
-        this.playlistLocalRepository = serviceToolBox.playlistLocalRepository;
+    public PlaylistReorderSongService(ToolBoxService toolBoxService, Scanner scanner) {
+        this.playlistLocalRepository = toolBoxService.playlistLocalRepository;
         this.scanner = scanner;
 
     }

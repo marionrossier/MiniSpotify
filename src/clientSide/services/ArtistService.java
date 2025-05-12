@@ -5,8 +5,8 @@ import serverSide.repositories.ArtistLocalRepository;
 public class ArtistService {
     private final ArtistLocalRepository artistLocalRepository;
 
-    public ArtistService(ServiceToolBox serviceToolBox) {
-        this.artistLocalRepository = serviceToolBox.artistLocalRepository;
+    public ArtistService(ToolBoxService toolBoxService) {
+        this.artistLocalRepository = toolBoxService.artistLocalRepository;
     }
 
     public String getArtisteNameById (int artistId){

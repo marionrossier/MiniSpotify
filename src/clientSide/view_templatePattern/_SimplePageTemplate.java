@@ -1,9 +1,9 @@
 package clientSide.view_templatePattern;
 
-import clientSide.services.Icon;
+import clientSide.services.IconService;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
-import clientSide.services.ViewToolBox;
+import clientSide.services.ToolBoxView;
 
 import java.util.Scanner;
 
@@ -17,9 +17,9 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
     PageService pageService;
     Scanner scanner = new Scanner(System.in);
     boolean isFree = true;
-    public ViewToolBox viewToolBox;
+    public ToolBoxView toolBoxView;
 
-    protected Icon icon = new Icon();
+    protected IconService icon = new IconService();
 
     public _SimplePageTemplate(PageService pageService, IPlaylistPlayer spotifyPlayer) {
         this.pageService = pageService;

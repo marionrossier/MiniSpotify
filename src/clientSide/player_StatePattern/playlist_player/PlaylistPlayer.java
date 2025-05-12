@@ -14,7 +14,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     protected PlaylistServices playlistServices;
     protected SongService songService;
     protected IAudioRepository audioRepository;
-    private final Icon icon = new Icon();
+    private final IconService icon = new IconService();
 
     protected Stack<Integer> songIdHistory = new Stack<>();
 

@@ -17,13 +17,13 @@ public class PlaylistServices {
     private final SongLocalRepository songLocalRepository;
 
 
-    public PlaylistServices (ServiceToolBox serviceToolBox,
+    public PlaylistServices (ToolBoxService toolBoxService,
                              PlaylistFunctionalitiesService playlistFuncService,
                              TemporaryPlaylistService temporaryPlaylistService){
-        this.playlistLocalRepository = serviceToolBox.playlistLocalRepository;
+        this.playlistLocalRepository = toolBoxService.playlistLocalRepository;
         this.temporaryPlaylistService = temporaryPlaylistService;
         this.playlistFuncService = playlistFuncService;
-        this.songLocalRepository = serviceToolBox.songLocalRepository;
+        this.songLocalRepository = toolBoxService.songLocalRepository;
     }
 
     public int setDurationSeconds(int playlistId) {

@@ -1,15 +1,15 @@
 package clientSide.view_templatePattern;
 
-import clientSide.services.ViewToolBox;
+import clientSide.services.ToolBoxView;
 import serverSide.entities.Playlist;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 
 public class PlaylistPageShared extends _SimplePageTemplate {
 
-    public PlaylistPageShared(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+    public PlaylistPageShared(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
-        this.viewToolBox = viewToolBox;
+        this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Shared Playlist Page : ";
         this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak +
@@ -19,14 +19,14 @@ public class PlaylistPageShared extends _SimplePageTemplate {
     @Override
     public void displaySpecificContent(){
         System.out.println();
-        Playlist playlist = viewToolBox.getPlaylistServ().getPlaylistById(viewToolBox.getPlaylistServ().getCurrentPlaylistId());
+        Playlist playlist = toolBoxView.getPlaylistServ().getPlaylistById(toolBoxView.getPlaylistServ().getCurrentPlaylistId());
         if (playlist == null){
             pageService.playlistHomePage.displayAllPage();
         }
         else {
         System.out.println("Playlist name : " + playlist.getName());
         System.out.println();
-        viewToolBox.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId());
+        toolBoxView.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId());
         }
     }
 

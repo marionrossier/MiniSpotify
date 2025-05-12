@@ -1,6 +1,6 @@
 package clientSide.view_templatePattern;
 
-import clientSide.services.ViewToolBox;
+import clientSide.services.ToolBoxView;
 import serverSide.entities.Playlist;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
@@ -11,9 +11,9 @@ public class PlaylistPageOpen extends _SimplePageTemplate {
 
     Scanner in = new Scanner(System.in);
 
-    public PlaylistPageOpen(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+    public PlaylistPageOpen(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
-        this.viewToolBox = viewToolBox;
+        this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Playlist Page : ";
         this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak +
@@ -27,14 +27,14 @@ public class PlaylistPageOpen extends _SimplePageTemplate {
     @Override
     public void displaySpecificContent(){
         System.out.println();
-        Playlist playlist = viewToolBox.getPlaylistServ().getPlaylistById(viewToolBox.getPlaylistServ().getCurrentPlaylistId());
+        Playlist playlist = toolBoxView.getPlaylistServ().getPlaylistById(toolBoxView.getPlaylistServ().getCurrentPlaylistId());
         if (playlist == null){
             pageService.playlistHomePage.displayAllPage();
         }
         else {
         System.out.println("Playlist name : " + playlist.getName());
         System.out.println();
-        viewToolBox.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId());
+        toolBoxView.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId());
         }
     }
 
@@ -42,8 +42,8 @@ public class PlaylistPageOpen extends _SimplePageTemplate {
     public void button1() {
         System.out.print(icon.zeroBack + icon.lineBreak + "Enter the new name of the playlist : ");
         String newName = pageService.gotAnInput(in.next());
-        int playlistId = viewToolBox.getPlaylistServ().getCurrentPlaylistId();
-        viewToolBox.getPlaylistServ().renamePlayList(playlistId, newName);
+        int playlistId = toolBoxView.getPlaylistServ().getCurrentPlaylistId();
+        toolBoxView.getPlaylistServ().renamePlayList(playlistId, newName);
         pageService.playlistPageOpen.displayAllPage();
     }
 
@@ -56,20 +56,20 @@ public class PlaylistPageOpen extends _SimplePageTemplate {
     public void button3() {
         System.out.print("Enter the number of the song you want to remove : ");
 
-        int playlistId = viewToolBox.getPlaylistServ().getCurrentPlaylistId();
-        int songIndex = viewToolBox.getPlaylistServ().takeAndValidateInputSongChoice(playlistId);
+        int playlistId = toolBoxView.getPlaylistServ().getCurrentPlaylistId();
+        int songIndex = toolBoxView.getPlaylistServ().takeAndValidateInputSongChoice(playlistId);
         if (songIndex == 0){
             pageService.playlistHomePage.displayAllPage();
         }
-        int currentPlaylistId = viewToolBox.getPlaylistServ().getCurrentPlaylistId();
-        viewToolBox.getPlaylistServ().deleteSongFromPlaylist(currentPlaylistId, songIndex);
+        int currentPlaylistId = toolBoxView.getPlaylistServ().getCurrentPlaylistId();
+        toolBoxView.getPlaylistServ().deleteSongFromPlaylist(currentPlaylistId, songIndex);
         pageService.playlistPageOpen.displayAllPage();
     }
 
     @Override
     public void button4() {
-        int currentPlaylistId = viewToolBox.getPlaylistServ().getCurrentPlaylistId();
-        viewToolBox.getPlaylistReorderSongServ().reorderSongsInPlaylist(currentPlaylistId, viewToolBox.getPlaylistServ());
+        int currentPlaylistId = toolBoxView.getPlaylistServ().getCurrentPlaylistId();
+        toolBoxView.getPlaylistReorderSongServ().reorderSongsInPlaylist(currentPlaylistId, toolBoxView.getPlaylistServ());
         pageService.playlistPageOpen.displayAllPage();
     }
 

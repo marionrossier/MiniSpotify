@@ -26,7 +26,7 @@ public abstract class CommuneMethods {
     protected IAudioRepository audioLocalRepository;
     protected ArtistLocalRepository artistLocalRepository;
 
-    protected ServiceToolBox serviceToolBox;
+    protected ToolBoxService toolBoxService;
     protected PlaylistServices playlistService;
     protected StockageService stockageService;
     protected PlaylistFunctionalitiesService playlistFunctionalitiesService;
@@ -40,7 +40,7 @@ public abstract class CommuneMethods {
     protected UniqueIdService uniqueIdService;
     protected SongService songService;
 
-    protected ViewToolBox viewToolBox;
+    protected ToolBoxView toolBoxView;
 
     protected IPlaylistPlayer playlistPlayer;
     protected FakeMusicPlayer fakeMusicPlayer;
@@ -68,30 +68,30 @@ public abstract class CommuneMethods {
 
         audioLocalRepository = new AudioLocalRepository();
         passwordService = new PasswordService(userLocalRepository);
-        serviceToolBox = new ServiceToolBox(playlistLocalRepository, userLocalRepository, songLocalRepository,
+        toolBoxService = new ToolBoxService(playlistLocalRepository, userLocalRepository, songLocalRepository,
                 artistLocalRepository, audioLocalRepository);
 
-        userService = new UserService(serviceToolBox,passwordService);
-        temporaryPlaylistService = new TemporaryPlaylistService(serviceToolBox,userService);
-        songService = new SongService(serviceToolBox);
-        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(serviceToolBox, userLocalRepository, userService);
-        playlistService = new PlaylistServices(serviceToolBox, playlistFunctionalitiesService, temporaryPlaylistService);
-        artistService = new ArtistService(serviceToolBox);
+        userService = new UserService(toolBoxService,passwordService);
+        temporaryPlaylistService = new TemporaryPlaylistService(toolBoxService,userService);
+        songService = new SongService(toolBoxService);
+        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(toolBoxService, userLocalRepository, userService);
+        playlistService = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService);
+        artistService = new ArtistService(toolBoxService);
         printService = new PrintService(songService, artistService, playlistService, userService);
         searchService = new SearchService(songService, printService);
-        playlistReorderSongService = new PlaylistReorderSongService(serviceToolBox, scanner);
+        playlistReorderSongService = new PlaylistReorderSongService(toolBoxService, scanner);
         uniqueIdService = new UniqueIdService();
-        songService = new SongService(serviceToolBox);
+        songService = new SongService(toolBoxService);
         navigationStackService = new NavigationStackService();
 
         fakeMusicPlayer = new FakeMusicPlayer();
         playlistPlayer = new PlaylistPlayer(
                 fakeMusicPlayer, audioLocalRepository, songService, playlistService);
 
-        viewToolBox = new ViewToolBox(playlistService, userService, songService, artistService, printService,
+        toolBoxView = new ToolBoxView(playlistService, userService, songService, artistService, printService,
                 searchService, passwordService, playlistReorderSongService, temporaryPlaylistService, uniqueIdService, passwordService);
 
-        pageService = new PageService(playlistPlayer, viewToolBox, navigationStackService, userService);
+        pageService = new PageService(playlistPlayer, toolBoxView, navigationStackService, userService);
 
     }
 

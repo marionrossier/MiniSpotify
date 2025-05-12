@@ -1,8 +1,7 @@
 package serverSide;
 
-import clientSide.services.AudioService;
 import clientSide.services.PasswordService;
-import clientSide.services.ServiceToolBox;
+import clientSide.services.ToolBoxService;
 import clientSide.services.UserService;
 import serverSide.entities.*;
 import serverSide.repositories.*;
@@ -40,10 +39,10 @@ public class JsonService {
         AudioLocalRepository audioLocalRepository = new AudioLocalRepository();
         PasswordService passwordService = new PasswordService(userLocalRepository);
 
-        ServiceToolBox serviceToolBox = new ServiceToolBox(playlistLocalRepository, userLocalRepository,
+        ToolBoxService toolBoxService = new ToolBoxService(playlistLocalRepository, userLocalRepository,
                 songLocalRepository, artistLocalRepository, audioLocalRepository);
 
-        UserService userService = new UserService(serviceToolBox, passwordService);
+        UserService userService = new UserService(toolBoxService, passwordService);
 
         JsonService.addUser(userService);
         addArtist(artistLocalRepository);

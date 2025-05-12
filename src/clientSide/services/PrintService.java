@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PrintService {
 
-    private final Icon icon = new Icon();
+    private final IconService icon = new IconService();
     private final UserService userService;
     private final PlaylistServices playlistService;
     private final SongService songService;

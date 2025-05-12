@@ -1,6 +1,6 @@
 package clientSide.view_templatePattern;
 
-import clientSide.services.ViewToolBox;
+import clientSide.services.ToolBoxView;
 import serverSide.entities.PlanEnum;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
@@ -12,15 +12,15 @@ public class CreateAccount extends _InversedPageTemplate {
     private String email;
     private PlanEnum planEnum;
 
-    public CreateAccount(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+    public CreateAccount(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
-        this.viewToolBox = viewToolBox;
+        this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Create Account Page";
         this.pageContent = icon.zeroBack + icon.lineBreak +
                 icon.nbr(1) + "FREE " + icon.free() + icon.lineBreak +
                 icon.nbr(2) + "PREMIUM " + icon.premium();
-        viewToolBox.getUserServ().resetCookie();
+        toolBoxView.getUserServ().resetCookie();
     }
 
     public void displaySpecificContent () {
@@ -30,7 +30,7 @@ public class CreateAccount extends _InversedPageTemplate {
         password = pageService.gotAnInput(scanner.nextLine());
         System.out.print("Enter your email : ");
         email = pageService.gotAnInput(scanner.nextLine());
-        while (!viewToolBox.getUserServ().emailValidation(email)){
+        while (!toolBoxView.getUserServ().emailValidation(email)){
             System.err.print("Enter a valid email address, like name@email.com :");
             email = pageService.gotAnInput(scanner.nextLine());
         }
@@ -50,7 +50,7 @@ public class CreateAccount extends _InversedPageTemplate {
     }
 
     private void createAccount() {
-        viewToolBox.getUserServ().addUser(pseudonym,email,password, planEnum);
+        toolBoxView.getUserServ().addUser(pseudonym,email,password, planEnum);
         System.out.println("Account created successfully !");
         pageService.login.displayAllPage();
     }

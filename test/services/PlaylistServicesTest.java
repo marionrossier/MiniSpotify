@@ -63,7 +63,7 @@ class PlaylistServicesTest extends CommuneMethods{
                 fakeMusicPlayer, audioLocalRepository, songService, playlistService);
 
         // Create playlistServices
-        playlistService = new PlaylistServices(serviceToolBox, playlistFunctionalitiesService, temporaryPlaylistService);
+        playlistService = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService);
     }
 
     @AfterEach
@@ -166,7 +166,7 @@ class PlaylistServicesTest extends CommuneMethods{
         String input = "2\n1\n3\nx\n";
         Scanner testScanner = new Scanner(new ByteArrayInputStream(input.getBytes()));
 
-        PlaylistReorderSongService reorderService = new PlaylistReorderSongService(serviceToolBox, testScanner);
+        PlaylistReorderSongService reorderService = new PlaylistReorderSongService(toolBoxService, testScanner);
         reorderService.reorderSongsInPlaylist(playlist.getPlaylistId(), playlistService);
 
         Playlist updated = playlistLocalRepository.getPlaylistById(playlist.getPlaylistId());

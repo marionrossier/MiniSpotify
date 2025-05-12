@@ -2,13 +2,13 @@ package clientSide.view_templatePattern;
 
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
-import clientSide.services.ViewToolBox;
+import clientSide.services.ToolBoxView;
 
 public class PlaylistDeletion extends _SimplePageTemplate {
 
-    public PlaylistDeletion(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+    public PlaylistDeletion(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
-        this.viewToolBox = viewToolBox;
+        this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Delete Playlist Page";
         this.pageContent = icon.zeroBack + icon.lineBreak +
@@ -19,7 +19,7 @@ public class PlaylistDeletion extends _SimplePageTemplate {
 
     @Override
     public void button1() {
-        viewToolBox.getPlaylistServ().deletePlaylist(viewToolBox.getPlaylistServ().getCurrentPlaylistId());
+        toolBoxView.getPlaylistServ().deletePlaylist(toolBoxView.getPlaylistServ().getCurrentPlaylistId());
         pageService.playlistHomePage.displayAllPage();
     }
 

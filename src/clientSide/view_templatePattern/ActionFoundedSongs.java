@@ -2,14 +2,14 @@ package clientSide.view_templatePattern;
 
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
-import clientSide.services.ViewToolBox;
+import clientSide.services.ToolBoxView;
 
 
 public class ActionFoundedSongs extends _SimplePageTemplate {
 
-    public ActionFoundedSongs(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+    public ActionFoundedSongs(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
-        this.viewToolBox = viewToolBox;
+        this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Chose your action for the selected songs";
         this.pageContent = icon.zeroBack + " |  " + icon.nineHomepage + icon.lineBreak +
@@ -26,21 +26,21 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
     @Override
     public void button2() {
         System.out.println("Your Playlists : ");
-        viewToolBox.getPrintServ().printUserPlaylists(viewToolBox.getUserServ().getCurrentUserId());
+        toolBoxView.getPrintServ().printUserPlaylists(toolBoxView.getUserServ().getCurrentUserId());
 
         displayInput();
 
-        int chosenPlaylist = viewToolBox.getPlaylistServ().takeAndValidationInputPlaylistChoice();
-        viewToolBox.getPlaylistServ().setCurrentPlaylistId(chosenPlaylist);
+        int chosenPlaylist = toolBoxView.getPlaylistServ().takeAndValidationInputPlaylistChoice();
+        toolBoxView.getPlaylistServ().setCurrentPlaylistId(chosenPlaylist);
         verificationAndThenAction();
     }
 
     private void verificationAndThenAction() {
-        int currentPlaylistId = viewToolBox.getPlaylistServ().getCurrentPlaylistId();
-        int temporaryPlaylistId = viewToolBox.getPlaylistServ().getTemporaryPlaylistId();
+        int currentPlaylistId = toolBoxView.getPlaylistServ().getCurrentPlaylistId();
+        int temporaryPlaylistId = toolBoxView.getPlaylistServ().getTemporaryPlaylistId();
 
-        if (viewToolBox.getPlaylistServ().isCurrentUserOwnerOfPlaylist(currentPlaylistId)) {
-            viewToolBox.getPlaylistServ().addSongToPlaylistFromTemporaryPlaylist(temporaryPlaylistId,currentPlaylistId);
+        if (toolBoxView.getPlaylistServ().isCurrentUserOwnerOfPlaylist(currentPlaylistId)) {
+            toolBoxView.getPlaylistServ().addSongToPlaylistFromTemporaryPlaylist(temporaryPlaylistId,currentPlaylistId);
             pageService.playlistPageOpen.displayAllPage();
         }
         else {

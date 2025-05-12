@@ -1,6 +1,6 @@
 package clientSide.view_templatePattern;
 
-import clientSide.services.ViewToolBox;
+import clientSide.services.ToolBoxView;
 import serverSide.entities.PlaylistEnum;
 import serverSide.entities.User;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
@@ -9,9 +9,9 @@ import clientSide.services.PageService;
 public class PlaylistCreation extends _InversedPageTemplate {
     private String playlistName;
 
-    public PlaylistCreation(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+    public PlaylistCreation(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
-        this.viewToolBox = viewToolBox;
+        this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Create Playlist Page";
         this.pageContent = "You're playlist will be : " + icon.lineBreak +
@@ -26,13 +26,13 @@ public class PlaylistCreation extends _InversedPageTemplate {
 
     @Override
     public void button1(){
-        viewToolBox.getPlaylistServ().createNewPlaylist(playlistName, PlaylistEnum.PRIVATE);
+        toolBoxView.getPlaylistServ().createNewPlaylist(playlistName, PlaylistEnum.PRIVATE);
         pageService.playlistPageOpen.displayAllPage();
     }
 
     @Override
     public void button2(){
-        viewToolBox.getPlaylistServ().createNewPlaylist(playlistName, PlaylistEnum.PUBLIC);
+        toolBoxView.getPlaylistServ().createNewPlaylist(playlistName, PlaylistEnum.PUBLIC);
         pageService.playlistPageOpen.displayAllPage();
     }
 
@@ -40,9 +40,9 @@ public class PlaylistCreation extends _InversedPageTemplate {
 
         this.playlistName = pageService.gotAnInput(scanner.nextLine());
 
-        User user = viewToolBox.getUserServ().getUserById(viewToolBox.getUserServ().getCurrentUserId());
+        User user = toolBoxView.getUserServ().getUserById(toolBoxView.getUserServ().getCurrentUserId());
 
-        boolean playlistNameOk = viewToolBox.getPlaylistServ().verifyPlaylistName(playlistName, user);
+        boolean playlistNameOk = toolBoxView.getPlaylistServ().verifyPlaylistName(playlistName, user);
 
         if (!playlistNameOk){
             System.out.print("Playlist Name already exist in you're playlists. Try again");

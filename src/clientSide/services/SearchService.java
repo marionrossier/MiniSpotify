@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class SearchService {
 
     Scanner scanner = new Scanner(System.in);
-    private final Icon icon = new Icon();
+    private final IconService icon = new IconService();
     private final SongService songService;
     private final PrintService printService;
 

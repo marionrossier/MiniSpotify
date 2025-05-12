@@ -11,8 +11,8 @@ public class UserService {
     private final UserLocalRepository userLocalRepository;
     private final PasswordService passwordService;
 
-    public UserService(ServiceToolBox serviceToolBox, PasswordService passwordService){
-        this.userLocalRepository = serviceToolBox.userLocalRepository;
+    public UserService(ToolBoxService toolBoxService, PasswordService passwordService){
+        this.userLocalRepository = toolBoxService.userLocalRepository;
         this.passwordService = passwordService;
     }
 

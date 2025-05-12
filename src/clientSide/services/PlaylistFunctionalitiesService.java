@@ -15,8 +15,8 @@ public class PlaylistFunctionalitiesService {
     private final PlaylistLocalRepository playlistLocalRepository;
     private final UserService userService;
 
-    public PlaylistFunctionalitiesService(ServiceToolBox serviceToolBox, UserLocalRepository userLocalRepository, UserService userService){
-        this.playlistLocalRepository = serviceToolBox.playlistLocalRepository;
+    public PlaylistFunctionalitiesService(ToolBoxService toolBoxService, UserLocalRepository userLocalRepository, UserService userService){
+        this.playlistLocalRepository = toolBoxService.playlistLocalRepository;
         this.userLocalRepository = userLocalRepository;
         this.userService = userService;
     }
