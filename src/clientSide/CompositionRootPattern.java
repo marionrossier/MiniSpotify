@@ -3,17 +3,20 @@ package clientSide;
 import clientSide.services.*;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import serverSide.StockageService;
-import serverSide.repositories.*;
+import serverSide.repositoriesPattern.*;
 import clientSide.player_StatePattern.file_player.MusicPlayer;
 import clientSide.player_StatePattern.file_player.IMusicPlayer;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
 
 import java.util.Scanner;
+import java.util.Stack;
 
 public class CompositionRootPattern {
 
     Scanner scanner = new Scanner(System.in);
+    public final Stack<Integer> menuPagesStack = new Stack<>();
+
     //Json-Mp3
     StockageService stockageService;
 
@@ -46,8 +49,6 @@ public class CompositionRootPattern {
 
 
     final PageService pageService;
-    final NavigationStackService navigationStackService;
-
     final ToolBoxService toolBoxService;
 
     public CompositionRootPattern (){
@@ -73,11 +74,12 @@ public class CompositionRootPattern {
         artistService = new ArtistService(toolBoxService);
         songService = new SongService(toolBoxService);
 
-        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(toolBoxService, userLocalRepository, userService);
         playlistReorderSongService = new PlaylistReorderSongService(toolBoxService, scanner);
         temporaryPlaylistService = new TemporaryPlaylistService(toolBoxService, userService);
-        playlistServices = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService);
 
+        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(toolBoxService, userService,
+                songService);
+        playlistServices = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService);
         printService = new PrintService(songService, artistService, playlistServices, userService);
         searchService = new SearchService(songService, printService);
         uniqueIdService = new UniqueIdService();
@@ -88,9 +90,7 @@ public class CompositionRootPattern {
                 printService, searchService, passwordService, playlistReorderSongService,
                 temporaryPlaylistService, uniqueIdService, passwordService);
 
-        navigationStackService = new NavigationStackService();
-        pageService = new PageService(spotifyPlayer, toolBoxView,navigationStackService, userService);
-
+        pageService = new PageService(spotifyPlayer, toolBoxView, userService, menuPagesStack);
     }
 
     public void startApp(){

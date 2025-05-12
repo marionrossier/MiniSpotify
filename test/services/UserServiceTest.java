@@ -2,15 +2,11 @@ package services;
 
 import serverSide.entities.PlanEnum;
 import serverSide.entities.User;
-import serverSide.repositories.UserLocalRepository;
-import clientSide.services.PasswordService;
-import clientSide.services.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utilsAndFakes.CommuneMethods;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 

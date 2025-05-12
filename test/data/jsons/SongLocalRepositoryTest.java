@@ -1,19 +1,14 @@
 package data.jsons;
 
-import utilsAndFakes.FakeAudioRepository;
 import serverSide.entities.MusicGender;
 import serverSide.entities.Song;
-import serverSide.repositories.ArtistLocalRepository;
-import serverSide.repositories.IAudioRepository;
-import serverSide.repositories.SongLocalRepository;
+import serverSide.repositoriesPattern.IAudioRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utilsAndFakes.CommuneMethods;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.LinkedList;
 import java.util.List;
 

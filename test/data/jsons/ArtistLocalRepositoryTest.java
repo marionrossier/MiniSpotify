@@ -1,7 +1,7 @@
 package data.jsons;
 
 import serverSide.entities.Artist;
-import serverSide.repositories.ArtistLocalRepository;
+import serverSide.repositoriesPattern.ArtistLocalRepository;
 import org.junit.jupiter.api.*;
 import utilsAndFakes.CommuneMethods;
 

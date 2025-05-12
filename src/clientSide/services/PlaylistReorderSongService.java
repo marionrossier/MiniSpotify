@@ -1,7 +1,7 @@
 package clientSide.services;
 
 import serverSide.entities.Playlist;
-import serverSide.repositories.PlaylistLocalRepository;
+import serverSide.repositoriesPattern.PlaylistLocalRepository;
 
 import java.util.LinkedList;
 import java.util.List;

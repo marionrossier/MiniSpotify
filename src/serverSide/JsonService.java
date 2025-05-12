@@ -4,7 +4,7 @@ import clientSide.services.PasswordService;
 import clientSide.services.ToolBoxService;
 import clientSide.services.UserService;
 import serverSide.entities.*;
-import serverSide.repositories.*;
+import serverSide.repositoriesPattern.*;
 
 import java.io.File;
 import java.io.IOException;

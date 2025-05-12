@@ -13,6 +13,7 @@ public class PageService {
 
     ArrayList<_MenuInterface> pages = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
+    private final Stack<Integer> menuPagesStack;
 
     private final IPlaylistPlayer spotifyPlayer;
     public PlaylistChoseList playlistChoseList;
@@ -25,7 +26,7 @@ public class PageService {
     public FriendAddPlaylist friendAddPlaylist;
     public HomePage homePage;
     public PlaylistHomePage playlistHomePage;
-    public LoginOK login;
+    public Login login;
     public CreateAccount createAccount;
     public PlaylistPageOpen playlistPageOpen;
     public Search search;
@@ -38,15 +39,16 @@ public class PageService {
 
 
     private final UserService userService;
-    private final NavigationStackService navigationStackService;
     private final ToolBoxView toolBoxView;
 
-    public PageService(IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView,
-                       NavigationStackService navigationStackService, UserService userService) {
+    public PageService(IPlaylistPlayer spotifyPlayer,
+                       ToolBoxView toolBoxView,
+                       UserService userService,
+                       Stack<Integer> menuPagesStack) {
         this.spotifyPlayer = spotifyPlayer;
         this.toolBoxView = toolBoxView;
-        this.navigationStackService = navigationStackService;
         this.userService = userService;
+        this.menuPagesStack = menuPagesStack;
         setUpPages();
     }
 
@@ -83,7 +85,7 @@ public class PageService {
         this.playlistHomePage = new PlaylistHomePage(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.playlistHomePage);
 
-        this.login = new LoginOK(this, spotifyPlayer, toolBoxView, pageId++);
+        this.login = new Login(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.login);
 
         this.createAccount = new CreateAccount(this, spotifyPlayer, toolBoxView, pageId++);
@@ -115,14 +117,14 @@ public class PageService {
     }
 
     public void startLogin(){
-        navigationStackService.menuPages.push(login.pageId);
+        menuPagesStack.push(login.pageId);
         userService.resetCookie();
         login.displayAllPage();
     }
 
     public String gotAnInput(String input){
         if (input.equals("0")){
-            int menuPageId = navigationStackService.getMenuPages().peek();
+            int menuPageId = menuPagesStack.peek();
             goBack(menuPageId);
             return "";
         }
@@ -130,14 +132,31 @@ public class PageService {
     }
 
     public Stack<Integer> getMenuPages() {
-        return navigationStackService.menuPages;
+        return menuPagesStack;
+    }
+
+    public void addToStack(int pageId) {
+        //TODO : compléter la liste des pages sur lesquelles on devrait pas pouvoir faire retour.
+        int createAccount = this.createAccount.pageId;
+        int actionFoundedSongs = this.actionFoundedSongs.pageId;
+        int playlistCreation = this.playlistCreation.pageId;
+        int searchGender = this.searchGender.pageId;
+        int playlistDeletion = this.playlistDeletion.pageId;
+        int [] pageIdNotToAdd = new int[] {createAccount, actionFoundedSongs, playlistCreation, searchGender, playlistDeletion};
+
+        for (int id : pageIdNotToAdd) {
+            if (id == pageId) {
+                return;
+            }
+        }
+        getMenuPages().push(pageId);
     }
 
     public void goBack(int pageId) {
         int lastPageId;
         do {
             lastPageId = getMenuPages().pop();
-        } while (lastPageId == pageId && !getMenuPages().isEmpty());
+        } while ((lastPageId == pageId || lastPageId != homePage.pageId) && !getMenuPages().isEmpty());
 
         getPageById(lastPageId).displayAllPage();
     }
@@ -157,8 +176,13 @@ public class PageService {
             User user = toolBoxView.getUserServ().getUserById(userId);
 
             if (user.getPlanEnum().equals(PlanEnum.FREE)) {
-
-                System.out.println("Premium Client option only. \nUpgrade to Premium plan now ? YES or NO");
+                System.err.println("Premium Client option only.");
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println("Upgrade to Premium plan now ? YES or NO");
                 String input = scanner.nextLine();
                 int lastPageId = this.getMenuPages().pop();
                 input = input.toLowerCase();

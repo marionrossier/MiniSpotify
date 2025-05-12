@@ -1,6 +1,6 @@
 package clientSide.services;
 
-import serverSide.repositories.ArtistLocalRepository;
+import serverSide.repositoriesPattern.ArtistLocalRepository;
 
 public class ArtistService {
     private final ArtistLocalRepository artistLocalRepository;

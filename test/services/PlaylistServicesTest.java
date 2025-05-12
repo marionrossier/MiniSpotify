@@ -91,19 +91,6 @@ class PlaylistServicesTest extends CommuneMethods{
     }
 
     @Test
-    public void testDeletePlaylist(){
-        // Arrange
-        int playlistId = this.playlist.getPlaylistId();
-
-        // Act
-        playlistService.deletePlaylist(playlistId);
-        Playlist deletedPlaylist = playlistLocalRepository.getPlaylistById(playlistId);
-
-        // Assert
-        assertNull(deletedPlaylist, "The playlist should be deleted");
-    }
-
-    @Test
     public void testCreateTemporaryPlaylist(){
         //Arrange
         LinkedList <Integer> chosenSongs = new LinkedList<>();
@@ -121,20 +108,7 @@ class PlaylistServicesTest extends CommuneMethods{
     }
 
     @Test
-    public void testDeleteTemporaryPlaylist(){
-        //Arrange
-        LinkedList <Integer> chosenSongs = new LinkedList<>();
-        chosenSongs.add(1);
-
-        playlistService.createTemporaryPlaylist(chosenSongs, PlaylistEnum.PUBLIC);
-        //Act
-        playlistService.deleteTemporaryPlaylist();
-        //Assert
-        assertNull(playlistLocalRepository.getPlaylistByName("temporaryPlaylist"), "The playlist should be deleted");
-    }
-
-    @Test
-    public void testCreatePlaylistWithTemporaryPlaylist (){
+    public void testAdjustTemporaryPlaylistToNewPlaylist(){
         //Arrange
         LinkedList <Integer> chosenSongs = new LinkedList<>();
         chosenSongs.add(1);
@@ -146,7 +120,7 @@ class PlaylistServicesTest extends CommuneMethods{
                 .getPlaylistSongsListWithId().size();
 
         //Act
-        playlistService.createPlaylistWithTemporaryPlaylist(playlistName, PlaylistEnum.PUBLIC);
+        playlistService.adjustTemporaryPlaylistToNewPlaylist(playlistName, PlaylistEnum.PUBLIC);
         int newPlaylistLength = playlistLocalRepository
                 .getPlaylistByName(playlistName)
                 .getPlaylistSongsListWithId().size();

@@ -20,7 +20,7 @@ public class PlaylistPageOpen extends _SimplePageTemplate {
                 icon.nbr(1) + "Rename Playlist" + icon.lineBreak +
                 icon.nbr(2) + "Add song" + icon.lineBreak +
                 icon.nbr(3) + "Remove song" + icon.lineBreak +
-                icon.nbr(4) + "Reorder song" + icon.premium() + icon.lineBreak +
+                icon.nbr(4) + "Reorder song" + icon.lineBreak +
                 icon.nbr(5) + "Delete the playlist";
     }
 
@@ -41,7 +41,7 @@ public class PlaylistPageOpen extends _SimplePageTemplate {
     @Override
     public void button1() {
         System.out.print(icon.zeroBack + icon.lineBreak + "Enter the new name of the playlist : ");
-        String newName = pageService.gotAnInput(in.next());
+        String newName = pageService.gotAnInput(in.nextLine());
         int playlistId = toolBoxView.getPlaylistServ().getCurrentPlaylistId();
         toolBoxView.getPlaylistServ().renamePlayList(playlistId, newName);
         pageService.playlistPageOpen.displayAllPage();

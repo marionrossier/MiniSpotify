@@ -26,7 +26,6 @@ class PageServiceTest extends CommuneMethods {
     @Test
     void testGetPageById() {
         //Arrange
-
         //Act
         int pageId = pageService.homePage.getPageId();
         boolean exist = false;
@@ -40,11 +39,11 @@ class PageServiceTest extends CommuneMethods {
 //    @Test
 //    void testGoBack() {
 //        //Arrange
-//        navigationStackService.menuPages.push(pageService.login.pageId);
-//        navigationStackService.menuPages.push(pageService.homePage.pageId);
-//        navigationStackService.menuPages.push(pageService.playlistHomePage.pageId);
-//        navigationStackService.menuPages.push(pageService.playlistPageOpen.pageId);
-//        navigationStackService.menuPages.push(pageService.playlistPageOpen.pageId);
+//        pageService.getMenuPages().push(pageService.login.pageId);
+//        pageService.getMenuPages().push(pageService.homePage.pageId);
+//        pageService.getMenuPages().push(pageService.playlistHomePage.pageId);
+//        pageService.getMenuPages().push(pageService.playlistPageOpen.pageId);
+//        pageService.getMenuPages().push(pageService.playlistPageOpen.pageId);
 //        int playlistHomePageId = pageService.playlistHomePage.pageId;
 //        int playlistPageOpen = pageService.playlistPageOpen.pageId;
 //        //Act
@@ -56,11 +55,11 @@ class PageServiceTest extends CommuneMethods {
 //    @Test
 //    void testGotAnInput() {
 //        //Arrange
-//        navigationStackService.menuPages.push(pageService.login.pageId);
-//        navigationStackService.menuPages.push(pageService.homePage.pageId);
+//        menuPagesStack.push(pageService.playlistHomePage.pageId);
 //        String input = "0";
 //
 //        //Act
+//        pageService.gotAnInput(input);
 //        String inputCheck = pageService.gotAnInput(input);
 //
 //        //Assert

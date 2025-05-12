@@ -32,7 +32,7 @@ public class PrintService {
     public void printSongList (List<Integer> songs){
         int i = 1;
         for (Integer song : songs) {
-            System.out.println(i + ". " + songService.getSongById(song).getTitle()+ " " +
+            System.out.println(i + ". " + songService.getSongById(song).getTitle()+ " - " +
                             artistService.getArtistNameBySong(song));
             i++;
         }

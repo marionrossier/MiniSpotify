@@ -6,9 +6,9 @@ import clientSide.services.Cookies_SingletonPattern;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 
-public class LoginOK extends _SimplePageTemplate {
+public class Login extends _SimplePageTemplate {
 
-    public LoginOK(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
+    public Login(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;

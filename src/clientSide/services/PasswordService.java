@@ -1,7 +1,7 @@
 package clientSide.services;
 
 import serverSide.entities.User;
-import serverSide.repositories.UserLocalRepository;
+import serverSide.repositoriesPattern.UserLocalRepository;
 
 import java.util.*;
 

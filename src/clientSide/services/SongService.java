@@ -2,7 +2,7 @@ package clientSide.services;
 
 import serverSide.entities.MusicGender;
 import serverSide.entities.Song;
-import serverSide.repositories.SongLocalRepository;
+import serverSide.repositoriesPattern.SongLocalRepository;
 
 import java.util.LinkedList;
 

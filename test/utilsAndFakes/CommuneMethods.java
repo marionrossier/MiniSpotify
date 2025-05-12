@@ -5,12 +5,13 @@ import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
 import clientSide.services.*;
 import serverSide.StockageService;
 import serverSide.entities.*;
-import serverSide.repositories.*;
+import serverSide.repositoriesPattern.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Scanner;
+import java.util.Stack;
 
 public abstract class CommuneMethods {
 
@@ -47,10 +48,12 @@ public abstract class CommuneMethods {
 
     protected PageService pageService;
 
-    private NavigationStackService navigationStackService;
+    public final Stack<Integer> menuPagesStack;
 
 
     public CommuneMethods() throws IOException {
+
+        menuPagesStack = new Stack<>();
 
         tempPlaylistsFile = Files.createTempFile("playlist", ".json").toFile();
         playlistLocalRepository = new PlaylistLocalRepository(tempPlaylistsFile.getAbsolutePath());
@@ -74,7 +77,7 @@ public abstract class CommuneMethods {
         userService = new UserService(toolBoxService,passwordService);
         temporaryPlaylistService = new TemporaryPlaylistService(toolBoxService,userService);
         songService = new SongService(toolBoxService);
-        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(toolBoxService, userLocalRepository, userService);
+        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(toolBoxService, userService, songService);
         playlistService = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService);
         artistService = new ArtistService(toolBoxService);
         printService = new PrintService(songService, artistService, playlistService, userService);
@@ -82,7 +85,6 @@ public abstract class CommuneMethods {
         playlistReorderSongService = new PlaylistReorderSongService(toolBoxService, scanner);
         uniqueIdService = new UniqueIdService();
         songService = new SongService(toolBoxService);
-        navigationStackService = new NavigationStackService();
 
         fakeMusicPlayer = new FakeMusicPlayer();
         playlistPlayer = new PlaylistPlayer(
@@ -91,7 +93,7 @@ public abstract class CommuneMethods {
         toolBoxView = new ToolBoxView(playlistService, userService, songService, artistService, printService,
                 searchService, passwordService, playlistReorderSongService, temporaryPlaylistService, uniqueIdService, passwordService);
 
-        pageService = new PageService(playlistPlayer, toolBoxView, navigationStackService, userService);
+        pageService = new PageService(playlistPlayer, toolBoxView, userService, menuPagesStack);
 
     }
 

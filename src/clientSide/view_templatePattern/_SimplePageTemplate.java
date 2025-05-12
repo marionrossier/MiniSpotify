@@ -28,31 +28,13 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
 
     public void displayAllPage(){
         pageService.pageIsPremium(isFree);
-        addToStack();
+        pageService.addToStack(getPageId());
         displayTitle(pageTitle);
         displayContent(pageContent);
         displaySpecificContent();
         displayInput();
         validateInput();
         switchPage();
-    }
-
-    private void addToStack() {
-        //TODO : compléter la liste des pages sur lesquelles on devrait pas pouvoir faire retour.
-        int createAccount = pageService.createAccount.pageId;
-        int actionFoundedSong = pageService.actionFoundedSongs.pageId;
-        int playlistCreation = pageService.playlistCreation.pageId;
-        int searchGender = pageService.searchGender.pageId;
-        int search = pageService.search.pageId;
-        int playlistDeletion = pageService.playlistDeletion.pageId;
-        int [] pageIdNotToAdd = new int[] {createAccount, actionFoundedSong,playlistCreation, search, searchGender, playlistDeletion};
-
-        for (int id : pageIdNotToAdd) {
-            if (id == getPageId()) {
-                return;
-            }
-        }
-        pageService.getMenuPages().push(getPageId());
     }
 
     public final int getPageId (){
@@ -82,7 +64,7 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
             index = scanner.nextInt();
             scanner.nextLine(); // Clear the newline character
         }catch (Exception e){
-            System.out.println("Invalid input, try again.");
+            System.err.println("Invalid input, try again.");
             scanner.nextLine(); // Clear the invalid input
             displayInput();
             validateInput();

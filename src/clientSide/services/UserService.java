@@ -2,7 +2,7 @@ package clientSide.services;
 
 import serverSide.entities.PlanEnum;
 import serverSide.entities.User;
-import serverSide.repositories.UserLocalRepository;
+import serverSide.repositoriesPattern.UserLocalRepository;
 
 import java.util.ArrayList;
 import java.util.List;

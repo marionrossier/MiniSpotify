@@ -1,6 +1,6 @@
 package clientSide.services;
 
-import serverSide.repositories.*;
+import serverSide.repositoriesPattern.*;
 
 public class ToolBoxService {
 

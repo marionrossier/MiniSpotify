@@ -1,4 +1,4 @@
-package serverSide.repositories;
+package serverSide.repositoriesPattern;
 
 import java.io.InputStream;
 
