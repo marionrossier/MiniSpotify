@@ -1,23 +1,23 @@
 package clientSide.view_templatePattern;
 
-import clientSide.services.ViewToolBox;
+import clientSide.services.ToolBoxView;
 import serverSide.entities.User;
 import clientSide.services.Cookies_SingletonPattern;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 
-public class LoginOK extends _SimplePageTemplate {
+public class Login extends _SimplePageTemplate {
 
-    public LoginOK(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+    public Login(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
-        this.viewToolBox = viewToolBox;
+        this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Login Page";
         this.pageContent =
                 icon.nbr(0) + "End process" + icon.lineBreak +
                 icon.nbr(1)+ "Sign in"+icon.lineBreak +
                 icon.nbr(2)+ "Create an account";
-        viewToolBox.getUserServ().resetCookie();
+        toolBoxView.getUserServ().resetCookie();
     }
 
     @Override
@@ -36,11 +36,11 @@ public class LoginOK extends _SimplePageTemplate {
         String password = pageService.gotAnInput(scanner.nextLine());
 
         //Check the password...
-        if (viewToolBox.getPasswordServ().passwordCheck(pseudonym, password)){
-            User user = viewToolBox.getUserServ().getUserByPseudonym(pseudonym);
+        if (toolBoxView.getPasswordServ().passwordCheck(pseudonym, password)){
+            User user = toolBoxView.getUserServ().getUserByPseudonym(pseudonym);
             Cookies_SingletonPattern.setUser(user.getUserId());
             System.out.println(icon.lineBreak + icon.ok() + "Login successful !");
-            viewToolBox.getPlaylistServ().createAllSongPlaylist(user);
+            toolBoxView.getPlaylistServ().createAllSongPlaylist(user);
             pageService.homePage.displayAllPage();
         }
         else {

@@ -1,15 +1,15 @@
 package clientSide.view_templatePattern;
 
-import clientSide.services.ViewToolBox;
+import clientSide.services.ToolBoxView;
 import serverSide.entities.Playlist;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 
 public class SongPlayer extends _SimplePageTemplate {
 
-    public SongPlayer(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+    public SongPlayer(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
-        this.viewToolBox = viewToolBox;
+        this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Song Player Page";
         this.pageContent =
@@ -24,11 +24,11 @@ public class SongPlayer extends _SimplePageTemplate {
 
     @Override
     public void displaySpecificContent(){
-        Playlist playlist = viewToolBox.getPlaylistServ().getPlaylistById(viewToolBox.getPlaylistServ().getCurrentPlaylistId());
+        Playlist playlist = toolBoxView.getPlaylistServ().getPlaylistById(toolBoxView.getPlaylistServ().getCurrentPlaylistId());
         System.out.println(
                 "Current Playlist : " + playlist.getName() +
-                ", duration " + (viewToolBox.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())/60) + ":" +
-                        viewToolBox.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())%60 +
+                ", duration " + (toolBoxView.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())/60) + ":" +
+                        toolBoxView.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())%60 +
                 ", size : " + playlist.getSize() + icon.lineBreak);
     }
 
@@ -46,7 +46,7 @@ public class SongPlayer extends _SimplePageTemplate {
 
     @Override
     public void button3() {
-        spotifyPlayer.playOrPause(viewToolBox.getSongServ().getCurrentSongId());
+        spotifyPlayer.playOrPause(toolBoxView.getSongServ().getCurrentSongId());
         loop();
     }
 
@@ -76,8 +76,8 @@ public class SongPlayer extends _SimplePageTemplate {
     void loop(){
         while (spotifyPlayer.isPlaying() || spotifyPlayer.isPaused()) {
             int currentSongId = spotifyPlayer.getCurrentSongId();
-            System.out.println("Current lecture : " + viewToolBox.getSongServ().getSongById(currentSongId).getTitle() + " - " +
-                    viewToolBox.getArtistServ().getArtistNameBySong(currentSongId));
+            System.out.println("Current lecture : " + toolBoxView.getSongServ().getSongById(currentSongId).getTitle() + " - " +
+                    toolBoxView.getArtistServ().getArtistNameBySong(currentSongId));
             displayInput();
             validateInput();
             switchPage();

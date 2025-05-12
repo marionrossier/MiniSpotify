@@ -1,8 +1,8 @@
 package clientSide.services;
 
-import serverSide.repositories.*;
+import serverSide.repositoriesPattern.*;
 
-public class ServiceToolBox {
+public class ToolBoxService {
 
     public final UserLocalRepository userLocalRepository;
     public final PlaylistLocalRepository playlistLocalRepository;
@@ -11,11 +11,11 @@ public class ServiceToolBox {
     public final IAudioRepository audioLocalRepository;
 
 
-    public ServiceToolBox (PlaylistLocalRepository playlistLocalRepository,
-                           UserLocalRepository userLocalRepository,
-                           SongLocalRepository songLocalRepository,
-                           ArtistLocalRepository artistLocalRepository,
-                           IAudioRepository audioLocalRepository){
+    public ToolBoxService(PlaylistLocalRepository playlistLocalRepository,
+                          UserLocalRepository userLocalRepository,
+                          SongLocalRepository songLocalRepository,
+                          ArtistLocalRepository artistLocalRepository,
+                          IAudioRepository audioLocalRepository){
 
         this.playlistLocalRepository = playlistLocalRepository;
         this.userLocalRepository = userLocalRepository;

@@ -3,17 +3,20 @@ package clientSide;
 import clientSide.services.*;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import serverSide.StockageService;
-import serverSide.repositories.*;
+import serverSide.repositoriesPattern.*;
 import clientSide.player_StatePattern.file_player.MusicPlayer;
 import clientSide.player_StatePattern.file_player.IMusicPlayer;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
 
 import java.util.Scanner;
+import java.util.Stack;
 
 public class CompositionRootPattern {
 
     Scanner scanner = new Scanner(System.in);
+    public final Stack<Integer> menuPagesStack = new Stack<>();
+
     //Json-Mp3
     StockageService stockageService;
 
@@ -41,14 +44,12 @@ public class CompositionRootPattern {
 
     final IMusicPlayer musicPlayer;
     final IPlaylistPlayer spotifyPlayer;
-    final ViewToolBox viewToolBox;
+    final ToolBoxView toolBoxView;
     final BasicPlayer basicPlayer;
 
 
     final PageService pageService;
-    final NavigationStackService navigationStackService;
-
-    final ServiceToolBox serviceToolBox;
+    final ToolBoxService toolBoxService;
 
     public CompositionRootPattern (){
 
@@ -63,34 +64,33 @@ public class CompositionRootPattern {
         songLocalRepository = new SongLocalRepository(stockageService, artistLocalRepository);
         audioLocalRepository = new AudioLocalRepository();
 
-        serviceToolBox = new ServiceToolBox(playlistLocalRepository, userLocalRepository, songLocalRepository,
+        toolBoxService = new ToolBoxService(playlistLocalRepository, userLocalRepository, songLocalRepository,
                 artistLocalRepository, audioLocalRepository);
 
         //Services
         passwordService = new PasswordService(userLocalRepository);
 
-        userService = new UserService(serviceToolBox, passwordService);
-        artistService = new ArtistService(serviceToolBox);
-        songService = new SongService(serviceToolBox);
+        userService = new UserService(toolBoxService, passwordService);
+        artistService = new ArtistService(toolBoxService);
+        songService = new SongService(toolBoxService);
 
-        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(serviceToolBox, userLocalRepository, userService);
-        playlistReorderSongService = new PlaylistReorderSongService(serviceToolBox, scanner);
-        temporaryPlaylistService = new TemporaryPlaylistService(serviceToolBox, userService);
-        playlistServices = new PlaylistServices(serviceToolBox, playlistFunctionalitiesService, temporaryPlaylistService);
+        playlistReorderSongService = new PlaylistReorderSongService(toolBoxService, scanner);
+        temporaryPlaylistService = new TemporaryPlaylistService(toolBoxService, userService);
 
+        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(toolBoxService, userService,
+                songService);
+        playlistServices = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService);
         printService = new PrintService(songService, artistService, playlistServices, userService);
         searchService = new SearchService(songService, printService);
         uniqueIdService = new UniqueIdService();
 
         musicPlayer = new MusicPlayer(audioLocalRepository, basicPlayer);
         spotifyPlayer = new PlaylistPlayer(musicPlayer, audioLocalRepository, songService, playlistServices);
-        viewToolBox = new ViewToolBox(playlistServices, userService, songService, artistService,
+        toolBoxView = new ToolBoxView(playlistServices, userService, songService, artistService,
                 printService, searchService, passwordService, playlistReorderSongService,
                 temporaryPlaylistService, uniqueIdService, passwordService);
 
-        navigationStackService = new NavigationStackService();
-        pageService = new PageService(spotifyPlayer, viewToolBox,navigationStackService, userService);
-
+        pageService = new PageService(spotifyPlayer, toolBoxView, userService, menuPagesStack);
     }
 
     public void startApp(){

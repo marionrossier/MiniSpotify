@@ -1,6 +1,6 @@
 package clientSide.services;
 
-public class ViewToolBox {
+public class ToolBoxView {
     final PlaylistServices playlistServ;
     final SongService songServ;
     final SearchService searchServ;
@@ -12,7 +12,7 @@ public class ViewToolBox {
     final TemporaryPlaylistService temporaryPlaylistService;
     final UniqueIdService uniqueIdServ;
 
-    public ViewToolBox(PlaylistServices playlistServices, UserService userService, SongService songService,
+    public ToolBoxView(PlaylistServices playlistServices, UserService userService, SongService songService,
                        ArtistService artistServ, PrintService printService, SearchService searchServ,
                        PasswordService passwordService, PlaylistReorderSongService playlistReorderSongServ,
                        TemporaryPlaylistService temporaryPlaylistService, UniqueIdService uniqueIdService, PasswordService service) {

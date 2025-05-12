@@ -1,6 +1,6 @@
 package clientSide.services;
 
-public class Icon {
+public class IconService {
 
     public String nbr(int x){
         return (x+"\uFE0F⃣");

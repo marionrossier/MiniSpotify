@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PrintService {
 
-    private final Icon icon = new Icon();
+    private final IconService icon = new IconService();
     private final UserService userService;
     private final PlaylistServices playlistService;
     private final SongService songService;
@@ -32,7 +32,7 @@ public class PrintService {
     public void printSongList (List<Integer> songs){
         int i = 1;
         for (Integer song : songs) {
-            System.out.println(i + ". " + songService.getSongById(song).getTitle()+ " " +
+            System.out.println(i + ". " + songService.getSongById(song).getTitle()+ " - " +
                             artistService.getArtistNameBySong(song));
             i++;
         }

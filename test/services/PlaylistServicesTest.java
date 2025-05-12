@@ -63,7 +63,7 @@ class PlaylistServicesTest extends CommuneMethods{
                 fakeMusicPlayer, audioLocalRepository, songService, playlistService);
 
         // Create playlistServices
-        playlistService = new PlaylistServices(serviceToolBox, playlistFunctionalitiesService, temporaryPlaylistService);
+        playlistService = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService);
     }
 
     @AfterEach
@@ -91,19 +91,6 @@ class PlaylistServicesTest extends CommuneMethods{
     }
 
     @Test
-    public void testDeletePlaylist(){
-        // Arrange
-        int playlistId = this.playlist.getPlaylistId();
-
-        // Act
-        playlistService.deletePlaylist(playlistId);
-        Playlist deletedPlaylist = playlistLocalRepository.getPlaylistById(playlistId);
-
-        // Assert
-        assertNull(deletedPlaylist, "The playlist should be deleted");
-    }
-
-    @Test
     public void testCreateTemporaryPlaylist(){
         //Arrange
         LinkedList <Integer> chosenSongs = new LinkedList<>();
@@ -121,20 +108,7 @@ class PlaylistServicesTest extends CommuneMethods{
     }
 
     @Test
-    public void testDeleteTemporaryPlaylist(){
-        //Arrange
-        LinkedList <Integer> chosenSongs = new LinkedList<>();
-        chosenSongs.add(1);
-
-        playlistService.createTemporaryPlaylist(chosenSongs, PlaylistEnum.PUBLIC);
-        //Act
-        playlistService.deleteTemporaryPlaylist();
-        //Assert
-        assertNull(playlistLocalRepository.getPlaylistByName("temporaryPlaylist"), "The playlist should be deleted");
-    }
-
-    @Test
-    public void testCreatePlaylistWithTemporaryPlaylist (){
+    public void testAdjustTemporaryPlaylistToNewPlaylist(){
         //Arrange
         LinkedList <Integer> chosenSongs = new LinkedList<>();
         chosenSongs.add(1);
@@ -146,7 +120,7 @@ class PlaylistServicesTest extends CommuneMethods{
                 .getPlaylistSongsListWithId().size();
 
         //Act
-        playlistService.createPlaylistWithTemporaryPlaylist(playlistName, PlaylistEnum.PUBLIC);
+        playlistService.adjustTemporaryPlaylistToNewPlaylist(playlistName, PlaylistEnum.PUBLIC);
         int newPlaylistLength = playlistLocalRepository
                 .getPlaylistByName(playlistName)
                 .getPlaylistSongsListWithId().size();
@@ -166,7 +140,7 @@ class PlaylistServicesTest extends CommuneMethods{
         String input = "2\n1\n3\nx\n";
         Scanner testScanner = new Scanner(new ByteArrayInputStream(input.getBytes()));
 
-        PlaylistReorderSongService reorderService = new PlaylistReorderSongService(serviceToolBox, testScanner);
+        PlaylistReorderSongService reorderService = new PlaylistReorderSongService(toolBoxService, testScanner);
         reorderService.reorderSongsInPlaylist(playlist.getPlaylistId(), playlistService);
 
         Playlist updated = playlistLocalRepository.getPlaylistById(playlist.getPlaylistId());

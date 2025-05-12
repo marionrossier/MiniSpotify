@@ -2,12 +2,12 @@ package clientSide.view_templatePattern;
 
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
-import clientSide.services.ViewToolBox;
+import clientSide.services.ToolBoxView;
 
 public class FriendRemoveAFriend extends _SimplePageTemplate {
-    public FriendRemoveAFriend(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+    public FriendRemoveAFriend(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
-        this.viewToolBox = viewToolBox;
+        this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Remove Friend Page";
