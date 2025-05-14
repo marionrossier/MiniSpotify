@@ -30,7 +30,7 @@ public class TemporaryPlaylistService {
             return;
         }
         int currentUserId = userService.getCurrentUserId();
-        Playlist temporaryPlaylist = playlistLocalRepository.getTemporaryPlaylistOfCurrentUser(userService);
+        Playlist temporaryPlaylist = playlistLocalRepository.getTemporaryPlaylistOfCurrentUser(currentUserId);
 
         if (temporaryPlaylist == null) {
             temporaryPlaylist = new Playlist("temporaryPlaylist", PlaylistEnum.PRIVATE);
@@ -49,7 +49,8 @@ public class TemporaryPlaylistService {
     }
 
     public void adjustTemporaryPlaylistToNewPlaylist(String playlistName, PlaylistEnum status) {
-        Playlist newPlaylist = playlistLocalRepository.getTemporaryPlaylistOfCurrentUser(userService);
+        int currentUserId = userService.getCurrentUserId();
+        Playlist newPlaylist = playlistLocalRepository.getTemporaryPlaylistOfCurrentUser(currentUserId);
         if (newPlaylist != null) {
             newPlaylist.setName(playlistName);
             newPlaylist.setStatus(status);

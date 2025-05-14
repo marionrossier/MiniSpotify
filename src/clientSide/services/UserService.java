@@ -71,7 +71,8 @@ public class UserService {
             playlists = new ArrayList<>();
             userLocalRepository.getUserById(getCurrentUserId()).setPlaylists(playlists);
         }
-        userLocalRepository.addPlaylistToUser(getCurrentUserId(),playlistId);
+        User user = userLocalRepository.getUserById(getCurrentUserId());
+        userLocalRepository.addPlaylistToUser(user,playlistId);
     }
 
     public void followFriend() {/*TODO*/}

@@ -10,7 +10,7 @@ import java.util.List;
 public class ArtistLocalRepository {
     private final String filePath;
     private final StockageService stockageService;
-    private List<Artist> data;
+    private final List<Artist> data;
 
     public ArtistLocalRepository(String filePath) {
         this.filePath = filePath;
@@ -23,16 +23,11 @@ public class ArtistLocalRepository {
     }
 
     public List<Artist> getAllArtists() {
-        return new ArrayList<>(data); // retourne une copie pour éviter modifications directes
+        return new ArrayList<>(data);
     }
 
     public void addArtist(Artist artist) {
         data.add(artist);
-        stockageService.saveToJson(filePath, data);
-    }
-
-    public void deleteArtistById(int artistId) {
-        data.removeIf(artist -> artist.getArtistId() == artistId);
         stockageService.saveToJson(filePath, data);
     }
 
@@ -46,17 +41,6 @@ public class ArtistLocalRepository {
     public void saveArtist(Artist artist) {
         data.add(artist);
         stockageService.saveToJson(filePath, data);
-    }
-
-    public void updateArtist(Artist updatedArtist) {
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).getArtistId() == updatedArtist.getArtistId()) {
-                data.set(i, updatedArtist);
-                stockageService.saveToJson(filePath, data);
-                return;
-            }
-        }
-        System.err.println("Artist with ID " + updatedArtist.getArtistId() + " not found.");
     }
 
     public Artist getArtistByName(String name) {

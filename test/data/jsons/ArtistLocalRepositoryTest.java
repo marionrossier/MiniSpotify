@@ -48,23 +48,6 @@ class ArtistLocalRepositoryTest extends CommuneMethods {
     }
 
     @Test
-    void deleteArtistById_shouldRemoveTheArtist() {
-        // Arrange
-        Artist artistOne = new Artist("Artist One");
-        Artist artistTwo = new Artist("Artist Two");
-        repo.addArtist(artistOne);
-        repo.addArtist(artistTwo);
-
-        // Act
-        repo.deleteArtistById(artistOne.getArtistId());
-
-        // Assert
-        List<Artist> result = repo.getAllArtists();
-        assertEquals(1, result.size());
-        assertEquals(artistTwo.getArtistId(), result.get(0).getArtistId());
-    }
-
-    @Test
     void getArtistById_shouldFindTheArtist() {
         // Arrange
         Artist artist = new Artist("Test Artist");
@@ -75,21 +58,6 @@ class ArtistLocalRepositoryTest extends CommuneMethods {
 
         // Assert
         assertNotNull(result);
-    }
-
-    @Test
-    void updateArtist_shouldUpdateTheArtist() {
-        // Arrange
-        Artist artist = new Artist("Original Name");
-        repo.addArtist(artist);
-
-        // Act
-        artist.setArtistName("Updated Name");
-        repo.updateArtist(artist);
-
-        // Assert
-        Artist result = repo.getArtistById(artist.getArtistId());
-        assertEquals("Updated Name", result.getArtistName());
     }
 
     @Test

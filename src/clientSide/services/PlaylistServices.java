@@ -49,7 +49,8 @@ public class PlaylistServices {
     }
 
     public PlaylistEnum getPlaylistStatus (){
-        return playlistLocalRepository.getPlaylistStatus(getCurrentPlaylistId());
+        Playlist playlist = getPlaylistById(getCurrentPlaylistId());
+        return playlistLocalRepository.getPlaylistStatus(playlist);
     }
 
     public int getAllSongsPlaylistId (){
@@ -109,7 +110,7 @@ public class PlaylistServices {
     public int takeAndValidationInputPlaylistChoice() {
         return playlistFuncService.takeAndValidationInputPlaylistChoice();
     }
-    public void playlistPageRouter(PageService pageService, SongService songService) {
+    public void playlistPageRouter(PageService pageService) {
         playlistFuncService.playlistPageRouter(this, pageService);
     }
 

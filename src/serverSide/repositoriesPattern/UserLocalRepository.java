@@ -1,7 +1,6 @@
 package serverSide.repositoriesPattern;
 
 import serverSide.StockageService;
-import serverSide.entities.PlanEnum;
 import serverSide.entities.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -11,7 +10,7 @@ import java.util.List;
 public class UserLocalRepository {
     private final String filePath;
     private final StockageService stockageService;
-    private List<User> data;
+    private final List<User> data;
 
     public UserLocalRepository(String filePath) {
         this.filePath = filePath;
@@ -23,10 +22,6 @@ public class UserLocalRepository {
         this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/jsons/user.json");
     }
 
-    public String getFilePath() {
-        return filePath;
-    }
-
     public List<User> getAllUsers() {
         return new ArrayList<>(data); // Copie défensive
     }
@@ -34,11 +29,6 @@ public class UserLocalRepository {
     public void saveUser(User user) {
         data.removeIf(u -> u.getUserId() == user.getUserId());
         data.add(user);
-        stockageService.saveToJson(filePath, data);
-    }
-
-    public void removeUserById(int userId) {
-        data.removeIf(user -> user.getUserId() == userId);
         stockageService.saveToJson(filePath, data);
     }
 
@@ -56,16 +46,7 @@ public class UserLocalRepository {
                 .orElse(null);
     }
 
-    public void updatePlanEnum(int userId, PlanEnum newPlan) {
-        User user = getUserById(userId);
-        if (user != null) {
-            user.setPlanEnum(newPlan);
-            stockageService.saveToJson(filePath, data);
-        }
-    }
-
-    public void addPlaylistToUser(int userId, int playlistId) {
-        User user = getUserById(userId);
+    public void addPlaylistToUser(User user, int playlistId) {
         if (user != null) {
             List<Integer> playlists = user.getPlaylists();
             if (playlists == null) {
@@ -79,8 +60,7 @@ public class UserLocalRepository {
         }
     }
 
-    public void addFriendToUser(int userId, int friendId) {
-        User user = getUserById(userId);
+    public void addFriendToUser(User user, int friendId) {
         if (user != null) {
             List<Integer> friends = user.getFriends();
             if (friends == null) {
@@ -94,8 +74,7 @@ public class UserLocalRepository {
         }
     }
 
-    public void deleteFriendFromUser(int userId, int friendId) {
-        User user = getUserById(userId);
+    public void deleteFriendFromUser(User user, int friendId) {
         if (user != null) {
             List<Integer> friends = user.getFriends();
             if (friends != null && friends.contains(friendId)) {

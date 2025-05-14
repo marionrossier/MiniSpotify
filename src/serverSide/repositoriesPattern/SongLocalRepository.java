@@ -13,7 +13,7 @@ public class SongLocalRepository {
     private final String filePath;
     private final StockageService stockageService;
     private final ArtistLocalRepository artistLocalRepository;
-    private List<Song> data;
+    private final List<Song> data;
 
     public SongLocalRepository(String filePath, StockageService stockageService, ArtistLocalRepository artistLocalRepository) {
         this.filePath = filePath;
@@ -25,20 +25,14 @@ public class SongLocalRepository {
     public SongLocalRepository(StockageService stockageService, ArtistLocalRepository artistLocalRepository) {
         this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/jsons/song.json",
                 stockageService, artistLocalRepository);
-
     }
 
     public List<Song> getAllSongs() {
         return new ArrayList<>(data);
     }
 
-    public void addSong(Song song) {
+    public void addSong(Song song) { //only for Populate
         data.add(song);
-        stockageService.saveToJson(filePath, data);
-    }
-
-    public void removeSongById(int songId) {
-        data.removeIf(song -> song.getSongId() == songId);
         stockageService.saveToJson(filePath, data);
     }
 
@@ -65,9 +59,5 @@ public class SongLocalRepository {
         return new LinkedList<>(data.stream()
                 .filter(song -> song.getGender() == gender)
                 .toList());
-    }
-
-    public String getSongFilePath() {
-        return filePath;
     }
 }

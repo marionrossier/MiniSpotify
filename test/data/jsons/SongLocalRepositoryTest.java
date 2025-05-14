@@ -22,7 +22,7 @@ class SongLocalRepositoryTest extends CommuneMethods{
     }
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp(){
     }
 
     @AfterEach
@@ -49,25 +49,6 @@ class SongLocalRepositoryTest extends CommuneMethods{
         assertEquals(1, songs.size());
         assertEquals("Test Song", songs.get(0).getTitle());
         assertEquals("Test Artist", artistLocalRepository.getArtistById(songs.get(0).getArtistId()).getArtistName());
-    }
-
-    @Test
-    void removeSongById_shouldDeleteTheSong() {
-        // Arrange
-        Song songOne = createTestSong(1, "Song One", "Artist One", MusicGender.POP,
-                artistLocalRepository);
-        Song songTwo = createTestSong(2, "Song Two", "Artist Two", MusicGender.ROCK,
-                artistLocalRepository);
-        songLocalRepository.addSong(songOne);
-        songLocalRepository.addSong(songTwo);
-
-        // Act
-        songLocalRepository.removeSongById(songOne.getSongId());
-
-        // Assert
-        List<Song> result = songLocalRepository.getAllSongs();
-        assertEquals(1, result.size());
-        assertEquals(songTwo.getSongId(), result.get(0).getSongId());
     }
 
     @Test
@@ -148,12 +129,6 @@ class SongLocalRepositoryTest extends CommuneMethods{
         // Assert
         assertEquals(2, result.size());
         assertTrue(result.stream().allMatch(s -> s.getGender() == MusicGender.POP));
-    }
-
-    @Test
-    void getSongFilePath_shouldReturnCorrectPath() {
-        // Assert
-        assertEquals(tempSongsFile.getAbsolutePath(), songLocalRepository.getSongFilePath());
     }
 
     @Test
