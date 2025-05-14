@@ -2,13 +2,14 @@ package clientSide.services;
 
 import serverSide.entities.PlanEnum;
 import serverSide.entities.User;
+import serverSide.repositoriesPattern.IUserRepository;
 import serverSide.repositoriesPattern.UserLocalRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
-    private final UserLocalRepository userLocalRepository;
+    private final IUserRepository userLocalRepository;
     private final PasswordService passwordService;
 
     public UserService(ToolBoxService toolBoxService, PasswordService passwordService){

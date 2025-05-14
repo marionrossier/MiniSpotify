@@ -2,13 +2,13 @@ package clientSide.services;
 
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
-import serverSide.repositoriesPattern.PlaylistLocalRepository;
+import serverSide.repositoriesPattern.IPlaylistRepository;
 
 import java.util.LinkedList;
 
 public class TemporaryPlaylistService {
 
-    private final PlaylistLocalRepository playlistLocalRepository;
+    private final IPlaylistRepository playlistLocalRepository;
     private final UserService userService;
 
     public TemporaryPlaylistService(ToolBoxService toolBoxService, UserService userService){

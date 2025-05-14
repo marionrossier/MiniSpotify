@@ -4,17 +4,17 @@ import serverSide.repositoriesPattern.*;
 
 public class ToolBoxService {
 
-    public final UserLocalRepository userLocalRepository;
-    public final PlaylistLocalRepository playlistLocalRepository;
-    public final SongLocalRepository songLocalRepository;
-    public final ArtistLocalRepository artistLocalRepository;
+    public final IUserRepository userLocalRepository;
+    public final IPlaylistRepository playlistLocalRepository;
+    public final ISongRepository songLocalRepository;
+    public final IArtistRepository artistLocalRepository;
     public final IAudioRepository audioLocalRepository;
 
 
-    public ToolBoxService(PlaylistLocalRepository playlistLocalRepository,
-                          UserLocalRepository userLocalRepository,
-                          SongLocalRepository songLocalRepository,
-                          ArtistLocalRepository artistLocalRepository,
+    public ToolBoxService(IPlaylistRepository playlistLocalRepository,
+                          IUserRepository userLocalRepository,
+                          ISongRepository songLocalRepository,
+                          IArtistRepository artistLocalRepository,
                           IAudioRepository audioLocalRepository){
 
         this.playlistLocalRepository = playlistLocalRepository;

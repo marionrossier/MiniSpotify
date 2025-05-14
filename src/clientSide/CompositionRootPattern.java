@@ -21,11 +21,11 @@ public class CompositionRootPattern {
     StockageService stockageService;
 
     //Repositories
-    final PlaylistLocalRepository playlistLocalRepository;
-    final UserLocalRepository userLocalRepository;
-    final SongLocalRepository songLocalRepository;
-    final ArtistLocalRepository artistLocalRepository;
-    final AudioLocalRepository audioLocalRepository;
+    final IPlaylistRepository playlistLocalRepository;
+    final IUserRepository userLocalRepository;
+    final ISongRepository songLocalRepository;
+    final IArtistRepository artistLocalRepository;
+    final IAudioRepository audioLocalRepository;
 
     //Services
     final UserService userService;

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArtistLocalRepository {
+public class ArtistLocalRepository implements IArtistRepository{
     private final String filePath;
     private final StockageService stockageService;
     private final List<Artist> data;

@@ -2,13 +2,13 @@ package clientSide.services;
 
 import serverSide.entities.MusicGender;
 import serverSide.entities.Song;
-import serverSide.repositoriesPattern.SongLocalRepository;
+import serverSide.repositoriesPattern.ISongRepository;
 
 import java.util.LinkedList;
 
 public class SongService {
 
-    private final SongLocalRepository songLocalRepository;
+    private final ISongRepository songLocalRepository;
 
     // Constructor
     public SongService(ToolBoxService toolBoxService) {

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserLocalRepository {
+public class UserLocalRepository implements IUserRepository {
     private final String filePath;
     private final StockageService stockageService;
     private final List<User> data;

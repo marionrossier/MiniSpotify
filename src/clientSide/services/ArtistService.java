@@ -1,9 +1,9 @@
 package clientSide.services;
 
-import serverSide.repositoriesPattern.ArtistLocalRepository;
+import serverSide.repositoriesPattern.IArtistRepository;
 
 public class ArtistService {
-    private final ArtistLocalRepository artistLocalRepository;
+    private final IArtistRepository artistLocalRepository;
 
     public ArtistService(ToolBoxService toolBoxService) {
         this.artistLocalRepository = toolBoxService.artistLocalRepository;

@@ -1,6 +1,7 @@
 package clientSide.services;
 
 import serverSide.entities.User;
+import serverSide.repositoriesPattern.IUserRepository;
 import serverSide.repositoriesPattern.UserLocalRepository;
 
 import java.util.*;
@@ -11,9 +12,9 @@ import java.security.SecureRandom;
 
 public class PasswordService {
 
-    private final UserLocalRepository userLocalRepository;
+    private final IUserRepository userLocalRepository;
 
-    public PasswordService(UserLocalRepository userLocalRepository) {
+    public PasswordService(IUserRepository userLocalRepository) {
         this.userLocalRepository = userLocalRepository;
     }
 

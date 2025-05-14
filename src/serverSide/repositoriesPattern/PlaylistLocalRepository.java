@@ -8,7 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaylistLocalRepository {
+public class PlaylistLocalRepository implements IPlaylistRepository {
     private final String filePath;
     private final StockageService stockageService;
     private final List<Playlist> data;

@@ -4,17 +4,17 @@ import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 import serverSide.entities.Song;
 import serverSide.entities.User;
-import serverSide.repositoriesPattern.PlaylistLocalRepository;
-import serverSide.repositoriesPattern.SongLocalRepository;
+import serverSide.repositoriesPattern.IPlaylistRepository;
+import serverSide.repositoriesPattern.ISongRepository;
 
 import java.util.*;
 
 public class PlaylistServices {
 
-    private final PlaylistLocalRepository playlistLocalRepository;
+    private final IPlaylistRepository playlistLocalRepository;
     private final TemporaryPlaylistService temporaryPlaylistService;
     private final PlaylistFunctionalitiesService playlistFuncService;
-    private final SongLocalRepository songLocalRepository;
+    private final ISongRepository songLocalRepository;
 
 
     public PlaylistServices (ToolBoxService toolBoxService,

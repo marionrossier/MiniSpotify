@@ -9,20 +9,20 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SongLocalRepository {
+public class SongLocalRepository implements ISongRepository {
     private final String filePath;
     private final StockageService stockageService;
-    private final ArtistLocalRepository artistLocalRepository;
+    private final IArtistRepository artistLocalRepository;
     private final List<Song> data;
 
-    public SongLocalRepository(String filePath, StockageService stockageService, ArtistLocalRepository artistLocalRepository) {
+    public SongLocalRepository(String filePath, StockageService stockageService, IArtistRepository artistLocalRepository) {
         this.filePath = filePath;
         this.stockageService = stockageService;
         this.artistLocalRepository = artistLocalRepository;
         this.data = stockageService.loadFromJson(this.filePath, new TypeReference<>() {});
     }
 
-    public SongLocalRepository(StockageService stockageService, ArtistLocalRepository artistLocalRepository) {
+    public SongLocalRepository(StockageService stockageService, IArtistRepository artistLocalRepository) {
         this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/jsons/song.json",
                 stockageService, artistLocalRepository);
     }
