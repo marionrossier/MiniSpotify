@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class FrontPlaylistRepo implements IPlaylistRepository {
+
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
@@ -101,7 +102,6 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
         ));
     }
 
-    // Méthode utilitaire privée
     private Playlist getPlaylistFromServer(Map<String, Object> request) {
         try {
             Map<String, Object> response = SocketClient.sendRequest(request);

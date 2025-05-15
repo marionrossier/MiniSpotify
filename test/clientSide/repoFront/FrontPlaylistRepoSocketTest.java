@@ -18,6 +18,7 @@ class FrontPlaylistRepoSocketTest {
     static Thread serverThread;
 
     @BeforeAll
+    //TODO : faire une méthode startServerAndSetupRepo() pour éviter la duplication de code
     static void startServerAndSetupRepo() {
         try (Socket testSocket = new Socket("127.0.0.1", 45000)) {
             // Le serveur est déjà lancé, on ne fait rien
@@ -40,7 +41,6 @@ class FrontPlaylistRepoSocketTest {
                 Thread.currentThread().interrupt();
             }
         }
-
         Cookies_SingletonPattern.setUser(232928320);
         repo = new FrontPlaylistRepo();
     }
