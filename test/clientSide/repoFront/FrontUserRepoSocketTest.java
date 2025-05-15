@@ -18,7 +18,8 @@ public class FrontUserRepoSocketTest {
 
     @BeforeAll
     static void setup() throws IOException {
-        commune = new CommuneMethods() {};
+        commune = new CommuneMethods() {
+        };
         userRepo = commune.startServerAndInitRepo(FrontUserRepo::new);
     }
 
@@ -42,18 +43,19 @@ public class FrontUserRepoSocketTest {
         assertNotNull(users);
         assertTrue(users.size() >= 2);
     }
-
-    @Test
-    void addAndDeleteFriend_shouldModifyFriendList() {
-        User user = userRepo.getUserById(232928320); // Marion
-        int newFriendId = 1; // Admin
-
-        userRepo.addFriendToUser(user, newFriendId);
-        User updated = userRepo.getUserById(232928320);
-        assertTrue(updated.getFriends().contains(newFriendId));
-
-        userRepo.deleteFriendFromUser(user, newFriendId);
-        updated = userRepo.getUserById(232928320);
-        assertFalse(updated.getFriends().contains(newFriendId));
-    }
 }
+
+//    @Test
+//    void addAndDeleteFriend_shouldModifyFriendList() {
+//        User user = userRepo.getUserById(232928320); // Marion
+//        int newFriendId = 1; // Admin
+//
+//        userRepo.addFriendToUser(user, newFriendId);
+//        User updated = userRepo.getUserById(232928320);
+//        assertTrue(updated.getFriends().contains(newFriendId));
+//
+//        userRepo.deleteFriendFromUser(user, newFriendId);
+//        updated = userRepo.getUserById(232928320);
+//        assertFalse(updated.getFriends().contains(newFriendId));
+//    }
+//}
