@@ -23,7 +23,7 @@ public class BackPlaylistRepo {
     public String handleRequest(Map<String, Object> request) {
         try {
             String command = (String) request.get("command");
-            String username = (String) request.get("username");
+            String username = (String) request.get("userPseudonym");
             String passwordHash = (String) request.get("password");
 
             Optional<User> optUser = userRepo.authenticate(username, passwordHash);

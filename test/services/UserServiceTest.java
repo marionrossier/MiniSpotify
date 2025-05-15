@@ -6,20 +6,23 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utilsAndFakes.CommuneMethods;
+import utilsAndFakes.Initializer;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserServiceTest extends CommuneMethods {
+public class UserServiceTest{
+    private CommuneMethods communeMethods;
+    private Initializer initializer;
 
-    public UserServiceTest() throws IOException {
-        super();
+    public UserServiceTest(){
     }
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp(){
+        communeMethods = new CommuneMethods();
+        initializer = communeMethods.initializer;
     }
 
     @AfterEach

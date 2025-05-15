@@ -19,11 +19,11 @@ public class BackUserRepo {
     public String handleRequest(Map<String, Object> request) {
         try {
             String command = (String) request.get("command");
-            String username = (String) request.get("username");
+            String username = (String) request.get("userPseudonym");
             String password = (String) request.get("password");
 
             Optional<User> optUser = userRepo.authenticate(username, password);
-            if (optUser.isEmpty()) {
+            if (optUser.isEmpty() && !command.equals("getUserByPseudonymLogin")) {
                 return "{\"status\": \"ERROR\", \"message\": \"Authentication failed\"}";
             }
 
@@ -35,6 +35,13 @@ public class BackUserRepo {
                 case "getUserById" -> {
                     int id = (int) request.get("userId");
                     User user = userRepo.getUserById(id);
+                    return user != null
+                            ? mapper.writeValueAsString(Map.of("status", "OK", "user", user))
+                            : "{\"status\": \"ERROR\", \"message\": \"User not found\"}";
+                }
+                case "getUserByPseudonymLogin" -> {
+                    String pseudo = (String) request.get("pseudonym");
+                    User user = userRepo.getUserByPseudonym(pseudo);
                     return user != null
                             ? mapper.writeValueAsString(Map.of("status", "OK", "user", user))
                             : "{\"status\": \"ERROR\", \"message\": \"User not found\"}";

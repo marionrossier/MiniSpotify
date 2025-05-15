@@ -1,10 +1,12 @@
 package clientSide.repoFront;
 
 import middle.IPlaylistRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import serverSide.entities.Playlist;
 import utilsAndFakes.CommuneMethods;
+import utilsAndFakes.Initializer;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,16 +15,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FrontPlaylistRepoSocketTest extends CommuneMethods{
 
-    static IPlaylistRepository playlistRepo;
-    static CommuneMethods communeMethods;
-
-    public FrontPlaylistRepoSocketTest() throws IOException {
-    }
+    private IPlaylistRepository frontPlaylistRepo;
+    private CommuneMethods communeMethods;
+    private Initializer initializer;
 
     @BeforeEach
     void setup() throws IOException {
-        communeMethods = new CommuneMethods() {};
-        playlistRepo = communeMethods.startServerAndInitRepo(() -> initializer.frontPlaylistRepo);
+        communeMethods = new CommuneMethods();
+        initializer = communeMethods.initializer;
+        frontPlaylistRepo = initializer.frontPlaylistRepo;
+        initializer.populateLocalUsers();
+        initializer.populateLocalPlaylists();
+
+        communeMethods.startServer();
+    }
+
+    @AfterEach
+    void tearDown() {
+        initializer.cleanUp();
     }
 
     @Test
@@ -31,7 +41,7 @@ class FrontPlaylistRepoSocketTest extends CommuneMethods{
         int id = 1940298216;
 
         // Act
-        Playlist playlist = playlistRepo.getPlaylistById(id);
+        Playlist playlist = frontPlaylistRepo.getPlaylistById(id);
 
         // Assert
         assertNotNull(playlist);
@@ -44,7 +54,7 @@ class FrontPlaylistRepoSocketTest extends CommuneMethods{
         // Arrange
 
         // Act
-        List<Playlist> playlists = playlistRepo.getAllPlaylists();
+        List<Playlist> playlists = frontPlaylistRepo.getAllPlaylists();
 
         // Assert
         assertNotNull(playlists);
@@ -57,7 +67,7 @@ class FrontPlaylistRepoSocketTest extends CommuneMethods{
         String name = "Rock Legends";
 
         // Act
-        Playlist playlist = playlistRepo.getPlaylistByName(name);
+        Playlist playlist = frontPlaylistRepo.getPlaylistByName(name);
 
         // Assert
         assertNotNull(playlist);
@@ -70,9 +80,9 @@ class FrontPlaylistRepoSocketTest extends CommuneMethods{
         int userId = 232928320;
 
         // Act
-        Playlist temp = playlistRepo.getTemporaryPlaylistOfCurrentUser(userId);
+        Playlist temp = frontPlaylistRepo.getTemporaryPlaylistOfCurrentUser(userId);
 
         // Assert
-        assertNotNull(temp); // sauf si "temporaryPlaylist" existe pas
+        assertNull(temp);
     }
 }

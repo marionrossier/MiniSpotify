@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utilsAndFakes.FakeMusicPlayer;
 import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
+import utilsAndFakes.Initializer;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -17,20 +18,24 @@ import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlaylistServicesTest extends CommuneMethods{
+class PlaylistServicesTest{
 
     private Playlist playlist;
+    private CommuneMethods communeMethods;
+    private Initializer initializer;
 
-    public PlaylistServicesTest() throws IOException {
-        super();
+    public PlaylistServicesTest(){
     }
 
     @BeforeEach
     void setUp() throws IOException {
+        communeMethods = new CommuneMethods();
+        initializer = communeMethods.initializer;
+
         // Create test songs
-        Song song1 = createSong(1, "Song 1", "song1.mp3");
-        Song song2 = createSong(2, "Song 2", "song2.mp3");
-        Song song3 = createSong(3, "Song 3", "song3.mp3");
+        Song song1 = communeMethods.createSong(1, "Song 1", "song1.mp3");
+        Song song2 = communeMethods.createSong(2, "Song 2", "song2.mp3");
+        Song song3 = communeMethods.createSong(3, "Song 3", "song3.mp3");
 
         // Add songs to repository
         initializer.songLocalRepository.addSong(song1);
@@ -41,9 +46,9 @@ class PlaylistServicesTest extends CommuneMethods{
         playlist = new Playlist("Test Playlist", PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(1);
         initializer.playlistLocalRepository.savePlaylist(playlist);
-        addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), initializer.playlistLocalRepository, initializer.playlistService);
-        addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), initializer.playlistLocalRepository, initializer.playlistService);
-        addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), initializer.playlistLocalRepository, initializer.playlistService);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), initializer.playlistLocalRepository, initializer.playlistService);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), initializer.playlistLocalRepository, initializer.playlistService);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), initializer.playlistLocalRepository, initializer.playlistService);
 
         // Add playlist to repository
         initializer.playlistLocalRepository.savePlaylist(playlist);
@@ -54,7 +59,7 @@ class PlaylistServicesTest extends CommuneMethods{
         initializer.userLocalRepository.saveUser(user);
 
         // Create Cookies_SingeltonPattern instance
-        Cookies_SingletonPattern.setInstance(400953820); //testUsers
+        Cookies_SingletonPattern.setInstance(400953820, "tester", "password"); //testUsers
 
         // Create a FakeMusicPlayer for testing
         FakeMusicPlayer fakeMusicPlayer = new FakeMusicPlayer();
@@ -136,9 +141,9 @@ class PlaylistServicesTest extends CommuneMethods{
     @Test
     public void testReorderSongsInPlaylist() {
         //Arrange
-        addSongToPlaylist(playlist.getPlaylistId(), 1, initializer.playlistLocalRepository, initializer.playlistService);
-        addSongToPlaylist(playlist.getPlaylistId(), 2, initializer.playlistLocalRepository, initializer.playlistService);
-        addSongToPlaylist(playlist.getPlaylistId(), 3, initializer.playlistLocalRepository, initializer.playlistService);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), 1, initializer.playlistLocalRepository, initializer.playlistService);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), 2, initializer.playlistLocalRepository, initializer.playlistService);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), 3, initializer.playlistLocalRepository, initializer.playlistService);
 
         // Simuler l'entrée utilisateur
         String input = "2\n1\n3\nx\n";

@@ -8,26 +8,32 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import serverSide.entities.Playlist;
+import utilsAndFakes.Initializer;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 
-public class PlaylistPlayerTest extends CommuneMethods{
+public class PlaylistPlayerTest{
 
-    public PlaylistPlayerTest() throws IOException {
-        super();
+    private CommuneMethods communeMethods;
+    private Initializer initializer;
+
+    public PlaylistPlayerTest() {
     }
 
     @BeforeEach
     void setUp() throws IOException {
+        communeMethods = new CommuneMethods();
+        initializer = communeMethods.initializer;
+
         // Create Cookies_SingeltonPattern instance
-        Cookies_SingletonPattern.setInstance(400953820); //testUsers
+        Cookies_SingletonPattern.setInstance(400953820, "tester", "password"); //testUsers
 
         // Create test songs
-        Song song1 = createSong(1, "Song 1", "song1.mp3");
-        Song song2 = createSong(2, "Song 2", "song2.mp3");
-        Song song3 = createSong(3, "Song 3", "song3.mp3");
+        Song song1 = communeMethods.createSong(1, "Song 1", "song1.mp3");
+        Song song2 = communeMethods.createSong(2, "Song 2", "song2.mp3");
+        Song song3 = communeMethods.createSong(3, "Song 3", "song3.mp3");
         
         // Add songs to repository
         initializer.songLocalRepository.addSong(song1);
@@ -39,9 +45,9 @@ public class PlaylistPlayerTest extends CommuneMethods{
         playlist.setPlaylistId(1);
         initializer.playlistLocalRepository.savePlaylist(playlist);
 
-        addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), initializer.playlistLocalRepository, initializer.playlistService);
-        addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), initializer.playlistLocalRepository, initializer.playlistService);
-        addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), initializer.playlistLocalRepository, initializer.playlistService);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), initializer.playlistLocalRepository, initializer.playlistService);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), initializer.playlistLocalRepository, initializer.playlistService);
+        communeMethods.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), initializer.playlistLocalRepository, initializer.playlistService);
     }
     
     @AfterEach

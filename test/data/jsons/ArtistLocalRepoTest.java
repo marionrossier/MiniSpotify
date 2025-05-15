@@ -4,6 +4,7 @@ import serverSide.entities.Artist;
 import serverSide.repoLocal.ArtistLocalRepository;
 import org.junit.jupiter.api.*;
 import utilsAndFakes.CommuneMethods;
+import utilsAndFakes.Initializer;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,25 +13,27 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BackArtistRepoTest extends CommuneMethods {
+class ArtistLocalRepoTest{
 
     private File tempFile;
     private ArtistLocalRepository repo;
+    private CommuneMethods communeMethods;
+    private Initializer initializer;
 
-    public BackArtistRepoTest() throws IOException {
+    public ArtistLocalRepoTest(){
     }
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setup() throws IOException {
         tempFile = Files.createTempFile("artist", ".json").toFile();
         repo = new ArtistLocalRepository(tempFile.getAbsolutePath());
+        communeMethods = new CommuneMethods();
+        initializer = communeMethods.initializer;
     }
 
     @AfterEach
     void tearDown() {
-        if (tempFile.exists()) {
-            tempFile.delete();
-        }
+        initializer.cleanUp();
     }
 
     @Test

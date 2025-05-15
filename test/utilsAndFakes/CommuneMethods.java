@@ -6,14 +6,17 @@ import serverSide.entities.*;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.function.Supplier;
 
-public abstract class CommuneMethods {
+public class CommuneMethods {
 
     public Initializer initializer;
 
-    public CommuneMethods() throws IOException {
-        this.initializer = new Initializer();
+    public CommuneMethods() {
+        try {
+            this.initializer = new Initializer();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void addSongToPlaylist(int currentPlaylistId, int currentSongId, IPlaylistRepository playlistLocalRepository,
@@ -37,7 +40,7 @@ public abstract class CommuneMethods {
         }
     }
 
-    protected Song createSong(int id, String title, String fileName) {
+    public Song createSong(int id, String title, String fileName) {
         Song song = new Song();
         song.setSongId(id);
         song.setTitle(title);
@@ -78,7 +81,7 @@ public abstract class CommuneMethods {
         return song;
     }
 
-    public <T> T startServerAndInitRepo(Supplier<T> repoSupplier) {
+    public void startServer() {
         try (Socket testSocket = new Socket("127.0.0.1", 45000)) {
             System.out.println("✅ Serveur déjà actif.");
         } catch (IOException e) {
@@ -98,7 +101,6 @@ public abstract class CommuneMethods {
                 Thread.currentThread().interrupt();
             }
         }
-        Cookies_SingletonPattern.setUser(232928320);
-        return repoSupplier.get();
+        Cookies_SingletonPattern.setUser(232928320, "marion", "hash");
     }
 }

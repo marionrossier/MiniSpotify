@@ -7,8 +7,7 @@ import clientSide.repoFront.*;
 import clientSide.services.*;
 import clientSide.socket.SocketClient;
 import middle.*;
-import serverSide.entities.PlanEnum;
-import serverSide.entities.User;
+import serverSide.entities.*;
 import serverSide.repoBack.*;
 import serverSide.repoLocal.*;
 import serverSide.socket.AudioSocketServer;
@@ -17,6 +16,8 @@ import serverSide.socket.SocketServer;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -58,7 +59,7 @@ public class Initializer {
 
     public PageService pageService;
 
-    protected Stack<Integer> menuPagesStack;
+    public Stack<Integer> menuPagesStack;
 
     //SOCKETS
     protected SocketClient socketClient;
@@ -141,7 +142,7 @@ public class Initializer {
         socketServer = new SocketServer(backUserRepo, backPlaylistRepo, backSongRepo, backArtistRepo);
     }
 
-    public void populateUsers() {
+    public void populateLocalUsers() {
         User marion = new User("marion", "marion@example.com", "hash", PlanEnum.FREE);
         marion.setUserId(232928320);
 
@@ -150,5 +151,50 @@ public class Initializer {
 
         userLocalRepository.saveUser(marion);
         userLocalRepository.saveUser(florent);
+    }
+
+    public void populateLocalArtist(){
+        LinkedList<Integer> amy = new LinkedList<>(Arrays.asList(1108071776,342105258,625427469,661206135));
+        Artist amyWinehouse = new Artist(960571432, "Amy Winehouse", amy);
+
+        artistLocalRepository.saveArtist(amyWinehouse);
+    }
+
+    public void populateLocalSong(){
+        Song song = new Song(1108071776, "Rehab",
+                artistLocalRepository.getArtistByName("Amy Winehouse").getArtistId() ,
+                214, MusicGender.SOUL_RNB,
+                "Rehab - Amy Winehouse - Back to Black - 2006 - Soul _ R&B - 0334.mp3");
+
+        songLocalRepository.addSong(song);
+    }
+
+    public void populateLocalPlaylists(){
+        Playlist playlist1 = new Playlist("Girls", 1940298216,
+                new LinkedList<>(Arrays.asList(1108071776, 342105258, 625427469, 661206135, 1986076679, 2084461505,
+                        1290739974, 1951451340, 469321884, 1252829874, 1988790520, 700468481)),
+                2754, 12, 232928320, PlaylistEnum.PUBLIC);
+
+        Playlist playlist2 = new Playlist("Rock Legends", 546441990,
+                new LinkedList<>(Arrays.asList(243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482)),
+                1317, 6, 1, PlaylistEnum.PUBLIC);
+
+        playlistLocalRepository.savePlaylist(playlist1);
+        playlistLocalRepository.savePlaylist(playlist2);
+    }
+
+    public void cleanUp() {
+        if (tempPlaylistsFile.exists()) {
+            tempPlaylistsFile.delete();
+        }
+        if (tempSongsFile.exists()) {
+            tempSongsFile.delete();
+        }
+        if (tempUsersFile.exists()) {
+            tempUsersFile.delete();
+        }
+        if (tempArtistFile.exists()){
+            tempArtistFile.delete();
+        }
     }
 }

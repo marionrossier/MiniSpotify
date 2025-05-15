@@ -4,6 +4,8 @@ import serverSide.entities.PlanEnum;
 import serverSide.entities.User;
 import serverSide.repoLocal.UserLocalRepository;
 import org.junit.jupiter.api.*;
+import utilsAndFakes.CommuneMethods;
+import utilsAndFakes.Initializer;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,18 +18,20 @@ class UserLocalRepositoryTest {
 
     private File tempFile;
     private UserLocalRepository userLocalRepository;
+    private CommuneMethods communeMethods;
+    private Initializer initializer;
 
     @BeforeEach
     void setUp() throws IOException {
         tempFile = Files.createTempFile("user", ".json").toFile();
         userLocalRepository = new UserLocalRepository(tempFile.getAbsolutePath());
+        communeMethods = new CommuneMethods();
+        initializer = communeMethods.initializer;
     }
 
     @AfterEach
     void tearDown() {
-        if (tempFile.exists()) {
-            tempFile.delete();
-        }
+        initializer.cleanUp();
     }
 
     @Test

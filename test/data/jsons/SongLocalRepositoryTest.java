@@ -2,34 +2,32 @@ package data.jsons;
 
 import serverSide.entities.MusicGender;
 import serverSide.entities.Song;
-import middle.IAudioRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utilsAndFakes.CommuneMethods;
+import utilsAndFakes.Initializer;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SongLocalRepositoryTest extends CommuneMethods{
+class SongLocalRepositoryTest {
 
-    private IAudioRepository audioRepository;
-
-    public SongLocalRepositoryTest() throws IOException {
-        super();
-    }
+    private CommuneMethods communeMethods;
+    private Initializer initializer;
 
     @BeforeEach
     void setUp(){
+        communeMethods = new CommuneMethods();
+        initializer = communeMethods.initializer;
     }
 
     @AfterEach
     void tearDown() {
         if (initializer.tempSongsFile.exists()) {
-            initializer.tempSongsFile.delete(); // TODO : implement 'Initializer.CleanUp'
+            initializer.tempSongsFile.delete();
         }
         if (initializer.tempArtistFile.exists()) {
             initializer.tempArtistFile.delete();
@@ -39,7 +37,7 @@ class SongLocalRepositoryTest extends CommuneMethods{
     @Test
     void addSong_shouldSaveTheSong() {
         // Arrange
-        Song song = createTestSong(1, "Test Song", "Test Artist", MusicGender.POP,
+        Song song = communeMethods.createTestSong(1, "Test Song", "Test Artist", MusicGender.POP,
                 initializer.artistLocalRepository);
 
         // Act
@@ -55,7 +53,7 @@ class SongLocalRepositoryTest extends CommuneMethods{
     @Test
     void getSongById_shouldFindTheSong() {
         // Arrange
-        Song song = createTestSong(1, "Test Song", "Test Artist", MusicGender.POP,
+        Song song = communeMethods.createTestSong(1, "Test Song", "Test Artist", MusicGender.POP,
                 initializer.artistLocalRepository);
         initializer.songLocalRepository.addSong(song);
 
@@ -70,11 +68,11 @@ class SongLocalRepositoryTest extends CommuneMethods{
     @Test
     void getSongsByTitle_shouldReturnMatchingSongs() {
         // Arrange
-        Song songOne = createTestSong(1, "Love Song", "Artist One", MusicGender.POP,
+        Song songOne = communeMethods.createTestSong(1, "Love Song", "Artist One", MusicGender.POP,
                 initializer.artistLocalRepository);
-        Song songTwo = createTestSong(2, "Rock Song", "Artist Two", MusicGender.ROCK,
+        Song songTwo = communeMethods.createTestSong(2, "Rock Song", "Artist Two", MusicGender.ROCK,
                 initializer.artistLocalRepository);
-        Song songThree = createTestSong(3, "Another Love Song", "Artist Three", MusicGender.POP,
+        Song songThree = communeMethods.createTestSong(3, "Another Love Song", "Artist Three", MusicGender.POP,
                 initializer.artistLocalRepository);
         initializer.songLocalRepository.addSong(songOne);
         initializer.songLocalRepository.addSong(songTwo);
@@ -92,11 +90,11 @@ class SongLocalRepositoryTest extends CommuneMethods{
     @Test
     void getSongsByArtist_shouldReturnMatchingSongs() {
         // Arrange
-        Song songOne = createTestSong(1, "Song One", "John Doe", MusicGender.POP,
+        Song songOne = communeMethods.createTestSong(1, "Song One", "John Doe", MusicGender.POP,
                 initializer.artistLocalRepository);
-        Song songTwo = createTestSong(2, "Song Two", "Jane Doe", MusicGender.ROCK,
+        Song songTwo = communeMethods.createTestSong(2, "Song Two", "Jane Doe", MusicGender.ROCK,
                 initializer.artistLocalRepository);
-        Song songThree = createTestSong(3, "Song Three", "John Smith", MusicGender.DISCO,
+        Song songThree = communeMethods.createTestSong(3, "Song Three", "John Smith", MusicGender.DISCO,
                 initializer.artistLocalRepository);
         initializer.songLocalRepository.addSong(songOne);
         initializer.songLocalRepository.addSong(songTwo);
@@ -114,11 +112,11 @@ class SongLocalRepositoryTest extends CommuneMethods{
     @Test
     void getSongsByGender_shouldReturnMatchingSongs() {
         // Arrange
-        Song songOne = createTestSong(1, "Pop Song 1", "Artist One", MusicGender.POP,
+        Song songOne = communeMethods.createTestSong(1, "Pop Song 1", "Artist One", MusicGender.POP,
                 initializer.artistLocalRepository);
-        Song songTwo = createTestSong(2, "Rock Song", "Artist Two", MusicGender.ROCK,
+        Song songTwo = communeMethods.createTestSong(2, "Rock Song", "Artist Two", MusicGender.ROCK,
                 initializer.artistLocalRepository);
-        Song songThree = createTestSong(3, "Pop Song 2", "Artist Three", MusicGender.POP,
+        Song songThree = communeMethods.createTestSong(3, "Pop Song 2", "Artist Three", MusicGender.POP,
                 initializer.artistLocalRepository);
         initializer.songLocalRepository.addSong(songOne);
         initializer.songLocalRepository.addSong(songTwo);
