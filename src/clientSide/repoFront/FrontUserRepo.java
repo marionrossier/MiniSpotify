@@ -1,43 +1,130 @@
 package clientSide.repoFront;
 
-import serverSide.entities.User;
+import clientSide.socket.SocketClient;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import middle.IUserRepository;
+import serverSide.entities.User;
 
-import java.util.List;
+import java.util.*;
 
 public class FrontUserRepo implements IUserRepository {
+    private final ObjectMapper mapper = new ObjectMapper();
+
+    private final String username = "marion";
+    private final String password = "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=";
+
     @Override
     public List<User> getAllUsers() {
-        return List.of();
+        try {
+            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+                    "command", "getAllUsers",
+                    "username", username,
+                    "password", password
+            ));
+
+            if (!"OK".equals(response.get("status"))) return null;
+
+            List<?> raw = (List<?>) response.get("users");
+            String json = mapper.writeValueAsString(raw);
+            User[] users = mapper.readValue(json, User[].class);
+            return Arrays.asList(users);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void saveUser(User user) {
-
+        try {
+            Map<String, Object> request = Map.of(
+                    "command", "saveUser",
+                    "username", username,
+                    "password", password,
+                    "user", mapper.convertValue(user, Map.class)
+            );
+            SocketClient.sendRequest(request);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public User getUserById(int userId) {
-        return null;
+        return getUserFromServer(Map.of(
+                "command", "getUserById",
+                "username", username,
+                "password", password,
+                "userId", userId
+        ));
     }
 
     @Override
     public User getUserByPseudonym(String pseudonym) {
-        return null;
+        return getUserFromServer(Map.of(
+                "command", "getUserByPseudonym",
+                "username", username,
+                "password", password,
+                "pseudonym", pseudonym
+        ));
     }
 
     @Override
     public void addPlaylistToUser(User user, int playlistId) {
-
+        try {
+            Map<String, Object> request = Map.of(
+                    "command", "addPlaylistToUser",
+                    "username", username,
+                    "password", password,
+                    "user", mapper.convertValue(user, Map.class),
+                    "playlistId", playlistId
+            );
+            SocketClient.sendRequest(request);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void addFriendToUser(User user, int friendId) {
-
+        try {
+            Map<String, Object> request = Map.of(
+                    "command", "addFriendToUser",
+                    "username", username,
+                    "password", password,
+                    "user", mapper.convertValue(user, Map.class),
+                    "friendId", friendId
+            );
+            SocketClient.sendRequest(request);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void deleteFriendFromUser(User user, int friendId) {
+        try {
+            Map<String, Object> request = Map.of(
+                    "command", "deleteFriendFromUser",
+                    "username", username,
+                    "password", password,
+                    "user", mapper.convertValue(user, Map.class),
+                    "friendId", friendId
+            );
+            SocketClient.sendRequest(request);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    private User getUserFromServer(Map<String, Object> request) {
+        try {
+            Map<String, Object> response = SocketClient.sendRequest(request);
+            if (!"OK".equals(response.get("status"))) return null;
+            Object userObj = response.get("user");
+            String json = mapper.writeValueAsString(userObj);
+            return mapper.readValue(json, User.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

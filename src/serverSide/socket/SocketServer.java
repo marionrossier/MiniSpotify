@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import serverSide.repoBack.BackArtistRepo;
 import serverSide.repoBack.BackPlaylistRepo;
 import serverSide.repoBack.BackSongRepo;
+import serverSide.repoBack.BackUserRepo;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -52,6 +53,11 @@ public class SocketServer {
                 case "getAllSongs", "getSongById", "getSongsByTitle",
                      "getSongsByArtist", "getSongsByGender", "addSong"
                         -> BackSongRepo.handleRequest(request);
+
+                // 👤 User
+                case "getAllUsers", "getUserById", "getUserByPseudonym", "saveUser",
+                     "addPlaylistToUser", "addFriendToUser", "deleteFriendFromUser"
+                        -> BackUserRepo.handleRequest(request);
 
                 default -> "{\"status\": \"ERROR\", \"message\": \"Unknown command at server switch\"}";
             };

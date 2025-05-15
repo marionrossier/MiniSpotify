@@ -1,44 +1,28 @@
 package clientSide.repoFront;
 
-import clientSide.services.Cookies_SingletonPattern;
 import middle.IArtistRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import serverSide.entities.Artist;
+import utilsAndFakes.CommuneMethods;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FrontArtistRepoSocketTest {
 
-    static IArtistRepository repo;
-    static Thread serverThread;
+    static IArtistRepository artistRepo;
+    static CommuneMethods commune;
+
+    public FrontArtistRepoSocketTest() throws IOException {
+    }
 
     @BeforeAll
-    static void startServerAndSetupRepo() {
-        try {
-            new java.net.Socket("127.0.0.1", 45000).close();
-            System.out.println("✅ Serveur déjà lancé.");
-        } catch (Exception e) {
-            serverThread = new Thread(() -> {
-                try {
-                    serverSide.socket.SocketServer.main(null);
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-            });
-            serverThread.setDaemon(true);
-            serverThread.start();
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-        }
-        Cookies_SingletonPattern.setUser(232928320);
-        repo = new FrontArtistRepo();
+    static void setup() throws IOException {
+        commune = new CommuneMethods() {};
+        artistRepo = commune.startServerAndInitRepo(FrontArtistRepo::new);
     }
 
     @Test
@@ -47,7 +31,7 @@ class FrontArtistRepoSocketTest {
         int artistId = 960571432;
 
         // Act
-        Artist artist = repo.getArtistById(artistId);
+        Artist artist = artistRepo.getArtistById(artistId);
 
         // Assert
         assertNotNull(artist);
@@ -60,7 +44,7 @@ class FrontArtistRepoSocketTest {
         String artistName = "Amy Winehouse";
 
         // Act
-        Artist artist = repo.getArtistByName(artistName);
+        Artist artist = artistRepo.getArtistByName(artistName);
 
         // Assert
         assertNotNull(artist);
@@ -72,7 +56,7 @@ class FrontArtistRepoSocketTest {
         // Arrange
 
         // Act
-        List<Artist> allArtists = repo.getAllArtists();
+        List<Artist> allArtists = artistRepo.getAllArtists();
 
         // Assert
         assertNotNull(allArtists);
@@ -85,7 +69,7 @@ class FrontArtistRepoSocketTest {
         int songId = 1108071776; // Rehab
 
         // Act
-        Artist artist = repo.getArtistBySongId(songId);
+        Artist artist = artistRepo.getArtistBySongId(songId);
 
         // Assert
         assertNotNull(artist);
