@@ -29,7 +29,7 @@ public class SongLocalRepository implements ISongRepository {
                 stockageService, artistLocalRepository);
     }
 
-    public List<Song> getAllSongs() {
+    public ArrayList<Song> getAllSongs() {
         return new ArrayList<>(data);
     }
 
