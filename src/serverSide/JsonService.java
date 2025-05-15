@@ -1,10 +1,11 @@
 package serverSide;
 
+import middle.ISongRepository;
 import clientSide.services.PasswordService;
 import clientSide.services.ToolBoxService;
 import clientSide.services.UserService;
 import serverSide.entities.*;
-import serverSide.repositoriesPattern.*;
+import serverSide.repoLocal.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class JsonService {
         ArtistLocalRepository artistLocalRepository = new ArtistLocalRepository(artistJsonFile.getAbsolutePath());
         UserLocalRepository userLocalRepository = new UserLocalRepository(userJsonFile.getAbsolutePath());
         PlaylistLocalRepository playlistLocalRepository = new PlaylistLocalRepository(playlistJsonFile.getAbsolutePath());
-        SongLocalRepository songLocalRepository = new SongLocalRepository(songJsonFile.getAbsolutePath(),
+        ISongRepository songLocalRepository = new SongLocalRepository(songJsonFile.getAbsolutePath(),
                 stockageService, artistLocalRepository);
 
         AudioLocalRepository audioLocalRepository = new AudioLocalRepository();
@@ -125,7 +126,7 @@ public class JsonService {
         artistLocalRepository.addArtist(new Artist(609219333, "Imagine Dragons", dragons));
     }
 
-    public static void addSong(SongLocalRepository songLocalRepository, ArtistLocalRepository artistLocalRepository){
+    public static void addSong(ISongRepository songLocalRepository, ArtistLocalRepository artistLocalRepository){
 
         songLocalRepository.addSong(new Song(1108071776, "Rehab",
                 artistLocalRepository.getArtistByName("Amy Winehouse").getArtistId() ,

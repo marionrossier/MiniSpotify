@@ -2,18 +2,17 @@ package clientSide.services;
 
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
-import serverSide.entities.Song;
 import serverSide.entities.User;
-import serverSide.repositoriesPattern.PlaylistLocalRepository;
-import serverSide.repositoriesPattern.UserLocalRepository;
+import middle.IPlaylistRepository;
+import middle.IUserRepository;
 import java.util.List;
 import java.util.Scanner;
 
 public class PlaylistFunctionalitiesService {
 
     Scanner scanner = new Scanner(System.in);
-    private final UserLocalRepository userLocalRepository;
-    private final PlaylistLocalRepository playlistLocalRepository;
+    private final IUserRepository userLocalRepository;
+    private final IPlaylistRepository playlistLocalRepository;
     private final UserService userService;
     private final SongService songService;
 

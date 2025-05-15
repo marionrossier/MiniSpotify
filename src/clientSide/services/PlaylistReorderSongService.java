@@ -1,7 +1,7 @@
 package clientSide.services;
 
 import serverSide.entities.Playlist;
-import serverSide.repositoriesPattern.PlaylistLocalRepository;
+import middle.IPlaylistRepository;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class PlaylistReorderSongService {
 
     private final Scanner scanner;
-    private final PlaylistLocalRepository playlistLocalRepository;
+    private final IPlaylistRepository playlistLocalRepository;
 
     public PlaylistReorderSongService(ToolBoxService toolBoxService, Scanner scanner) {
         this.playlistLocalRepository = toolBoxService.playlistLocalRepository;

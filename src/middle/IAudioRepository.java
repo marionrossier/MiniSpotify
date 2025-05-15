@@ -1,7 +1,8 @@
-package serverSide.repositoriesPattern;
+package middle;
 
 import java.io.InputStream;
 
 public interface IAudioRepository {
+
     InputStream getStream(String fileName);
 }

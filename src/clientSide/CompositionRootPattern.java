@@ -1,9 +1,10 @@
 package clientSide;
 
+import middle.*;
 import clientSide.services.*;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import serverSide.StockageService;
-import serverSide.repositoriesPattern.*;
+import serverSide.repoLocal.*;
 import clientSide.player_StatePattern.file_player.MusicPlayer;
 import clientSide.player_StatePattern.file_player.IMusicPlayer;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
@@ -21,11 +22,11 @@ public class CompositionRootPattern {
     StockageService stockageService;
 
     //Repositories
-    final PlaylistLocalRepository playlistLocalRepository;
-    final UserLocalRepository userLocalRepository;
-    final SongLocalRepository songLocalRepository;
-    final ArtistLocalRepository artistLocalRepository;
-    final AudioLocalRepository audioLocalRepository;
+    final IPlaylistRepository playlistLocalRepository;
+    final IUserRepository userLocalRepository;
+    final ISongRepository songLocalRepository;
+    final IArtistRepository artistLocalRepository;
+    final IAudioRepository audioLocalRepository;
 
     //Services
     final UserService userService;

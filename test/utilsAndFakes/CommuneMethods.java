@@ -1,11 +1,12 @@
 package utilsAndFakes;
 
+import middle.*;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
 import clientSide.services.*;
 import serverSide.StockageService;
 import serverSide.entities.*;
-import serverSide.repositoriesPattern.*;
+import serverSide.repoLocal.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,11 +22,11 @@ public abstract class CommuneMethods {
     protected File tempUsersFile;
     protected File tempArtistFile;
 
-    protected PlaylistLocalRepository playlistLocalRepository;
-    protected SongLocalRepository songLocalRepository;
-    protected UserLocalRepository userLocalRepository;
+    protected IPlaylistRepository playlistLocalRepository;
+    protected ISongRepository songLocalRepository;
+    protected IUserRepository userLocalRepository;
     protected IAudioRepository audioLocalRepository;
-    protected ArtistLocalRepository artistLocalRepository;
+    protected IArtistRepository artistLocalRepository;
 
     protected ToolBoxService toolBoxService;
     protected PlaylistServices playlistService;
@@ -97,7 +98,7 @@ public abstract class CommuneMethods {
 
     }
 
-    public void addSongToPlaylist(int currentPlaylistId, int currentSongId, PlaylistLocalRepository playlistLocalRepository,
+    public void addSongToPlaylist(int currentPlaylistId, int currentSongId, IPlaylistRepository playlistLocalRepository,
                                   PlaylistServices playlistServices) {
         Playlist playlist = playlistLocalRepository.getPlaylistById(currentPlaylistId);
         playlist.getPlaylistSongsListWithId().add(currentSongId);
@@ -123,7 +124,7 @@ public abstract class CommuneMethods {
         return song;
     }
 
-    public Playlist createTestPlaylist(int id, String name, PlaylistLocalRepository playlistLocalRepository) {
+    public Playlist createTestPlaylist(int id, String name, IPlaylistRepository playlistLocalRepository) {
         Playlist playlist = new Playlist(name, PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(id);
         playlistLocalRepository.savePlaylist(playlist);
@@ -139,7 +140,7 @@ public abstract class CommuneMethods {
     }
 
     public Song createTestSong(int id, String title, String artistName, MusicGender gender,
-                               ArtistLocalRepository artistLocalRepository) {
+                               IArtistRepository artistLocalRepository) {
         Song song = new Song();
         song.setSongId(id);
         song.setTitle(title);

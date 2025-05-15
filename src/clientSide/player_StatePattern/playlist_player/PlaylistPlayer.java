@@ -1,9 +1,9 @@
 package clientSide.player_StatePattern.playlist_player;
 
+import middle.IAudioRepository;
 import clientSide.services.*;
 import serverSide.entities.Playlist;
 import serverSide.entities.Song;
-import serverSide.repositoriesPattern.*;
 import clientSide.player_StatePattern.file_player.IMusicPlayer;
 
 import java.util.*;

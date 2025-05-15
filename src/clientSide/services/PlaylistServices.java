@@ -4,17 +4,17 @@ import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 import serverSide.entities.Song;
 import serverSide.entities.User;
-import serverSide.repositoriesPattern.PlaylistLocalRepository;
-import serverSide.repositoriesPattern.SongLocalRepository;
+import middle.IPlaylistRepository;
+import middle.ISongRepository;
 
 import java.util.*;
 
 public class PlaylistServices {
 
-    private final PlaylistLocalRepository playlistLocalRepository;
+    private final IPlaylistRepository playlistLocalRepository;
     private final TemporaryPlaylistService temporaryPlaylistService;
     private final PlaylistFunctionalitiesService playlistFuncService;
-    private final SongLocalRepository songLocalRepository;
+    private final ISongRepository songLocalRepository;
 
 
     public PlaylistServices (ToolBoxService toolBoxService,
@@ -49,7 +49,8 @@ public class PlaylistServices {
     }
 
     public PlaylistEnum getPlaylistStatus (){
-        return playlistLocalRepository.getPlaylistStatus(getCurrentPlaylistId());
+        Playlist playlist = getPlaylistById(getCurrentPlaylistId());
+        return playlistLocalRepository.getPlaylistStatus(playlist);
     }
 
     public int getAllSongsPlaylistId (){
@@ -109,7 +110,7 @@ public class PlaylistServices {
     public int takeAndValidationInputPlaylistChoice() {
         return playlistFuncService.takeAndValidationInputPlaylistChoice();
     }
-    public void playlistPageRouter(PageService pageService, SongService songService) {
+    public void playlistPageRouter(PageService pageService) {
         playlistFuncService.playlistPageRouter(this, pageService);
     }
 

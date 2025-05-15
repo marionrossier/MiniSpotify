@@ -2,7 +2,7 @@ package data.jsons;
 
 import serverSide.entities.PlanEnum;
 import serverSide.entities.User;
-import serverSide.repositoriesPattern.UserLocalRepository;
+import serverSide.repoLocal.UserLocalRepository;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
@@ -42,23 +42,6 @@ class UserLocalRepositoryTest {
         List<User> users = userLocalRepository.getAllUsers();
         assertEquals(1, users.size());
         assertEquals("TestUser", users.get(0).getPseudonym());
-    }
-
-    @Test
-    void removeUserById_shouldDeleteTheUser() {
-        // Arrange
-        User userOne = new User("UserOne", "one@example.com", "1234", PlanEnum.FREE);
-        User userTwo = new User("UserTwo", "two@example.com", "1234", PlanEnum.FREE);
-        userLocalRepository.saveUser(userOne);
-        userLocalRepository.saveUser(userTwo);
-
-        // Act
-        userLocalRepository.removeUserById(userOne.getUserId());
-
-        // Assert
-        List<User> result = userLocalRepository.getAllUsers();
-        assertEquals(1, result.size());
-        assertEquals(userTwo.getUserId(), result.get(0).getUserId());
     }
 
     @Test

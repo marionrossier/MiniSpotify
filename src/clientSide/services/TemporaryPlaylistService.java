@@ -2,13 +2,13 @@ package clientSide.services;
 
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
-import serverSide.repositoriesPattern.PlaylistLocalRepository;
+import middle.IPlaylistRepository;
 
 import java.util.LinkedList;
 
 public class TemporaryPlaylistService {
 
-    private final PlaylistLocalRepository playlistLocalRepository;
+    private final IPlaylistRepository playlistLocalRepository;
     private final UserService userService;
 
     public TemporaryPlaylistService(ToolBoxService toolBoxService, UserService userService){
@@ -30,7 +30,7 @@ public class TemporaryPlaylistService {
             return;
         }
         int currentUserId = userService.getCurrentUserId();
-        Playlist temporaryPlaylist = playlistLocalRepository.getTemporaryPlaylistOfCurrentUser(userService);
+        Playlist temporaryPlaylist = playlistLocalRepository.getTemporaryPlaylistOfCurrentUser(currentUserId);
 
         if (temporaryPlaylist == null) {
             temporaryPlaylist = new Playlist("temporaryPlaylist", PlaylistEnum.PRIVATE);
@@ -49,7 +49,8 @@ public class TemporaryPlaylistService {
     }
 
     public void adjustTemporaryPlaylistToNewPlaylist(String playlistName, PlaylistEnum status) {
-        Playlist newPlaylist = playlistLocalRepository.getTemporaryPlaylistOfCurrentUser(userService);
+        int currentUserId = userService.getCurrentUserId();
+        Playlist newPlaylist = playlistLocalRepository.getTemporaryPlaylistOfCurrentUser(currentUserId);
         if (newPlaylist != null) {
             newPlaylist.setName(playlistName);
             newPlaylist.setStatus(status);
