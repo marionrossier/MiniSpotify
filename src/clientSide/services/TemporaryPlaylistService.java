@@ -2,7 +2,7 @@ package clientSide.services;
 
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
-import serverSide.repositoriesPattern.IPlaylistRepository;
+import middle.IPlaylistRepository;
 
 import java.util.LinkedList;
 

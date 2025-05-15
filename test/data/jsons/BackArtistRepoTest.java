@@ -1,7 +1,7 @@
 package data.jsons;
 
 import serverSide.entities.Artist;
-import serverSide.repositoriesPattern.ArtistLocalRepository;
+import serverSide.repoLocal.ArtistLocalRepository;
 import org.junit.jupiter.api.*;
 import utilsAndFakes.CommuneMethods;
 
@@ -12,12 +12,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ArtistLocalRepositoryTest extends CommuneMethods {
+class BackArtistRepoTest extends CommuneMethods {
 
     private File tempFile;
     private ArtistLocalRepository repo;
 
-    public ArtistLocalRepositoryTest() throws IOException {
+    public BackArtistRepoTest() throws IOException {
     }
 
     @BeforeEach

@@ -1,7 +1,7 @@
 package clientSide.player_StatePattern.file_player;
 
 import javazoom.jlgui.basicplayer.*;
-import serverSide.repositoriesPattern.IAudioRepository;
+import middle.IAudioRepository;
 
 import java.util.Map;
 

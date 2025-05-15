@@ -1,4 +1,4 @@
-package serverSide.repositoriesPattern;
+package middle;
 
 import serverSide.entities.Artist;
 

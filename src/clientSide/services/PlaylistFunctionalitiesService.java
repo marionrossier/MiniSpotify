@@ -3,8 +3,8 @@ package clientSide.services;
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 import serverSide.entities.User;
-import serverSide.repositoriesPattern.IPlaylistRepository;
-import serverSide.repositoriesPattern.IUserRepository;
+import middle.IPlaylistRepository;
+import middle.IUserRepository;
 import java.util.List;
 import java.util.Scanner;
 

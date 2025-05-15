@@ -4,8 +4,8 @@ import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 import serverSide.entities.Song;
 import serverSide.entities.User;
-import serverSide.repositoriesPattern.IPlaylistRepository;
-import serverSide.repositoriesPattern.ISongRepository;
+import middle.IPlaylistRepository;
+import middle.ISongRepository;
 
 import java.util.*;
 

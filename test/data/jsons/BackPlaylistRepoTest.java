@@ -11,8 +11,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlaylistLocalRepositoryTest extends CommuneMethods{
-    public PlaylistLocalRepositoryTest() throws IOException {
+class BackPlaylistRepoTest extends CommuneMethods{
+    public BackPlaylistRepoTest() throws IOException {
     }
 
     @BeforeEach

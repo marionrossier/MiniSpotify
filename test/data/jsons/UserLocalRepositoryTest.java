@@ -2,7 +2,7 @@ package data.jsons;
 
 import serverSide.entities.PlanEnum;
 import serverSide.entities.User;
-import serverSide.repositoriesPattern.UserLocalRepository;
+import serverSide.repoLocal.UserLocalRepository;
 import org.junit.jupiter.api.*;
 
 import java.io.File;

@@ -1,9 +1,10 @@
 package clientSide;
 
+import middle.*;
 import clientSide.services.*;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import serverSide.StockageService;
-import serverSide.repositoriesPattern.*;
+import serverSide.repoLocal.*;
 import clientSide.player_StatePattern.file_player.MusicPlayer;
 import clientSide.player_StatePattern.file_player.IMusicPlayer;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;

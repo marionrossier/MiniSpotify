@@ -1,5 +1,6 @@
-package serverSide.repositoriesPattern;
+package serverSide.repoLocal;
 
+import middle.IArtistRepository;
 import serverSide.StockageService;
 import serverSide.entities.Artist;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -7,7 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArtistLocalRepository implements IArtistRepository{
+public class ArtistLocalRepository implements IArtistRepository {
     private final String filePath;
     private final StockageService stockageService;
     private final List<Artist> data;

@@ -1,6 +1,6 @@
 package utilsAndFakes;
 
-import serverSide.repositoriesPattern.IAudioRepository;
+import middle.IAudioRepository;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

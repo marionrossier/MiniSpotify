@@ -2,7 +2,7 @@ package data.jsons;
 
 import serverSide.entities.MusicGender;
 import serverSide.entities.Song;
-import serverSide.repositoriesPattern.IAudioRepository;
+import middle.IAudioRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

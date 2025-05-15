@@ -1,10 +1,11 @@
 package serverSide;
 
+import middle.ISongRepository;
 import clientSide.services.PasswordService;
 import clientSide.services.ToolBoxService;
 import clientSide.services.UserService;
 import serverSide.entities.*;
-import serverSide.repositoriesPattern.*;
+import serverSide.repoLocal.*;
 
 import java.io.File;
 import java.io.IOException;

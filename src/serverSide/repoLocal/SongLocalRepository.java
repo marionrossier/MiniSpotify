@@ -1,5 +1,7 @@
-package serverSide.repositoriesPattern;
+package serverSide.repoLocal;
 
+import middle.IArtistRepository;
+import middle.ISongRepository;
 import serverSide.StockageService;
 import serverSide.entities.MusicGender;
 import serverSide.entities.Song;

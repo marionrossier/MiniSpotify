@@ -1,11 +1,12 @@
 package utilsAndFakes;
 
+import middle.*;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
 import clientSide.services.*;
 import serverSide.StockageService;
 import serverSide.entities.*;
-import serverSide.repositoriesPattern.*;
+import serverSide.repoLocal.*;
 
 import java.io.File;
 import java.io.IOException;
