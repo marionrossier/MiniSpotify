@@ -10,11 +10,16 @@ import java.util.*;
 
 public class FrontSongRepo implements ISongRepository {
     private final ObjectMapper mapper = new ObjectMapper();
+    private final SocketClient socketClient;
+
+    public FrontSongRepo(SocketClient socketClient) {
+        this.socketClient = new SocketClient();
+    }
 
     @Override
     public ArrayList<Song> getAllSongs() {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+            Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getAllSongs",
                     "username", "marion",
                     "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU="
@@ -42,7 +47,7 @@ public class FrontSongRepo implements ISongRepository {
                     "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
                     "song", mapper.convertValue(song, Map.class)
             );
-            SocketClient.sendRequest(request);
+            socketClient.sendRequest(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -61,7 +66,7 @@ public class FrontSongRepo implements ISongRepository {
     @Override
     public LinkedList<Song> getSongsByTitle(String title) {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+            Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getSongsByTitle",
                     "username", "marion",
                     "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
@@ -82,7 +87,7 @@ public class FrontSongRepo implements ISongRepository {
     @Override
     public LinkedList<Song> getSongsByArtist(String artistName) {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+            Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getSongsByArtist",
                     "username", "marion",
                     "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
@@ -103,7 +108,7 @@ public class FrontSongRepo implements ISongRepository {
     @Override
     public LinkedList<Song> getSongsByGender(MusicGender gender) {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+            Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getSongsByGender",
                     "username", "marion",
                     "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
@@ -123,7 +128,7 @@ public class FrontSongRepo implements ISongRepository {
 
     private Song getSongFromServer(Map<String, Object> request) {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(request);
+            Map<String, Object> response = socketClient.sendRequest(request);
             if (!"OK".equals(response.get("status"))) return null;
             Object songObj = response.get("song");
             String json = mapper.writeValueAsString(songObj);

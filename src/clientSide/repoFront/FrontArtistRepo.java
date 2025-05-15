@@ -12,11 +12,16 @@ import java.util.Map;
 public class FrontArtistRepo implements IArtistRepository {
 
     private final ObjectMapper mapper = new ObjectMapper();
+    private final SocketClient socketClient;
+
+    public FrontArtistRepo(SocketClient socketClient) {
+        this.socketClient = new SocketClient();
+    }
 
     @Override
     public List<Artist> getAllArtists() {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+            Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getAllArtists",
                     "username", "marion",
                     "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU="
@@ -41,7 +46,7 @@ public class FrontArtistRepo implements IArtistRepository {
                     "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
                     "artist", mapper.convertValue(artist, Map.class)
             );
-            SocketClient.sendRequest(request);
+            socketClient.sendRequest(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -66,7 +71,7 @@ public class FrontArtistRepo implements IArtistRepository {
                     "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
                     "artist", mapper.convertValue(artist, Map.class)
             );
-            SocketClient.sendRequest(request);
+            socketClient.sendRequest(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -94,7 +99,7 @@ public class FrontArtistRepo implements IArtistRepository {
 
     private Artist getArtistFromServer(Map<String, Object> request) {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(request);
+            Map<String, Object> response = socketClient.sendRequest(request);
             if (!"OK".equals(response.get("status"))) return null;
             Object artistObj = response.get("artist");
             String json = mapper.writeValueAsString(artistObj);

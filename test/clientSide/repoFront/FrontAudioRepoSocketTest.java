@@ -1,7 +1,7 @@
 package clientSide.repoFront;
 
 import middle.IAudioRepository;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utilsAndFakes.CommuneMethods;
 
@@ -14,23 +14,26 @@ public class FrontAudioRepoSocketTest extends CommuneMethods {
 
     static IAudioRepository audioRepo;
     static Thread audioServerThread;
+    static FrontAudioRepoSocketTest instance;
 
-    private static final String TEST_FILE_NAME = "Believer - Imagine Dragons - Evolve - 2017 - Pop rock _ Alt rock - 0324.mp3";
-    private static final File SOURCE_FILE = new File(System.getProperty("user.home") +
+    private final String TEST_FILE_NAME = "Believer - Imagine Dragons - Evolve - 2017 - Pop rock _ Alt rock - 0324.mp3";
+    private final File SOURCE_FILE = new File(System.getProperty("user.home") +
             "/MiniSpotifyFlorentMarion/songsfiles/" + TEST_FILE_NAME);
 
     public FrontAudioRepoSocketTest() throws IOException {
+        super();
     }
 
-    @BeforeAll
-    static void setup() throws IOException {
+    @BeforeEach
+    void setup() throws IOException {
+        instance = new FrontAudioRepoSocketTest();
 
         try (Socket socket = new Socket("127.0.0.1", 45001)) {
             System.out.println("✅ Audio server already running.");
         } catch (IOException e) {
             audioServerThread = new Thread(() -> {
                 try {
-                    audioSocketServer.main();
+                    initializer.audioSocketServer.main();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
@@ -43,9 +46,9 @@ public class FrontAudioRepoSocketTest extends CommuneMethods {
                 Thread.currentThread().interrupt();
             }
         }
-
-        audioRepo = new FrontAudioRepo();
+        audioRepo = initializer.frontAudioRepo;
     }
+
 
     @Test
     void getStream_shouldReturnAudioFileMatchingSource() throws IOException {

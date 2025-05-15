@@ -1,7 +1,7 @@
 package clientSide.repoFront;
 
 import middle.IPlaylistRepository;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import serverSide.entities.Playlist;
 import utilsAndFakes.CommuneMethods;
@@ -11,18 +11,18 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FrontPlaylistRepoSocketTest {
+class FrontPlaylistRepoSocketTest extends CommuneMethods{
 
     static IPlaylistRepository playlistRepo;
-    static CommuneMethods commune;
+    static CommuneMethods communeMethods;
 
     public FrontPlaylistRepoSocketTest() throws IOException {
     }
 
-    @BeforeAll
-    static void setup() throws IOException {
-        commune = new CommuneMethods() {};
-        playlistRepo = commune.startServerAndInitRepo(FrontPlaylistRepo::new);
+    @BeforeEach
+    void setup() throws IOException {
+        communeMethods = new CommuneMethods() {};
+        playlistRepo = communeMethods.startServerAndInitRepo(() -> initializer.frontPlaylistRepo);
     }
 
     @Test

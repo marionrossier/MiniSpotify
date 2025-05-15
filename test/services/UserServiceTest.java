@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserServiceTest extends CommuneMethods {
 
     public UserServiceTest() throws IOException {
+        super();
     }
 
     @BeforeEach
@@ -23,28 +24,28 @@ public class UserServiceTest extends CommuneMethods {
 
     @AfterEach
     void tearDown() {
-        if (tempUsersFile.exists()) {
-            tempUsersFile.delete();
+        if (initializer.tempUsersFile.exists()) {
+            initializer.tempUsersFile.delete();
         }
     }
 
     @Test
     void addUser_ShouldCreateANewUser(){
         // Act
-        userService.addUser("TestUser", "test@test.com", "TestPassword", PlanEnum.FREE);
+        initializer.userService.addUser("TestUser", "test@test.com", "TestPassword", PlanEnum.FREE);
 
         // Assert
-        List<User> users = userLocalRepository.getAllUsers();
+        List<User> users = initializer.userLocalRepository.getAllUsers();
         assertEquals(1, users.size());
     }
 
     @Test
     void getUserIdByPseudo_ShouldReturnTheUserId(){
         // Arrange
-        userService.addUser("TestUser", "test@test.com", "TestPassword", PlanEnum.FREE);
+        initializer.userService.addUser("TestUser", "test@test.com", "TestPassword", PlanEnum.FREE);
 
         // Act
-        int userId = userService.getUserIdByPseudo("TestUser");
+        int userId = initializer.userService.getUserIdByPseudo("TestUser");
 
         // Assert
         assertTrue(userId > 0);
@@ -53,10 +54,10 @@ public class UserServiceTest extends CommuneMethods {
     @Test
     void verifyUserAuthentification_ShouldReturnTrue_WhenCorrectCredentialAreGiven() {
         // Arrange
-        userService.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
+        initializer.userService.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
 
         // Act
-        boolean result = passwordService.verifyUserAuthentification("TestUser", "CorrectPassword");
+        boolean result = initializer.passwordService.verifyUserAuthentification("TestUser", "CorrectPassword");
 
         // Assert
         assertTrue(result);
@@ -65,10 +66,10 @@ public class UserServiceTest extends CommuneMethods {
     @Test
     void verifyUserAuthentification_ShouldReturnFalse_WhenWrongCredentialAreGiven() {
         // Arrange
-        userService.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
+        initializer.userService.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
 
         // Act
-        boolean result = passwordService.verifyUserAuthentification("TestUser", "WrongPassword");
+        boolean result = initializer.passwordService.verifyUserAuthentification("TestUser", "WrongPassword");
 
         // Assert
         assertFalse(result);

@@ -1,128 +1,19 @@
 package utilsAndFakes;
 
 import middle.*;
-import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
-import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
 import clientSide.services.*;
-import Utils.StockageService;
 import serverSide.entities.*;
-import serverSide.repoBack.*;
-import serverSide.repoLocal.*;
-import serverSide.socket.AudioSocketServer;
-import serverSide.socket.SocketServer;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.util.Scanner;
-import java.util.Stack;
 import java.util.function.Supplier;
 
 public abstract class CommuneMethods {
 
-    Scanner scanner = new Scanner(System.in);
-
-    static Thread serverThread;
-
-    protected File tempPlaylistsFile;
-    protected File tempSongsFile;
-    protected File tempUsersFile;
-    protected File tempArtistFile;
-
-    protected IPlaylistRepository playlistLocalRepository;
-    protected ISongRepository songLocalRepository;
-    protected IUserRepository userLocalRepository;
-    protected IAudioRepository audioLocalRepository;
-    protected IArtistRepository artistLocalRepository;
-
-    protected ToolBoxService toolBoxService;
-    protected PlaylistServices playlistService;
-    protected StockageService stockageService;
-    protected PlaylistFunctionalitiesService playlistFunctionalitiesService;
-    protected TemporaryPlaylistService temporaryPlaylistService;
-    protected UserService userService;
-    protected PasswordService passwordService;
-    protected ArtistService artistService;
-    protected PrintService printService;
-    protected SearchService searchService;
-    protected PlaylistReorderSongService playlistReorderSongService;
-    protected UniqueIdService uniqueIdService;
-    protected SongService songService;
-
-    protected ToolBoxView toolBoxView;
-
-    protected IPlaylistPlayer playlistPlayer;
-    protected FakeMusicPlayer fakeMusicPlayer;
-
-    protected PageService pageService;
-
-    public final Stack<Integer> menuPagesStack;
-
-    //SOCKETS
-    public final BackAudioRepo backAudioRepo;
-    public final BackPlaylistRepo backPlaylistRepo;
-    public final BackUserRepo backUserRepo;
-    public final BackSongRepo backSongRepo;
-    public final BackArtistRepo backArtistRepo;
-
-    public final AudioSocketServer audioSocketServer;
-    public final SocketServer socketServer;
+    public Initializer initializer;
 
     public CommuneMethods() throws IOException {
-
-        menuPagesStack = new Stack<>();
-
-        tempPlaylistsFile = Files.createTempFile("playlist", ".json").toFile();
-        playlistLocalRepository = new PlaylistLocalRepository(tempPlaylistsFile.getAbsolutePath());
-
-        tempArtistFile = Files.createTempFile("artist", ".json").toFile();
-        artistLocalRepository = new ArtistLocalRepository(tempPlaylistsFile.getAbsolutePath());
-
-        tempUsersFile = Files.createTempFile("user", ".json").toFile();
-        userLocalRepository = new UserLocalRepository(tempUsersFile.getAbsolutePath());
-
-        stockageService = new StockageService();
-        tempSongsFile = Files.createTempFile("song", ".json").toFile();
-        songLocalRepository = new SongLocalRepository(tempSongsFile.getAbsolutePath(),
-                stockageService, artistLocalRepository);
-
-        audioLocalRepository = new AudioLocalRepository();
-        passwordService = new PasswordService(userLocalRepository);
-        toolBoxService = new ToolBoxService(playlistLocalRepository, userLocalRepository, songLocalRepository,
-                artistLocalRepository, audioLocalRepository);
-
-        userService = new UserService(toolBoxService,passwordService);
-        temporaryPlaylistService = new TemporaryPlaylistService(toolBoxService,userService);
-        songService = new SongService(toolBoxService);
-        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(toolBoxService, userService, songService);
-        playlistService = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService);
-        artistService = new ArtistService(toolBoxService);
-        printService = new PrintService(songService, artistService, playlistService, userService);
-        searchService = new SearchService(songService, printService);
-        playlistReorderSongService = new PlaylistReorderSongService(toolBoxService, scanner);
-        uniqueIdService = new UniqueIdService();
-        songService = new SongService(toolBoxService);
-
-        fakeMusicPlayer = new FakeMusicPlayer();
-        playlistPlayer = new PlaylistPlayer(
-                fakeMusicPlayer, audioLocalRepository, songService, playlistService);
-
-        toolBoxView = new ToolBoxView(playlistService, userService, songService, artistService, printService,
-                searchService, passwordService, playlistReorderSongService, temporaryPlaylistService, uniqueIdService, passwordService);
-
-        pageService = new PageService(playlistPlayer, toolBoxView, userService, menuPagesStack);
-
-
-        //SOCKETS
-        backAudioRepo = new BackAudioRepo(userLocalRepository);
-        backPlaylistRepo = new BackPlaylistRepo(playlistLocalRepository, userLocalRepository);
-        backUserRepo = new BackUserRepo(userLocalRepository);
-        backArtistRepo = new BackArtistRepo(artistLocalRepository, userLocalRepository);
-        backSongRepo = new BackSongRepo(songLocalRepository, userLocalRepository);
-
-        audioSocketServer = new AudioSocketServer(backAudioRepo);
-        socketServer = new SocketServer(backUserRepo, backPlaylistRepo, backSongRepo, backArtistRepo);
+        this.initializer = new Initializer();
     }
 
     public void addSongToPlaylist(int currentPlaylistId, int currentSongId, IPlaylistRepository playlistLocalRepository,
@@ -139,7 +30,10 @@ public abstract class CommuneMethods {
     public void addSongsToPlaylist(Playlist playlist, int... songIds) {
         for (int id : songIds) {
             Song song = createTestSong(id, "Song " + id);
-            this.addSongToPlaylist(playlist.getPlaylistId(), song.getSongId(), playlistLocalRepository, playlistService);
+            this.addSongToPlaylist(playlist.getPlaylistId(),
+                    song.getSongId(),
+                    initializer.playlistLocalRepository,
+                    initializer.playlistService);
         }
     }
 
@@ -188,15 +82,15 @@ public abstract class CommuneMethods {
         try (Socket testSocket = new Socket("127.0.0.1", 45000)) {
             System.out.println("✅ Serveur déjà actif.");
         } catch (IOException e) {
-            serverThread = new Thread(() -> {
+            initializer.serverThread = new Thread(() -> {
                 try {
-                    socketServer.main();
+                    initializer.socketServer.main();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
             });
-            serverThread.setDaemon(true);
-            serverThread.start();
+            initializer.serverThread.setDaemon(true);
+            initializer.serverThread.start();
 
             try {
                 Thread.sleep(1000); // Laisse le temps au serveur de démarrer
@@ -207,5 +101,4 @@ public abstract class CommuneMethods {
         Cookies_SingletonPattern.setUser(232928320);
         return repoSupplier.get();
     }
-
 }

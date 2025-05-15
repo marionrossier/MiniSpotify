@@ -13,6 +13,11 @@ import java.util.Map;
 public class FrontPlaylistRepo implements IPlaylistRepository {
 
     private final ObjectMapper mapper = new ObjectMapper();
+    private final SocketClient socketClient;
+
+    public FrontPlaylistRepo(SocketClient socketClient) {
+        this.socketClient = new SocketClient();
+    }
 
     @Override
     public Playlist getPlaylistById(int playlistId) {
@@ -37,7 +42,7 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
     @Override
     public List<Playlist> getAllPlaylists() {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+            Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getAllPlaylists",
                     "username", "marion",
                     "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU="
@@ -55,7 +60,7 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
 
     @Override
     public void deletePlaylistById(int playlistId) {
-        SocketClient.sendRequest(Map.of(
+        socketClient.sendRequest(Map.of(
                 "command", "deletePlaylistById",
                 "username", "marion",
                 "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
@@ -72,7 +77,7 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
                     "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
                     "playlist", mapper.convertValue(playlist, Map.class)
             );
-            SocketClient.sendRequest(request);
+            socketClient.sendRequest(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -81,7 +86,7 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
     @Override
     public PlaylistEnum getPlaylistStatus(Playlist playlist) {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+            Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getPlaylistStatus",
                     "username", "marion",
                     "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
@@ -104,7 +109,7 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
 
     private Playlist getPlaylistFromServer(Map<String, Object> request) {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(request);
+            Map<String, Object> response = socketClient.sendRequest(request);
             if (!"OK".equals(response.get("status"))) return null;
             Object playlistObj = response.get("playlist");
             String json = mapper.writeValueAsString(playlistObj);

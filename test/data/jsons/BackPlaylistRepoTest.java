@@ -12,7 +12,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BackPlaylistRepoTest extends CommuneMethods{
+
     public BackPlaylistRepoTest() throws IOException {
+        super();
     }
 
     @BeforeEach
@@ -21,27 +23,27 @@ class BackPlaylistRepoTest extends CommuneMethods{
 
     @AfterEach
     void tearDown() {
-        if (tempPlaylistsFile.exists()) {
-            tempPlaylistsFile.delete();
+        if (initializer.tempPlaylistsFile.exists()) {
+            initializer.tempPlaylistsFile.delete();
         }
-        if (tempSongsFile.exists()) {
-            tempSongsFile.delete();
+        if (initializer.tempSongsFile.exists()) {
+            initializer.tempSongsFile.delete();
         }
-        if (tempUsersFile.exists()) {
-            tempUsersFile.delete();
+        if (initializer.tempUsersFile.exists()) {
+            initializer.tempUsersFile.delete();
         }
     }
 
     @Test
     void savePlaylist_shouldSaveThePlaylist() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist", playlistLocalRepository);
+        Playlist playlist = createTestPlaylist(1, "Test Playlist", initializer.playlistLocalRepository);
 
         // Act
-        playlistLocalRepository.savePlaylist(playlist);
+        initializer.playlistLocalRepository.savePlaylist(playlist);
 
         // Assert
-        List<Playlist> playlists = playlistLocalRepository.getAllPlaylists();
+        List<Playlist> playlists = initializer.playlistLocalRepository.getAllPlaylists();
         assertEquals(1, playlists.size());
         assertEquals("Test Playlist", playlists.get(0).getName());
     }
@@ -51,14 +53,14 @@ class BackPlaylistRepoTest extends CommuneMethods{
         // Arrange
         int [] songsId = new int []{1, 2, 3};
 
-        Playlist playlist = createTestPlaylist(1, "Test Playlist", playlistLocalRepository);
+        Playlist playlist = createTestPlaylist(1, "Test Playlist", initializer.playlistLocalRepository);
         addSongsToPlaylist(playlist, songsId);
 
         // Act
-        playlistLocalRepository.savePlaylist(playlist);
+        initializer.playlistLocalRepository.savePlaylist(playlist);
 
         // Assert
-        List<Playlist> playlists = playlistLocalRepository.getAllPlaylists();
+        List<Playlist> playlists = initializer.playlistLocalRepository.getAllPlaylists();
         assertEquals(1, playlists.size());
         assertEquals("Test Playlist", playlists.get(0).getName());
     }
@@ -66,19 +68,19 @@ class BackPlaylistRepoTest extends CommuneMethods{
     @Test
     void deletePlaylistById_shouldRemoveThePlaylist() {
         // Arrange
-        Playlist playlistOne = createTestPlaylist(1, "Playlist One", playlistLocalRepository);
+        Playlist playlistOne = createTestPlaylist(1, "Playlist One", initializer.playlistLocalRepository);
         addSongsToPlaylist(playlistOne,  1,2);
-        playlistLocalRepository.savePlaylist(playlistOne);
+        initializer.playlistLocalRepository.savePlaylist(playlistOne);
 
-        Playlist playlistTwo = createTestPlaylist(2, "Playlist Two", playlistLocalRepository);
+        Playlist playlistTwo = createTestPlaylist(2, "Playlist Two", initializer.playlistLocalRepository);
         addSongsToPlaylist(playlistTwo,  3,4);
-        playlistLocalRepository.savePlaylist(playlistTwo);
+        initializer.playlistLocalRepository.savePlaylist(playlistTwo);
 
         // Act
-        playlistLocalRepository.deletePlaylistById(playlistOne.getPlaylistId());
+        initializer.playlistLocalRepository.deletePlaylistById(playlistOne.getPlaylistId());
 
         // Assert
-        List<Playlist> result = playlistLocalRepository.getAllPlaylists();
+        List<Playlist> result = initializer.playlistLocalRepository.getAllPlaylists();
         assertEquals(1, result.size());
         assertEquals(playlistTwo.getPlaylistId(), result.get(0).getPlaylistId());
     }
@@ -86,12 +88,12 @@ class BackPlaylistRepoTest extends CommuneMethods{
     @Test
     void getPlaylistById_shouldFindThePlaylist() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist", playlistLocalRepository);
+        Playlist playlist = createTestPlaylist(1, "Test Playlist", initializer.playlistLocalRepository);
         addSongsToPlaylist(playlist, 1,2,3);
-        playlistLocalRepository.savePlaylist(playlist);
+        initializer.playlistLocalRepository.savePlaylist(playlist);
 
         // Act
-        Playlist result = playlistLocalRepository.getPlaylistById(playlist.getPlaylistId());
+        Playlist result = initializer.playlistLocalRepository.getPlaylistById(playlist.getPlaylistId());
 
         // Assert
         assertNotNull(result);
@@ -101,12 +103,12 @@ class BackPlaylistRepoTest extends CommuneMethods{
     @Test
     void getPlaylistById_withNonexistentId_shouldReturnNull() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist", playlistLocalRepository);
+        Playlist playlist = createTestPlaylist(1, "Test Playlist", initializer.playlistLocalRepository);
         addSongsToPlaylist(playlist, 1,2,3);
-        playlistLocalRepository.savePlaylist(playlist);
+        initializer.playlistLocalRepository.savePlaylist(playlist);
 
         // Act
-        Playlist result = playlistLocalRepository.getPlaylistById(999);
+        Playlist result = initializer.playlistLocalRepository.getPlaylistById(999);
 
         // Assert
         assertNull(result);
@@ -115,18 +117,18 @@ class BackPlaylistRepoTest extends CommuneMethods{
     @Test
     void updatePlaylist_shouldModifyThePlaylist() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Original Name", playlistLocalRepository);
-        playlistLocalRepository.savePlaylist(playlist);
+        Playlist playlist = createTestPlaylist(1, "Original Name", initializer.playlistLocalRepository);
+        initializer.playlistLocalRepository.savePlaylist(playlist);
         addSongsToPlaylist(playlist, 1,2);
 
         // Act
-        playlistService.renamePlayList(playlist.getPlaylistId(), "Updated Name");
+        initializer.playlistService.renamePlayList(playlist.getPlaylistId(), "Updated Name");
 
         // Add more songs
         addSongsToPlaylist(playlist, 3,4);
 
         // Assert
-        Playlist result = playlistLocalRepository.getPlaylistById(playlist.getPlaylistId());
+        Playlist result = initializer.playlistLocalRepository.getPlaylistById(playlist.getPlaylistId());
         assertEquals("Updated Name", result.getName());
         assertEquals(4, result.getPlaylistSongsListWithId().size());
     }
@@ -134,12 +136,12 @@ class BackPlaylistRepoTest extends CommuneMethods{
     @Test
     void getPlaylistByName_shouldFindThePlaylist() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist", playlistLocalRepository);
+        Playlist playlist = createTestPlaylist(1, "Test Playlist", initializer.playlistLocalRepository);
         addSongsToPlaylist(playlist, 1,2,3);
-        playlistLocalRepository.savePlaylist(playlist);
+        initializer.playlistLocalRepository.savePlaylist(playlist);
 
         // Act
-        Playlist result = playlistLocalRepository.getPlaylistByName("Test Playlist");
+        Playlist result = initializer.playlistLocalRepository.getPlaylistByName("Test Playlist");
 
         // Assert
         assertNotNull(result);
@@ -149,12 +151,12 @@ class BackPlaylistRepoTest extends CommuneMethods{
     @Test
     void getPlaylistByName_shouldBeCaseInsensitive() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist", playlistLocalRepository);
+        Playlist playlist = createTestPlaylist(1, "Test Playlist", initializer.playlistLocalRepository);
         addSongsToPlaylist(playlist, 1,2,3);
-        playlistLocalRepository.savePlaylist(playlist);
+        initializer.playlistLocalRepository.savePlaylist(playlist);
 
         // Act
-        Playlist result = playlistLocalRepository.getPlaylistByName("test PLAYLIST");
+        Playlist result = initializer.playlistLocalRepository.getPlaylistByName("test PLAYLIST");
 
         // Assert
         assertNotNull(result);
@@ -164,12 +166,12 @@ class BackPlaylistRepoTest extends CommuneMethods{
     @Test
     void getPlaylistByName_withNonexistentName_shouldReturnNull() {
         // Arrange
-        Playlist playlist = createTestPlaylist(1, "Test Playlist", playlistLocalRepository);
+        Playlist playlist = createTestPlaylist(1, "Test Playlist", initializer.playlistLocalRepository);
         addSongsToPlaylist(playlist, 1,2,3);
-        playlistLocalRepository.savePlaylist(playlist);
+        initializer.playlistLocalRepository.savePlaylist(playlist);
 
         // Act
-        Playlist result = playlistLocalRepository.getPlaylistByName("Nonexistent Playlist");
+        Playlist result = initializer.playlistLocalRepository.getPlaylistByName("Nonexistent Playlist");
 
         // Assert
         assertNull(result);
@@ -178,7 +180,7 @@ class BackPlaylistRepoTest extends CommuneMethods{
     @Test
     void getAllPlaylists_withEmptyRepository_shouldReturnEmptyList() {
         // Act
-        List<Playlist> result = playlistLocalRepository.getAllPlaylists();
+        List<Playlist> result = initializer.playlistLocalRepository.getAllPlaylists();
 
         // Assert
         assertNotNull(result);

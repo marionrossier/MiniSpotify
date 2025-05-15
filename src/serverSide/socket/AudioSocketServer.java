@@ -56,7 +56,7 @@ public class AudioSocketServer {
         }
     }
 
-    private static byte[] readAllBytes(File file) throws IOException {
+    private byte[] readAllBytes(File file) throws IOException {
         try (InputStream fileIn = new FileInputStream(file);
              ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
 

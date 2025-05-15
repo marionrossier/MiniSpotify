@@ -12,11 +12,16 @@ public class FrontUserRepo implements IUserRepository {
 
     private final String username = "marion";
     private final String password = "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=";
+    private final SocketClient socketClient;
+
+    public FrontUserRepo(SocketClient socketClient) {
+        this.socketClient = new SocketClient();
+    }
 
     @Override
     public Optional<User> authenticate(String pseudonym, String hashedPassword) {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+            Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getUserByPseudonym",
                     "username", username,
                     "password", password,
@@ -38,7 +43,7 @@ public class FrontUserRepo implements IUserRepository {
     @Override
     public List<User> getAllUsers() {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+            Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getAllUsers",
                     "username", username,
                     "password", password
@@ -64,7 +69,7 @@ public class FrontUserRepo implements IUserRepository {
                     "password", password,
                     "user", mapper.convertValue(user, Map.class)
             );
-            SocketClient.sendRequest(request);
+            socketClient.sendRequest(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -100,7 +105,7 @@ public class FrontUserRepo implements IUserRepository {
                     "user", mapper.convertValue(user, Map.class),
                     "playlistId", playlistId
             );
-            SocketClient.sendRequest(request);
+            socketClient.sendRequest(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -116,7 +121,7 @@ public class FrontUserRepo implements IUserRepository {
                     "user", mapper.convertValue(user, Map.class),
                     "friendId", friendId
             );
-            SocketClient.sendRequest(request);
+            socketClient.sendRequest(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -132,7 +137,7 @@ public class FrontUserRepo implements IUserRepository {
                     "user", mapper.convertValue(user, Map.class),
                     "friendId", friendId
             );
-            SocketClient.sendRequest(request);
+            socketClient.sendRequest(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -140,7 +145,7 @@ public class FrontUserRepo implements IUserRepository {
 
     private User getUserFromServer(Map<String, Object> request) {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(request);
+            Map<String, Object> response = socketClient.sendRequest(request);
             if (!"OK".equals(response.get("status"))) return null;
             Object userObj = response.get("user");
             String json = mapper.writeValueAsString(userObj);

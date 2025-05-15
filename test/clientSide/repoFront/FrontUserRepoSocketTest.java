@@ -1,7 +1,7 @@
 package clientSide.repoFront;
 
 import middle.IUserRepository;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import serverSide.entities.User;
 import utilsAndFakes.CommuneMethods;
@@ -11,16 +11,19 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FrontUserRepoSocketTest {
+public class FrontUserRepoSocketTest extends CommuneMethods {
 
-    static IUserRepository userRepo;
-    static CommuneMethods commune;
+    public IUserRepository userRepo;
+    public CommuneMethods communeMethods;
 
-    @BeforeAll
-    static void setup() throws IOException {
-        commune = new CommuneMethods() {
-        };
-        userRepo = commune.startServerAndInitRepo(FrontUserRepo::new);
+    public FrontUserRepoSocketTest() throws IOException {
+    }
+
+    @BeforeEach
+    void setup() throws IOException {
+        initializer.populateUsers();
+        communeMethods = new CommuneMethods() {};
+        userRepo = communeMethods.startServerAndInitRepo(() -> initializer.frontUserRepo);
     }
 
     @Test

@@ -2,6 +2,7 @@ package clientSide.repoFront;
 
 import middle.IArtistRepository;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import serverSide.entities.Artist;
 import utilsAndFakes.CommuneMethods;
@@ -11,18 +12,18 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FrontArtistRepoSocketTest {
+class FrontArtistRepoSocketTest extends CommuneMethods{
 
     static IArtistRepository artistRepo;
-    static CommuneMethods commune;
+    static CommuneMethods communeMethods;
 
     public FrontArtistRepoSocketTest() throws IOException {
     }
 
-    @BeforeAll
-    static void setup() throws IOException {
-        commune = new CommuneMethods() {};
-        artistRepo = commune.startServerAndInitRepo(FrontArtistRepo::new);
+    @BeforeEach
+    void setup() throws IOException {
+        communeMethods = new CommuneMethods() {};
+        artistRepo = communeMethods.startServerAndInitRepo(() -> initializer.frontArtistRepo);
     }
 
     @Test

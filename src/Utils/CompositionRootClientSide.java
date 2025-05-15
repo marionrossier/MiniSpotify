@@ -6,6 +6,7 @@ import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
 import clientSide.repoFront.*;
 import clientSide.services.*;
+import clientSide.socket.SocketClient;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import middle.*;
 
@@ -23,6 +24,8 @@ public class CompositionRootClientSide {
     final ISongRepository frontSongRepo;
     final IArtistRepository frontArtistRepo;
     final IAudioRepository frontAudioRepo;
+
+    final SocketClient socketClient;
 
     //Services
     final UserService userService;
@@ -54,10 +57,11 @@ public class CompositionRootClientSide {
         basicPlayer = new BasicPlayer();
 
         //Repositories
-        frontPlaylistRepo = new FrontPlaylistRepo();
-        frontUserRepo = new FrontUserRepo();
-        frontArtistRepo = new FrontArtistRepo();
-        frontSongRepo = new FrontSongRepo();
+        socketClient = new SocketClient();
+        frontPlaylistRepo = new FrontPlaylistRepo(socketClient);
+        frontUserRepo = new FrontUserRepo(socketClient);
+        frontArtistRepo = new FrontArtistRepo(socketClient);
+        frontSongRepo = new FrontSongRepo(socketClient);
         frontAudioRepo = new FrontAudioRepo();
 
         toolBoxService = new ToolBoxService(frontPlaylistRepo, frontUserRepo, frontSongRepo,

@@ -2,6 +2,7 @@ package clientSide.repoFront;
 
 import middle.ISongRepository;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import serverSide.entities.MusicGender;
 import serverSide.entities.Song;
@@ -16,15 +17,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class FrontSongRepoSocketTest extends CommuneMethods {
 
     static ISongRepository songRepo;
-    static CommuneMethods commune;
+    static CommuneMethods communeMethods;
 
     public FrontSongRepoSocketTest() throws IOException {
     }
 
-    @BeforeAll
-    static void setup() throws IOException {
-        commune = new CommuneMethods() {};
-        songRepo = commune.startServerAndInitRepo(FrontSongRepo::new);
+    @BeforeEach
+    void setup() throws IOException {
+        communeMethods = new CommuneMethods() {};
+        songRepo = communeMethods.startServerAndInitRepo(() -> initializer.frontSongRepo);
     }
 
     @Test

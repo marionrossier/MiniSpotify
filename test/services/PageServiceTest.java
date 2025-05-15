@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PageServiceTest extends CommuneMethods {
 
     public PageServiceTest() throws IOException {
+        super();
     }
 
     @BeforeEach
@@ -20,14 +21,14 @@ class PageServiceTest extends CommuneMethods {
 
     @AfterEach
     void tearDown() {
-        pageService.getMenuPages().clear();
+        initializer.pageService.getMenuPages().clear();
     }
 
     @Test
     void testGetPageById() {
         //Arrange
         //Act
-        int pageId = pageService.homePage.getPageId();
+        int pageId = initializer.pageService.homePage.getPageId();
         boolean exist = false;
         if (pageId > 0){
             exist = true;
