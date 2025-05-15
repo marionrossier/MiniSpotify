@@ -3,6 +3,7 @@ package serverSide.socket;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import serverSide.repoBack.BackArtistRepo;
 import serverSide.repoBack.BackPlaylistRepo;
+import serverSide.repoBack.BackSongRepo;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -37,19 +38,24 @@ public class SocketServer {
             String command = (String) request.get("command");
 
             String responseJson = switch (command) {
-                // 🎵 Playlist
+                // Playlist
                 case "getPlaylistById", "getPlaylistByName", "getAllPlaylists",
                      "deletePlaylistById", "savePlaylist", "getPlaylistStatus", "getTemporaryPlaylistOfCurrentUser"
                         -> BackPlaylistRepo.handleRequest(request);
 
-                // 👤 Artist
+                // Artist
                 case "getAllArtists", "getArtistById", "getArtistByName",
                      "getArtistBySongId", "addArtist", "saveArtist"
                         -> BackArtistRepo.handleRequest(request);
 
-                // ❌ Commande inconnue
+                // Song 🎶
+                case "getAllSongs", "getSongById", "getSongsByTitle",
+                     "getSongsByArtist", "getSongsByGender", "addSong"
+                        -> BackSongRepo.handleRequest(request);
+
                 default -> "{\"status\": \"ERROR\", \"message\": \"Unknown command at server switch\"}";
             };
+
 
             out.write(responseJson);
             out.newLine();

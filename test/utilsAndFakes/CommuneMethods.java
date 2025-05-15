@@ -10,13 +10,18 @@ import serverSide.repoLocal.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.Socket;
 import java.nio.file.Files;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.function.Supplier;
 
 public abstract class CommuneMethods {
 
     Scanner scanner = new Scanner(System.in);
+
+    static Thread serverThread;
+
     protected File tempPlaylistsFile;
     protected File tempSongsFile;
     protected File tempUsersFile;
@@ -155,6 +160,30 @@ public abstract class CommuneMethods {
         song.setGender(gender);
 
         return song;
+    }
+
+    public <T> T startServerAndInitRepo(Supplier<T> repoSupplier) {
+        try (Socket testSocket = new Socket("127.0.0.1", 45000)) {
+            System.out.println("✅ Serveur déjà actif.");
+        } catch (IOException e) {
+            serverThread = new Thread(() -> {
+                try {
+                    serverSide.socket.SocketServer.main(null);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+            serverThread.setDaemon(true);
+            serverThread.start();
+
+            try {
+                Thread.sleep(1000); // Laisse le temps au serveur de démarrer
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        Cookies_SingletonPattern.setUser(232928320);
+        return repoSupplier.get();
     }
 
 }
