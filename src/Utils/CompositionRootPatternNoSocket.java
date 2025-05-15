@@ -1,9 +1,8 @@
-package clientSide;
+package Utils;
 
-import middle.*;
 import clientSide.services.*;
 import javazoom.jlgui.basicplayer.BasicPlayer;
-import serverSide.StockageService;
+import middle.*;
 import serverSide.repoLocal.*;
 import clientSide.player_StatePattern.file_player.MusicPlayer;
 import clientSide.player_StatePattern.file_player.IMusicPlayer;
@@ -13,7 +12,7 @@ import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class CompositionRootPattern {
+public class CompositionRootPatternNoSocket {
 
     Scanner scanner = new Scanner(System.in);
     public final Stack<Integer> menuPagesStack = new Stack<>();
@@ -52,7 +51,7 @@ public class CompositionRootPattern {
     final PageService pageService;
     final ToolBoxService toolBoxService;
 
-    public CompositionRootPattern (){
+    public CompositionRootPatternNoSocket(){
 
         //Json-Mp3
         stockageService = new StockageService();

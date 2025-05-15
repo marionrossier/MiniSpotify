@@ -2,9 +2,8 @@ package serverSide.repoBack;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import middle.IPlaylistRepository;
+import middle.IUserRepository;
 import serverSide.entities.Playlist;
-import serverSide.repoLocal.PlaylistLocalRepository;
-import serverSide.repoLocal.UserLocalRepository;
 import serverSide.entities.User;
 
 import java.util.List;
@@ -12,11 +11,16 @@ import java.util.Map;
 import java.util.Optional;
 
 public class BackPlaylistRepo {
-    private static final ObjectMapper mapper = new ObjectMapper();
-    private static final IPlaylistRepository playlistRepo = new PlaylistLocalRepository();
-    private static final UserLocalRepository userRepo = new UserLocalRepository();
+    private final ObjectMapper mapper = new ObjectMapper();
+    private final IPlaylistRepository playlistRepo;
+    private final IUserRepository userRepo;
 
-    public static String handleRequest(Map<String, Object> request) {
+    public BackPlaylistRepo(IPlaylistRepository playlistRepo, IUserRepository userRepo) {
+        this.playlistRepo = playlistRepo;
+        this.userRepo = userRepo;
+    }
+
+    public String handleRequest(Map<String, Object> request) {
         try {
             String command = (String) request.get("command");
             String username = (String) request.get("username");

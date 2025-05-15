@@ -14,6 +14,28 @@ public class FrontUserRepo implements IUserRepository {
     private final String password = "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=";
 
     @Override
+    public Optional<User> authenticate(String pseudonym, String hashedPassword) {
+        try {
+            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+                    "command", "getUserByPseudonym",
+                    "username", username,
+                    "password", password,
+                    "pseudonym", pseudonym
+            ));
+            if (!"OK".equals(response.get("status"))) return Optional.empty();
+            Object userObj = response.get("user");
+            String json = mapper.writeValueAsString(userObj);
+            User user = mapper.readValue(json, User.class);
+            if (user != null && user.getPassword().equals(hashedPassword)) {
+                return Optional.of(user);
+            }
+            return Optional.empty();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<User> getAllUsers() {
         try {
             Map<String, Object> response = SocketClient.sendRequest(Map.of(

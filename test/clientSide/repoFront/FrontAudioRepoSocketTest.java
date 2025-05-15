@@ -3,13 +3,14 @@ package clientSide.repoFront;
 import middle.IAudioRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import utilsAndFakes.CommuneMethods;
 
 import java.io.*;
 import java.net.Socket;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FrontAudioRepoSocketTest {
+public class FrontAudioRepoSocketTest extends CommuneMethods {
 
     static IAudioRepository audioRepo;
     static Thread audioServerThread;
@@ -18,15 +19,18 @@ public class FrontAudioRepoSocketTest {
     private static final File SOURCE_FILE = new File(System.getProperty("user.home") +
             "/MiniSpotifyFlorentMarion/songsfiles/" + TEST_FILE_NAME);
 
+    public FrontAudioRepoSocketTest() throws IOException {
+    }
+
     @BeforeAll
     static void setup() throws IOException {
-        // ✅ Lancer AudioSocketServer si nécessaire
+
         try (Socket socket = new Socket("127.0.0.1", 45001)) {
             System.out.println("✅ Audio server already running.");
         } catch (IOException e) {
             audioServerThread = new Thread(() -> {
                 try {
-                    serverSide.socket.AudioSocketServer.main(null);
+                    audioSocketServer.main();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }

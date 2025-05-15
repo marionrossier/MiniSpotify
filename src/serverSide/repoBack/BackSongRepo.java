@@ -2,24 +2,25 @@ package serverSide.repoBack;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import middle.ISongRepository;
-import serverSide.entities.Playlist;
+import middle.IUserRepository;
 import serverSide.entities.Song;
 import serverSide.entities.User;
-import serverSide.repoLocal.SongLocalRepository;
-import serverSide.repoLocal.ArtistLocalRepository;
-import serverSide.repoLocal.UserLocalRepository;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public class BackSongRepo {
-    private static final ObjectMapper mapper = new ObjectMapper();
-    private static final ISongRepository songRepo =
-            new SongLocalRepository(new serverSide.StockageService(), new ArtistLocalRepository());
-    private static final UserLocalRepository userRepo = new UserLocalRepository();
+    private final ObjectMapper mapper = new ObjectMapper();
+    private final ISongRepository songRepo;
+    private final IUserRepository userRepo;
 
-    public static String handleRequest(Map<String, Object> request) {
+    public BackSongRepo(ISongRepository songRepo, IUserRepository userRepo) {
+        this.songRepo = songRepo;
+        this.userRepo = userRepo;
+    }
+
+    public String handleRequest(Map<String, Object> request) {
         try {
             String command = (String) request.get("command");
             String username = (String) request.get("username");

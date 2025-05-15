@@ -1,7 +1,7 @@
 package serverSide.repoLocal;
 
 import middle.IPlaylistRepository;
-import serverSide.StockageService;
+import Utils.StockageService;
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 import com.fasterxml.jackson.core.type.TypeReference;

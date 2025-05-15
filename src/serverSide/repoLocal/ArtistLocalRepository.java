@@ -1,7 +1,7 @@
 package serverSide.repoLocal;
 
 import middle.IArtistRepository;
-import serverSide.StockageService;
+import Utils.StockageService;
 import serverSide.entities.Artist;
 import com.fasterxml.jackson.core.type.TypeReference;
 

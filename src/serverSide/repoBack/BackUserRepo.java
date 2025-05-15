@@ -3,17 +3,20 @@ package serverSide.repoBack;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import middle.IUserRepository;
 import serverSide.entities.User;
-import serverSide.repoLocal.UserLocalRepository;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public class BackUserRepo {
-    private static final ObjectMapper mapper = new ObjectMapper();
-    private static final UserLocalRepository userRepo = new UserLocalRepository();
+    private final ObjectMapper mapper = new ObjectMapper();
+    private final IUserRepository userRepo;
 
-    public static String handleRequest(Map<String, Object> request) {
+    public BackUserRepo(IUserRepository userRepo) {
+        this.userRepo = userRepo;
+    }
+
+    public String handleRequest(Map<String, Object> request) {
         try {
             String command = (String) request.get("command");
             String username = (String) request.get("username");

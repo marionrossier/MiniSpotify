@@ -9,13 +9,14 @@ import java.net.Socket;
 
 public class AudioSocketServer {
 
-    private static final int PORT = 45001;
-    private static final String AUDIO_FOLDER =
+    private final int PORT = 45001;
+    private final String AUDIO_FOLDER =
             System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/songsfiles/";
 
-    private static final UserLocalRepository userRepo = new UserLocalRepository();
+    private final UserLocalRepository userRepo = new UserLocalRepository();
+    private final BackAudioRepo backAudioRepo;
 
-    public static void main(String[] args) {
+    public void main() {
         System.out.println("🎵 AudioSocketServer started on port " + PORT);
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             while (true) {
@@ -27,7 +28,11 @@ public class AudioSocketServer {
         }
     }
 
-    private static void handleAudioRequest(Socket socket) {
+    public AudioSocketServer(BackAudioRepo backAudioRepo){
+        this.backAudioRepo = backAudioRepo;
+    }
+
+    private void handleAudioRequest(Socket socket) {
         try (DataInputStream in = new DataInputStream(socket.getInputStream());
              DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
 
@@ -37,7 +42,7 @@ public class AudioSocketServer {
                 return;
             }
 
-            byte[] bytes = BackAudioRepo.handleGetAudioFile(in);
+            byte[] bytes = backAudioRepo.handleGetAudioFile(in);
             if (bytes == null) {
                 out.writeInt(0); // Auth échouée ou fichier introuvable
                 return;

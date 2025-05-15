@@ -1,5 +1,6 @@
 package serverSide.repoBack;
 
+import middle.IUserRepository;
 import serverSide.entities.User;
 import serverSide.repoLocal.UserLocalRepository;
 
@@ -8,11 +9,15 @@ import java.util.Optional;
 
 public class BackAudioRepo {
 
-    private static final String AUDIO_FOLDER =
+    private final String AUDIO_FOLDER =
             System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/songsfiles/";
-    private static final UserLocalRepository userRepo = new UserLocalRepository();
+    private final IUserRepository userRepo;
 
-    public static byte[] handleGetAudioFile(DataInputStream in) throws IOException {
+    public BackAudioRepo(IUserRepository userRepo) {
+        this.userRepo = userRepo;
+    }
+
+    public byte[] handleGetAudioFile(DataInputStream in) throws IOException {
         String username = in.readUTF();
         String password = in.readUTF();
         String fileName = in.readUTF();

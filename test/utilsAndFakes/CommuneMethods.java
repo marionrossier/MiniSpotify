@@ -4,9 +4,12 @@ import middle.*;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
 import clientSide.services.*;
-import serverSide.StockageService;
+import Utils.StockageService;
 import serverSide.entities.*;
+import serverSide.repoBack.*;
 import serverSide.repoLocal.*;
+import serverSide.socket.AudioSocketServer;
+import serverSide.socket.SocketServer;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,6 +59,15 @@ public abstract class CommuneMethods {
 
     public final Stack<Integer> menuPagesStack;
 
+    //SOCKETS
+    public final BackAudioRepo backAudioRepo;
+    public final BackPlaylistRepo backPlaylistRepo;
+    public final BackUserRepo backUserRepo;
+    public final BackSongRepo backSongRepo;
+    public final BackArtistRepo backArtistRepo;
+
+    public final AudioSocketServer audioSocketServer;
+    public final SocketServer socketServer;
 
     public CommuneMethods() throws IOException {
 
@@ -101,6 +113,16 @@ public abstract class CommuneMethods {
 
         pageService = new PageService(playlistPlayer, toolBoxView, userService, menuPagesStack);
 
+
+        //SOCKETS
+        backAudioRepo = new BackAudioRepo(userLocalRepository);
+        backPlaylistRepo = new BackPlaylistRepo(playlistLocalRepository, userLocalRepository);
+        backUserRepo = new BackUserRepo(userLocalRepository);
+        backArtistRepo = new BackArtistRepo(artistLocalRepository, userLocalRepository);
+        backSongRepo = new BackSongRepo(songLocalRepository, userLocalRepository);
+
+        audioSocketServer = new AudioSocketServer(backAudioRepo);
+        socketServer = new SocketServer(backUserRepo, backPlaylistRepo, backSongRepo, backArtistRepo);
     }
 
     public void addSongToPlaylist(int currentPlaylistId, int currentSongId, IPlaylistRepository playlistLocalRepository,
@@ -168,7 +190,7 @@ public abstract class CommuneMethods {
         } catch (IOException e) {
             serverThread = new Thread(() -> {
                 try {
-                    serverSide.socket.SocketServer.main(null);
+                    socketServer.main();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
