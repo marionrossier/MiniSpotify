@@ -38,7 +38,7 @@ public class PasswordService {
 
     public boolean verifyUserAuthentification(String pseudonym, String password) {
 
-        User searchedUser = userLocalRepository.getUserByPseudonym(pseudonym);
+        User searchedUser = userLocalRepository.getUserByPseudonymLogin(pseudonym);
 
         if (searchedUser == null) {
             System.err.println("The user does not exist.");

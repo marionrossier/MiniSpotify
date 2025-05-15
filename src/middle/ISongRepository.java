@@ -3,12 +3,12 @@ package middle;
 import serverSide.entities.MusicGender;
 import serverSide.entities.Song;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public interface ISongRepository {
 
-    List<Song> getAllSongs();
+    ArrayList<Song> getAllSongs();
     void addSong(Song song);
     Song getSongById(int songId);
     LinkedList<Song> getSongsByTitle(String title);

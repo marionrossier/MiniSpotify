@@ -1,32 +1,31 @@
-package clientSide;
+package Utils;
 
-import middle.*;
-import clientSide.services.*;
-import javazoom.jlgui.basicplayer.BasicPlayer;
-import serverSide.StockageService;
-import serverSide.repoLocal.*;
-import clientSide.player_StatePattern.file_player.MusicPlayer;
 import clientSide.player_StatePattern.file_player.IMusicPlayer;
+import clientSide.player_StatePattern.file_player.MusicPlayer;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
+import clientSide.repoFront.*;
+import clientSide.services.*;
+import clientSide.socket.SocketClient;
+import javazoom.jlgui.basicplayer.BasicPlayer;
+import middle.*;
 
 import java.util.Scanner;
 import java.util.Stack;
 
-public class CompositionRootPattern {
+public class CompositionRootClientSide {
 
     Scanner scanner = new Scanner(System.in);
     public final Stack<Integer> menuPagesStack = new Stack<>();
 
-    //Json-Mp3
-    StockageService stockageService;
-
     //Repositories
-    final IPlaylistRepository playlistLocalRepository;
-    final IUserRepository userLocalRepository;
-    final ISongRepository songLocalRepository;
-    final IArtistRepository artistLocalRepository;
-    final IAudioRepository audioLocalRepository;
+    final IPlaylistRepository frontPlaylistRepo;
+    final IUserRepository frontUserRepo;
+    final ISongRepository frontSongRepo;
+    final IArtistRepository frontArtistRepo;
+    final IAudioRepository frontAudioRepo;
+
+    final SocketClient socketClient;
 
     //Services
     final UserService userService;
@@ -52,24 +51,24 @@ public class CompositionRootPattern {
     final PageService pageService;
     final ToolBoxService toolBoxService;
 
-    public CompositionRootPattern (){
+    public CompositionRootClientSide(){
 
         //Json-Mp3
-        stockageService = new StockageService();
         basicPlayer = new BasicPlayer();
 
         //Repositories
-        playlistLocalRepository = new PlaylistLocalRepository();
-        userLocalRepository = new UserLocalRepository();
-        artistLocalRepository = new ArtistLocalRepository();
-        songLocalRepository = new SongLocalRepository(stockageService, artistLocalRepository);
-        audioLocalRepository = new AudioLocalRepository();
+        socketClient = new SocketClient();
+        frontPlaylistRepo = new FrontPlaylistRepo(socketClient);
+        frontUserRepo = new FrontUserRepo(socketClient);
+        frontArtistRepo = new FrontArtistRepo(socketClient);
+        frontSongRepo = new FrontSongRepo(socketClient);
+        frontAudioRepo = new FrontAudioRepo();
 
-        toolBoxService = new ToolBoxService(playlistLocalRepository, userLocalRepository, songLocalRepository,
-                artistLocalRepository, audioLocalRepository);
+        toolBoxService = new ToolBoxService(frontPlaylistRepo, frontUserRepo, frontSongRepo,
+                frontArtistRepo, frontAudioRepo);
 
         //Services
-        passwordService = new PasswordService(userLocalRepository);
+        passwordService = new PasswordService(frontUserRepo);
 
         userService = new UserService(toolBoxService, passwordService);
         artistService = new ArtistService(toolBoxService);
@@ -85,8 +84,8 @@ public class CompositionRootPattern {
         searchService = new SearchService(songService, printService);
         uniqueIdService = new UniqueIdService();
 
-        musicPlayer = new MusicPlayer(audioLocalRepository, basicPlayer);
-        spotifyPlayer = new PlaylistPlayer(musicPlayer, audioLocalRepository, songService, playlistServices);
+        musicPlayer = new MusicPlayer(frontAudioRepo, basicPlayer);
+        spotifyPlayer = new PlaylistPlayer(musicPlayer, frontAudioRepo, songService, playlistServices);
         toolBoxView = new ToolBoxView(playlistServices, userService, songService, artistService,
                 printService, searchService, passwordService, playlistReorderSongService,
                 temporaryPlaylistService, uniqueIdService, passwordService);
@@ -95,22 +94,6 @@ public class CompositionRootPattern {
     }
 
     public void startApp(){
-
         this.pageService.startLogin();
-    }
-
-    public void copyJsons(){
-        StockageService stockageService = new StockageService();
-
-        stockageService.copyResourceToWritableLocation("jsons/artist.json", "artist.json");
-        stockageService.copyResourceToWritableLocation("jsons/user.json", "user.json");
-        stockageService.copyResourceToWritableLocation("jsons/song.json", "song.json");
-        stockageService.copyResourceToWritableLocation("jsons/playlist.json", "playlist.json");
-    }
-
-    public void copySongs(){
-        StockageService stockageService = new StockageService();
-
-        stockageService.copyAllSongsToWritableLocation("songsfiles");
     }
 }

@@ -1,12 +1,13 @@
 package serverSide.repoLocal;
 
 import middle.IUserRepository;
-import serverSide.StockageService;
+import Utils.StockageService;
 import serverSide.entities.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserLocalRepository implements IUserRepository {
     private final String filePath;
@@ -21,6 +22,20 @@ public class UserLocalRepository implements IUserRepository {
 
     public UserLocalRepository() {
         this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/jsons/user.json");
+    }
+
+    public Optional<User> authenticate(String pseudonym, String hashedPassword) {
+        return data.stream()
+                .filter(user -> user.getPseudonym().equals(pseudonym) && user.getPassword().equals(hashedPassword))
+                .findFirst();
+    }
+
+    //TODO : AJouter interface
+    public User getUserByPseudonymLogin(String pseudonym) {
+        return data.stream()
+                .filter(user -> user.getPseudonym().equals(pseudonym))
+                .findFirst()
+                .orElse(null);
     }
 
     public List<User> getAllUsers() {
