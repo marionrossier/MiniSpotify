@@ -30,6 +30,14 @@ public class UserLocalRepository implements IUserRepository {
                 .findFirst();
     }
 
+    //TODO : AJouter interface
+    public User getUserByPseudonymLogin(String pseudonym) {
+        return data.stream()
+                .filter(user -> user.getPseudonym().equals(pseudonym))
+                .findFirst()
+                .orElse(null);
+    }
+
     public List<User> getAllUsers() {
         return new ArrayList<>(data); // Copie défensive
     }
