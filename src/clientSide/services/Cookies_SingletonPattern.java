@@ -4,18 +4,22 @@ public class Cookies_SingletonPattern {
     private static Cookies_SingletonPattern instance;
 
     private final int userId;
+    private final String userPseudonym;
+    private final String userPassword;
     private int currentPlaylistId;
     private int currentSongId;
 
-    private Cookies_SingletonPattern(int userId) {
+    private Cookies_SingletonPattern(int userId, String userPseudonym, String userPassword) {
         this.userId = userId;
+        this.userPseudonym = userPseudonym;
+        this.userPassword = userPassword;
         this.currentPlaylistId = 598327402; //AllSongs
         this.currentSongId = 1108071776; //Amy Rehab
     }
 
-    public static Cookies_SingletonPattern setUser(int userId) {
+    public static Cookies_SingletonPattern setUser(int userId, String userName, String userPassword) {
         if (instance == null || instance.userId == 1) {
-            instance = new Cookies_SingletonPattern(userId);
+            instance = new Cookies_SingletonPattern(userId, userName, userPassword);
         }
         return instance;
     }
@@ -34,9 +38,9 @@ public class Cookies_SingletonPattern {
         instance.currentSongId = currentSongId;
     }
 
-    public static void setInstance(int id) {
+    public static void setInstance(int userId, String userName, String userPassword) {
         if (instance == null) {
-            instance = new Cookies_SingletonPattern(id);
+            instance = new Cookies_SingletonPattern(userId, userName,userPassword);
         }
     }
 
@@ -55,6 +59,14 @@ public class Cookies_SingletonPattern {
 
     public int getUserId() {
         return userId;
+    }
+
+    public String getUserPseudonym() {
+        return userPseudonym;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
     }
 
     public int getCurrentPlaylistId() {
