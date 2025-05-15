@@ -1,5 +1,6 @@
 package clientSide.repoFront;
 
+import clientSide.services.Cookies_SingletonPattern;
 import clientSide.socket.SocketClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import middle.IUserRepository;
@@ -7,22 +8,26 @@ import serverSide.entities.User;
 
 import java.util.*;
 
+//TODO : résoudre le problème de l'authentification qui pass plus.
 public class FrontUserRepo implements IUserRepository {
     private final ObjectMapper mapper = new ObjectMapper();
+    private final SocketClient socketClient;
 
-    private final String username = "marion";
-    private final String password = "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=";
+    public FrontUserRepo(SocketClient socketClient) {
+        this.socketClient = new SocketClient();
+    }
 
     @Override
     public Optional<User> authenticate(String pseudonym, String hashedPassword) {
+
         try {
-            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+            Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getUserByPseudonym",
-                    "username", username,
-                    "password", password,
+                    "userPseudonym", pseudonym,
+                    "password", hashedPassword,
                     "pseudonym", pseudonym
             ));
-            if (!"OK".equals(response.get("status"))) return Optional.empty();
+            if (!response.get("status").equals("OK")) return Optional.empty();
             Object userObj = response.get("user");
             String json = mapper.writeValueAsString(userObj);
             User user = mapper.readValue(json, User.class);
@@ -36,12 +41,20 @@ public class FrontUserRepo implements IUserRepository {
     }
 
     @Override
+    public User getUserByPseudonymLogin(String pseudonym) {
+        return getUserFromServer(Map.of(
+                "command", "getUserByPseudonymLogin",
+                "pseudonym", pseudonym
+        ));
+    }
+
+    @Override
     public List<User> getAllUsers() {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+            Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getAllUsers",
-                    "username", username,
-                    "password", password
+                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                    "password", Cookies_SingletonPattern.getInstance().getUserPassword()
             ));
 
             if (!"OK".equals(response.get("status"))) return null;
@@ -60,11 +73,11 @@ public class FrontUserRepo implements IUserRepository {
         try {
             Map<String, Object> request = Map.of(
                     "command", "saveUser",
-                    "username", username,
-                    "password", password,
+                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                     "user", mapper.convertValue(user, Map.class)
             );
-            SocketClient.sendRequest(request);
+            socketClient.sendRequest(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -74,8 +87,8 @@ public class FrontUserRepo implements IUserRepository {
     public User getUserById(int userId) {
         return getUserFromServer(Map.of(
                 "command", "getUserById",
-                "username", username,
-                "password", password,
+                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                 "userId", userId
         ));
     }
@@ -84,8 +97,8 @@ public class FrontUserRepo implements IUserRepository {
     public User getUserByPseudonym(String pseudonym) {
         return getUserFromServer(Map.of(
                 "command", "getUserByPseudonym",
-                "username", username,
-                "password", password,
+                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                 "pseudonym", pseudonym
         ));
     }
@@ -95,12 +108,12 @@ public class FrontUserRepo implements IUserRepository {
         try {
             Map<String, Object> request = Map.of(
                     "command", "addPlaylistToUser",
-                    "username", username,
-                    "password", password,
+                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                     "user", mapper.convertValue(user, Map.class),
                     "playlistId", playlistId
             );
-            SocketClient.sendRequest(request);
+            socketClient.sendRequest(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -111,12 +124,12 @@ public class FrontUserRepo implements IUserRepository {
         try {
             Map<String, Object> request = Map.of(
                     "command", "addFriendToUser",
-                    "username", username,
-                    "password", password,
+                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                     "user", mapper.convertValue(user, Map.class),
                     "friendId", friendId
             );
-            SocketClient.sendRequest(request);
+            socketClient.sendRequest(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -127,12 +140,12 @@ public class FrontUserRepo implements IUserRepository {
         try {
             Map<String, Object> request = Map.of(
                     "command", "deleteFriendFromUser",
-                    "username", username,
-                    "password", password,
+                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                     "user", mapper.convertValue(user, Map.class),
                     "friendId", friendId
             );
-            SocketClient.sendRequest(request);
+            socketClient.sendRequest(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -140,8 +153,11 @@ public class FrontUserRepo implements IUserRepository {
 
     private User getUserFromServer(Map<String, Object> request) {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(request);
-            if (!"OK".equals(response.get("status"))) return null;
+            Map<String, Object> response = socketClient.sendRequest(request);
+            if (!response.get("status").equals("OK")){
+                System.out.println(response);
+                return null;
+            }
             Object userObj = response.get("user");
             String json = mapper.writeValueAsString(userObj);
             return mapper.readValue(json, User.class);

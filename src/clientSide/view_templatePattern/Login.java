@@ -37,8 +37,8 @@ public class Login extends _SimplePageTemplate {
 
         //Check the password...
         if (toolBoxView.getPasswordServ().passwordCheck(pseudonym, password)){
-            User user = toolBoxView.getUserServ().getUserByPseudonym(pseudonym);
-            Cookies_SingletonPattern.setUser(user.getUserId());
+            User user = toolBoxView.getUserServ().getUserByPseudonymLogin(pseudonym);
+            Cookies_SingletonPattern.setUser(user.getUserId(), user.getPseudonym(), user.getPassword());
             System.out.println(icon.lineBreak + icon.ok() + "Login successful !");
             toolBoxView.getPlaylistServ().createAllSongPlaylist(user);
             pageService.homePage.displayAllPage();

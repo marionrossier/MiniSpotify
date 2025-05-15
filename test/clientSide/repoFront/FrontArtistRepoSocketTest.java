@@ -1,28 +1,37 @@
 package clientSide.repoFront;
 
 import middle.IArtistRepository;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import serverSide.entities.Artist;
 import utilsAndFakes.CommuneMethods;
+import utilsAndFakes.Initializer;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FrontArtistRepoSocketTest {
 
-    static IArtistRepository artistRepo;
-    static CommuneMethods commune;
+    private IArtistRepository artistRepo;
+    private CommuneMethods communeMethods;
+    private Initializer initializer;
 
-    public FrontArtistRepoSocketTest() throws IOException {
+    @BeforeEach
+    void setup() {
+        communeMethods = new CommuneMethods();
+        initializer = communeMethods.initializer;
+        artistRepo = initializer.frontArtistRepo;
+        initializer.populateLocalUsers();
+        initializer.populateLocalArtist();
+
+        communeMethods.startServer();
     }
 
-    @BeforeAll
-    static void setup() throws IOException {
-        commune = new CommuneMethods() {};
-        artistRepo = commune.startServerAndInitRepo(FrontArtistRepo::new);
+    @AfterEach
+    void tearDown() {
+        initializer.cleanUp();
     }
 
     @Test

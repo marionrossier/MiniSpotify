@@ -1,5 +1,6 @@
 package clientSide.repoFront;
 
+import clientSide.services.Cookies_SingletonPattern;
 import clientSide.socket.SocketClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import serverSide.entities.Artist;
@@ -12,14 +13,19 @@ import java.util.Map;
 public class FrontArtistRepo implements IArtistRepository {
 
     private final ObjectMapper mapper = new ObjectMapper();
+    private final SocketClient socketClient;
+
+    public FrontArtistRepo(SocketClient socketClient) {
+        this.socketClient = new SocketClient();
+    }
 
     @Override
     public List<Artist> getAllArtists() {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+            Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getAllArtists",
-                    "username", "marion",
-                    "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU="
+                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                    "password", Cookies_SingletonPattern.getInstance().getUserPassword()
             ));
 
             if (!"OK".equals(response.get("status"))) return null;
@@ -37,11 +43,11 @@ public class FrontArtistRepo implements IArtistRepository {
         try {
             Map<String, Object> request = Map.of(
                     "command", "addArtist",
-                    "username", "marion",
-                    "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
+                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                     "artist", mapper.convertValue(artist, Map.class)
             );
-            SocketClient.sendRequest(request);
+            socketClient.sendRequest(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -51,8 +57,8 @@ public class FrontArtistRepo implements IArtistRepository {
     public Artist getArtistById(int artistId) {
         return getArtistFromServer(Map.of(
                 "command", "getArtistById",
-                "username", "marion",
-                "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
+                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                 "artistId", artistId
         ));
     }
@@ -62,11 +68,11 @@ public class FrontArtistRepo implements IArtistRepository {
         try {
             Map<String, Object> request = Map.of(
                     "command", "saveArtist",
-                    "username", "marion",
-                    "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
+                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                     "artist", mapper.convertValue(artist, Map.class)
             );
-            SocketClient.sendRequest(request);
+            socketClient.sendRequest(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -76,8 +82,8 @@ public class FrontArtistRepo implements IArtistRepository {
     public Artist getArtistByName(String name) {
         return getArtistFromServer(Map.of(
                 "command", "getArtistByName",
-                "username", "marion",
-                "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
+                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                 "artistName", name
         ));
     }
@@ -86,16 +92,19 @@ public class FrontArtistRepo implements IArtistRepository {
     public Artist getArtistBySongId(int songId) {
         return getArtistFromServer(Map.of(
                 "command", "getArtistBySongId",
-                "username", "marion",
-                "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
+                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                 "songId", songId
         ));
     }
 
     private Artist getArtistFromServer(Map<String, Object> request) {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(request);
-            if (!"OK".equals(response.get("status"))) return null;
+            Map<String, Object> response = socketClient.sendRequest(request);
+            if (!response.get("status").equals("OK")) {
+                System.out.println(response);
+                return null;
+            }
             Object artistObj = response.get("artist");
             String json = mapper.writeValueAsString(artistObj);
             return mapper.readValue(json, Artist.class);

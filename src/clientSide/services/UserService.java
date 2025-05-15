@@ -93,4 +93,8 @@ public class UserService {
         }
         return false;
     }
+
+    public User getUserByPseudonymLogin(String pseudonym) {
+        return userLocalRepository.getUserByPseudonymLogin(pseudonym);
+    }
 }

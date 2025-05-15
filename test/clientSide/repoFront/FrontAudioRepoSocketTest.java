@@ -1,36 +1,42 @@
 package clientSide.repoFront;
 
+import clientSide.services.Cookies_SingletonPattern;
 import middle.IAudioRepository;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utilsAndFakes.CommuneMethods;
+import utilsAndFakes.Initializer;
 
 import java.io.*;
 import java.net.Socket;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FrontAudioRepoSocketTest extends CommuneMethods {
+public class FrontAudioRepoSocketTest {
 
-    static IAudioRepository audioRepo;
-    static Thread audioServerThread;
+    private IAudioRepository audioRepo;
+    private Thread audioServerThread;
+    private CommuneMethods communeMethods;
+    private Initializer initializer;
 
-    private static final String TEST_FILE_NAME = "Believer - Imagine Dragons - Evolve - 2017 - Pop rock _ Alt rock - 0324.mp3";
-    private static final File SOURCE_FILE = new File(System.getProperty("user.home") +
+    private final String TEST_FILE_NAME = "Believer - Imagine Dragons - Evolve - 2017 - Pop rock _ Alt rock - 0324.mp3";
+    private final File SOURCE_FILE = new File(System.getProperty("user.home") +
             "/MiniSpotifyFlorentMarion/songsfiles/" + TEST_FILE_NAME);
 
-    public FrontAudioRepoSocketTest() throws IOException {
-    }
-
-    @BeforeAll
-    static void setup() throws IOException {
+    @BeforeEach
+    void setup() {
+        communeMethods = new CommuneMethods();
+        initializer = communeMethods.initializer;
+        initializer.populateLocalUsers();
+        Cookies_SingletonPattern.setInstance(232928320, "marion", "hash");
 
         try (Socket socket = new Socket("127.0.0.1", 45001)) {
             System.out.println("✅ Audio server already running.");
         } catch (IOException e) {
             audioServerThread = new Thread(() -> {
                 try {
-                    audioSocketServer.main();
+                    initializer.audioSocketServer.main();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
@@ -43,8 +49,12 @@ public class FrontAudioRepoSocketTest extends CommuneMethods {
                 Thread.currentThread().interrupt();
             }
         }
+        audioRepo = initializer.frontAudioRepo;
+    }
 
-        audioRepo = new FrontAudioRepo();
+    @AfterEach
+    void tearDown() {
+        initializer.cleanUp();
     }
 
     @Test

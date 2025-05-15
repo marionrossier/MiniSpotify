@@ -1,5 +1,6 @@
 package clientSide.repoFront;
 
+import clientSide.services.Cookies_SingletonPattern;
 import middle.IAudioRepository;
 
 import java.io.*;
@@ -9,8 +10,6 @@ public class FrontAudioRepo implements IAudioRepository {
 
     private static final String SERVER_ADDRESS = "127.0.0.1";
     private static final int SERVER_PORT = 45001; // ⚠️ à séparer si tu veux dissocier socket JSON et audio
-    private static final String USERNAME = "marion";
-    private static final String PASSWORD = "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=";
 
     @Override
     public InputStream getStream(String fileName) {
@@ -20,8 +19,8 @@ public class FrontAudioRepo implements IAudioRepository {
 
             // ✅ Envoie une requête de fichier audio (simple protocole)
             out.writeUTF("getAudioFile");
-            out.writeUTF(USERNAME);
-            out.writeUTF(PASSWORD);
+            out.writeUTF(String.valueOf(Cookies_SingletonPattern.getInstance().getUserPseudonym()));
+            out.writeUTF(Cookies_SingletonPattern.getInstance().getUserPassword());
             out.writeUTF(fileName);
             out.flush();
 

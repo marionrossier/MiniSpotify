@@ -67,7 +67,7 @@ public class SocketServer {
                         -> backSongRepo.handleRequest(request);
 
                 // 👤 User
-                case "getAllUsers", "getUserById", "getUserByPseudonym", "saveUser",
+                case "getAllUsers", "getUserById", "getUserByPseudonymLogin", "getUserByPseudonym", "saveUser",
                      "addPlaylistToUser", "addFriendToUser", "deleteFriendFromUser"
                         -> backUserRepo.handleRequest(request);
 

@@ -1,5 +1,6 @@
 package clientSide.repoFront;
 
+import clientSide.services.Cookies_SingletonPattern;
 import clientSide.socket.SocketClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import middle.IPlaylistRepository;
@@ -13,13 +14,18 @@ import java.util.Map;
 public class FrontPlaylistRepo implements IPlaylistRepository {
 
     private final ObjectMapper mapper = new ObjectMapper();
+    private final SocketClient socketClient;
+
+    public FrontPlaylistRepo(SocketClient socketClient) {
+        this.socketClient = new SocketClient();
+    }
 
     @Override
     public Playlist getPlaylistById(int playlistId) {
         return getPlaylistFromServer(Map.of(
                 "command", "getPlaylistById",
-                "username", "marion",
-                "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
+                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                 "playlistId", playlistId
         ));
     }
@@ -28,8 +34,8 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
     public Playlist getPlaylistByName(String name) {
         return getPlaylistFromServer(Map.of(
                 "command", "getPlaylistByName",
-                "username", "marion",
-                "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
+                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                 "name", name
         ));
     }
@@ -37,10 +43,10 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
     @Override
     public List<Playlist> getAllPlaylists() {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+            Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getAllPlaylists",
-                    "username", "marion",
-                    "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU="
+                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                    "password", Cookies_SingletonPattern.getInstance().getUserPassword()
             ));
 
             if (!"OK".equals(response.get("status"))) return null;
@@ -55,10 +61,10 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
 
     @Override
     public void deletePlaylistById(int playlistId) {
-        SocketClient.sendRequest(Map.of(
+        socketClient.sendRequest(Map.of(
                 "command", "deletePlaylistById",
-                "username", "marion",
-                "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
+                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                 "playlistId", playlistId
         ));
     }
@@ -68,11 +74,11 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
         try {
             Map<String, Object> request = Map.of(
                     "command", "savePlaylist",
-                    "username", "marion",
-                    "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
+                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                     "playlist", mapper.convertValue(playlist, Map.class)
             );
-            SocketClient.sendRequest(request);
+            socketClient.sendRequest(request);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -81,10 +87,10 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
     @Override
     public PlaylistEnum getPlaylistStatus(Playlist playlist) {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(Map.of(
+            Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getPlaylistStatus",
-                    "username", "marion",
-                    "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU=",
+                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
                     "playlist", mapper.convertValue(playlist, Map.class)
             ));
             return PlaylistEnum.valueOf((String) response.get("playlistStatus"));
@@ -97,15 +103,18 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
     public Playlist getTemporaryPlaylistOfCurrentUser(int currentUserId) {
         return getPlaylistFromServer(Map.of(
                 "command", "getTemporaryPlaylistOfCurrentUser",
-                "username", "marion",
-                "password", "ipmUvIFpi5NU/dhSPJuy49ikJM9yHSWfzKict97V/gU="
+                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                "password", Cookies_SingletonPattern.getInstance().getUserPassword()
         ));
     }
 
     private Playlist getPlaylistFromServer(Map<String, Object> request) {
         try {
-            Map<String, Object> response = SocketClient.sendRequest(request);
-            if (!"OK".equals(response.get("status"))) return null;
+            Map<String, Object> response = socketClient.sendRequest(request);
+            if (!response.get("status").equals("OK")) {
+                System.out.println(response);
+                return null;
+            }
             Object playlistObj = response.get("playlist");
             String json = mapper.writeValueAsString(playlistObj);
             return mapper.readValue(json, Playlist.class);

@@ -1,11 +1,13 @@
 package clientSide.repoFront;
 
 import middle.ISongRepository;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import serverSide.entities.MusicGender;
 import serverSide.entities.Song;
 import utilsAndFakes.CommuneMethods;
+import utilsAndFakes.Initializer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,18 +15,28 @@ import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FrontSongRepoSocketTest extends CommuneMethods {
+class FrontSongRepoSocketTest {
 
-    static ISongRepository songRepo;
-    static CommuneMethods commune;
+    private ISongRepository songRepo;
+    private CommuneMethods communeMethods;
+    private Initializer initializer;
 
-    public FrontSongRepoSocketTest() throws IOException {
+
+    @BeforeEach
+    void setup() {
+        communeMethods = new CommuneMethods();
+        initializer = communeMethods.initializer;
+        songRepo = initializer.frontSongRepo;
+        initializer.populateLocalUsers();
+        initializer.populateLocalArtist();
+        initializer.populateLocalSong();
+
+        communeMethods.startServer();
     }
 
-    @BeforeAll
-    static void setup() throws IOException {
-        commune = new CommuneMethods() {};
-        songRepo = commune.startServerAndInitRepo(FrontSongRepo::new);
+    @AfterEach
+    void tearDown() {
+        initializer.cleanUp();
     }
 
     @Test
