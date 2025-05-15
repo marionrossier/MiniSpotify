@@ -2,17 +2,17 @@ package clientSide.services;
 
 import serverSide.entities.PlanEnum;
 import serverSide.entities.User;
-import serverSide.repositories.UserLocalRepository;
+import middle.IUserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
-    private final UserLocalRepository userLocalRepository;
+    private final IUserRepository userLocalRepository;
     private final PasswordService passwordService;
 
-    public UserService(ServiceToolBox serviceToolBox, PasswordService passwordService){
-        this.userLocalRepository = serviceToolBox.userLocalRepository;
+    public UserService(ToolBoxService toolBoxService, PasswordService passwordService){
+        this.userLocalRepository = toolBoxService.userLocalRepository;
         this.passwordService = passwordService;
     }
 
@@ -71,7 +71,8 @@ public class UserService {
             playlists = new ArrayList<>();
             userLocalRepository.getUserById(getCurrentUserId()).setPlaylists(playlists);
         }
-        userLocalRepository.addPlaylistToUser(getCurrentUserId(),playlistId);
+        User user = userLocalRepository.getUserById(getCurrentUserId());
+        userLocalRepository.addPlaylistToUser(user,playlistId);
     }
 
     public void followFriend() {/*TODO*/}
@@ -91,5 +92,9 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    public User getUserByPseudonymLogin(String pseudonym) {
+        return userLocalRepository.getUserByPseudonymLogin(pseudonym);
     }
 }

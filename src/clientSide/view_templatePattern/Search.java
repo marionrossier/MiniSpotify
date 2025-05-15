@@ -1,6 +1,6 @@
 package clientSide.view_templatePattern;
 
-import clientSide.services.ViewToolBox;
+import clientSide.services.ToolBoxView;
 import serverSide.entities.Playlist;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
@@ -10,9 +10,9 @@ import java.util.List;
 
 public class Search extends _SimplePageTemplate {
 
-    public Search(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+    public Search(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
-        this.viewToolBox = viewToolBox;
+        this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Search Page";
         this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak +
@@ -28,7 +28,7 @@ public class Search extends _SimplePageTemplate {
         String songTitle = scanner.nextLine();
         System.out.println();
 
-        viewToolBox.getSearchServ().searchSong(songTitle, "byTitle", getPageId(), pageService, viewToolBox.getPlaylistServ());
+        toolBoxView.getSearchServ().searchSong(songTitle, "byTitle", getPageId(), pageService, toolBoxView.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
     }
 
@@ -38,7 +38,7 @@ public class Search extends _SimplePageTemplate {
         String artistName = scanner.nextLine();
         System.out.println();
 
-        viewToolBox.getSearchServ().searchSong(artistName, "byArtist", getPageId(), pageService, viewToolBox.getPlaylistServ());
+        toolBoxView.getSearchServ().searchSong(artistName, "byArtist", getPageId(), pageService, toolBoxView.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
     }
 
@@ -53,17 +53,17 @@ public class Search extends _SimplePageTemplate {
         System.out.println("Select your Playlist to add by entering their number and press \"enter\" between each song." + icon.lineBreak +
                 "End selection with an \"x\"." + icon.lineBreak);
 
-        List<Playlist> playlist = viewToolBox.getPlaylistServ().getPublicPlaylists();
-        viewToolBox.getPrintServ().printPlaylist(playlist);
+        List<Playlist> playlist = toolBoxView.getPlaylistServ().getPublicPlaylists();
+        toolBoxView.getPrintServ().printPlaylist(playlist);
         this.displayInput();
-        LinkedList<Integer> chosenPlaylists = viewToolBox.getSearchServ().chooseFoundedPlaylist(playlist, pageService);
+        LinkedList<Integer> chosenPlaylists = toolBoxView.getSearchServ().chooseFoundedPlaylist(playlist, pageService);
 
         for (Integer playlistIndex : chosenPlaylists) {
             int playlistId = playlist.get(playlistIndex).getPlaylistId();
-            if (!viewToolBox.getUserServ().getUserById(viewToolBox.getUserServ().getCurrentUserId())
+            if (!toolBoxView.getUserServ().getUserById(toolBoxView.getUserServ().getCurrentUserId())
                     .getPlaylists()
                     .contains(playlistId)) {
-                viewToolBox.getUserServ().addOnePlaylist(playlistId);
+                toolBoxView.getUserServ().addOnePlaylist(playlistId);
             }
         }
         System.out.println("Playlist.s has been added.");

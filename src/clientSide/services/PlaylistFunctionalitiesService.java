@@ -3,26 +3,29 @@ package clientSide.services;
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 import serverSide.entities.User;
-import serverSide.repositories.PlaylistLocalRepository;
-import serverSide.repositories.UserLocalRepository;
+import middle.IPlaylistRepository;
+import middle.IUserRepository;
 import java.util.List;
 import java.util.Scanner;
 
 public class PlaylistFunctionalitiesService {
 
     Scanner scanner = new Scanner(System.in);
-    private final UserLocalRepository userLocalRepository;
-    private final PlaylistLocalRepository playlistLocalRepository;
+    private final IUserRepository userLocalRepository;
+    private final IPlaylistRepository playlistLocalRepository;
     private final UserService userService;
+    private final SongService songService;
 
-    public PlaylistFunctionalitiesService(ServiceToolBox serviceToolBox, UserLocalRepository userLocalRepository, UserService userService){
-        this.playlistLocalRepository = serviceToolBox.playlistLocalRepository;
-        this.userLocalRepository = userLocalRepository;
+    public PlaylistFunctionalitiesService(ToolBoxService toolBoxService, UserService userService,
+                                          SongService songService){
+        this.playlistLocalRepository = toolBoxService.playlistLocalRepository;
+        this.userLocalRepository = toolBoxService.userLocalRepository;
         this.userService = userService;
+        this.songService = songService;
     }
 
     public void createNewPlaylist (String playlistName, PlaylistEnum status, PlaylistServices playlistServices){
-        playlistServices.createPlaylistWithTemporaryPlaylist(playlistName, status);
+        playlistServices.adjustTemporaryPlaylistToNewPlaylist(playlistName, status);
         int playlistId = playlistServices.getPlaylistByName(playlistName).getPlaylistId();
         playlistServices.setCurrentPlaylistId(playlistId);
         System.out.println();
@@ -45,12 +48,17 @@ public class PlaylistFunctionalitiesService {
         int playlistIndex = actualPlaylists.indexOf(playlistId);
 
         actualPlaylists.remove(playlistIndex);
+        userService.saveUser(user);
     }
 
-    public void deletePlaylist(int playlistId) {
+    public void deletePlaylist(int playlistId, int currentPlaylistId) {
+        User user = userService.getUserById(userService.getCurrentUserId());
         Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
-        if (playlist.getStatus().equals(PlaylistEnum.PRIVATE)){
+        int playlistOwner = playlist.getOwnerId();
+
+        if (playlistOwner == user.getUserId()){
             playlistLocalRepository.deletePlaylistById(playlistId);
+            removePlaylistFromUser(playlistId);
             System.out.println("Playlist deleted !");
         }
         else {
@@ -84,6 +92,14 @@ public class PlaylistFunctionalitiesService {
 
     public void deleteSongFromPlaylist(int playlistId, int songIndex) {
         Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
+
+        int songId = songService.getSongById(playlist.getPlaylistSongsListWithId().get(songIndex)).getSongId();
+        int currentSongId = songService.getCurrentSongId();
+
+        if (currentSongId == songId){
+            System.err.println("You can not delete the current playing song.");
+        }
+
         playlist.getPlaylistSongsListWithId().remove(songIndex);
         playlistLocalRepository.savePlaylist(playlist);
     }
@@ -156,7 +172,7 @@ public class PlaylistFunctionalitiesService {
         return chosenPlaylist;
     }
 
-    public void playlistPageRouter(PageService pageService, SongService songService, PlaylistServices playlistServices) {
+    public void playlistPageRouter(PlaylistServices playlistServices, PageService pageService) {
         int chosenPlaylist = takeAndValidationInputPlaylistChoice();
 
         if (chosenPlaylist == 0) {
@@ -164,7 +180,7 @@ public class PlaylistFunctionalitiesService {
             return;
         }
         playlistServices.setCurrentPlaylistId(chosenPlaylist);
-        songService.setCurrentSongId(playlistLocalRepository.getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
+        songService.setCurrentSongId(playlistServices.getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
 
         if (isCurrentUserOwnerOfPlaylist(chosenPlaylist)){
             pageService.playlistPageOpen.displayAllPage();

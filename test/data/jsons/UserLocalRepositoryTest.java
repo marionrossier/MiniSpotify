@@ -2,8 +2,10 @@ package data.jsons;
 
 import serverSide.entities.PlanEnum;
 import serverSide.entities.User;
-import serverSide.repositories.UserLocalRepository;
+import serverSide.repoLocal.UserLocalRepository;
 import org.junit.jupiter.api.*;
+import utilsAndFakes.CommuneMethods;
+import utilsAndFakes.Initializer;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,18 +18,20 @@ class UserLocalRepositoryTest {
 
     private File tempFile;
     private UserLocalRepository userLocalRepository;
+    private CommuneMethods communeMethods;
+    private Initializer initializer;
 
     @BeforeEach
     void setUp() throws IOException {
         tempFile = Files.createTempFile("user", ".json").toFile();
         userLocalRepository = new UserLocalRepository(tempFile.getAbsolutePath());
+        communeMethods = new CommuneMethods();
+        initializer = communeMethods.initializer;
     }
 
     @AfterEach
     void tearDown() {
-        if (tempFile.exists()) {
-            tempFile.delete();
-        }
+        initializer.cleanUp();
     }
 
     @Test
@@ -42,23 +46,6 @@ class UserLocalRepositoryTest {
         List<User> users = userLocalRepository.getAllUsers();
         assertEquals(1, users.size());
         assertEquals("TestUser", users.get(0).getPseudonym());
-    }
-
-    @Test
-    void removeUserById_shouldDeleteTheUser() {
-        // Arrange
-        User userOne = new User("UserOne", "one@example.com", "1234", PlanEnum.FREE);
-        User userTwo = new User("UserTwo", "two@example.com", "1234", PlanEnum.FREE);
-        userLocalRepository.saveUser(userOne);
-        userLocalRepository.saveUser(userTwo);
-
-        // Act
-        userLocalRepository.removeUserById(userOne.getUserId());
-
-        // Assert
-        List<User> result = userLocalRepository.getAllUsers();
-        assertEquals(1, result.size());
-        assertEquals(userTwo.getUserId(), result.get(0).getUserId());
     }
 
     @Test

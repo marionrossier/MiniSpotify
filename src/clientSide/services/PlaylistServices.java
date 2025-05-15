@@ -4,26 +4,26 @@ import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 import serverSide.entities.Song;
 import serverSide.entities.User;
-import serverSide.repositories.PlaylistLocalRepository;
-import serverSide.repositories.SongLocalRepository;
+import middle.IPlaylistRepository;
+import middle.ISongRepository;
 
 import java.util.*;
 
 public class PlaylistServices {
 
-    private final PlaylistLocalRepository playlistLocalRepository;
+    private final IPlaylistRepository playlistLocalRepository;
     private final TemporaryPlaylistService temporaryPlaylistService;
     private final PlaylistFunctionalitiesService playlistFuncService;
-    private final SongLocalRepository songLocalRepository;
+    private final ISongRepository songLocalRepository;
 
 
-    public PlaylistServices (ServiceToolBox serviceToolBox,
+    public PlaylistServices (ToolBoxService toolBoxService,
                              PlaylistFunctionalitiesService playlistFuncService,
                              TemporaryPlaylistService temporaryPlaylistService){
-        this.playlistLocalRepository = serviceToolBox.playlistLocalRepository;
+        this.playlistLocalRepository = toolBoxService.playlistLocalRepository;
         this.temporaryPlaylistService = temporaryPlaylistService;
         this.playlistFuncService = playlistFuncService;
-        this.songLocalRepository = serviceToolBox.songLocalRepository;
+        this.songLocalRepository = toolBoxService.songLocalRepository;
     }
 
     public int setDurationSeconds(int playlistId) {
@@ -49,7 +49,8 @@ public class PlaylistServices {
     }
 
     public PlaylistEnum getPlaylistStatus (){
-        return playlistLocalRepository.getPlaylistStatus(getCurrentPlaylistId());
+        Playlist playlist = getPlaylistById(getCurrentPlaylistId());
+        return playlistLocalRepository.getPlaylistStatus(playlist);
     }
 
     public int getAllSongsPlaylistId (){
@@ -89,7 +90,7 @@ public class PlaylistServices {
         playlistFuncService.createAllSongPlaylist(user, this);
     }
     public void deletePlaylist(int playlistId) {
-        playlistFuncService.deletePlaylist(playlistId);
+        playlistFuncService.deletePlaylist(playlistId, getCurrentPlaylistId());
     }
     public void renamePlayList(int playlistId, String newName) {
         playlistFuncService.renamePlayList(playlistId, newName);
@@ -109,8 +110,8 @@ public class PlaylistServices {
     public int takeAndValidationInputPlaylistChoice() {
         return playlistFuncService.takeAndValidationInputPlaylistChoice();
     }
-    public void playlistPageRouter(PageService pageService, SongService songService) {
-        playlistFuncService.playlistPageRouter(pageService, songService, this);
+    public void playlistPageRouter(PageService pageService) {
+        playlistFuncService.playlistPageRouter(this, pageService);
     }
 
     //TEMPORARY PLAYLIST :
@@ -120,13 +121,10 @@ public class PlaylistServices {
     public void createTemporaryPlaylist(LinkedList<Integer> chosenSongs, PlaylistEnum status) {
         temporaryPlaylistService.createTemporaryPlaylist(chosenSongs,status, this);
     }
-    public void createPlaylistWithTemporaryPlaylist(String playlistName, PlaylistEnum status) {
-        temporaryPlaylistService.createPlaylistWithTemporaryPlaylist(playlistName,status, this);
+    public void adjustTemporaryPlaylistToNewPlaylist(String playlistName, PlaylistEnum status) {
+        temporaryPlaylistService.adjustTemporaryPlaylistToNewPlaylist(playlistName,status);
     }
     public void addSongToPlaylistFromTemporaryPlaylist(int temporaryPlaylistId, int finalPlaylistId) {
         temporaryPlaylistService.addSongToPlaylistFromTemporaryPlaylist(temporaryPlaylistId, finalPlaylistId);
-    }
-    public void deleteTemporaryPlaylist() {
-        temporaryPlaylistService.deleteTemporaryPlaylist();
     }
 }

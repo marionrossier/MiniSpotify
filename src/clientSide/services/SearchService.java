@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class SearchService {
 
     Scanner scanner = new Scanner(System.in);
-    private final Icon icon = new Icon();
+    private final IconService icon = new IconService();
     private final SongService songService;
     private final PrintService printService;
 
@@ -42,7 +42,7 @@ public class SearchService {
                 return;
         }
         if (foundedSongs.isEmpty()) {
-            System.out.println("No songs found.");
+            System.err.println("No songs found.");
             pageService.goBack(pageId);
             return;
         }
@@ -57,7 +57,7 @@ public class SearchService {
         LinkedList<Song> songsByTitle;
 
         if (songTitle == null || songTitle.isEmpty()) {
-            System.out.println("No result.");
+            System.err.println("No result.");
             return new LinkedList<>();
         }
         else {
@@ -71,7 +71,7 @@ public class SearchService {
         LinkedList<Song> songsByArtist;
 
         if (artistName == null || artistName.isEmpty()) {
-            System.out.println("No result.");
+            System.err.println("No result.");
             return new LinkedList<>();
         }
         else {
@@ -85,7 +85,7 @@ public class SearchService {
         LinkedList<Song> songsByGender;
 
         if (genderName == null) {
-            System.out.println("No result.");
+            System.err.println("No result.");
             return new LinkedList<>();
         }
         else {
@@ -104,17 +104,6 @@ public class SearchService {
             songsByTitleId.add(song.getSongId());
         }
         return songsByTitleId;
-    }
-
-    private LinkedList<Integer> listPlaylistToListInt(List<Playlist> playlists) {
-        LinkedList<Integer> playlistById = new LinkedList<>();
-        if (playlists.isEmpty()) {
-            return playlistById;
-        }
-        for (Playlist playlist : playlists) {
-            playlistById.add(playlist.getPlaylistId());
-        }
-        return playlistById;
     }
 
     public LinkedList<Integer> chooseFoundedSongs(List<Integer> foundedSongs, PageService pageService){

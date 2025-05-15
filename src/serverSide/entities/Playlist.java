@@ -33,6 +33,18 @@ public class Playlist {
         this.status = status;
     }
 
+    //Only for tests
+    public Playlist(String name, int playlistId, LinkedList <Integer> listSongsId, int durationSeconds, int size, int ownerId, PlaylistEnum status) {
+        this.name = name;
+        this.playlistId = playlistId;
+        this.ownerId = 0;
+        this.listSongsId = listSongsId;
+        this.durationSeconds = durationSeconds;
+        this.size = size;
+        this.ownerId = ownerId;
+        this.status = status;
+    }
+
     public String getName() {
         return name;
     }

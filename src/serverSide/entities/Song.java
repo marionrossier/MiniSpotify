@@ -1,6 +1,5 @@
 package serverSide.entities;
 
-import serverSide.repositories.ArtistLocalRepository;
 import clientSide.services.UniqueIdService;
 
 public class Song {

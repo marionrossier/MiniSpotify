@@ -2,13 +2,13 @@ package clientSide.view_templatePattern;
 
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
-import clientSide.services.ViewToolBox;
+import clientSide.services.ToolBoxView;
 
 public class PlaylistChoseList extends _SimplePageTemplate {
 
-    public PlaylistChoseList(PageService pageService, IPlaylistPlayer spotifyPlayer, ViewToolBox viewToolBox, int pageId) {
+    public PlaylistChoseList(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
-        this.viewToolBox = viewToolBox;
+        this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Chose Your Playlist Page";
         this.pageContent = icon.zeroBack + icon.lineBreak +
@@ -17,12 +17,12 @@ public class PlaylistChoseList extends _SimplePageTemplate {
 
     @Override
     public void displaySpecificContent() {
-        viewToolBox.getPrintServ().printUserPlaylists(viewToolBox.getUserServ().getCurrentUserId());
+        toolBoxView.getPrintServ().printUserPlaylists(toolBoxView.getUserServ().getCurrentUserId());
     }
 
     @Override
     public void validateInput() {
-        viewToolBox.getPlaylistServ().playlistPageRouter(pageService, viewToolBox.getSongServ());
+        toolBoxView.getPlaylistServ().playlistPageRouter(pageService);
     }
 
     @Override
