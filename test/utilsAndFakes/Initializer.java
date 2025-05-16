@@ -109,7 +109,7 @@ public class Initializer {
         playlistService = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService);
         artistService = new ArtistService(toolBoxService);
         printService = new PrintService(songService, artistService, playlistService, userService);
-        searchService = new SearchService(songService, printService);
+        searchService = new SearchService(songService, printService, userService);
         playlistReorderSongService = new PlaylistReorderSongService(toolBoxService, scanner);
         uniqueIdService = new UniqueIdService();
         songService = new SongService(toolBoxService);
@@ -119,7 +119,7 @@ public class Initializer {
                 fakeMusicPlayer, audioLocalRepository, songService, playlistService);
 
         toolBoxView = new ToolBoxView(playlistService, userService, songService, artistService, printService,
-                searchService, passwordService, playlistReorderSongService, temporaryPlaylistService, uniqueIdService, passwordService);
+                searchService, passwordService, playlistReorderSongService, temporaryPlaylistService, uniqueIdService);
 
         pageService = new PageService(playlistPlayer, toolBoxView, userService, menuPagesStack);
 

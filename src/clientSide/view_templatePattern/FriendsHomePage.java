@@ -12,11 +12,9 @@ public class FriendsHomePage extends _SimplePageTemplate {
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Friends Home Page";
-        this.pageContent = icon.zeroBack + icon.lineBreak + //TODO : bien refactorer la classe et ses boutons !
+        this.pageContent = icon.zeroBack + icon.nineHomepage + icon.lineBreak +
                 icon.nbr(1) + "Display friends" + icon.lineBreak +
-                icon.nbr(2) + "Add a friend" + icon.lineBreak +
-                icon.nbr(3) + "Remove a friend" + icon.lineBreak +
-                icon.nbr(4) + "Commune Playlists" + icon.lineBreak  + icon.eightMusicPlayer;
+                icon.nbr(2) + "Search friend" + icon.lineBreak;
     }
 
     @Override
@@ -26,16 +24,7 @@ public class FriendsHomePage extends _SimplePageTemplate {
 
     @Override
     public void button2() {
-        pageService.friendsCommunePlaylists.displayAllPage();
+        pageService.friendSearch.displayAllPage();
     }
 
-    @Override
-    public void button3() {
-        pageService.friendAddAFriend.displayAllPage();
-    }
-
-    @Override
-    public void button4() {
-        pageService.friendAddPlaylist.displayAllPage();
-    }
 }

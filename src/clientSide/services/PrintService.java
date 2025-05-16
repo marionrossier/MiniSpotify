@@ -39,18 +39,21 @@ public class PrintService {
         System.out.println();
     }
 
-    public void printPlaylist(List<Playlist> playlists) {
-        if (playlists == null || playlists.isEmpty()) {
+    public void printPlaylist(List<Integer> playlistsId) {
+        if (playlistsId == null || playlistsId.isEmpty()) {
             System.out.println("No playlist available.");
             return;
         }
 
         int i = 1;
-        for (Playlist playlist : playlists) {
-            System.out.println(i + ". " + playlist.getName());
-            i++;
+        for (Integer playlistId : playlistsId) {
+            Playlist playlist = playlistService.getPlaylistById(playlistId);
+            if (playlist != null) {
+                System.out.println(i + ". " + playlist.getName());
+                i++;
+            }
         }
-}
+    }
 
     public void printUserPlaylists(int userId){
         int i = 1;
@@ -80,5 +83,68 @@ public class PrintService {
             return icon.earth();
         }
         return icon.lock();
+    }
+
+    public boolean printUserFriends(int userId){
+        int i = 1;
+        User user = userService.getUserById(userId);
+
+        List<Integer> friendsId = userService.getUserById(userId).getFriends();
+        if (user != null) {
+            if (friendsId.isEmpty()){
+                System.err.println("No friends actually.");
+                return false;
+            }
+            for (int friendId : friendsId) {
+                User friend = userService.getUserById(friendId);
+
+                if (friend != null) {
+                    System.out.println(i + ". " + friend.getPseudonym());
+                    i++;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void printUsers(List<Integer> usersId){
+        if (usersId == null || usersId.isEmpty()) {
+            System.out.println("No user found.");
+            return;
+        }
+        int i = 1;
+        for (int userId : usersId) {
+            User user = userService.getUserById(userId);
+            if (user != null) {
+                System.out.println(i + ". " + user.getPseudonym());
+                i++;
+            }
+        }
+        System.out.println();
+    }
+
+    public void printUserPublicPlaylists(int friendId) {
+        int i = 1;
+        User user = userService.getUserById(friendId);
+
+        if (user != null && user.getPlaylists() != null) {
+            for (int playlistId : userService.getUserById(friendId).getPlaylists()) {
+                Playlist playlist = playlistService.getPlaylistById(playlistId);
+
+                if ((playlist != null)
+                        && (playlist.getStatus().equals(PlaylistEnum.PUBLIC))
+                        && (playlist.getOwnerId() == user.getUserId())) {
+                    boolean isUserOwner = playlist.getOwnerId() == user.getUserId();
+                    System.out.println(i + ". " +
+                            playlist.getName() + " - " +
+                            printPlaylistStatus(playlist.getStatus()) +
+                            (isUserOwner ? icon.house() : ""));
+                    i++;
+                }
+            }
+        }
+        else {
+            System.out.println("No public playlists available.");
+        }
     }
 }

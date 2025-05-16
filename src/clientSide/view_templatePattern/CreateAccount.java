@@ -24,6 +24,7 @@ public class CreateAccount extends _InversedPageTemplate {
     }
 
     public void displaySpecificContent () {
+        System.out.println("For going back, enter \"0\".");
         System.out.print("Enter your pseudonym : ");
         pseudonym = pageService.gotAnInput(scanner.nextLine());
         System.out.print("Enter your password : ");

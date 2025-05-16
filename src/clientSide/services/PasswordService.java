@@ -41,7 +41,7 @@ public class PasswordService {
         User searchedUser = userLocalRepository.getUserByPseudonymLogin(pseudonym);
 
         if (searchedUser == null) {
-            System.err.println("The user does not exist.");
+            System.out.print(ToolBoxView.PRINT_RED + "The user does not exist.");
             return false;
         }
 
@@ -50,7 +50,7 @@ public class PasswordService {
         if (givenHashedPassword.equals(searchedUser.getPassword())) {
             return true;
         } else {
-            System.err.println("The password is incorrect.");
+            System.out.print(ToolBoxView.PRINT_RED + "The password is incorrect.");
             return false;
         }
     }

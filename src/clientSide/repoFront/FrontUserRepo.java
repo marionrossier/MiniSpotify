@@ -8,7 +8,6 @@ import serverSide.entities.User;
 
 import java.util.*;
 
-//TODO : résoudre le problème de l'authentification qui pass plus.
 public class FrontUserRepo implements IUserRepository {
     private final ObjectMapper mapper = new ObjectMapper();
     private final SocketClient socketClient;
@@ -146,6 +145,25 @@ public class FrontUserRepo implements IUserRepository {
                     "friendId", friendId
             );
             socketClient.sendRequest(request);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Integer> getAllFriendsFromUser(User user) {
+        try {
+            Map<String, Object> response = socketClient.sendRequest(Map.of(
+                    "command", "getAllFriendsFromUser",
+                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
+                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
+                    "user", mapper.convertValue(user, Map.class)
+            ));
+            if (!"OK".equals(response.get("status"))) return null;
+            List<?> raw = (List<?>) response.get("friends");
+            String json = mapper.writeValueAsString(raw);
+            Integer[] friends = mapper.readValue(json, Integer[].class);
+            return Arrays.asList(friends);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

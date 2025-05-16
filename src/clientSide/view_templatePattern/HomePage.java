@@ -14,8 +14,8 @@ public class HomePage extends _SimplePageTemplate {
         this.pageContent =
                 icon.nbr(0) + "Log out" + " | " + icon.eightMusicPlayer + icon.lineBreak +
                 icon.nbr(1) + "Playlists" + icon.lineBreak +
-                icon.nbr(2) + "Search" + icon.lineBreak +
-                icon.nbr(3) + "Friends (TODO)" + icon.premium();
+                icon.nbr(2) + "Search song" + icon.lineBreak +
+                icon.nbr(3) + "Friends" + icon.premium();
     }
 
     @Override

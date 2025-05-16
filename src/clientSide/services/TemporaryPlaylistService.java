@@ -55,7 +55,7 @@ public class TemporaryPlaylistService {
             newPlaylist.setName(playlistName);
             newPlaylist.setStatus(status);
             playlistLocalRepository.savePlaylist(newPlaylist);
-            userService.addOnePlaylist(newPlaylist.getPlaylistId());
+            userService.addOnePlaylistToCurrentUser(newPlaylist.getPlaylistId());
         } else {
             System.err.println("Temporary playlist not found.");
         }

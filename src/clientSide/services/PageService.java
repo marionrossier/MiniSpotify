@@ -12,30 +12,29 @@ import java.util.Stack;
 public class PageService {
 
     ArrayList<_MenuInterface> pages = new ArrayList<>();
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
     private final Stack<Integer> menuPagesStack;
 
     private final IPlaylistPlayer spotifyPlayer;
-    public PlaylistChoseList playlistChoseList;
-    public PlaylistCreation playlistCreation;
-    public PlaylistDeletion playlistDeletion;
-    public FriendAddAFriend friendAddAFriend;
-    public FriendsCommunePlaylists friendsCommunePlaylists;
-    public FriendsDisplayFriends friendsDisplayFriends;
-    public FriendsHomePage friendsHomePage;
-    public FriendAddPlaylist friendAddPlaylist;
-    public HomePage homePage;
-    public PlaylistHomePage playlistHomePage;
     public Login login;
     public CreateAccount createAccount;
-    public PlaylistPageOpen playlistPageOpen;
-    public Search search;
-    public SongPlayer songPlayer;
-    public SearchGender searchGender;
-    public FriendInformation friendInformation;
-    public FriendRemoveAFriend friendRemoveAFriend;
-    public ActionFoundedSongs actionFoundedSongs;
+    public HomePage homePage;
+    public PlaylistHomePage playlistHomePage;
+    public PlaylistChoseList playlistChoseList;
     public PlaylistPageShared playlistPageShared;
+    public PlaylistPageOpen playlistPageOpen;
+    public PlaylistCreation playlistCreation;
+    public PlaylistDeletion playlistDeletion;
+    public Search search;
+    public ActionFoundedSongs actionFoundedSongs;
+    public SearchGender searchGender;
+    public FriendsPlaylistPage friendsPlaylistPage;
+    public FriendsDisplayFriends friendsDisplayFriends;
+    public FriendsHomePage friendsHomePage;
+    public FriendSearch friendSearch;
+    public FriendPlaylists friendPlaylists;
+    public FriendOptions friendOptions;
+    public SongPlayer songPlayer;
 
 
     private final UserService userService;
@@ -64,11 +63,8 @@ public class PageService {
         this.playlistDeletion = new PlaylistDeletion(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.playlistDeletion);
 
-        this.friendAddAFriend = new FriendAddAFriend(this, spotifyPlayer, toolBoxView, pageId++);
-        pages.add(this.friendAddAFriend);
-
-        this.friendsCommunePlaylists = new FriendsCommunePlaylists(this, spotifyPlayer, toolBoxView, pageId++);
-        pages.add(this.friendsCommunePlaylists);
+        this.friendsPlaylistPage = new FriendsPlaylistPage(this, spotifyPlayer, toolBoxView, pageId++);
+        pages.add(this.friendsPlaylistPage);
 
         this.friendsDisplayFriends = new FriendsDisplayFriends(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.friendsDisplayFriends);
@@ -76,8 +72,8 @@ public class PageService {
         this.friendsHomePage = new FriendsHomePage(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.friendsHomePage);
 
-        this.friendAddPlaylist = new FriendAddPlaylist(this, spotifyPlayer, toolBoxView, pageId++);
-        pages.add(this.friendAddPlaylist);
+        this.friendSearch = new FriendSearch(this, spotifyPlayer, toolBoxView, pageId++);
+        pages.add(this.friendSearch);
 
         this.homePage = new HomePage(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.homePage);
@@ -103,11 +99,11 @@ public class PageService {
         this.searchGender = new SearchGender(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.searchGender);
 
-        this.friendInformation = new FriendInformation(this, spotifyPlayer, toolBoxView, pageId++);
-        pages.add(this.friendInformation);
+        this.friendPlaylists = new FriendPlaylists(this, spotifyPlayer, toolBoxView, pageId++);
+        pages.add(this.friendPlaylists);
 
-        this.friendRemoveAFriend = new FriendRemoveAFriend(this, spotifyPlayer, toolBoxView, pageId++);
-        pages.add(this.friendRemoveAFriend);
+        this.friendOptions = new FriendOptions(this, spotifyPlayer, toolBoxView, pageId++);
+        pages.add(this.friendOptions);
 
         this.actionFoundedSongs = new ActionFoundedSongs(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.actionFoundedSongs);
@@ -136,7 +132,6 @@ public class PageService {
     }
 
     public void addToStack(int pageId) {
-        //TODO : compléter la liste des pages sur lesquelles on devrait pas pouvoir faire retour.
         int createAccount = this.createAccount.pageId;
         int actionFoundedSongs = this.actionFoundedSongs.pageId;
         int playlistCreation = this.playlistCreation.pageId;
@@ -156,7 +151,7 @@ public class PageService {
         int lastPageId;
         do {
             lastPageId = getMenuPages().pop();
-        } while ((lastPageId == pageId || lastPageId != homePage.pageId) && !getMenuPages().isEmpty());
+        } while (pageId == lastPageId && pageId != homePage.pageId && !getMenuPages().isEmpty());
 
         getPageById(lastPageId).displayAllPage();
     }
@@ -196,10 +191,9 @@ public class PageService {
                         getPageById(lastPageId).displayAllPage();
                         break;
                     default:
-                        System.err.println("Invalid input.");
+                        System.out.print(ToolBoxView.PRINT_RED + "Invalid input.");
                         getPageById(lastPageId).displayAllPage();
                 }
-
             }
         }
     }

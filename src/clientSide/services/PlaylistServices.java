@@ -65,21 +65,36 @@ public class PlaylistServices {
         return playlistLocalRepository.getPlaylistById(id);
     }
 
-    public List<Playlist> getPublicPlaylists() {
+    public List<Integer> getPublicPlaylists() {
         List<Playlist> allPlaylists = playlistLocalRepository.getAllPlaylists();
-        List<Playlist> publicPlaylist = new ArrayList<>();
+        List<Integer> publicPlaylistIds = new ArrayList<>();
 
         for (Playlist playlist : allPlaylists){
             if (playlist.getStatus().equals(PlaylistEnum.PUBLIC)){
-                publicPlaylist.add(playlist);
+                publicPlaylistIds.add(playlist.getPlaylistId());
             }
         }
-        return  publicPlaylist;
+        return publicPlaylistIds;
     }
 
-    public LinkedList<Playlist> getSharedPlaylist(User followedUser) {
-        throw new UnsupportedOperationException("Not implemented yet");
-        /*TODO*/
+    public List<Integer> getUserPublicPlaylists(User user){
+        List<Integer> playlists = user.getPlaylists();
+        List<Integer> finalList = new ArrayList<>();
+        for (int playlistId : playlists){
+            Playlist playlist = getPlaylistById(playlistId);
+            if (playlist.getStatus() == PlaylistEnum.PUBLIC){
+                finalList.add(playlistId);
+            }
+        }
+        return finalList;
+    }
+
+    public int getCurrentFriendPlaylistId (){
+        return Cookies_SingletonPattern.getInstance().getCurrentFriendPlaylistId();
+    }
+
+    public void setCurrentFriendPlaylistId (int playlistId){
+        Cookies_SingletonPattern.getInstance().setCurrentFriendPlaylistId(playlistId);
     }
 
     //PLAYLIST FUNCTIONALITIES :
@@ -90,7 +105,7 @@ public class PlaylistServices {
         playlistFuncService.createAllSongPlaylist(user, this);
     }
     public void deletePlaylist(int playlistId) {
-        playlistFuncService.deletePlaylist(playlistId, getCurrentPlaylistId());
+        playlistFuncService.deletePlaylist(playlistId);
     }
     public void renamePlayList(int playlistId, String newName) {
         playlistFuncService.renamePlayList(playlistId, newName);
@@ -126,5 +141,20 @@ public class PlaylistServices {
     }
     public void addSongToPlaylistFromTemporaryPlaylist(int temporaryPlaylistId, int finalPlaylistId) {
         temporaryPlaylistService.addSongToPlaylistFromTemporaryPlaylist(temporaryPlaylistId, finalPlaylistId);
+    }
+
+    public void getAndAddSelectionOfPlaylistsToCurrentUserPlaylists(List<Integer> playlist,
+                                                                    LinkedList<Integer> chosenPlaylists,
+                                                                    ToolBoxView toolBoxView) {
+
+        for (Integer playlistIndex : chosenPlaylists) {
+            int playlistId = playlist.get(playlistIndex);
+            if (!toolBoxView.getUserServ().getUserById(toolBoxView.getUserServ().getCurrentUserId())
+                    .getPlaylists()
+                    .contains(playlistId)) {
+                toolBoxView.getUserServ().addOnePlaylistToCurrentUser(playlistId);
+            }
+        }
+        System.out.println("Playlist.s has been added.");
     }
 }

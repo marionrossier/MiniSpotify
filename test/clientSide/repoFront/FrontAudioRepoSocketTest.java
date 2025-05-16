@@ -36,7 +36,7 @@ public class FrontAudioRepoSocketTest {
         } catch (IOException e) {
             audioServerThread = new Thread(() -> {
                 try {
-                    initializer.audioSocketServer.main();
+                    initializer.audioSocketServer.audioSocketMain();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }

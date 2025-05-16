@@ -9,9 +9,6 @@ import java.util.Stack;
 
 public class CompositionRootServerSide {
 
-    Scanner scanner = new Scanner(System.in);
-    public final Stack<Integer> menuPagesStack = new Stack<>();
-
     //Json-Mp3
     StockageService stockageService;
 
@@ -49,10 +46,10 @@ public class CompositionRootServerSide {
     public void copyJsons(){
         StockageService stockageService = new StockageService();
 
-        stockageService.copyResourceToWritableLocation("jsons/artist.json", "artist.json");
-        stockageService.copyResourceToWritableLocation("jsons/user.json", "user.json");
-        stockageService.copyResourceToWritableLocation("jsons/song.json", "song.json");
-        stockageService.copyResourceToWritableLocation("jsons/playlist.json", "playlist.json");
+        stockageService.copyResourceToWritableLocation("jsons/artist.json");
+        stockageService.copyResourceToWritableLocation("jsons/user.json");
+        stockageService.copyResourceToWritableLocation("jsons/song.json");
+        stockageService.copyResourceToWritableLocation("jsons/playlist.json");
     }
 
     public void copySongs(){
