@@ -38,7 +38,7 @@ public class FriendsDisplayFriends extends _SimplePageTemplate {
         String friendIndex = pageService.gotAnInput(scanner.nextLine());
 
         while(Integer.parseInt(friendIndex)>friends.size()){
-            System.err.println("Invalide input. Please try again.");
+            System.out.print(ToolBoxView.PRINT_RED + "Invalide input. Please try again.");
             friendIndex = pageService.gotAnInput(scanner.nextLine());
             displayInput();
         }

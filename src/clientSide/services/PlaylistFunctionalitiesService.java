@@ -128,14 +128,14 @@ public class PlaylistFunctionalitiesService {
                 int inputNumber = Integer.parseInt(input);
 
                 if (inputNumber < 1 || inputNumber > playlist.getSize()) {
-                    System.err.println("Invalid Playlist number.");
+                    System.out.print(ToolBoxView.PRINT_RED + "Invalid Playlist number.");
                     System.out.println("Try again or press \"0\" to go back : ");
                 } else {
                     chosenSong = inputNumber-1;
                     break;
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Invalid input, please enter a number : ");
+                System.out.print(ToolBoxView.PRINT_RED + "Invalid input, please enter a number : ");
             }
         }
 
@@ -158,14 +158,14 @@ public class PlaylistFunctionalitiesService {
                 int inputNumber = Integer.parseInt(input);
 
                 if (inputNumber < 1 || inputNumber > currentUser.getPlaylists().size()) {
-                    System.err.println("Invalid Playlist number.");
+                    System.out.print(ToolBoxView.PRINT_RED + "Invalid Playlist number.");
                     System.out.println("Try again or press \"0\" to go back : ");
                 } else {
                     chosenPlaylist = currentUser.getPlaylists().get(inputNumber - 1);
                     break;
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Invalid input, please enter a number : ");
+                System.out.print(ToolBoxView.PRINT_RED + "Invalid input, please enter a number : ");
             }
         }
 

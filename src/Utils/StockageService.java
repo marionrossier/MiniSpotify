@@ -39,7 +39,7 @@ public class StockageService {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), data);
         } catch (IOException e) {
-            System.err.println("Error during the saving action for : " + e.getMessage());
+            System.err.print("Error during the saving action for : " + e.getMessage());
         }
     }
 

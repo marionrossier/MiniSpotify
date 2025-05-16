@@ -64,7 +64,7 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
             index = scanner.nextInt();
             scanner.nextLine(); // Clear the newline character
         }catch (Exception e){
-            System.err.println("Invalid input, try again.");
+            System.out.print(ToolBoxView.PRINT_RED + "Invalid input, try again.");
             scanner.nextLine(); // Clear the invalid input
             displayInput();
             validateInput();

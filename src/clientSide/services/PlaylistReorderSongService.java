@@ -52,10 +52,10 @@ public class PlaylistReorderSongService {
                         System.err.println("This song is already in the new order. Try again.");
                     }
                 } else {
-                    System.err.println("Invalid selection. Please try again.");
+                    System.out.print(ToolBoxView.PRINT_RED + "Invalid selection. Please try again.");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Invalid input. Please enter a number or \"x\" to finish.");
+                System.out.print(ToolBoxView.PRINT_RED + "Invalid input. Please enter a number or \"x\" to finish.");
             }
         }
 

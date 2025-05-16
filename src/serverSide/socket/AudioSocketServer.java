@@ -24,7 +24,7 @@ public class AudioSocketServer {
                 new Thread(() -> handleAudioRequest(clientSocket)).start();
             }
         } catch (IOException e) {
-            System.err.println("❌ Server error: " + e.getMessage());
+            System.err.print("❌ Server error: " + e.getMessage());
         }
     }
 
@@ -52,7 +52,7 @@ public class AudioSocketServer {
             out.write(bytes);
 
         } catch (IOException e) {
-            System.err.println("❌ Audio handler error: " + e.getMessage());
+            System.err.print("❌ Audio handler error: " + e.getMessage());
         }
     }
 

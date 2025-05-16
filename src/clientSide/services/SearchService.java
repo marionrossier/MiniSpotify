@@ -41,7 +41,7 @@ public class SearchService {
                 foundedSongs = searchByGender(gender);
                 break;
             default :
-                System.err.println("Invalid search type: " + type);
+                System.out.print(ToolBoxView.PRINT_RED + "Invalid search type: " + type);
                 pageService.goBack(pageId);
                 return;
         }
@@ -150,10 +150,10 @@ public class SearchService {
                 if (songIndex >= 0 && songIndex < size) {
                     selectedSongsIndex.add(songIndex);
                 } else {
-                    System.err.println("Invalid selection. Please try again.");
+                    System.out.print(ToolBoxView.PRINT_RED + "Invalid selection. Please try again.");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Invalid input. Please enter a number or \"x\" to exit.");
+                System.out.print(ToolBoxView.PRINT_RED + "Invalid input. Please enter a number or \"x\" to exit.");
             }
         }
     }

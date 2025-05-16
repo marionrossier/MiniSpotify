@@ -152,7 +152,7 @@ public class PageService {
         int lastPageId;
         do {
             lastPageId = getMenuPages().pop();
-        } while ((lastPageId == pageId || lastPageId != homePage.pageId) && !getMenuPages().isEmpty());
+        } while (pageId == lastPageId && pageId != homePage.pageId && !getMenuPages().isEmpty());
 
         getPageById(lastPageId).displayAllPage();
     }
@@ -192,7 +192,7 @@ public class PageService {
                         getPageById(lastPageId).displayAllPage();
                         break;
                     default:
-                        System.err.println("Invalid input.");
+                        System.out.print(ToolBoxView.PRINT_RED + "Invalid input.");
                         getPageById(lastPageId).displayAllPage();
                 }
             }
