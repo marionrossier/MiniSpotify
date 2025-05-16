@@ -16,4 +16,5 @@ public interface IUserRepository {
     void addPlaylistToUser(User user, int playlistId);
     void addFriendToUser(User user, int friendId);
     void deleteFriendFromUser(User user, int friendId);
+    List<Integer> getAllFriendsFromUser(User user);
 }

@@ -16,26 +16,25 @@ public class PageService {
     private final Stack<Integer> menuPagesStack;
 
     private final IPlaylistPlayer spotifyPlayer;
-    public PlaylistChoseList playlistChoseList;
-    public PlaylistCreation playlistCreation;
-    public PlaylistDeletion playlistDeletion;
-    public FriendAddAFriend friendAddAFriend;
-    public FriendsCommunePlaylists friendsCommunePlaylists;
-    public FriendsDisplayFriends friendsDisplayFriends;
-    public FriendsHomePage friendsHomePage;
-    public FriendAddPlaylist friendAddPlaylist;
-    public HomePage homePage;
-    public PlaylistHomePage playlistHomePage;
     public Login login;
     public CreateAccount createAccount;
-    public PlaylistPageOpen playlistPageOpen;
-    public Search search;
-    public SongPlayer songPlayer;
-    public SearchGender searchGender;
-    public FriendInformation friendInformation;
-    public FriendRemoveAFriend friendRemoveAFriend;
-    public ActionFoundedSongs actionFoundedSongs;
+    public HomePage homePage;
+    public PlaylistHomePage playlistHomePage;
+    public PlaylistChoseList playlistChoseList;
     public PlaylistPageShared playlistPageShared;
+    public PlaylistPageOpen playlistPageOpen;
+    public PlaylistCreation playlistCreation;
+    public PlaylistDeletion playlistDeletion;
+    public Search search;
+    public ActionFoundedSongs actionFoundedSongs;
+    public SearchGender searchGender;
+    public FriendsPlaylistPage friendsPlaylistPage;
+    public FriendsDisplayFriends friendsDisplayFriends;
+    public FriendsHomePage friendsHomePage;
+    public FriendSearch friendSearch;
+    public FriendPlaylists friendPlaylists;
+    public FriendOptions friendOptions;
+    public SongPlayer songPlayer;
 
 
     private final UserService userService;
@@ -64,11 +63,8 @@ public class PageService {
         this.playlistDeletion = new PlaylistDeletion(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.playlistDeletion);
 
-        this.friendAddAFriend = new FriendAddAFriend(this, spotifyPlayer, toolBoxView, pageId++);
-        pages.add(this.friendAddAFriend);
-
-        this.friendsCommunePlaylists = new FriendsCommunePlaylists(this, spotifyPlayer, toolBoxView, pageId++);
-        pages.add(this.friendsCommunePlaylists);
+        this.friendsPlaylistPage = new FriendsPlaylistPage(this, spotifyPlayer, toolBoxView, pageId++);
+        pages.add(this.friendsPlaylistPage);
 
         this.friendsDisplayFriends = new FriendsDisplayFriends(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.friendsDisplayFriends);
@@ -76,8 +72,8 @@ public class PageService {
         this.friendsHomePage = new FriendsHomePage(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.friendsHomePage);
 
-        this.friendAddPlaylist = new FriendAddPlaylist(this, spotifyPlayer, toolBoxView, pageId++);
-        pages.add(this.friendAddPlaylist);
+        this.friendSearch = new FriendSearch(this, spotifyPlayer, toolBoxView, pageId++);
+        pages.add(this.friendSearch);
 
         this.homePage = new HomePage(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.homePage);
@@ -103,11 +99,11 @@ public class PageService {
         this.searchGender = new SearchGender(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.searchGender);
 
-        this.friendInformation = new FriendInformation(this, spotifyPlayer, toolBoxView, pageId++);
-        pages.add(this.friendInformation);
+        this.friendPlaylists = new FriendPlaylists(this, spotifyPlayer, toolBoxView, pageId++);
+        pages.add(this.friendPlaylists);
 
-        this.friendRemoveAFriend = new FriendRemoveAFriend(this, spotifyPlayer, toolBoxView, pageId++);
-        pages.add(this.friendRemoveAFriend);
+        this.friendOptions = new FriendOptions(this, spotifyPlayer, toolBoxView, pageId++);
+        pages.add(this.friendOptions);
 
         this.actionFoundedSongs = new ActionFoundedSongs(this, spotifyPlayer, toolBoxView, pageId++);
         pages.add(this.actionFoundedSongs);
@@ -199,7 +195,6 @@ public class PageService {
                         System.err.println("Invalid input.");
                         getPageById(lastPageId).displayAllPage();
                 }
-
             }
         }
     }

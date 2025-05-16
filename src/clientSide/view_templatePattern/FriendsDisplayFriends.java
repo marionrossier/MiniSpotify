@@ -3,16 +3,49 @@ package clientSide.view_templatePattern;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 import clientSide.services.ToolBoxView;
+import serverSide.entities.User;
+
+import java.util.List;
 
 public class FriendsDisplayFriends extends _SimplePageTemplate {
-    public FriendsDisplayFriends(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
+    public FriendsDisplayFriends(PageService pageService, IPlaylistPlayer spotifyPlayer,
+                                 ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Display actual Friends Page";
-        this.pageContent = icon.zeroBack + icon.lineBreak +
-                "Tip the friend's number to see his playlists and have option to add it" + icon.eightMusicPlayer;
-        //TODO : faire aussi la page pour l'ajout d'une playlist a ses propres playlists
+        this.pageContent = icon.zeroBack;
+    }
+
+    @Override
+    public void displaySpecificContent (){
+        System.out.println( "Enter your friend number to see future options.");
+        int userId = toolBoxView.getUserServ().getCurrentUserId();
+        boolean friendsExists = toolBoxView.getPrintServ().printUserFriends(userId);
+
+        if (!friendsExists){
+            pageService.friendsHomePage.displayAllPage();
+            return ;
+        }
+    }
+
+    @Override
+    public void validateInput() {
+        User user = toolBoxView.getUserServ().getUserById(toolBoxView.getUserServ().getCurrentUserId());
+        List<Integer> friends = user.getFriends();
+
+        String friendIndex = pageService.gotAnInput(scanner.nextLine());
+
+        while(Integer.parseInt(friendIndex)>friends.size()){
+            System.err.println("Invalide input. Please try again.");
+            friendIndex = pageService.gotAnInput(scanner.nextLine());
+            displayInput();
+        }
+        int friendId = friends.get(Integer.parseInt(friendIndex)-1);
+
+        toolBoxView.getUserServ().setCurrentFriendId(friendId);
+
+        pageService.friendOptions.displayAllPage();
     }
 }

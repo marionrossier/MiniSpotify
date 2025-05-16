@@ -45,7 +45,7 @@ public class PlaylistCreation extends _InversedPageTemplate {
         boolean playlistNameOk = toolBoxView.getPlaylistServ().verifyPlaylistName(playlistName, user);
 
         if (!playlistNameOk){
-            System.out.print("Playlist Name already exist in you're playlists. Try again");
+            System.out.print("Playlist Name already exist in your playlists. Try again");
             this.displayInput();
             playlistNameVerification();
         }

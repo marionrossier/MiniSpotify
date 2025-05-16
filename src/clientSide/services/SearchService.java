@@ -4,6 +4,7 @@ import serverSide.entities.MusicGender;
 import serverSide.entities.Playlist;
 import serverSide.entities.Song;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,12 +15,15 @@ public class SearchService {
     private final IconService icon = new IconService();
     private final SongService songService;
     private final PrintService printService;
+    private final UserService userService;
 
     // Constructor
     public SearchService(SongService songService,
-                         PrintService printService) {
+                         PrintService printService,
+                         UserService userService) {
         this.songService = songService;
         this.printService = printService;
+        this.userService = userService;
     }
 
     public void searchSong(String input, String type, int pageId, PageService pageService, PlaylistServices playlistServices) {
@@ -125,7 +129,7 @@ public class SearchService {
         return selectedSongs;
     }
 
-    public LinkedList<Integer> chooseFoundedPlaylist(List<Playlist> playlist, PageService pageService){
+    public LinkedList<Integer> chooseFoundedPlaylist(List<Integer> playlist, PageService pageService){
         LinkedList<Integer> selectedPlaylistIndex = new LinkedList<>();
         loopIntInputValidation(pageService, selectedPlaylistIndex, playlist.size());
         return selectedPlaylistIndex;
@@ -152,5 +156,16 @@ public class SearchService {
                 System.err.println("Invalid input. Please enter a number or \"x\" to exit.");
             }
         }
+    }
+
+    public List<Integer> searchUserByPseudonyme (String pseudonym){
+        List<Integer> usersId = new ArrayList<>();
+        if (pseudonym == null || pseudonym.isEmpty()){
+            System.err.println("No pseudonym given.");
+        }
+        else{
+            usersId = userService.getUsersByPseudonym(pseudonym);
+        }
+        return usersId;
     }
 }

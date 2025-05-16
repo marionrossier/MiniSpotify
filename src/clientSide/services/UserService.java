@@ -65,7 +65,7 @@ public class UserService {
         Cookies_SingletonPattern.resetCookies();
     }
 
-    public void addOnePlaylist(int playlistId) {
+    public void addOnePlaylistToCurrentUser(int playlistId) {
         List<Integer> playlists = userLocalRepository.getUserById(getCurrentUserId()).getPlaylists();
         if (playlists == null) {
             playlists = new ArrayList<>();
@@ -75,11 +75,42 @@ public class UserService {
         userLocalRepository.addPlaylistToUser(user,playlistId);
     }
 
-    public void followFriend() {/*TODO*/}
-    public void unfollowFriend() {/*TODO*/}
+    public void addFriend(int friendId) {
+        User user = userLocalRepository.getUserById(getCurrentUserId());
+        List<Integer> friends = user.getFriends();
+        if (!friends.contains(friendId)) {
+            friends.add(friendId);
+            userLocalRepository.saveUser(user);
+            System.out.println("Friend add to your friend list.");
+        }
+        else {
+            System.out.println("You're already friends !");
+        }
+    }
+
+    public void deleteFriend(int friendId) {
+        User user = userLocalRepository.getUserById(getCurrentUserId());
+        List<Integer> friends = user.getFriends();
+        friends.remove(Integer.valueOf(friendId));
+        userLocalRepository.saveUser(user);
+    }
 
     public User getUserByPseudonym(String pseudonym) {
         return userLocalRepository.getUserByPseudonym(pseudonym);
+    }
+
+    public List<Integer> getUsersByPseudonym(String pseudonym){
+        List<Integer> userIds = new ArrayList<>();
+        List<User> allUsers = userLocalRepository.getAllUsers();
+        if (pseudonym == null || pseudonym.isEmpty()) {
+            return userIds;
+        }
+        for (User user : allUsers) {
+            if (user.getPseudonym() != null && user.getPseudonym().toLowerCase().contains(pseudonym.toLowerCase())) {
+                userIds.add(user.getUserId());
+            }
+        }
+        return userIds;
     }
 
     public User getUserById(int userId) {
@@ -96,5 +127,18 @@ public class UserService {
 
     public User getUserByPseudonymLogin(String pseudonym) {
         return userLocalRepository.getUserByPseudonymLogin(pseudonym);
+    }
+
+    public List<Integer> getFriendsFromUser(User user){
+        int userId = user.getUserId();
+        return userLocalRepository.getUserById(userId).getFriends();
+    }
+
+    public void setCurrentFriendId (int friendId){
+        Cookies_SingletonPattern.getInstance().setCurrentFriendId(friendId);
+    }
+
+    public int getCurrentFriendId (){
+        return Cookies_SingletonPattern.getInstance().getCurrentFriendId();
     }
 }

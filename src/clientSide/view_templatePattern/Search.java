@@ -4,6 +4,7 @@ import clientSide.services.ToolBoxView;
 import serverSide.entities.Playlist;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import serverSide.entities.User;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -53,20 +54,12 @@ public class Search extends _SimplePageTemplate {
         System.out.println("Select your Playlist to add by entering their number and press \"enter\" between each song." + icon.lineBreak +
                 "End selection with an \"x\"." + icon.lineBreak);
 
-        List<Playlist> playlist = toolBoxView.getPlaylistServ().getPublicPlaylists();
+        List<Integer> playlist = toolBoxView.getPlaylistServ().getPublicPlaylists();
+        User user = toolBoxView.getUserServ().getUserById(toolBoxView.getUserServ().getCurrentUserId());
         toolBoxView.getPrintServ().printPlaylist(playlist);
         this.displayInput();
         LinkedList<Integer> chosenPlaylists = toolBoxView.getSearchServ().chooseFoundedPlaylist(playlist, pageService);
-
-        for (Integer playlistIndex : chosenPlaylists) {
-            int playlistId = playlist.get(playlistIndex).getPlaylistId();
-            if (!toolBoxView.getUserServ().getUserById(toolBoxView.getUserServ().getCurrentUserId())
-                    .getPlaylists()
-                    .contains(playlistId)) {
-                toolBoxView.getUserServ().addOnePlaylist(playlistId);
-            }
-        }
-        System.out.println("Playlist.s has been added.");
+        toolBoxView.getPlaylistServ().getAndAddSelectionOfPlaylistsToCurrentUserPlaylists(playlist, chosenPlaylists, toolBoxView);
         pageService.playlistHomePage.displayAllPage();
     }
 }

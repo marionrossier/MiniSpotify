@@ -39,6 +39,7 @@ public class User {
         this.playlists = playlists;
         this.friends = friends;
     }
+
     public User(int id, String pseudonym, String email, String password, byte[] salt,
                 PlanEnum planEnum, List<Integer> playlists, List<Integer> friends) {
         this.pseudonym = pseudonym;

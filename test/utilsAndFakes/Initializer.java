@@ -109,7 +109,7 @@ public class Initializer {
         playlistService = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService);
         artistService = new ArtistService(toolBoxService);
         printService = new PrintService(songService, artistService, playlistService, userService);
-        searchService = new SearchService(songService, printService);
+        searchService = new SearchService(songService, printService, userService);
         playlistReorderSongService = new PlaylistReorderSongService(toolBoxService, scanner);
         uniqueIdService = new UniqueIdService();
         songService = new SongService(toolBoxService);

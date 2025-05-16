@@ -6,6 +6,8 @@ public class Cookies_SingletonPattern {
     private final int userId;
     private final String userPseudonym;
     private final String userPassword;
+    private int currentFriendId;
+    private int currentFriendPlaylistId;
     private int currentPlaylistId;
     private int currentSongId;
 
@@ -15,11 +17,13 @@ public class Cookies_SingletonPattern {
         this.userPassword = userPassword;
         this.currentPlaylistId = 598327402; //AllSongs
         this.currentSongId = 1108071776; //Amy Rehab
+        this.currentFriendId = 0; //Initialization
+        this.currentFriendPlaylistId = 0; //Initialization
     }
 
-    public static Cookies_SingletonPattern setUser(int userId, String userName, String userPassword) {
+    public static Cookies_SingletonPattern setUser(int userId, String userPseudonym, String userPassword) {
         if (instance == null || instance.userId == 1) {
-            instance = new Cookies_SingletonPattern(userId, userName, userPassword);
+            instance = new Cookies_SingletonPattern(userId, userPseudonym, userPassword);
         }
         return instance;
     }
@@ -83,5 +87,21 @@ public class Cookies_SingletonPattern {
                 "userId=" + userId +
                 ", currentPlaylistId=" + currentPlaylistId +
                 '}';
+    }
+
+    public int getCurrentFriendId() {
+        return currentFriendId;
+    }
+
+    public void setCurrentFriendId(int friendId){
+        this.currentFriendId = friendId;
+    }
+
+    public int getCurrentFriendPlaylistId() {
+        return currentFriendPlaylistId;
+    }
+
+    public void setCurrentFriendPlaylistId(int currentFriendPlaylistId) {
+        this.currentFriendPlaylistId = currentFriendPlaylistId;
     }
 }

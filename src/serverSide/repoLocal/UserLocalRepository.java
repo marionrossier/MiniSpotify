@@ -30,7 +30,6 @@ public class UserLocalRepository implements IUserRepository {
                 .findFirst();
     }
 
-    //TODO : AJouter interface
     public User getUserByPseudonymLogin(String pseudonym) {
         return data.stream()
                 .filter(user -> user.getPseudonym().equals(pseudonym))
@@ -98,5 +97,17 @@ public class UserLocalRepository implements IUserRepository {
                 stockageService.saveToJson(filePath, data);
             }
         }
+    }
+
+    public List<Integer> getAllFriendsFromUser(User user){
+        if (user != null) {
+            List<Integer> friends = user.getFriends();
+            if (friends == null) {
+                friends = new ArrayList<>();
+                user.setFriends(friends);
+            }
+            return friends;
+        }
+        return new ArrayList<>();
     }
 }
