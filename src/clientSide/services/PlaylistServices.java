@@ -105,7 +105,7 @@ public class PlaylistServices {
         playlistFuncService.createAllSongPlaylist(user, this);
     }
     public void deletePlaylist(int playlistId) {
-        playlistFuncService.deletePlaylist(playlistId, getCurrentPlaylistId());
+        playlistFuncService.deletePlaylist(playlistId);
     }
     public void renamePlayList(int playlistId, String newName) {
         playlistFuncService.renamePlayList(playlistId, newName);

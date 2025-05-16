@@ -119,7 +119,7 @@ public class Initializer {
                 fakeMusicPlayer, audioLocalRepository, songService, playlistService);
 
         toolBoxView = new ToolBoxView(playlistService, userService, songService, artistService, printService,
-                searchService, passwordService, playlistReorderSongService, temporaryPlaylistService, uniqueIdService, passwordService);
+                searchService, passwordService, playlistReorderSongService, temporaryPlaylistService, uniqueIdService);
 
         pageService = new PageService(playlistPlayer, toolBoxView, userService, menuPagesStack);
 

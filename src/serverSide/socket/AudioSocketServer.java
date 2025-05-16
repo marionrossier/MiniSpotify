@@ -1,7 +1,6 @@
 package serverSide.socket;
 
 import serverSide.repoBack.BackAudioRepo;
-import serverSide.repoLocal.UserLocalRepository;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -10,13 +9,13 @@ import java.net.Socket;
 public class AudioSocketServer {
 
     private final int PORT = 45001;
-    private final String AUDIO_FOLDER =
-            System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/songsfiles/";
+    //TODO : retirer si zero problème
+//    private final String AUDIO_FOLDER =
+//            System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/songsfiles/";
 
-    private final UserLocalRepository userRepo = new UserLocalRepository();
     private final BackAudioRepo backAudioRepo;
 
-    public void main() {
+    public void audioSocketMain() {
         System.out.println("🎵 AudioSocketServer started on port " + PORT);
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             while (true) {
@@ -56,16 +55,17 @@ public class AudioSocketServer {
         }
     }
 
-    private byte[] readAllBytes(File file) throws IOException {
-        try (InputStream fileIn = new FileInputStream(file);
-             ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
-
-            byte[] temp = new byte[4096];
-            int read;
-            while ((read = fileIn.read(temp)) != -1) {
-                buffer.write(temp, 0, read);
-            }
-            return buffer.toByteArray();
-        }
-    }
+    //TODO : supprimer si pas d'erreur !
+//    private byte[] readAllBytes(File file) throws IOException {
+//        try (InputStream fileIn = new FileInputStream(file);
+//             ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
+//
+//            byte[] temp = new byte[4096];
+//            int read;
+//            while ((read = fileIn.read(temp)) != -1) {
+//                buffer.write(temp, 0, read);
+//            }
+//            return buffer.toByteArray();
+//        }
+//    }
 }

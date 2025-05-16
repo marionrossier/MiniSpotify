@@ -26,7 +26,7 @@ public class ToolBoxView {
     public ToolBoxView(PlaylistServices playlistServices, UserService userService, SongService songService,
                        ArtistService artistServ, PrintService printService, SearchService searchServ,
                        PasswordService passwordService, PlaylistReorderSongService playlistReorderSongServ,
-                       TemporaryPlaylistService temporaryPlaylistService, UniqueIdService uniqueIdService, PasswordService service) {
+                       TemporaryPlaylistService temporaryPlaylistService, UniqueIdService uniqueIdService) {
 
         this.playlistServ = playlistServices;
         this.userServ = userService;

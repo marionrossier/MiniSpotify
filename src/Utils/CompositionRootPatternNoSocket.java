@@ -88,7 +88,7 @@ public class CompositionRootPatternNoSocket {
         spotifyPlayer = new PlaylistPlayer(musicPlayer, audioLocalRepository, songService, playlistServices);
         toolBoxView = new ToolBoxView(playlistServices, userService, songService, artistService,
                 printService, searchService, passwordService, playlistReorderSongService,
-                temporaryPlaylistService, uniqueIdService, passwordService);
+                temporaryPlaylistService, uniqueIdService);
 
         pageService = new PageService(spotifyPlayer, toolBoxView, userService, menuPagesStack);
     }
@@ -101,10 +101,10 @@ public class CompositionRootPatternNoSocket {
     public void copyJsons(){
         StockageService stockageService = new StockageService();
 
-        stockageService.copyResourceToWritableLocation("jsons/artist.json", "artist.json");
-        stockageService.copyResourceToWritableLocation("jsons/user.json", "user.json");
-        stockageService.copyResourceToWritableLocation("jsons/song.json", "song.json");
-        stockageService.copyResourceToWritableLocation("jsons/playlist.json", "playlist.json");
+        stockageService.copyResourceToWritableLocation("jsons/artist.json");
+        stockageService.copyResourceToWritableLocation("jsons/user.json");
+        stockageService.copyResourceToWritableLocation("jsons/song.json");
+        stockageService.copyResourceToWritableLocation("jsons/playlist.json");
     }
 
     public void copySongs(){

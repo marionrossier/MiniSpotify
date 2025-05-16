@@ -88,7 +88,7 @@ public class CompositionRootClientSide {
         spotifyPlayer = new PlaylistPlayer(musicPlayer, frontAudioRepo, songService, playlistServices);
         toolBoxView = new ToolBoxView(playlistServices, userService, songService, artistService,
                 printService, searchService, passwordService, playlistReorderSongService,
-                temporaryPlaylistService, uniqueIdService, passwordService);
+                temporaryPlaylistService, uniqueIdService);
 
         pageService = new PageService(spotifyPlayer, toolBoxView, userService, menuPagesStack);
     }

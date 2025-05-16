@@ -20,7 +20,6 @@ public class StockageService {
     String fileName = "MiniSpotifyFlorentMarion";
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-
     public <T> List<T> loadFromJson(String filePath, TypeReference<List<T>> typeReference) {
         File file = new File(filePath);
         if (!file.exists()) {
@@ -34,7 +33,6 @@ public class StockageService {
         }
     }
 
-
     public <T> void saveToJson(String filePath, List<T> data) {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), data);
@@ -43,21 +41,19 @@ public class StockageService {
         }
     }
 
+    //TODO : retirer si pas de bug
+//    public String createWritableDirectory(String directoryPath) {
+//        try {
+//            Path targetPath = Paths.get(userHome, fileName, directoryPath);
+//            Files.createDirectories(targetPath);
+//
+//            return targetPath.toString();
+//        } catch (IOException e) {
+//            throw new RuntimeException("Error creating folder : " + userHome + fileName + "\n Message : " + e.getMessage());
+//        }
+//    }
 
-    public String createWritableDirectory(String directoryPath) {
-        try {
-            Path targetPath = Paths.get(userHome, fileName, directoryPath);
-            Files.createDirectories(targetPath);
-
-
-            return targetPath.toString();
-        } catch (IOException e) {
-            throw new RuntimeException("Error creating folder : " + userHome + fileName + "\n Message : " + e.getMessage());
-        }
-    }
-
-
-    public String copyResourceToWritableLocation(String resourcePath, String targetFileName){
+    public void copyResourceToWritableLocation(String resourcePath){
         try {
             InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(resourcePath);
             if (resourceStream == null) {
@@ -72,8 +68,6 @@ public class StockageService {
             if (!Files.exists(targetPath)) {
                 Files.copy(resourceStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
             }
-
-            return targetPath.toString();
         } catch (IOException e) {
             throw new RuntimeException("Error when copying file from resources : "+ e.getMessage());
         }
@@ -90,7 +84,6 @@ public class StockageService {
                 throw new IllegalArgumentException("Resource folder not found: " + resourceFolderPath);
             }
 
-            // Parcourir les fichiers dans le dossier
             File resourceFolder = new File(getClass().getClassLoader().getResource(resourceFolderPath).toURI());
             File[] files = resourceFolder.listFiles((dir, name) -> name.endsWith(".mp3"));
 

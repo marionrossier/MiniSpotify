@@ -12,7 +12,7 @@ import java.util.Stack;
 public class PageService {
 
     ArrayList<_MenuInterface> pages = new ArrayList<>();
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
     private final Stack<Integer> menuPagesStack;
 
     private final IPlaylistPlayer spotifyPlayer;
@@ -132,7 +132,6 @@ public class PageService {
     }
 
     public void addToStack(int pageId) {
-        //TODO : compléter la liste des pages sur lesquelles on devrait pas pouvoir faire retour.
         int createAccount = this.createAccount.pageId;
         int actionFoundedSongs = this.actionFoundedSongs.pageId;
         int playlistCreation = this.playlistCreation.pageId;

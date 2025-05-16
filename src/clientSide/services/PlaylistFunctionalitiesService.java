@@ -51,7 +51,7 @@ public class PlaylistFunctionalitiesService {
         userService.saveUser(user);
     }
 
-    public void deletePlaylist(int playlistId, int currentPlaylistId) {
+    public void deletePlaylist(int playlistId) {
         User user = userService.getUserById(userService.getCurrentUserId());
         Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
         int playlistOwner = playlist.getOwnerId();

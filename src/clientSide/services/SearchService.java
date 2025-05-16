@@ -1,7 +1,6 @@
 package clientSide.services;
 
 import serverSide.entities.MusicGender;
-import serverSide.entities.Playlist;
 import serverSide.entities.Song;
 
 import java.util.ArrayList;

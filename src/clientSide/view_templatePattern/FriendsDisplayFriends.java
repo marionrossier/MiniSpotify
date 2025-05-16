@@ -26,7 +26,6 @@ public class FriendsDisplayFriends extends _SimplePageTemplate {
 
         if (!friendsExists){
             pageService.friendsHomePage.displayAllPage();
-            return ;
         }
     }
 
