@@ -93,10 +93,6 @@ public class PlaylistFunctionalitiesService {
         int songId = songService.getSongById(playlist.getPlaylistSongsListWithId().get(songIndex)).getSongId();
         int currentSongId = songService.getCurrentSongId();
 
-        if (currentSongId == songId){
-            printLNInfo("You can not delete the current playing song.");
-        }
-
         playlist.getPlaylistSongsListWithId().remove(songIndex);
         playlistLocalRepository.savePlaylist(playlist);
     }
@@ -128,7 +124,7 @@ public class PlaylistFunctionalitiesService {
                     printInfo("Invalid Playlist number.");
                     printLNInfo("Try again or press \"0\" to go back : ");
                 } else {
-                    chosenSong = inputNumber-1;
+                    chosenSong = inputNumber;
                     break;
                 }
             } catch (NumberFormatException e) {

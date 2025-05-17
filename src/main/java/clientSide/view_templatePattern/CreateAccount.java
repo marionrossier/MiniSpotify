@@ -19,7 +19,7 @@ public class CreateAccount extends TemplateInversePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Create Account Page";
-        this.pageContent = icon.zeroBack + icon.lineBreak +
+        this.pageContent = icon.zeroBack + icon.lineBreak + icon.separator + icon.lineBreak +
                 icon.nbr1() + "FREE " + icon.free() + icon.lineBreak +
                 icon.nbr2() + "PREMIUM " + icon.premium();
         toolBoxView.getUserServ().resetCookie();

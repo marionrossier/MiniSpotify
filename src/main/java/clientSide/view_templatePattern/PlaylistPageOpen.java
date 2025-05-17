@@ -18,7 +18,7 @@ public class PlaylistPageOpen extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Playlist Page : ";
-        this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak +
+        this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak + icon.separator + icon.lineBreak +
                 icon.nbr1() + "Rename Playlist" + icon.lineBreak +
                 icon.nbr2() + "Add song" + icon.lineBreak +
                 icon.nbr3() + "Remove song" + icon.lineBreak +
@@ -64,7 +64,7 @@ public class PlaylistPageOpen extends TemplateSimplePage {
             pageService.playlistHomePage.displayAllPage();
         }
         int currentPlaylistId = toolBoxView.getPlaylistServ().getCurrentPlaylistId();
-        toolBoxView.getPlaylistServ().deleteSongFromPlaylist(currentPlaylistId, songIndex);
+        toolBoxView.getPlaylistServ().deleteSongFromPlaylist(currentPlaylistId, songIndex-1);
         pageService.playlistPageOpen.displayAllPage();
     }
 

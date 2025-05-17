@@ -11,7 +11,7 @@ public class SearchGender extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Select your desired gender";
-        this.pageContent = icon.zeroBack + icon.lineBreak +
+        this.pageContent = icon.zeroBack + icon.lineBreak + icon.separator + icon.lineBreak +
                 icon.nbr1() + "Soul RnB" + icon.lineBreak +
                 icon.nbr2() + "Pop" + icon.lineBreak +
                 icon.nbr3() + "Hip Hop" + icon.lineBreak +

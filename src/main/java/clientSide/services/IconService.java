@@ -15,28 +15,29 @@ public class IconService {
 
     public String playPause()   { return "[PLAY/PAUSE]"; }
     public String playBack()    { return "[|<<]"; }
-    public String next()        { return "[>]"; }
-    public String previous()    { return "[<]"; }
+    public String next()        { return "[>>]"; }
+    public String previous()    { return "[<<]"; }
     public String shuffle()     { return "[SHUFFLE]"; }
     public String sequential()  { return "[LOOP]"; }
-    public String repeatOne()   { return "[1X]"; }
+    public String repeatOne()   { return "[REPEAT]"; }
 
     public String ok()          { return "[OK]"; }
     public String warning()     { return "[!!!]"; }
-    public String lock()        { return "[LOCK]"; }
+    public String lock()        { return "[Owned]"; }
     public String premium()     { return "[PREMIUM]"; }
     public String free()        { return "[FREE]"; }
     public String group()       { return "[FRIENDS]"; }
-    public String house()       { return "[HOME]"; }
-    public String earth()       { return "[PUBLIC]"; }
+    public String house()       { return "[SAVED]"; }
+    public String earth()       { return "[OPEN]"; }
     public String search()      { return "[SEARCH]"; }
 
     public String lineBreak = "\n";
 
-    public String eightMusicPlayer = nbr8() + " Music Player";
-    public String nineHomepage     = nbr9() + " Home Page";
-    public String zeroBack         = nbr0() + " Back";
+    public String eightMusicPlayer = nbr8() + "[PLAYER]";
+    public String nineHomepage     = nbr9() + "[HOME]";
+    public String zeroBack         = nbr0() + "[BACK]";
 
+    public String separator = "--------------------------------------------";
     public String backHomePageMusicPlayer = zeroBack + " | " + nineHomepage + " | " + eightMusicPlayer;
     }
 

@@ -12,7 +12,7 @@ public class PlaylistHomePage extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Home Page Playlist";
         this.pageContent =
-                icon.backHomePageMusicPlayer + icon.lineBreak +
+                icon.backHomePageMusicPlayer + icon.lineBreak + icon.separator + icon.lineBreak +
                 icon.nbr1() + "Choose your playlist" + icon.lineBreak +
                 icon.nbr2() + "Create a playlist";
     }

@@ -14,7 +14,8 @@ public class HomePage extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Home Page";
         this.pageContent =
-                icon.nbr0() + "Log out" + " | " + icon.eightMusicPlayer + icon.lineBreak +
+                icon.nbr0() + "[LOG OUT]" + " | " + icon.eightMusicPlayer + icon.lineBreak +
+                        icon.separator + icon.lineBreak +
                 icon.nbr1() + "Playlists" + icon.lineBreak +
                 icon.nbr2() + "Search song" + icon.lineBreak +
                 icon.nbr3() + "Friends" + icon.premium();
@@ -22,7 +23,7 @@ public class HomePage extends TemplateSimplePage {
 
     @Override
     public void button0() {
-        printLNWhite("Logging you out ...");
+        printLNInfo("Logging you out ...");
         spotifyPlayer.stop();
 
         toolBoxView.getUserServ().resetCookie();

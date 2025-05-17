@@ -17,7 +17,7 @@ public class FriendsDisplayFriends extends TemplateSimplePage {
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Display actual Friends Page";
-        this.pageContent = icon.zeroBack;
+        this.pageContent = icon.zeroBack + icon.separator + icon.lineBreak;
     }
 
     @Override

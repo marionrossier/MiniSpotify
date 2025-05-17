@@ -16,7 +16,7 @@ public class FriendPlaylists extends TemplateSimplePage {
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Friend playlist Page";
-        this.pageContent = icon.zeroBack;
+        this.pageContent = icon.zeroBack + icon.separator + icon.lineBreak;
     }
 
     @Override

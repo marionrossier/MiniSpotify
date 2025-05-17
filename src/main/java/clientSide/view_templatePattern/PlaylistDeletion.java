@@ -13,7 +13,7 @@ public class PlaylistDeletion extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Delete Playlist Page";
-        this.pageContent = icon.zeroBack + icon.lineBreak +
+        this.pageContent = icon.zeroBack + icon.lineBreak + icon.separator + icon.lineBreak +
                 "Are you sure you want to delete this playlist?" + icon.lineBreak +
                 icon.nbr1() + "YES" + icon.lineBreak +
                 icon.nbr2() + "NO";

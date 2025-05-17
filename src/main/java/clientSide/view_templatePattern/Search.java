@@ -16,7 +16,7 @@ public class Search extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Search Page";
-        this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak +
+        this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak + icon.separator + icon.lineBreak +
                 icon.nbr1() + "Search by song title" + icon.lineBreak +
                 icon.nbr2() + "Search by artist" + icon.lineBreak +
                 icon.nbr3() + "Search by song gender" + icon.lineBreak +

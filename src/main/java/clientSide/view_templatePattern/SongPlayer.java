@@ -15,12 +15,14 @@ public class SongPlayer extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Song Player Page";
         this.pageContent =
-                icon.zeroBack + " |  " + icon.nineHomepage +icon.lineBreak+
-                icon.nbr1() + icon.sequential() + "/" + icon.shuffle() + "/" + icon.repeatOne()+ " | " +
-                icon.nbr2() + icon.previous() + " | " +
-                icon.nbr3() +  icon.playPause() +" | " +
-                icon.nbr4() +  icon.playBack() + " | " +
-                icon.nbr5() +  icon.next();}
+                        icon.backHomePageMusicPlayer + icon.lineBreak +
+                        icon.separator + icon.lineBreak +
+                        icon.nbr1() + icon.sequential() + " / " + icon.shuffle() + " / " + icon.repeatOne() + icon.lineBreak +
+                                icon.nbr2() + icon.playPause() + icon.lineBreak +
+                                icon.nbr3()+ icon.previous() + "\t" +
+                                icon.nbr4() + " " + icon.next() + "\t " + icon.nbr5() + icon.playBack();
+
+    }
 
     @Override
     public void displaySpecificContent(){
@@ -53,25 +55,25 @@ public class SongPlayer extends TemplateSimplePage {
 
     @Override
     public void button2() {
-        spotifyPlayer.previous();
-        loop();
-    }
-
-    @Override
-    public void button3() {
         spotifyPlayer.playOrPause(toolBoxView.getSongServ().getCurrentSongId());
         loop();
     }
 
     @Override
+    public void button3() {
+        spotifyPlayer.previous();
+        loop();
+    }
+
+    @Override
     public void button4() {
-        spotifyPlayer.playback();
+        spotifyPlayer.next();
         loop();
     }
 
     @Override
     public void button5() {
-        spotifyPlayer.next();
+        spotifyPlayer.playback();
         loop();
     }
 
