@@ -39,14 +39,7 @@ public class BackUserRepo {
                             ? mapper.writeValueAsString(Map.of("status", "OK", "user", user))
                             : "{\"status\": \"ERROR\", \"message\": \"User not found\"}";
                 }
-                case "getUserByPseudonymLogin" -> {
-                    String pseudo = (String) request.get("pseudonym");
-                    User user = userRepo.getUserByPseudonym(pseudo);
-                    return user != null
-                            ? mapper.writeValueAsString(Map.of("status", "OK", "user", user))
-                            : "{\"status\": \"ERROR\", \"message\": \"User not found\"}";
-                }
-                case "getUserByPseudonym" -> {
+                case "getUserByPseudonymLogin", "getUserByPseudonym"  -> {
                     String pseudo = (String) request.get("pseudonym");
                     User user = userRepo.getUserByPseudonym(pseudo);
                     return user != null

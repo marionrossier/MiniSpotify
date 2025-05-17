@@ -5,10 +5,6 @@ public class IconService {
     public String nbr(int x){
         return (x+"\uFE0F⃣");
     }
-
-    public String play (){
-        return ("▶\uFE0F");
-    }
     public String playPause(){
         return ("⏯️");
     }

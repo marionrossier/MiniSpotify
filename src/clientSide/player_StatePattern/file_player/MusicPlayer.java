@@ -104,7 +104,7 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
     }
 
     @Override
-    public void progress(int bytesread, long microseconds, byte[] pcmdata, Map properties) {
+    public void progress(int bytesRead, long microseconds, byte[] pcmData, Map properties) {
         // rien à faire ici pour toi
     }
 

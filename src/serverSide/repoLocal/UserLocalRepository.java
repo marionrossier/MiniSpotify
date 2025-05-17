@@ -40,7 +40,7 @@ public class UserLocalRepository implements IUserRepository {
     }
 
     public List<User> getAllUsers() {
-        return new ArrayList<>(data); // Copie défensive
+        return new ArrayList<>(data);
     }
 
     public void saveUser(User user) {

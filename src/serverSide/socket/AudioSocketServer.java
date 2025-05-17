@@ -41,7 +41,7 @@ public class AudioSocketServer {
 
             byte[] bytes = backAudioRepo.handleGetAudioFile(in);
             if (bytes == null) {
-                out.writeInt(0); // Auth échouée ou fichier introuvable
+                out.writeInt(0);
                 return;
             }
 

@@ -6,8 +6,6 @@ import clientSide.services.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utilsAndFakes.FakeMusicPlayer;
-import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
 import utilsAndFakes.DependencyProvider;
 
 import java.io.ByteArrayInputStream;
@@ -28,7 +26,7 @@ class PlaylistServicesTest{
     }
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp(){
         testHelper = new TestHelper();
         dependencyProvider = testHelper.dependencyProvider;
 

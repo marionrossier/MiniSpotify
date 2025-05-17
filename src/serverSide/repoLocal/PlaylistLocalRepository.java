@@ -27,7 +27,7 @@ public class PlaylistLocalRepository implements IPlaylistRepository {
     }
 
     public List<Playlist> getAllPlaylists() {
-        return new ArrayList<>(data); // copie défensive
+        return new ArrayList<>(data);
     }
 
     public void savePlaylist(Playlist playlist) {

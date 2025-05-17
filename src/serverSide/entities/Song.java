@@ -4,7 +4,6 @@ import clientSide.services.UniqueIdService;
 
 public class Song {
     private String title;
-    private String titleAndArtist;
     private int artistId;
     private int durationSeconds;
     private MusicGender gender;

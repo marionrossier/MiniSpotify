@@ -25,7 +25,7 @@ public class FriendSearch extends TemplateSimplePage {
         displayInput();
         String input = pageService.gotAnInput(scanner.nextLine());
 
-        List<Integer> usersId = toolBoxView.getSearchServ().searchUserByPseudonyme(input);
+        List<Integer> usersId = toolBoxView.getSearchServ().searchUserByPseudonym(input);
         toolBoxView.getPrintServ().printUsers(usersId);
 
         if (!usersId.isEmpty()) {

@@ -68,7 +68,6 @@ public class StockageService {
             Path targetDirectory = Paths.get(userHome, fileName, "songsfiles");
             Files.createDirectories(targetDirectory);
 
-            // Charger les ressources du dossier
             InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(resourceFolderPath);
             if (resourceStream == null) {
                 throw new IllegalArgumentException("Resource folder not found: " + resourceFolderPath);

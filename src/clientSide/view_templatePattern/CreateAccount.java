@@ -7,7 +7,7 @@ import clientSide.services.PageService;
 
 import static clientSide.services.PrintHelper.*;
 
-public class CreateAccount extends TemplateInversedPage {
+public class CreateAccount extends TemplateInversePage {
 
     private String pseudonym;
     private String password;

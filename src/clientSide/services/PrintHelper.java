@@ -11,7 +11,7 @@ public class PrintHelper {
     static final String PRINT_BLUE = "\u001B[34m";
     static final String PRINT_WHITE = "\u001B[28m";
 
-    static final String PRINT_BGWHITE = "\u001B[47m";
+    static final String PRINT_BG_WHITE = "\u001B[47m";
     static final String PRINT_BOLD = "\u001B[1m";
 
     public static void printLN (){
@@ -19,7 +19,7 @@ public class PrintHelper {
     }
 
     public static void printLNBgWhite(String message) {
-        System.out.println(PRINT_BGWHITE + PRINT_BLACK + PRINT_BOLD + message + PRINT_RESET);
+        System.out.println(PRINT_BG_WHITE + PRINT_BLACK + PRINT_BOLD + message + PRINT_RESET);
     }
 
     public static void printLNWhite(String message) {

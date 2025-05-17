@@ -39,7 +39,7 @@ public class FriendsDisplayFriends extends TemplateSimplePage {
         String friendIndex = pageService.gotAnInput(scanner.nextLine());
 
         while(Integer.parseInt(friendIndex)>friends.size()){
-            printInfo("Invalide input. Please try again.");
+            printInfo("Invalid input. Please try again.");
             friendIndex = pageService.gotAnInput(scanner.nextLine());
             displayInput();
         }

@@ -156,7 +156,7 @@ public class SearchService {
         }
     }
 
-    public List<Integer> searchUserByPseudonyme (String pseudonym){
+    public List<Integer> searchUserByPseudonym(String pseudonym){
         List<Integer> usersId = new ArrayList<>();
         if (pseudonym == null || pseudonym.isEmpty()){
             printLNInfo("No pseudonym given.");
