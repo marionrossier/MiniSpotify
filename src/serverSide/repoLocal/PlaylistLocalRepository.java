@@ -1,7 +1,7 @@
 package serverSide.repoLocal;
 
-import middle.IPlaylistRepository;
-import Utils.StockageService;
+import commun.IPlaylistRepository;
+import commun.StockageService;
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -17,6 +17,8 @@ public class PlaylistLocalRepository implements IPlaylistRepository {
     public PlaylistLocalRepository(String filePath) {
         this.filePath = filePath;
         this.stockageService = new StockageService();
+        stockageService.copyResourceToWritableLocation("jsons/playlist.json");
+
         this.data = stockageService.loadFromJson(this.filePath, new TypeReference<>() {});
     }
 

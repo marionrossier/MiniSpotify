@@ -1,8 +1,7 @@
 package serverSide.repoBack;
 
-import middle.IUserRepository;
+import commun.IUserRepository;
 import serverSide.entities.User;
-import serverSide.repoLocal.UserLocalRepository;
 
 import java.io.*;
 import java.util.Optional;

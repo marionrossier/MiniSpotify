@@ -3,7 +3,7 @@ package clientSide.repoFront;
 import clientSide.services.Cookies_SingletonPattern;
 import clientSide.socket.SocketClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import middle.ISongRepository;
+import commun.ISongRepository;
 import serverSide.entities.MusicGender;
 import serverSide.entities.Song;
 

@@ -1,8 +1,8 @@
-package Utils;
+package utils;
 
 import clientSide.services.*;
 import javazoom.jlgui.basicplayer.BasicPlayer;
-import middle.*;
+import commun.*;
 import serverSide.repoLocal.*;
 import clientSide.player_StatePattern.file_player.MusicPlayer;
 import clientSide.player_StatePattern.file_player.IMusicPlayer;
@@ -94,22 +94,6 @@ public class CompositionRootPatternNoSocket {
     }
 
     public void startApp(){
-
         this.pageService.startLogin();
-    }
-
-    public void copyJsons(){
-        StockageService stockageService = new StockageService();
-
-        stockageService.copyResourceToWritableLocation("jsons/artist.json");
-        stockageService.copyResourceToWritableLocation("jsons/user.json");
-        stockageService.copyResourceToWritableLocation("jsons/song.json");
-        stockageService.copyResourceToWritableLocation("jsons/playlist.json");
-    }
-
-    public void copySongs(){
-        StockageService stockageService = new StockageService();
-
-        stockageService.copyAllSongsToWritableLocation("songsfiles");
     }
 }

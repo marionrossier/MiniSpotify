@@ -1,4 +1,4 @@
-package middle;
+package commun;
 
 import serverSide.entities.MusicGender;
 import serverSide.entities.Song;

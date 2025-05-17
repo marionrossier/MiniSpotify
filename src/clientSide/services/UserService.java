@@ -2,7 +2,7 @@ package clientSide.services;
 
 import serverSide.entities.PlanEnum;
 import serverSide.entities.User;
-import middle.IUserRepository;
+import commun.IUserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class UserService {
 
         User existingUser = getUserByPseudonym(pseudonym);
         if (existingUser != null) {
-            System.err.println("The pseudonym \""+pseudonym+ "\" already exists.");
+            printLNInfo("The pseudonym \""+pseudonym+ "\" already exists.");
         }
         else {
             User newUser = new User(pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
@@ -47,7 +47,7 @@ public class UserService {
 
         User existingUser = getUserByPseudonym(pseudonym);
         if (existingUser != null) {
-            System.err.println("The pseudonym \""+pseudonym+ "\" already exists.");
+            printLNInfo("The pseudonym \""+pseudonym+ "\" already exists.");
         }
         else {
             User newUser = new User(id, pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());

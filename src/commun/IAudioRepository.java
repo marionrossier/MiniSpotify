@@ -1,4 +1,4 @@
-package middle;
+package commun;
 
 import java.io.InputStream;
 

@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 import serverSide.socket.AudioSocketServer;
 import serverSide.socket.SocketServer;
@@ -35,9 +35,6 @@ public class Main {
 
     public static void noSocketApp () {
         CompositionRootPatternNoSocket compositionRootPatternNoSocket = new CompositionRootPatternNoSocket();
-
-        compositionRootPatternNoSocket.copySongs();
-        compositionRootPatternNoSocket.copyJsons();
         compositionRootPatternNoSocket.startApp();
     }
 
@@ -52,17 +49,9 @@ public class Main {
                 compositionRootServerSide.backArtistRepo
         );
 
-        // ✅ Lancer les serveurs AVANT
-        new Thread(socketServer::main).start();
-        new Thread(audioSocketServer::audioSocketMain).start();
+        compositionRootServerSide.startApp(socketServer, audioSocketServer);
 
-        // ⏱ Petite pause pour éviter que le client tente une connexion trop tôt
-        try { Thread.sleep(1000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
 
-        compositionRootServerSide.copySongs();
-        compositionRootServerSide.copyJsons();
-
-        // ✅ Puis démarrer le client
         CompositionRootClientSide compositionRootClientSide = new CompositionRootClientSide();
         compositionRootClientSide.startApp();
     }

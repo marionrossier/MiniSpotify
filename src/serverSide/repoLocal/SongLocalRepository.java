@@ -1,8 +1,8 @@
 package serverSide.repoLocal;
 
-import middle.IArtistRepository;
-import middle.ISongRepository;
-import Utils.StockageService;
+import commun.IArtistRepository;
+import commun.ISongRepository;
+import commun.StockageService;
 import serverSide.entities.MusicGender;
 import serverSide.entities.Song;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -19,8 +19,10 @@ public class SongLocalRepository implements ISongRepository {
 
     public SongLocalRepository(String filePath, StockageService stockageService, IArtistRepository artistLocalRepository) {
         this.filePath = filePath;
-        this.stockageService = stockageService;
         this.artistLocalRepository = artistLocalRepository;
+        this.stockageService = stockageService;
+        this.stockageService.copyResourceToWritableLocation("jsons/song.json");
+
         this.data = stockageService.loadFromJson(this.filePath, new TypeReference<>() {});
     }
 

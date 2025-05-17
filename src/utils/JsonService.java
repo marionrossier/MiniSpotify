@@ -1,9 +1,10 @@
-package Utils;
+package utils;
 
-import middle.ISongRepository;
+import commun.ISongRepository;
 import clientSide.services.PasswordService;
 import clientSide.services.ToolBoxService;
 import clientSide.services.UserService;
+import commun.StockageService;
 import serverSide.entities.*;
 import serverSide.repoLocal.*;
 

@@ -1,11 +1,10 @@
-package Utils;
+package utils;
 
-import middle.*;
+import commun.*;
 import serverSide.repoBack.*;
 import serverSide.repoLocal.*;
-
-import java.util.Scanner;
-import java.util.Stack;
+import serverSide.socket.AudioSocketServer;
+import serverSide.socket.SocketServer;
 
 public class CompositionRootServerSide {
 
@@ -43,18 +42,10 @@ public class CompositionRootServerSide {
         backAudioRepo = new BackAudioRepo(userLocalRepository);
     }
 
-    public void copyJsons(){
-        StockageService stockageService = new StockageService();
+    public void startApp(SocketServer socketServer, AudioSocketServer audioSocketServer) {
+        new Thread(socketServer::socketServerMain).start();
+        new Thread(audioSocketServer::audioSocketMain).start();
 
-        stockageService.copyResourceToWritableLocation("jsons/artist.json");
-        stockageService.copyResourceToWritableLocation("jsons/user.json");
-        stockageService.copyResourceToWritableLocation("jsons/song.json");
-        stockageService.copyResourceToWritableLocation("jsons/playlist.json");
-    }
-
-    public void copySongs(){
-        StockageService stockageService = new StockageService();
-
-        stockageService.copyAllSongsToWritableLocation("songsfiles");
+        try { Thread.sleep(1000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
     }
 }

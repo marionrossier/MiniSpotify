@@ -1,6 +1,6 @@
 package clientSide.services;
 
-import middle.IArtistRepository;
+import commun.IArtistRepository;
 
 public class ArtistService {
     private final IArtistRepository artistLocalRepository;

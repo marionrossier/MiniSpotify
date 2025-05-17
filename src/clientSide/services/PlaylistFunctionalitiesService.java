@@ -3,8 +3,8 @@ package clientSide.services;
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 import serverSide.entities.User;
-import middle.IPlaylistRepository;
-import middle.IUserRepository;
+import commun.IPlaylistRepository;
+import commun.IUserRepository;
 import java.util.List;
 import java.util.Scanner;
 
@@ -65,7 +65,7 @@ public class PlaylistFunctionalitiesService {
         }
         else {
             if (playlist.getName().equals("AllSongs")){
-                System.err.println("You cannot delete the AllSongs playlist.");
+                printLNInfo("You cannot delete the AllSongs playlist.");
             }
             removePlaylistFromUser(playlistId);
             printLNGreen("Playlist removed from your list.");
@@ -99,7 +99,7 @@ public class PlaylistFunctionalitiesService {
         int currentSongId = songService.getCurrentSongId();
 
         if (currentSongId == songId){
-            System.err.println("You can not delete the current playing song.");
+            printLNInfo("You can not delete the current playing song.");
         }
 
         playlist.getPlaylistSongsListWithId().remove(songIndex);

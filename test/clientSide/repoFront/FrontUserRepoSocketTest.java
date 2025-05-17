@@ -1,6 +1,6 @@
 package clientSide.repoFront;
 
-import middle.IUserRepository;
+import commun.IUserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

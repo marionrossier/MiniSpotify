@@ -1,7 +1,7 @@
 package serverSide.repoBack;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import middle.IUserRepository;
+import commun.IUserRepository;
 import serverSide.entities.User;
 
 import java.util.List;

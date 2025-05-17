@@ -1,4 +1,4 @@
-package middle;
+package commun;
 
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;

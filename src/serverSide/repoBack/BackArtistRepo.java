@@ -1,8 +1,8 @@
 package serverSide.repoBack;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import middle.IArtistRepository;
-import middle.IUserRepository;
+import commun.IArtistRepository;
+import commun.IUserRepository;
 import serverSide.entities.Artist;
 import serverSide.entities.User;
 

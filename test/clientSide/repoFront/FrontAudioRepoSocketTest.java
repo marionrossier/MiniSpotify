@@ -1,7 +1,7 @@
 package clientSide.repoFront;
 
 import clientSide.services.Cookies_SingletonPattern;
-import middle.IAudioRepository;
+import commun.IAudioRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

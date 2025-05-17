@@ -3,7 +3,7 @@ package clientSide.repoFront;
 import clientSide.services.Cookies_SingletonPattern;
 import clientSide.socket.SocketClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import middle.IPlaylistRepository;
+import commun.IPlaylistRepository;
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
 

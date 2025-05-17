@@ -1,6 +1,6 @@
 package clientSide.repoFront;
 
-import middle.ISongRepository;
+import commun.ISongRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,6 @@ import serverSide.entities.Song;
 import utilsAndFakes.CommuneMethods;
 import utilsAndFakes.Initializer;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 

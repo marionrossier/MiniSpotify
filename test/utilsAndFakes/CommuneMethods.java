@@ -1,6 +1,6 @@
 package utilsAndFakes;
 
-import middle.*;
+import commun.*;
 import clientSide.services.*;
 import serverSide.entities.*;
 
@@ -87,7 +87,7 @@ public class CommuneMethods {
         } catch (IOException e) {
             initializer.serverThread = new Thread(() -> {
                 try {
-                    initializer.socketServer.main();
+                    initializer.socketServer.socketServerMain();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }

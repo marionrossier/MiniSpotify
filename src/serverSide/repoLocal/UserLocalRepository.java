@@ -1,7 +1,7 @@
 package serverSide.repoLocal;
 
-import middle.IUserRepository;
-import Utils.StockageService;
+import commun.IUserRepository;
+import commun.StockageService;
 import serverSide.entities.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -17,6 +17,8 @@ public class UserLocalRepository implements IUserRepository {
     public UserLocalRepository(String filePath) {
         this.filePath = filePath;
         this.stockageService = new StockageService();
+        stockageService.copyResourceToWritableLocation("jsons/user.json");
+
         this.data = stockageService.loadFromJson(this.filePath, new TypeReference<>() {});
     }
 

@@ -1,6 +1,6 @@
 package clientSide.player_StatePattern.playlist_player;
 
-import middle.IAudioRepository;
+import commun.IAudioRepository;
 import clientSide.services.*;
 import serverSide.entities.Playlist;
 import serverSide.entities.Song;

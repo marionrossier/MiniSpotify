@@ -1,6 +1,6 @@
 package clientSide.repoFront;
 
-import middle.IArtistRepository;
+import commun.IArtistRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
