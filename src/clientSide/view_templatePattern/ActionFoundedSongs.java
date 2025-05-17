@@ -6,7 +6,7 @@ import clientSide.services.ToolBoxView;
 
 import static clientSide.services.PrintHelper.*;
 
-public class ActionFoundedSongs extends _SimplePageTemplate {
+public class ActionFoundedSongs extends TemplateSimplePage {
 
     public ActionFoundedSongs(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
@@ -45,7 +45,7 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
             pageService.playlistPageOpen.displayAllPage();
         }
         else {
-            System.err.println("You're not the owner of this playlist.");
+            printLNInfo("You're not the owner of this playlist.");
             pageService.actionFoundedSongs.displayAllPage();
         }
     }

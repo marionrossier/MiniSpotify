@@ -1,7 +1,7 @@
 package clientSide.repoFront;
 
 import clientSide.services.Cookies_SingletonPattern;
-import middle.IAudioRepository;
+import commun.IAudioRepository;
 
 import java.io.*;
 import java.net.Socket;
@@ -9,7 +9,7 @@ import java.net.Socket;
 public class FrontAudioRepo implements IAudioRepository {
 
     private static final String SERVER_ADDRESS = "127.0.0.1";
-    private static final int SERVER_PORT = 45001; // ⚠️ à séparer si tu veux dissocier socket JSON et audio
+    private static final int SERVER_PORT = 45001;
 
     @Override
     public InputStream getStream(String fileName) {
@@ -17,15 +17,13 @@ public class FrontAudioRepo implements IAudioRepository {
              DataOutputStream out = new DataOutputStream(socket.getOutputStream());
              DataInputStream in = new DataInputStream(socket.getInputStream())) {
 
-            // ✅ Envoie une requête de fichier audio (simple protocole)
             out.writeUTF("getAudioFile");
             out.writeUTF(String.valueOf(Cookies_SingletonPattern.getInstance().getUserPseudonym()));
             out.writeUTF(Cookies_SingletonPattern.getInstance().getUserPassword());
             out.writeUTF(fileName);
             out.flush();
 
-            // ✅ Lecture du fichier en mémoire
-            int fileSize = in.readInt(); // Taille du fichier en octets
+            int fileSize = in.readInt();
             byte[] fileBytes = new byte[fileSize];
             in.readFully(fileBytes);
 

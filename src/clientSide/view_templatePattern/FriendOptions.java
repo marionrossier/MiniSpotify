@@ -9,7 +9,7 @@ import java.util.List;
 
 import static clientSide.services.PrintHelper.*;
 
-public class FriendOptions extends _SimplePageTemplate {
+public class FriendOptions extends TemplateSimplePage {
     public FriendOptions(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
         this.toolBoxView = toolBoxView;
@@ -45,7 +45,7 @@ public class FriendOptions extends _SimplePageTemplate {
             }
         }
         if (friendIndex == -1){
-            System.err.println("No corresponding friend found.");
+            printLNInfo("No corresponding friend found.");
         }
         else {
             toolBoxView.getUserServ().deleteFriend(friendID);

@@ -77,10 +77,6 @@ public class Playlist {
         this.ownerId = ownerId;
     }
 
-    public int getDurationSeconds() {
-        return durationSeconds;
-    }
-
     public void setPlaylistDuration(int durationSeconds) {
         this.durationSeconds = durationSeconds;
     }

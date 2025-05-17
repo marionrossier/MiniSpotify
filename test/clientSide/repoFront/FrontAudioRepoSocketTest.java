@@ -1,12 +1,12 @@
 package clientSide.repoFront;
 
 import clientSide.services.Cookies_SingletonPattern;
-import middle.IAudioRepository;
+import commun.IAudioRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utilsAndFakes.CommuneMethods;
-import utilsAndFakes.Initializer;
+import utilsAndFakes.TestHelper;
+import utilsAndFakes.DependencyProvider;
 
 import java.io.*;
 import java.net.Socket;
@@ -17,8 +17,8 @@ public class FrontAudioRepoSocketTest {
 
     private IAudioRepository audioRepo;
     private Thread audioServerThread;
-    private CommuneMethods communeMethods;
-    private Initializer initializer;
+    private TestHelper testHelper;
+    private DependencyProvider dependencyProvider;
 
     private final String TEST_FILE_NAME = "Believer - Imagine Dragons - Evolve - 2017 - Pop rock _ Alt rock - 0324.mp3";
     private final File SOURCE_FILE = new File(System.getProperty("user.home") +
@@ -26,9 +26,9 @@ public class FrontAudioRepoSocketTest {
 
     @BeforeEach
     void setup() {
-        communeMethods = new CommuneMethods();
-        initializer = communeMethods.initializer;
-        initializer.populateLocalUsers();
+        testHelper = new TestHelper();
+        dependencyProvider = testHelper.dependencyProvider;
+        dependencyProvider.populateLocalUsers();
         Cookies_SingletonPattern.setInstance(232928320, "marion", "hash");
 
         try (Socket socket = new Socket("127.0.0.1", 45001)) {
@@ -36,7 +36,7 @@ public class FrontAudioRepoSocketTest {
         } catch (IOException e) {
             audioServerThread = new Thread(() -> {
                 try {
-                    initializer.audioSocketServer.audioSocketMain();
+                    dependencyProvider.audioSocketServer.audioSocketMain();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
@@ -49,12 +49,12 @@ public class FrontAudioRepoSocketTest {
                 Thread.currentThread().interrupt();
             }
         }
-        audioRepo = initializer.frontAudioRepo;
+        audioRepo = dependencyProvider.frontAudioRepo;
     }
 
     @AfterEach
     void tearDown() {
-        initializer.cleanUp();
+        dependencyProvider.cleanUp();
     }
 
     @Test

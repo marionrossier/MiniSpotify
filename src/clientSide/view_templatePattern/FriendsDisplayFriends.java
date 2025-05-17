@@ -9,7 +9,7 @@ import static clientSide.services.PrintHelper.*;
 
 import java.util.List;
 
-public class FriendsDisplayFriends extends _SimplePageTemplate {
+public class FriendsDisplayFriends extends TemplateSimplePage {
     public FriendsDisplayFriends(PageService pageService, IPlaylistPlayer spotifyPlayer,
                                  ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
@@ -39,7 +39,7 @@ public class FriendsDisplayFriends extends _SimplePageTemplate {
         String friendIndex = pageService.gotAnInput(scanner.nextLine());
 
         while(Integer.parseInt(friendIndex)>friends.size()){
-            printInfo("Invalide input. Please try again.");
+            printInfo("Invalid input. Please try again.");
             friendIndex = pageService.gotAnInput(scanner.nextLine());
             displayInput();
         }

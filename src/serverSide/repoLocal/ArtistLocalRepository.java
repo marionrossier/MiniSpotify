@@ -1,7 +1,7 @@
 package serverSide.repoLocal;
 
-import middle.IArtistRepository;
-import Utils.StockageService;
+import commun.IArtistRepository;
+import commun.StockageService;
 import serverSide.entities.Artist;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -16,6 +16,8 @@ public class ArtistLocalRepository implements IArtistRepository {
     public ArtistLocalRepository(String filePath) {
         this.filePath = filePath;
         this.stockageService = new StockageService();
+
+        stockageService.copyResourceToWritableLocation("jsons/artist.json");
         this.data = stockageService.loadFromJson(this.filePath, new TypeReference<>() {});
     }
 

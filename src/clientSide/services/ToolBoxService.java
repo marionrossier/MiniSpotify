@@ -1,6 +1,6 @@
 package clientSide.services;
 
-import middle.*;
+import commun.*;
 
 public class ToolBoxService {
 

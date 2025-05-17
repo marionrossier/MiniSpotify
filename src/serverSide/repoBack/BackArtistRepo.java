@@ -1,8 +1,8 @@
 package serverSide.repoBack;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import middle.IArtistRepository;
-import middle.IUserRepository;
+import commun.IArtistRepository;
+import commun.IUserRepository;
 import serverSide.entities.Artist;
 import serverSide.entities.User;
 
@@ -62,6 +62,7 @@ public class BackArtistRepo {
                 }
 
                 case "addArtist", "saveArtist" -> {
+                    @SuppressWarnings("unchecked")
                     Map<String, Object> artistMap = (Map<String, Object>) request.get("artist");
                     Artist artist = mapper.convertValue(artistMap, Artist.class);
                     if ("addArtist".equals(command)) {

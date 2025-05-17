@@ -3,8 +3,8 @@ package data.jsons;
 import serverSide.entities.Artist;
 import serverSide.repoLocal.ArtistLocalRepository;
 import org.junit.jupiter.api.*;
-import utilsAndFakes.CommuneMethods;
-import utilsAndFakes.Initializer;
+import utilsAndFakes.TestHelper;
+import utilsAndFakes.DependencyProvider;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,8 +17,8 @@ class ArtistLocalRepoTest{
 
     private File tempFile;
     private ArtistLocalRepository repo;
-    private CommuneMethods communeMethods;
-    private Initializer initializer;
+    private TestHelper testHelper;
+    private DependencyProvider dependencyProvider;
 
     public ArtistLocalRepoTest(){
     }
@@ -27,13 +27,13 @@ class ArtistLocalRepoTest{
     void setup() throws IOException {
         tempFile = Files.createTempFile("artist", ".json").toFile();
         repo = new ArtistLocalRepository(tempFile.getAbsolutePath());
-        communeMethods = new CommuneMethods();
-        initializer = communeMethods.initializer;
+        testHelper = new TestHelper();
+        dependencyProvider = testHelper.dependencyProvider;
     }
 
     @AfterEach
     void tearDown() {
-        initializer.cleanUp();
+        dependencyProvider.cleanUp();
     }
 
     @Test

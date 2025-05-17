@@ -4,7 +4,7 @@ import clientSide.services.Cookies_SingletonPattern;
 import clientSide.socket.SocketClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import serverSide.entities.Artist;
-import middle.IArtistRepository;
+import commun.IArtistRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +16,7 @@ public class FrontArtistRepo implements IArtistRepository {
     private final SocketClient socketClient;
 
     public FrontArtistRepo(SocketClient socketClient) {
-        this.socketClient = new SocketClient();
+        this.socketClient = socketClient;
     }
 
     @Override

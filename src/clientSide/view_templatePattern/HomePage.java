@@ -6,7 +6,7 @@ import clientSide.services.ToolBoxView;
 
 import static clientSide.services.PrintHelper.*;
 
-public class HomePage extends _SimplePageTemplate {
+public class HomePage extends TemplateSimplePage {
 
     public HomePage(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);

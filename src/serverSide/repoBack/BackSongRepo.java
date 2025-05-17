@@ -1,8 +1,8 @@
 package serverSide.repoBack;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import middle.ISongRepository;
-import middle.IUserRepository;
+import commun.ISongRepository;
+import commun.IUserRepository;
 import serverSide.entities.Song;
 import serverSide.entities.User;
 
@@ -64,6 +64,7 @@ public class BackSongRepo {
                 }
 
                 case "addSong" -> {
+                    @SuppressWarnings("unchecked")
                     Map<String, Object> songMap = (Map<String, Object>) request.get("song");
                     Song song = mapper.convertValue(songMap, Song.class);
                     songRepo.addSong(song);

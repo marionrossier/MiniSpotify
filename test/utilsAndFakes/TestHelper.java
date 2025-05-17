@@ -1,19 +1,19 @@
 package utilsAndFakes;
 
-import middle.*;
+import commun.*;
 import clientSide.services.*;
 import serverSide.entities.*;
 
 import java.io.IOException;
 import java.net.Socket;
 
-public class CommuneMethods {
+public class TestHelper {
 
-    public Initializer initializer;
+    public DependencyProvider dependencyProvider;
 
-    public CommuneMethods() {
+    public TestHelper() {
         try {
-            this.initializer = new Initializer();
+            this.dependencyProvider = new DependencyProvider();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -35,8 +35,8 @@ public class CommuneMethods {
             Song song = createTestSong(id, "Song " + id);
             this.addSongToPlaylist(playlist.getPlaylistId(),
                     song.getSongId(),
-                    initializer.playlistLocalRepository,
-                    initializer.playlistService);
+                    dependencyProvider.playlistLocalRepository,
+                    dependencyProvider.playlistService);
         }
     }
 
@@ -85,15 +85,15 @@ public class CommuneMethods {
         try (Socket testSocket = new Socket("127.0.0.1", 45000)) {
             System.out.println("✅ Serveur déjà actif.");
         } catch (IOException e) {
-            initializer.serverThread = new Thread(() -> {
+            dependencyProvider.serverThread = new Thread(() -> {
                 try {
-                    initializer.socketServer.main();
+                    dependencyProvider.socketServer.socketServerMain();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
             });
-            initializer.serverThread.setDaemon(true);
-            initializer.serverThread.start();
+            dependencyProvider.serverThread.setDaemon(true);
+            dependencyProvider.serverThread.start();
 
             try {
                 Thread.sleep(1000); // Laisse le temps au serveur de démarrer

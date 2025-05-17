@@ -1,7 +1,7 @@
 package serverSide.repoLocal;
 
-import middle.IUserRepository;
-import Utils.StockageService;
+import commun.IUserRepository;
+import commun.StockageService;
 import serverSide.entities.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -17,6 +17,8 @@ public class UserLocalRepository implements IUserRepository {
     public UserLocalRepository(String filePath) {
         this.filePath = filePath;
         this.stockageService = new StockageService();
+        stockageService.copyResourceToWritableLocation("jsons/user.json");
+
         this.data = stockageService.loadFromJson(this.filePath, new TypeReference<>() {});
     }
 
@@ -38,7 +40,7 @@ public class UserLocalRepository implements IUserRepository {
     }
 
     public List<User> getAllUsers() {
-        return new ArrayList<>(data); // Copie défensive
+        return new ArrayList<>(data);
     }
 
     public void saveUser(User user) {
@@ -97,17 +99,5 @@ public class UserLocalRepository implements IUserRepository {
                 stockageService.saveToJson(filePath, data);
             }
         }
-    }
-
-    public List<Integer> getAllFriendsFromUser(User user){
-        if (user != null) {
-            List<Integer> friends = user.getFriends();
-            if (friends == null) {
-                friends = new ArrayList<>();
-                user.setFriends(friends);
-            }
-            return friends;
-        }
-        return new ArrayList<>();
     }
 }

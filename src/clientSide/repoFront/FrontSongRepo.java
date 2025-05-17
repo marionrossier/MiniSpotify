@@ -2,8 +2,9 @@ package clientSide.repoFront;
 
 import clientSide.services.Cookies_SingletonPattern;
 import clientSide.socket.SocketClient;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import middle.ISongRepository;
+import commun.ISongRepository;
 import serverSide.entities.MusicGender;
 import serverSide.entities.Song;
 
@@ -14,7 +15,7 @@ public class FrontSongRepo implements ISongRepository {
     private final SocketClient socketClient;
 
     public FrontSongRepo(SocketClient socketClient) {
-        this.socketClient = new SocketClient();
+        this.socketClient = socketClient;
     }
 
     @Override
@@ -74,12 +75,8 @@ public class FrontSongRepo implements ISongRepository {
                     "title", title
             ));
 
-            if (!"OK".equals(response.get("status"))) return null;
+            return getResponse(response);
 
-            List<?> raw = (List<?>) response.get("songs");
-            String json = mapper.writeValueAsString(raw);
-            Song[] songs = mapper.readValue(json, Song[].class);
-            return new LinkedList<>(Arrays.asList(songs));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -95,12 +92,8 @@ public class FrontSongRepo implements ISongRepository {
                     "artistName", artistName
             ));
 
-            if (!"OK".equals(response.get("status"))) return null;
+            return getResponse(response);
 
-            List<?> raw = (List<?>) response.get("songs");
-            String json = mapper.writeValueAsString(raw);
-            Song[] songs = mapper.readValue(json, Song[].class);
-            return new LinkedList<>(Arrays.asList(songs));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -116,15 +109,20 @@ public class FrontSongRepo implements ISongRepository {
                     "gender", gender.toString()
             ));
 
-            if (!"OK".equals(response.get("status"))) return null;
+            return getResponse(response);
 
-            List<?> raw = (List<?>) response.get("songs");
-            String json = mapper.writeValueAsString(raw);
-            Song[] songs = mapper.readValue(json, Song[].class);
-            return new LinkedList<>(Arrays.asList(songs));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private LinkedList<Song> getResponse(Map<String, Object> response) throws JsonProcessingException {
+        if (!"OK".equals(response.get("status"))) return null;
+
+        List<?> raw = (List<?>) response.get("songs");
+        String json = mapper.writeValueAsString(raw);
+        Song[] songs = mapper.readValue(json, Song[].class);
+        return new LinkedList<>(Arrays.asList(songs));
     }
 
     private Song getSongFromServer(Map<String, Object> request) {

@@ -1,38 +1,38 @@
 package clientSide.repoFront;
 
-import middle.IPlaylistRepository;
+import commun.IPlaylistRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import serverSide.entities.Playlist;
-import utilsAndFakes.CommuneMethods;
-import utilsAndFakes.Initializer;
+import utilsAndFakes.TestHelper;
+import utilsAndFakes.DependencyProvider;
 
 import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FrontPlaylistRepoSocketTest extends CommuneMethods{
+class FrontPlaylistRepoSocketTest extends TestHelper {
 
     private IPlaylistRepository frontPlaylistRepo;
-    private CommuneMethods communeMethods;
-    private Initializer initializer;
+    private TestHelper testHelper;
+    private DependencyProvider dependencyProvider;
 
     @BeforeEach
     void setup() throws IOException {
-        communeMethods = new CommuneMethods();
-        initializer = communeMethods.initializer;
-        frontPlaylistRepo = initializer.frontPlaylistRepo;
-        initializer.populateLocalUsers();
-        initializer.populateLocalPlaylists();
+        testHelper = new TestHelper();
+        dependencyProvider = testHelper.dependencyProvider;
+        frontPlaylistRepo = dependencyProvider.frontPlaylistRepo;
+        dependencyProvider.populateLocalUsers();
+        dependencyProvider.populateLocalPlaylists();
 
-        communeMethods.startServer();
+        testHelper.startServer();
     }
 
     @AfterEach
     void tearDown() {
-        initializer.cleanUp();
+        dependencyProvider.cleanUp();
     }
 
     @Test

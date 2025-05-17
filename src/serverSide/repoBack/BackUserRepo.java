@@ -1,7 +1,7 @@
 package serverSide.repoBack;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import middle.IUserRepository;
+import commun.IUserRepository;
 import serverSide.entities.User;
 
 import java.util.List;
@@ -39,14 +39,7 @@ public class BackUserRepo {
                             ? mapper.writeValueAsString(Map.of("status", "OK", "user", user))
                             : "{\"status\": \"ERROR\", \"message\": \"User not found\"}";
                 }
-                case "getUserByPseudonymLogin" -> {
-                    String pseudo = (String) request.get("pseudonym");
-                    User user = userRepo.getUserByPseudonym(pseudo);
-                    return user != null
-                            ? mapper.writeValueAsString(Map.of("status", "OK", "user", user))
-                            : "{\"status\": \"ERROR\", \"message\": \"User not found\"}";
-                }
-                case "getUserByPseudonym" -> {
+                case "getUserByPseudonymLogin", "getUserByPseudonym"  -> {
                     String pseudo = (String) request.get("pseudonym");
                     User user = userRepo.getUserByPseudonym(pseudo);
                     return user != null
@@ -54,6 +47,7 @@ public class BackUserRepo {
                             : "{\"status\": \"ERROR\", \"message\": \"User not found\"}";
                 }
                 case "saveUser" -> {
+                    @SuppressWarnings("unchecked")
                     Map<String, Object> userMap = (Map<String, Object>) request.get("user");
                     User user = mapper.convertValue(userMap, User.class);
                     userRepo.saveUser(user);

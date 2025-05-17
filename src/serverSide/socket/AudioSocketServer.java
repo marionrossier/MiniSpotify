@@ -10,9 +10,6 @@ import static clientSide.services.PrintHelper.*;
 public class AudioSocketServer {
 
     private final int PORT = 45001;
-    //TODO : retirer si zero problème
-//    private final String AUDIO_FOLDER =
-//            System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/songsfiles/";
 
     private final BackAudioRepo backAudioRepo;
 
@@ -24,7 +21,7 @@ public class AudioSocketServer {
                 new Thread(() -> handleAudioRequest(clientSocket)).start();
             }
         } catch (IOException e) {
-            System.err.print("❌ Server error: " + e.getMessage());
+            printLNError("❌ Server error: " + e.getMessage());
         }
     }
 
@@ -44,7 +41,7 @@ public class AudioSocketServer {
 
             byte[] bytes = backAudioRepo.handleGetAudioFile(in);
             if (bytes == null) {
-                out.writeInt(0); // Auth échouée ou fichier introuvable
+                out.writeInt(0);
                 return;
             }
 
@@ -52,21 +49,7 @@ public class AudioSocketServer {
             out.write(bytes);
 
         } catch (IOException e) {
-            System.err.print("❌ Audio handler error: " + e.getMessage());
+            printLNError("❌ Audio handler error: " + e.getMessage());
         }
     }
-
-    //TODO : supprimer si pas d'erreur !
-//    private byte[] readAllBytes(File file) throws IOException {
-//        try (InputStream fileIn = new FileInputStream(file);
-//             ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
-//
-//            byte[] temp = new byte[4096];
-//            int read;
-//            while ((read = fileIn.read(temp)) != -1) {
-//                buffer.write(temp, 0, read);
-//            }
-//            return buffer.toByteArray();
-//        }
-//    }
 }

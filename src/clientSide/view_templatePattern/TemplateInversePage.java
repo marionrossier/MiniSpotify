@@ -3,9 +3,9 @@ package clientSide.view_templatePattern;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 
-public abstract class _InversedPageTemplate extends _SimplePageTemplate {
+public abstract class TemplateInversePage extends TemplateSimplePage {
 
-    public _InversedPageTemplate(PageService pageService, IPlaylistPlayer spotifyPlayer) {
+    public TemplateInversePage(PageService pageService, IPlaylistPlayer spotifyPlayer) {
         super(pageService, spotifyPlayer);
     }
 

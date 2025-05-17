@@ -5,7 +5,7 @@ import clientSide.services.UniqueIdService;
 
 import java.util.List;
 
-@JsonInclude(JsonInclude.Include.NON_NULL) // Inclut uniquement les champs non nuls
+@JsonInclude(JsonInclude.Include.NON_NULL) // TODO : RETIRER ! Inclut uniquement les champs non nuls
 public class User {
     private int userId;
     private String pseudonym;

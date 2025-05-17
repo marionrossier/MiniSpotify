@@ -6,7 +6,7 @@ import clientSide.services.ToolBoxView;
 
 import static clientSide.services.PrintHelper.*;
 
-public class PlaylistDeletion extends _SimplePageTemplate {
+public class PlaylistDeletion extends TemplateSimplePage {
 
     public PlaylistDeletion(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);

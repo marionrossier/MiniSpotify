@@ -1,6 +1,7 @@
 package serverSide.repoLocal;
 
-import middle.IAudioRepository;
+import commun.IAudioRepository;
+import commun.StockageService;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -10,13 +11,17 @@ import java.io.InputStream;
 public class AudioLocalRepository implements IAudioRepository {
 
     private final String folderPath;
-
-    public AudioLocalRepository() {
-        this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/songsfiles/");
-    }
+    private final StockageService stockageService;
 
     public AudioLocalRepository(String folderPath) {
         this.folderPath = folderPath;
+        this.stockageService = new StockageService();
+        stockageService.copyAllSongsToWritableLocation("songsfiles");
+
+    }
+
+    public AudioLocalRepository() {
+        this(System.getProperty("user.home") + "/MiniSpotifyFlorentMarion/songsfiles/");
     }
 
     @Override

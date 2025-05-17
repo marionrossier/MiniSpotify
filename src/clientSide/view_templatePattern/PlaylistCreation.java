@@ -8,7 +8,7 @@ import clientSide.services.PageService;
 
 import static clientSide.services.PrintHelper.*;
 
-public class PlaylistCreation extends _InversedPageTemplate {
+public class PlaylistCreation extends TemplateInversePage {
     private String playlistName;
 
     public PlaylistCreation(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {

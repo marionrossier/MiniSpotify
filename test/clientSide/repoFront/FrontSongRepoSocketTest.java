@@ -1,15 +1,14 @@
 package clientSide.repoFront;
 
-import middle.ISongRepository;
+import commun.ISongRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import serverSide.entities.MusicGender;
 import serverSide.entities.Song;
-import utilsAndFakes.CommuneMethods;
-import utilsAndFakes.Initializer;
+import utilsAndFakes.TestHelper;
+import utilsAndFakes.DependencyProvider;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -18,25 +17,25 @@ import static org.junit.jupiter.api.Assertions.*;
 class FrontSongRepoSocketTest {
 
     private ISongRepository songRepo;
-    private CommuneMethods communeMethods;
-    private Initializer initializer;
+    private TestHelper testHelper;
+    private DependencyProvider dependencyProvider;
 
 
     @BeforeEach
     void setup() {
-        communeMethods = new CommuneMethods();
-        initializer = communeMethods.initializer;
-        songRepo = initializer.frontSongRepo;
-        initializer.populateLocalUsers();
-        initializer.populateLocalArtist();
-        initializer.populateLocalSong();
+        testHelper = new TestHelper();
+        dependencyProvider = testHelper.dependencyProvider;
+        songRepo = dependencyProvider.frontSongRepo;
+        dependencyProvider.populateLocalUsers();
+        dependencyProvider.populateLocalArtist();
+        dependencyProvider.populateLocalSong();
 
-        communeMethods.startServer();
+        testHelper.startServer();
     }
 
     @AfterEach
     void tearDown() {
-        initializer.cleanUp();
+        dependencyProvider.cleanUp();
     }
 
     @Test

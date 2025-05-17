@@ -3,14 +3,13 @@ package clientSide.view_templatePattern;
 import clientSide.services.ToolBoxView;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
-import serverSide.entities.User;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import static clientSide.services.PrintHelper.*;
 
-public class Search extends _SimplePageTemplate {
+public class Search extends TemplateSimplePage {
 
     public Search(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);

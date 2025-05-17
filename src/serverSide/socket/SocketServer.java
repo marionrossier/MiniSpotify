@@ -21,7 +21,7 @@ public class SocketServer {
     private final BackSongRepo backSongRepo;
     private final BackArtistRepo backArtistRepo;
 
-    public void main() {
+    public void socketServerMain() {
         try (ServerSocket serverSocket = new ServerSocket(this.PORT)) {
             printLNSystem("🎵 MiniSpotify Server is listening on port " + PORT);
 
@@ -52,6 +52,7 @@ public class SocketServer {
             Map request = mapper.readValue(jsonRequest, Map.class);
             String command = (String) request.get("command");
 
+            @SuppressWarnings("unchecked")
             String responseJson = switch (command) {
                 // Playlist
                 case "getPlaylistById", "getPlaylistByName", "getAllPlaylists",

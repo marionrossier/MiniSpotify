@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 import clientSide.player_StatePattern.file_player.IMusicPlayer;
 import clientSide.player_StatePattern.file_player.MusicPlayer;
@@ -8,7 +8,7 @@ import clientSide.repoFront.*;
 import clientSide.services.*;
 import clientSide.socket.SocketClient;
 import javazoom.jlgui.basicplayer.BasicPlayer;
-import middle.*;
+import commun.*;
 
 import java.util.Scanner;
 import java.util.Stack;

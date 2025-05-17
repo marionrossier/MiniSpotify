@@ -3,35 +3,35 @@ package services;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utilsAndFakes.CommuneMethods;
-import utilsAndFakes.Initializer;
+import utilsAndFakes.TestHelper;
+import utilsAndFakes.DependencyProvider;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PageServiceTest{
 
-    private CommuneMethods communeMethods;
-    private Initializer initializer;
+    private TestHelper testHelper;
+    private DependencyProvider dependencyProvider;
 
     public PageServiceTest(){
     }
 
     @BeforeEach
     void setUp() {
-        communeMethods = new CommuneMethods();
-        initializer = communeMethods.initializer;
+        testHelper = new TestHelper();
+        dependencyProvider = testHelper.dependencyProvider;
     }
 
     @AfterEach
     void tearDown() {
-        initializer.pageService.getMenuPages().clear();
+        dependencyProvider.pageService.getMenuPages().clear();
     }
 
     @Test
     void testGetPageById() {
         //Arrange
         //Act
-        int pageId = initializer.pageService.homePage.getPageId();
+        int pageId = dependencyProvider.pageService.homePage.getPageId();
         boolean exist = false;
         if (pageId > 0){
             exist = true;

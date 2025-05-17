@@ -1,7 +1,7 @@
 package clientSide.services;
 
 import serverSide.entities.Playlist;
-import middle.IPlaylistRepository;
+import commun.IPlaylistRepository;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class PlaylistReorderSongService {
                     if (!newOrder.contains(songId)) {
                         newOrder.add(songId);
                     } else {
-                        System.err.println("This song is already in the new order. Try again.");
+                        printLNInfo("This song is already in the new order. Try again.");
                     }
                 } else {
                     printInfo("Invalid selection. Please try again.");

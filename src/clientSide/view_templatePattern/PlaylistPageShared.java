@@ -7,7 +7,7 @@ import clientSide.services.PageService;
 
 import static clientSide.services.PrintHelper.*;
 
-public class PlaylistPageShared extends _SimplePageTemplate {
+public class PlaylistPageShared extends TemplateSimplePage {
 
     public PlaylistPageShared(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);

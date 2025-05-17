@@ -94,7 +94,7 @@ public class PrintService {
         List<Integer> friendsId = userService.getUserById(userId).getFriends();
         if (user != null) {
             if (friendsId.isEmpty()){
-                System.err.println("No friends actually.");
+                printLNInfo("No friends actually.");
                 return false;
             }
             for (int friendId : friendsId) {

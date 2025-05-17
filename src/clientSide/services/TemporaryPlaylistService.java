@@ -2,9 +2,11 @@ package clientSide.services;
 
 import serverSide.entities.Playlist;
 import serverSide.entities.PlaylistEnum;
-import middle.IPlaylistRepository;
+import commun.IPlaylistRepository;
 
 import java.util.LinkedList;
+
+import static clientSide.services.PrintHelper.*;
 
 public class TemporaryPlaylistService {
 
@@ -57,7 +59,7 @@ public class TemporaryPlaylistService {
             playlistLocalRepository.savePlaylist(newPlaylist);
             userService.addOnePlaylistToCurrentUser(newPlaylist.getPlaylistId());
         } else {
-            System.err.println("Temporary playlist not found.");
+            printLNError("Temporary playlist not found.");
         }
     }
 
@@ -73,7 +75,7 @@ public class TemporaryPlaylistService {
             }
             playlistLocalRepository.savePlaylist(targetPlaylist);
         } else {
-            System.err.println("Target playlist or temporary playlist not found.");
+            printLNError("Target playlist or temporary playlist not found.");
         }
     }
 }

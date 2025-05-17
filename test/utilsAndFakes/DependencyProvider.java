@@ -1,27 +1,24 @@
 package utilsAndFakes;
 
-import Utils.StockageService;
-import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
-import clientSide.player_StatePattern.playlist_player.PlaylistPlayer;
+import commun.StockageService;
+import clientSide.player_StatePattern.playlist_player.*;
 import clientSide.repoFront.*;
 import clientSide.services.*;
 import clientSide.socket.SocketClient;
-import middle.*;
+import commun.*;
 import serverSide.entities.*;
 import serverSide.repoBack.*;
 import serverSide.repoLocal.*;
-import serverSide.socket.AudioSocketServer;
-import serverSide.socket.SocketServer;
+import serverSide.socket.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
-public class Initializer {
+import static clientSide.services.PrintHelper.*;
+
+public class DependencyProvider {
 
     Scanner scanner = new Scanner(System.in);
 
@@ -79,7 +76,7 @@ public class Initializer {
     public final AudioSocketServer audioSocketServer;
     public final SocketServer socketServer;
 
-    public Initializer() throws IOException {
+    public DependencyProvider() throws IOException {
 
         menuPagesStack = new Stack<>();
 
@@ -184,17 +181,17 @@ public class Initializer {
     }
 
     public void cleanUp() {
-        if (tempPlaylistsFile.exists()) {
-            tempPlaylistsFile.delete();
-        }
-        if (tempSongsFile.exists()) {
-            tempSongsFile.delete();
-        }
-        if (tempUsersFile.exists()) {
-            tempUsersFile.delete();
-        }
-        if (tempArtistFile.exists()){
-            tempArtistFile.delete();
+        deleteIfExists(tempPlaylistsFile);
+        deleteIfExists(tempSongsFile);
+        deleteIfExists(tempUsersFile);
+        deleteIfExists(tempArtistFile);
+    }
+
+    private void deleteIfExists(File file) {
+        try {
+            Files.deleteIfExists(file.toPath());
+        } catch (IOException e) {
+            printLNError("Failed to delete file: " + file.getAbsolutePath());
         }
     }
 }

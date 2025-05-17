@@ -1,8 +1,8 @@
 package serverSide.repoBack;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import middle.IPlaylistRepository;
-import middle.IUserRepository;
+import commun.IPlaylistRepository;
+import commun.IUserRepository;
 import serverSide.entities.Playlist;
 import serverSide.entities.User;
 
@@ -62,6 +62,7 @@ public class BackPlaylistRepo {
                 }
 
                 case "savePlaylist" -> {
+                    @SuppressWarnings("unchecked")
                     Map<String, Object> playlistData = (Map<String, Object>) request.get("playlist");
                     Playlist playlist = mapper.convertValue(playlistData, Playlist.class);
                     playlistRepo.savePlaylist(playlist);
@@ -69,6 +70,7 @@ public class BackPlaylistRepo {
                 }
 
                 case "getPlaylistStatus" -> {
+                    @SuppressWarnings("unchecked")
                     Map<String, Object> playlistData = (Map<String, Object>) request.get("playlist");
                     Playlist playlist = mapper.convertValue(playlistData, Playlist.class);
                     return mapper.writeValueAsString(Map.of("status", "OK", "playlistStatus",

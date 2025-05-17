@@ -1,4 +1,4 @@
-package Utils;
+package commun;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +13,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+
+import static clientSide.services.PrintHelper.*;
 
 public class StockageService {
 
@@ -37,21 +39,9 @@ public class StockageService {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), data);
         } catch (IOException e) {
-            System.err.print("Error during the saving action for : " + e.getMessage());
+            printLNError("Error during the saving action for : " + e.getMessage());
         }
     }
-
-    //TODO : retirer si pas de bug
-//    public String createWritableDirectory(String directoryPath) {
-//        try {
-//            Path targetPath = Paths.get(userHome, fileName, directoryPath);
-//            Files.createDirectories(targetPath);
-//
-//            return targetPath.toString();
-//        } catch (IOException e) {
-//            throw new RuntimeException("Error creating folder : " + userHome + fileName + "\n Message : " + e.getMessage());
-//        }
-//    }
 
     public void copyResourceToWritableLocation(String resourcePath){
         try {
@@ -78,7 +68,6 @@ public class StockageService {
             Path targetDirectory = Paths.get(userHome, fileName, "songsfiles");
             Files.createDirectories(targetDirectory);
 
-            // Charger les ressources du dossier
             InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(resourceFolderPath);
             if (resourceStream == null) {
                 throw new IllegalArgumentException("Resource folder not found: " + resourceFolderPath);

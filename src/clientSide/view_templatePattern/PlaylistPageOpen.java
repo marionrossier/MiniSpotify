@@ -9,7 +9,7 @@ import static clientSide.services.PrintHelper.*;
 
 import java.util.Scanner;
 
-public class PlaylistPageOpen extends _SimplePageTemplate {
+public class PlaylistPageOpen extends TemplateSimplePage {
 
     Scanner in = new Scanner(System.in);
 

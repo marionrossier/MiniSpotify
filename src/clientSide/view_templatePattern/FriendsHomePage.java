@@ -4,7 +4,7 @@ import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 import clientSide.services.ToolBoxView;
 
-public class FriendsHomePage extends _SimplePageTemplate {
+public class FriendsHomePage extends TemplateSimplePage {
 
     public FriendsHomePage(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);

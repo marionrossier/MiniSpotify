@@ -3,7 +3,7 @@ package clientSide.repoFront;
 import clientSide.services.Cookies_SingletonPattern;
 import clientSide.socket.SocketClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import middle.IUserRepository;
+import commun.IUserRepository;
 import serverSide.entities.User;
 
 import java.util.*;
@@ -13,7 +13,7 @@ public class FrontUserRepo implements IUserRepository {
     private final SocketClient socketClient;
 
     public FrontUserRepo(SocketClient socketClient) {
-        this.socketClient = new SocketClient();
+        this.socketClient = socketClient;
     }
 
     @Override
@@ -145,25 +145,6 @@ public class FrontUserRepo implements IUserRepository {
                     "friendId", friendId
             );
             socketClient.sendRequest(request);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public List<Integer> getAllFriendsFromUser(User user) {
-        try {
-            Map<String, Object> response = socketClient.sendRequest(Map.of(
-                    "command", "getAllFriendsFromUser",
-                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
-                    "user", mapper.convertValue(user, Map.class)
-            ));
-            if (!"OK".equals(response.get("status"))) return null;
-            List<?> raw = (List<?>) response.get("friends");
-            String json = mapper.writeValueAsString(raw);
-            Integer[] friends = mapper.readValue(json, Integer[].class);
-            return Arrays.asList(friends);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
