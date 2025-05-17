@@ -9,10 +9,6 @@ public class ArtistService {
         this.artistLocalRepository = toolBoxService.artistLocalRepository;
     }
 
-    public String getArtisteNameById (int artistId){
-        return artistLocalRepository.getArtistById(artistId).getArtistName();
-    }
-
     public String getArtistNameBySong(int songId) {
         return artistLocalRepository.getArtistBySongId(songId).getArtistName();
     }

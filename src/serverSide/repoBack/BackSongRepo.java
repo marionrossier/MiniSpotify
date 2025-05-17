@@ -64,6 +64,7 @@ public class BackSongRepo {
                 }
 
                 case "addSong" -> {
+                    @SuppressWarnings("unchecked")
                     Map<String, Object> songMap = (Map<String, Object>) request.get("song");
                     Song song = mapper.convertValue(songMap, Song.class);
                     songRepo.addSong(song);

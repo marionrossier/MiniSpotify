@@ -52,6 +52,7 @@ public class SocketServer {
             Map request = mapper.readValue(jsonRequest, Map.class);
             String command = (String) request.get("command");
 
+            @SuppressWarnings("unchecked")
             String responseJson = switch (command) {
                 // Playlist
                 case "getPlaylistById", "getPlaylistByName", "getAllPlaylists",

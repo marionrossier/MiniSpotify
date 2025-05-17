@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlaylistLocalRepoTest{
 
-    private TestHelper testHelper;
-    private DependencyProvider dependencyProvider;
+    private final TestHelper testHelper;
+    private final DependencyProvider dependencyProvider;
 
     public PlaylistLocalRepoTest(){
         testHelper = new TestHelper();

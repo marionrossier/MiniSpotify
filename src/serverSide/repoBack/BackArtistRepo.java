@@ -62,6 +62,7 @@ public class BackArtistRepo {
                 }
 
                 case "addArtist", "saveArtist" -> {
+                    @SuppressWarnings("unchecked")
                     Map<String, Object> artistMap = (Map<String, Object>) request.get("artist");
                     Artist artist = mapper.convertValue(artistMap, Artist.class);
                     if ("addArtist".equals(command)) {
