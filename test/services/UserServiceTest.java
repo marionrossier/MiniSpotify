@@ -5,50 +5,50 @@ import serverSide.entities.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utilsAndFakes.CommuneMethods;
-import utilsAndFakes.Initializer;
+import utilsAndFakes.TestHelper;
+import utilsAndFakes.DependencyProvider;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserServiceTest{
-    private CommuneMethods communeMethods;
-    private Initializer initializer;
+    private TestHelper testHelper;
+    private DependencyProvider dependencyProvider;
 
     public UserServiceTest(){
     }
 
     @BeforeEach
     void setUp(){
-        communeMethods = new CommuneMethods();
-        initializer = communeMethods.initializer;
+        testHelper = new TestHelper();
+        dependencyProvider = testHelper.dependencyProvider;
     }
 
     @AfterEach
     void tearDown() {
-        if (initializer.tempUsersFile.exists()) {
-            initializer.tempUsersFile.delete();
+        if (dependencyProvider.tempUsersFile.exists()) {
+            dependencyProvider.tempUsersFile.delete();
         }
     }
 
     @Test
     void addUser_ShouldCreateANewUser(){
         // Act
-        initializer.userService.addUser("TestUser", "test@test.com", "TestPassword", PlanEnum.FREE);
+        dependencyProvider.userService.addUser("TestUser", "test@test.com", "TestPassword", PlanEnum.FREE);
 
         // Assert
-        List<User> users = initializer.userLocalRepository.getAllUsers();
+        List<User> users = dependencyProvider.userLocalRepository.getAllUsers();
         assertEquals(1, users.size());
     }
 
     @Test
     void getUserIdByPseudo_ShouldReturnTheUserId(){
         // Arrange
-        initializer.userService.addUser("TestUser", "test@test.com", "TestPassword", PlanEnum.FREE);
+        dependencyProvider.userService.addUser("TestUser", "test@test.com", "TestPassword", PlanEnum.FREE);
 
         // Act
-        int userId = initializer.userService.getUserIdByPseudo("TestUser");
+        int userId = dependencyProvider.userService.getUserIdByPseudo("TestUser");
 
         // Assert
         assertTrue(userId > 0);
@@ -57,10 +57,10 @@ public class UserServiceTest{
     @Test
     void verifyUserAuthentification_ShouldReturnTrue_WhenCorrectCredentialAreGiven() {
         // Arrange
-        initializer.userService.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
+        dependencyProvider.userService.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
 
         // Act
-        boolean result = initializer.passwordService.verifyUserAuthentification("TestUser", "CorrectPassword");
+        boolean result = dependencyProvider.passwordService.verifyUserAuthentification("TestUser", "CorrectPassword");
 
         // Assert
         assertTrue(result);
@@ -69,10 +69,10 @@ public class UserServiceTest{
     @Test
     void verifyUserAuthentification_ShouldReturnFalse_WhenWrongCredentialAreGiven() {
         // Arrange
-        initializer.userService.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
+        dependencyProvider.userService.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
 
         // Act
-        boolean result = initializer.passwordService.verifyUserAuthentification("TestUser", "WrongPassword");
+        boolean result = dependencyProvider.passwordService.verifyUserAuthentification("TestUser", "WrongPassword");
 
         // Assert
         assertFalse(result);

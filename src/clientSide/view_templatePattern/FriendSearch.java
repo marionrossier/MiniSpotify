@@ -3,14 +3,13 @@ package clientSide.view_templatePattern;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 import clientSide.services.ToolBoxView;
-import serverSide.entities.User;
 
 import java.util.List;
 import java.util.Objects;
 
 import static clientSide.services.PrintHelper.*;
 
-public class FriendSearch extends _SimplePageTemplate {
+public class FriendSearch extends TemplateSimplePage {
     public FriendSearch(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
         this.toolBoxView = toolBoxView;

@@ -100,16 +100,4 @@ public class UserLocalRepository implements IUserRepository {
             }
         }
     }
-
-    public List<Integer> getAllFriendsFromUser(User user){
-        if (user != null) {
-            List<Integer> friends = user.getFriends();
-            if (friends == null) {
-                friends = new ArrayList<>();
-                user.setFriends(friends);
-            }
-            return friends;
-        }
-        return new ArrayList<>();
-    }
 }

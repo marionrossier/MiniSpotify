@@ -44,7 +44,7 @@ public class SearchService {
                 return;
         }
         if (foundedSongs.isEmpty()) {
-            System.err.println("No songs found.");
+            printLNInfo("No songs found.");
             pageService.goBack(pageId);
             return;
         }
@@ -59,7 +59,7 @@ public class SearchService {
         LinkedList<Song> songsByTitle;
 
         if (songTitle == null || songTitle.isEmpty()) {
-            System.err.println("No result.");
+            printLNInfo("No result.");
             return new LinkedList<>();
         }
         else {
@@ -73,7 +73,7 @@ public class SearchService {
         LinkedList<Song> songsByArtist;
 
         if (artistName == null || artistName.isEmpty()) {
-            System.err.println("No result.");
+            printLNInfo("No result.");
             return new LinkedList<>();
         }
         else {
@@ -87,7 +87,7 @@ public class SearchService {
         LinkedList<Song> songsByGender;
 
         if (genderName == null) {
-            System.err.println("No result.");
+            printLNInfo("No result.");
             return new LinkedList<>();
         }
         else {
@@ -159,7 +159,7 @@ public class SearchService {
     public List<Integer> searchUserByPseudonyme (String pseudonym){
         List<Integer> usersId = new ArrayList<>();
         if (pseudonym == null || pseudonym.isEmpty()){
-            System.err.println("No pseudonym given.");
+            printLNInfo("No pseudonym given.");
         }
         else{
             usersId = userService.getUsersByPseudonym(pseudonym);

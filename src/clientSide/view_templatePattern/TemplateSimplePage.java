@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 import static clientSide.services.PrintHelper.*;
 
-public abstract class _SimplePageTemplate implements _MenuInterface {
+public abstract class TemplateSimplePage implements InterfaceMenu {
 
     int index;
     public String pageTitle;
@@ -23,7 +23,7 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
 
     protected IconService icon = new IconService();
 
-    public _SimplePageTemplate(PageService pageService, IPlaylistPlayer spotifyPlayer) {
+    public TemplateSimplePage(PageService pageService, IPlaylistPlayer spotifyPlayer) {
         this.pageService = pageService;
         this.spotifyPlayer = spotifyPlayer;
     }

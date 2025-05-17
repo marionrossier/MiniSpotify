@@ -4,7 +4,7 @@ import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 import clientSide.services.ToolBoxView;
 
-public class SearchGender extends _SimplePageTemplate {
+public class SearchGender extends TemplateSimplePage {
 
     public SearchGender(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);

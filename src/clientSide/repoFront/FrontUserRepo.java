@@ -150,25 +150,6 @@ public class FrontUserRepo implements IUserRepository {
         }
     }
 
-    @Override
-    public List<Integer> getAllFriendsFromUser(User user) {
-        try {
-            Map<String, Object> response = socketClient.sendRequest(Map.of(
-                    "command", "getAllFriendsFromUser",
-                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
-                    "user", mapper.convertValue(user, Map.class)
-            ));
-            if (!"OK".equals(response.get("status"))) return null;
-            List<?> raw = (List<?>) response.get("friends");
-            String json = mapper.writeValueAsString(raw);
-            Integer[] friends = mapper.readValue(json, Integer[].class);
-            return Arrays.asList(friends);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private User getUserFromServer(Map<String, Object> request) {
         try {
             Map<String, Object> response = socketClient.sendRequest(request);

@@ -9,7 +9,7 @@ import java.util.List;
 
 import static clientSide.services.PrintHelper.*;
 
-public class FriendPlaylists extends _SimplePageTemplate {
+public class FriendPlaylists extends TemplateSimplePage {
     public FriendPlaylists(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
         this.toolBoxView = toolBoxView;

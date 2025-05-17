@@ -7,7 +7,7 @@ import clientSide.services.PageService;
 
 import static clientSide.services.PrintHelper.*;
 
-public class CreateAccount extends _InversedPageTemplate {
+public class CreateAccount extends TemplateInversedPage {
 
     private String pseudonym;
     private String password;
@@ -34,7 +34,7 @@ public class CreateAccount extends _InversedPageTemplate {
         printWhite("Enter your email : ");
         email = pageService.gotAnInput(scanner.nextLine());
         while (!toolBoxView.getUserServ().emailValidation(email)){
-            System.err.print("Enter a valid email address, like name@email.com :");
+            printInfo("Enter a valid email address, like name@email.com :");
             email = pageService.gotAnInput(scanner.nextLine());
         }
         printLNWhite(icon.lineBreak + "Choose your plan : ");

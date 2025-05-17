@@ -4,7 +4,7 @@ import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 import clientSide.services.ToolBoxView;
 
-public class PlaylistChoseList extends _SimplePageTemplate {
+public class PlaylistChoseList extends TemplateSimplePage {
 
     public PlaylistChoseList(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);

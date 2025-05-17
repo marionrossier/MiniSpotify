@@ -5,8 +5,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import serverSide.entities.Artist;
-import utilsAndFakes.CommuneMethods;
-import utilsAndFakes.Initializer;
+import utilsAndFakes.TestHelper;
+import utilsAndFakes.DependencyProvider;
 
 import java.util.List;
 
@@ -15,23 +15,23 @@ import static org.junit.jupiter.api.Assertions.*;
 class FrontArtistRepoSocketTest {
 
     private IArtistRepository artistRepo;
-    private CommuneMethods communeMethods;
-    private Initializer initializer;
+    private TestHelper testHelper;
+    private DependencyProvider dependencyProvider;
 
     @BeforeEach
     void setup() {
-        communeMethods = new CommuneMethods();
-        initializer = communeMethods.initializer;
-        artistRepo = initializer.frontArtistRepo;
-        initializer.populateLocalUsers();
-        initializer.populateLocalArtist();
+        testHelper = new TestHelper();
+        dependencyProvider = testHelper.dependencyProvider;
+        artistRepo = dependencyProvider.frontArtistRepo;
+        dependencyProvider.populateLocalUsers();
+        dependencyProvider.populateLocalArtist();
 
-        communeMethods.startServer();
+        testHelper.startServer();
     }
 
     @AfterEach
     void tearDown() {
-        initializer.cleanUp();
+        dependencyProvider.cleanUp();
     }
 
     @Test

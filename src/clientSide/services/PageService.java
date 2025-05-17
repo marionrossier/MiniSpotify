@@ -13,7 +13,7 @@ import static clientSide.services.PrintHelper.*;
 
 public class PageService {
 
-    ArrayList<_MenuInterface> pages = new ArrayList<>();
+    ArrayList<InterfaceMenu> pages = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
     private final Stack<Integer> menuPagesStack;
 
@@ -158,8 +158,8 @@ public class PageService {
         getPageById(lastPageId).displayAllPage();
     }
 
-    public _MenuInterface getPageById(int id) {
-        for (_MenuInterface page : pages) {
+    public InterfaceMenu getPageById(int id) {
+        for (InterfaceMenu page : pages) {
             if (page.getPageId() == id) {
                 return page;
             }
@@ -173,7 +173,7 @@ public class PageService {
             User user = toolBoxView.getUserServ().getUserById(userId);
 
             if (user.getPlanEnum().equals(PlanEnum.FREE)) {
-                System.err.println("Premium Client option only.");
+                printLNInfo("Premium Client option only.");
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {

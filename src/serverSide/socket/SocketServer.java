@@ -21,7 +21,7 @@ public class SocketServer {
     private final BackSongRepo backSongRepo;
     private final BackArtistRepo backArtistRepo;
 
-    public void main() {
+    public void socketServerMain() {
         try (ServerSocket serverSocket = new ServerSocket(this.PORT)) {
             printLNSystem("🎵 MiniSpotify Server is listening on port " + PORT);
 

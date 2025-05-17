@@ -1,6 +1,6 @@
 package clientSide.view_templatePattern;
 
-public interface _MenuInterface {
+public interface InterfaceMenu {
 
     void displayAllPage();
 

@@ -21,7 +21,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class Initializer {
+public class DependencyProvider {
 
     Scanner scanner = new Scanner(System.in);
 
@@ -79,7 +79,7 @@ public class Initializer {
     public final AudioSocketServer audioSocketServer;
     public final SocketServer socketServer;
 
-    public Initializer() throws IOException {
+    public DependencyProvider() throws IOException {
 
         menuPagesStack = new Stack<>();
 

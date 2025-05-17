@@ -4,8 +4,8 @@ import serverSide.entities.PlanEnum;
 import serverSide.entities.User;
 import serverSide.repoLocal.UserLocalRepository;
 import org.junit.jupiter.api.*;
-import utilsAndFakes.CommuneMethods;
-import utilsAndFakes.Initializer;
+import utilsAndFakes.TestHelper;
+import utilsAndFakes.DependencyProvider;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,20 +18,20 @@ class UserLocalRepositoryTest {
 
     private File tempFile;
     private UserLocalRepository userLocalRepository;
-    private CommuneMethods communeMethods;
-    private Initializer initializer;
+    private TestHelper testHelper;
+    private DependencyProvider dependencyProvider;
 
     @BeforeEach
     void setUp() throws IOException {
         tempFile = Files.createTempFile("user", ".json").toFile();
         userLocalRepository = new UserLocalRepository(tempFile.getAbsolutePath());
-        communeMethods = new CommuneMethods();
-        initializer = communeMethods.initializer;
+        testHelper = new TestHelper();
+        dependencyProvider = testHelper.dependencyProvider;
     }
 
     @AfterEach
     void tearDown() {
-        initializer.cleanUp();
+        dependencyProvider.cleanUp();
     }
 
     @Test
