@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import commun.*;
 import serverSide.entities.*;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -43,6 +44,7 @@ public class BackPlaylistRepo {
                 case "getPlaylistByName" -> {
                     String name = (String) request.get("name");
                     Playlist playlist = playlistRepo.getPlaylistByName(name);
+
                     return playlist != null
                             ? mapper.writeValueAsString(Map.of("status", "OK", "playlist", playlist))
                             : "{\"status\": \"ERROR\", \"message\": \"Playlist not found\"}";

@@ -24,9 +24,6 @@ public class TestHelper {
                                   PlaylistServices playlistServices) {
         Playlist playlist = playlistLocalRepository.getPlaylistById(currentPlaylistId);
         playlist.getPlaylistSongsListWithId().add(currentSongId);
-        int playlistDuration = playlistServices.setDurationSeconds(playlist.getPlaylistId());
-        int playlistSize = playlist.getSize();
-        playlist.setPlaylistInformation(playlistDuration, playlistSize);
 
         playlistLocalRepository.savePlaylist(playlist);
     }

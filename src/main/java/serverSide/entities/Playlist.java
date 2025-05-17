@@ -1,6 +1,8 @@
 package serverSide.entities;
 
 import clientSide.services.UniqueIdService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.*;
 
@@ -8,8 +10,6 @@ public class Playlist {
     private String name;
     private int playlistId;
     private LinkedList<Integer> listSongsId = new LinkedList<>();
-    private int durationSeconds;
-    private int size;
     private int ownerId;
     private PlaylistEnum status;
     private final UniqueIdService uniqueIdService = new UniqueIdService();
@@ -22,25 +22,21 @@ public class Playlist {
         this.status = status;
     }
 
-    public Playlist(String name, LinkedList <Integer> listSongsId, int durationSeconds, int size, int ownerId, PlaylistEnum status) {
+    public Playlist(String name, LinkedList <Integer> listSongsId, int ownerId, PlaylistEnum status) {
         this.name = name;
         this.playlistId = uniqueIdService.setUniqueId();
         this.ownerId = 0;
         this.listSongsId = listSongsId;
-        this.durationSeconds = durationSeconds;
-        this.size = size;
         this.ownerId = ownerId;
         this.status = status;
     }
 
     //Only for tests
-    public Playlist(String name, int playlistId, LinkedList <Integer> listSongsId, int durationSeconds, int size, int ownerId, PlaylistEnum status) {
+    public Playlist(String name, int playlistId, LinkedList <Integer> listSongsId, int ownerId, PlaylistEnum status) {
         this.name = name;
         this.playlistId = playlistId;
         this.ownerId = 0;
         this.listSongsId = listSongsId;
-        this.durationSeconds = durationSeconds;
-        this.size = size;
         this.ownerId = ownerId;
         this.status = status;
     }
@@ -75,23 +71,6 @@ public class Playlist {
 
     public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
-    }
-
-    public void setPlaylistDuration(int durationSeconds) {
-        this.durationSeconds = durationSeconds;
-    }
-
-    public int getSize() {
-        return this.getPlaylistSongsListWithId().size();
-    }
-
-    public void setPlaylistSize(int playlistSize) {
-        this.size = playlistSize;
-    }
-
-    public void setPlaylistInformation(int playlistDuration, int playlistSize){
-        setPlaylistDuration(playlistDuration);
-        setPlaylistSize(playlistSize);
     }
 
     public PlaylistEnum getStatus() {

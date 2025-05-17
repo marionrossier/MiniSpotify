@@ -30,7 +30,7 @@ public class SongPlayer extends TemplateSimplePage {
                 "Current Playlist : " + playlist.getName() +
                 ", duration " + (toolBoxView.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())/60) + " minutes " +
                         toolBoxView.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())%60 +
-                " seconds, size : " + playlist.getSize() + " songs.");
+                " seconds, size : " + playlist.getPlaylistSongsListWithId().size() + " songs.");
     }
 
     @Override

@@ -65,7 +65,7 @@ public class PlaylistReorderSongService {
     }
 
     private boolean isValidIndex(int index, Playlist playlist) {
-        return index >= 0 && index < playlist.getSize();
+        return index >= 0 && index < playlist.getPlaylistSongsListWithId().size();
     }
 
     private void completeWithRemainingSongs(Playlist playlist, List<Integer> newOrder) {
@@ -78,7 +78,7 @@ public class PlaylistReorderSongService {
     }
 
     private void printSuccessMessage(Playlist playlist, List<Integer> newOrder) {
-        if (newOrder.size() < playlist.getSize()) {
+        if (newOrder.size() < playlist.getPlaylistSongsListWithId().size()) {
             printLNGreen("Playlist reordered successfully with remaining songs added at the end!");
         } else {
             printLNGreen("Playlist reordered successfully!");

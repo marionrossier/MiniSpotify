@@ -6,6 +6,8 @@ import clientSide.services.Cookies_SingletonPattern;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 
+import java.util.Arrays;
+
 import static clientSide.services.PrintHelper.*;
 
 public class Login extends TemplateSimplePage {

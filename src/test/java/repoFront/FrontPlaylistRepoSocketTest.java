@@ -45,7 +45,7 @@ class FrontPlaylistRepoSocketTest extends TestHelper {
         // Assert
         assertNotNull(playlist);
         assertEquals("Girls", playlist.getName());
-        assertEquals(12, playlist.getSize());
+        assertEquals(12, playlist.getPlaylistSongsListWithId().size());
     }
 
     @Test

@@ -170,11 +170,11 @@ public class DependencyProvider {
         Playlist playlist1 = new Playlist("Girls", 1940298216,
                 new LinkedList<>(Arrays.asList(1108071776, 342105258, 625427469, 661206135, 1986076679, 2084461505,
                         1290739974, 1951451340, 469321884, 1252829874, 1988790520, 700468481)),
-                2754, 12, 232928320, PlaylistEnum.PUBLIC);
+                232928320, PlaylistEnum.PUBLIC);
 
         Playlist playlist2 = new Playlist("Rock Legends", 546441990,
                 new LinkedList<>(Arrays.asList(243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482)),
-                1317, 6, 1, PlaylistEnum.PUBLIC);
+                1, PlaylistEnum.PUBLIC);
 
         playlistLocalRepository.savePlaylist(playlist1);
         playlistLocalRepository.savePlaylist(playlist2);

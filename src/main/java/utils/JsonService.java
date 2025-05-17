@@ -17,15 +17,15 @@ import java.util.List;
 public class JsonService {
     public static void main(String[] args) throws IOException {
 
-        Files.deleteIfExists(Path.of("resources/jsons/user.json"));
-        Files.deleteIfExists(Path.of("resources/jsons/song.json"));
-        Files.deleteIfExists(Path.of("resources/jsons/artist.json"));
-        Files.deleteIfExists(Path.of("resources/jsons/playlist.json"));
+        Files.deleteIfExists(Path.of("src/main/resources/jsons/user.json"));
+        Files.deleteIfExists(Path.of("src/main/resources/jsons/song.json"));
+        Files.deleteIfExists(Path.of("src/main/resources/jsons/artist.json"));
+        Files.deleteIfExists(Path.of("src/main/resources/jsons/playlist.json"));
 
-        File userJsonFile = Files.createFile(Path.of("resources/jsons/user.json")).toFile();
-        File songJsonFile = Files.createFile(Path.of("resources/jsons/song.json")).toFile();
-        File artistJsonFile = Files.createFile(Path.of("resources/jsons/artist.json")).toFile();
-        File playlistJsonFile = Files.createFile(Path.of("resources/jsons/playlist.json")).toFile();
+        File userJsonFile = Files.createFile(Path.of("src/main/resources/jsons/user.json")).toFile();
+        File songJsonFile = Files.createFile(Path.of("src/main/resources/jsons/song.json")).toFile();
+        File artistJsonFile = Files.createFile(Path.of("src/main/resources/jsons/artist.json")).toFile();
+        File playlistJsonFile = Files.createFile(Path.of("src/main/resources/jsons/playlist.json")).toFile();
 
         StockageService stockageService = new StockageService();
 
@@ -220,47 +220,47 @@ public class JsonService {
 
         playlistLocalRepository.savePlaylist(new Playlist("POP Vibes",
                 new LinkedList<>(Arrays.asList(1986076679, 2084461505, 1988790520, 700468481, 998984026, 1290739974)),
-                1480, 6, 1, PlaylistEnum.PUBLIC));
+                1, PlaylistEnum.PUBLIC));
 
         playlistLocalRepository.savePlaylist(new Playlist("Rock Legends",
                 new LinkedList<>(Arrays.asList(243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482)),
-                1317, 6, 1, PlaylistEnum.PUBLIC));
+                1, PlaylistEnum.PUBLIC));
 
         playlistLocalRepository.savePlaylist(new Playlist("Amy Forever",
                 new LinkedList<>(Arrays.asList(1108071776, 342105258, 625427469, 661206135)),
-                822, 4, 1, PlaylistEnum.PUBLIC));
+                1, PlaylistEnum.PUBLIC));
 
         playlistLocalRepository.savePlaylist(new Playlist("Imagine This",
                 new LinkedList<>(Arrays.asList(1287974581, 614172035, 494087492, 515539482)),
-                838, 4, 1726370281, PlaylistEnum.PUBLIC));
+                1726370281, PlaylistEnum.PUBLIC));
 
         playlistLocalRepository.savePlaylist(new Playlist("Quick Hits",
                 new LinkedList<>(Arrays.asList(625427469, 1280045910, 354322599, 1925355941, 661206135, 1252829874, 494087492)),
-                1240, 7, 1, PlaylistEnum.PUBLIC));
+                1, PlaylistEnum.PUBLIC));
 
         playlistLocalRepository.savePlaylist(new Playlist("Girls",
                 new LinkedList<>(Arrays.asList(1108071776, 342105258, 625427469, 661206135, 1986076679, 2084461505, 1290739974, 1951451340, 469321884, 1252829874, 1988790520, 700468481)),
-                2754, 12, 232928320, PlaylistEnum.PUBLIC));
+                232928320, PlaylistEnum.PUBLIC));
 
         playlistLocalRepository.savePlaylist(new Playlist("Boys",
                 new LinkedList<>(Arrays.asList(325561970, 321324189, 521970022, 1280045910, 719812166, 243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482, 998984026)),
-                2726, 12, 232928320, PlaylistEnum.PUBLIC));
+                232928320, PlaylistEnum.PUBLIC));
 
         playlistLocalRepository.savePlaylist(new Playlist("Soul & RnB Grooves",
                 new LinkedList<>(Arrays.asList(1108071776, 342105258, 625427469, 1280045910, 1951451340, 719812166, 661206135)),
-                1507, 7, 1, PlaylistEnum.PUBLIC));
+                1, PlaylistEnum.PUBLIC));
 
         playlistLocalRepository.savePlaylist(new Playlist("Dance Floor",
                 new LinkedList<>(Arrays.asList(325561970, 1252829874, 321324189, 521970022)),
-                909, 4, 232928320, PlaylistEnum.PRIVATE));
+                232928320, PlaylistEnum.PRIVATE));
 
         playlistLocalRepository.savePlaylist(new Playlist("Random Favorites",
                 new LinkedList<>(Arrays.asList(1280045910, 1951451340, 1252829874, 719812166, 521970022)),
-                1114, 5, 1726370281, PlaylistEnum.PUBLIC));
+                1726370281, PlaylistEnum.PUBLIC));
 
         playlistLocalRepository.savePlaylist(new Playlist("Before 2000",
                 new LinkedList<>(Arrays.asList(325561970, 354322599, 1925355941, 700468481)),
-                833, 4, 1726370281, PlaylistEnum.PRIVATE));
+                1726370281, PlaylistEnum.PRIVATE));
 
         playlistLocalRepository.savePlaylist(new Playlist("AllSongs",
                 new LinkedList<>(Arrays.asList(
@@ -268,6 +268,6 @@ public class JsonService {
                         354322599, 1925355941, 1951451340, 243871940, 1988790520, 719812166, 700468481, 469321884,
                         1824616046, 998984026, 661206135, 1290739974, 1252829874, 521970022, 1287974581, 614172035,
                         494087492, 515539482)),
-                6286, 26, 1, PlaylistEnum.PUBLIC));
+                1, PlaylistEnum.PUBLIC));
         }
     }

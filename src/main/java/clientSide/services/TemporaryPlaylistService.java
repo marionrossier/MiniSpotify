@@ -39,10 +39,6 @@ public class TemporaryPlaylistService {
         }
         temporaryPlaylist.setListSongsId(chosenSongs);
 
-        int playlistDuration = playlistServices.setDurationSeconds(temporaryPlaylist.getPlaylistId());
-        int playlistSize = temporaryPlaylist.getSize();
-
-        temporaryPlaylist.setPlaylistInformation(playlistDuration, playlistSize);
         temporaryPlaylist.setOwnerId(currentUserId);
         temporaryPlaylist.setStatus(status);
 

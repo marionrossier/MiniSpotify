@@ -124,7 +124,7 @@ public class PlaylistFunctionalitiesService {
             try {
                 int inputNumber = Integer.parseInt(input);
 
-                if (inputNumber < 1 || inputNumber > playlist.getSize()) {
+                if (inputNumber < 1 || inputNumber > playlist.getPlaylistSongsListWithId().size()) {
                     printInfo("Invalid Playlist number.");
                     printLNInfo("Try again or press \"0\" to go back : ");
                 } else {

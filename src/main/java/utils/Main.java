@@ -10,8 +10,6 @@ import static clientSide.services.PrintHelper.*;
 public class Main {
     public static void main(String[] args) {
 
-
-
         printLNWhite("Do you want to start the app with or without socket handling ?");
         printLNWhite("1. With socket");
         printLNWhite("2. Without socket");
