@@ -7,6 +7,8 @@ import serverSide.entities.User;
 
 import java.util.List;
 
+import static clientSide.services.PrintHelper.*;
+
 public class FriendPlaylists extends _SimplePageTemplate {
     public FriendPlaylists(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
@@ -20,7 +22,7 @@ public class FriendPlaylists extends _SimplePageTemplate {
     @Override
     public void displaySpecificContent (){
         int friendId = toolBoxView.getUserServ().getCurrentFriendId();
-        System.out.println("Public playlist.s of : " + toolBoxView.getUserServ().getUserById(friendId).getPseudonym());
+        printLNBlue("Public playlist.s of : " + toolBoxView.getUserServ().getUserById(friendId).getPseudonym());
         toolBoxView.getPrintServ().printUserPublicPlaylists(friendId);
     }
 

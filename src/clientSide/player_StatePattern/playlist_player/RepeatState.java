@@ -4,6 +4,7 @@ import serverSide.entities.Song;
 
 class RepeatState implements IState{
     private final PlaylistPlayer context;
+    public final String stateName = "repeat";
 
     public RepeatState(PlaylistPlayer spotifyService) {
         this.context = spotifyService;
@@ -15,7 +16,7 @@ class RepeatState implements IState{
     }
 
     @Override
-    public Song getPreviousSong (){
-        return context.currentSong;
+    public String getStateName() {
+        return stateName;
     }
 }

@@ -5,5 +5,5 @@ import serverSide.entities.Song;
 interface IState {
     Song getNextSong();
 
-    abstract Song getPreviousSong();
+    abstract String getStateName ();
 }

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 class SequentialState implements IState{
     private final PlaylistPlayer playlistPlayer;
+    public final String stateName = "sequential";
 
     public SequentialState(PlaylistPlayer spotifyService) {
         this.playlistPlayer = spotifyService;
@@ -23,7 +24,7 @@ class SequentialState implements IState{
     }
 
     @Override
-    public Song getPreviousSong() {
-        return null;
+    public String getStateName() {
+        return stateName;
     }
 }

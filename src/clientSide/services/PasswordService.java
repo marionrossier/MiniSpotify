@@ -9,6 +9,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import static clientSide.services.PrintHelper.*;
+
 public class PasswordService {
 
     private final IUserRepository userLocalRepository;
@@ -41,7 +43,7 @@ public class PasswordService {
         User searchedUser = userLocalRepository.getUserByPseudonymLogin(pseudonym);
 
         if (searchedUser == null) {
-            System.out.print(ToolBoxView.PRINT_RED + "The user does not exist.");
+            printInfo("This user does not exist.");
             return false;
         }
 
@@ -50,7 +52,7 @@ public class PasswordService {
         if (givenHashedPassword.equals(searchedUser.getPassword())) {
             return true;
         } else {
-            System.out.print(ToolBoxView.PRINT_RED + "The password is incorrect.");
+            printInfo("The password is incorrect.");
             return false;
         }
     }

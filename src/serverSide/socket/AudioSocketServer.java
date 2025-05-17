@@ -6,6 +6,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static clientSide.services.PrintHelper.*;
 public class AudioSocketServer {
 
     private final int PORT = 45001;
@@ -16,7 +17,7 @@ public class AudioSocketServer {
     private final BackAudioRepo backAudioRepo;
 
     public void audioSocketMain() {
-        System.out.println("🎵 AudioSocketServer started on port " + PORT);
+        printLNSystem("🎵 AudioSocketServer started on port " + PORT);
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             while (true) {
                 Socket clientSocket = serverSocket.accept();

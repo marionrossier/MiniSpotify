@@ -7,6 +7,8 @@ import middle.IUserRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+import static clientSide.services.PrintHelper.*;
+
 public class UserService {
     private final IUserRepository userLocalRepository;
     private final PasswordService passwordService;
@@ -81,10 +83,10 @@ public class UserService {
         if (!friends.contains(friendId)) {
             friends.add(friendId);
             userLocalRepository.saveUser(user);
-            System.out.println("Friend add to your friend list.");
+            printLNGreen("Friend add to your friend list.");
         }
         else {
-            System.out.println("You're already friends !");
+            printLNInfo("You're already friends !");
         }
     }
 
@@ -127,11 +129,6 @@ public class UserService {
 
     public User getUserByPseudonymLogin(String pseudonym) {
         return userLocalRepository.getUserByPseudonymLogin(pseudonym);
-    }
-
-    public List<Integer> getFriendsFromUser(User user){
-        int userId = user.getUserId();
-        return userLocalRepository.getUserById(userId).getFriends();
     }
 
     public void setCurrentFriendId (int friendId){

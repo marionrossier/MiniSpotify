@@ -8,6 +8,8 @@ import middle.IUserRepository;
 import java.util.List;
 import java.util.Scanner;
 
+import static clientSide.services.PrintHelper.*;
+
 public class PlaylistFunctionalitiesService {
 
     Scanner scanner = new Scanner(System.in);
@@ -28,8 +30,8 @@ public class PlaylistFunctionalitiesService {
         playlistServices.adjustTemporaryPlaylistToNewPlaylist(playlistName, status);
         int playlistId = playlistServices.getPlaylistByName(playlistName).getPlaylistId();
         playlistServices.setCurrentPlaylistId(playlistId);
-        System.out.println();
-        System.out.println("Playlist created successfully !");
+        printLN();
+        printLNGreen("Playlist created successfully !");
     }
 
     public void createAllSongPlaylist (User user, PlaylistServices playlistServices){
@@ -59,14 +61,14 @@ public class PlaylistFunctionalitiesService {
         if (playlistOwner == user.getUserId()){
             playlistLocalRepository.deletePlaylistById(playlistId);
             removePlaylistFromUser(playlistId);
-            System.out.println("Playlist deleted !");
+            printLNGreen("Playlist deleted !");
         }
         else {
             if (playlist.getName().equals("AllSongs")){
                 System.err.println("You cannot delete the AllSongs playlist.");
             }
             removePlaylistFromUser(playlistId);
-            System.out.println("Playlist removed from your list.");
+            printLNGreen("Playlist removed from your list.");
         }
     }
 
@@ -75,7 +77,7 @@ public class PlaylistFunctionalitiesService {
         playlist.setName(newName);
 
         playlistLocalRepository.savePlaylist(playlist);
-        System.out.println("Playlist renamed to " + newName + " !");
+        printLNGreen("Playlist renamed to " + newName + " !");
     }
 
     public boolean verifyPlaylistName(String playlistName, User user) {
@@ -128,14 +130,14 @@ public class PlaylistFunctionalitiesService {
                 int inputNumber = Integer.parseInt(input);
 
                 if (inputNumber < 1 || inputNumber > playlist.getSize()) {
-                    System.out.print(ToolBoxView.PRINT_RED + "Invalid Playlist number.");
-                    System.out.println("Try again or press \"0\" to go back : ");
+                    printInfo("Invalid Playlist number.");
+                    printLNInfo("Try again or press \"0\" to go back : ");
                 } else {
                     chosenSong = inputNumber-1;
                     break;
                 }
             } catch (NumberFormatException e) {
-                System.out.print(ToolBoxView.PRINT_RED + "Invalid input, please enter a number : ");
+                printInfo("Invalid input, please enter a number : ");
             }
         }
 
@@ -158,14 +160,14 @@ public class PlaylistFunctionalitiesService {
                 int inputNumber = Integer.parseInt(input);
 
                 if (inputNumber < 1 || inputNumber > currentUser.getPlaylists().size()) {
-                    System.out.print(ToolBoxView.PRINT_RED + "Invalid Playlist number.");
-                    System.out.println("Try again or press \"0\" to go back : ");
+                    printInfo("Invalid Playlist number.");
+                    printLNInfo("Try again or press \"0\" to go back : ");
                 } else {
                     chosenPlaylist = currentUser.getPlaylists().get(inputNumber - 1);
                     break;
                 }
             } catch (NumberFormatException e) {
-                System.out.print(ToolBoxView.PRINT_RED + "Invalid input, please enter a number : ");
+                printInfo("Invalid input, please enter a number : ");
             }
         }
 

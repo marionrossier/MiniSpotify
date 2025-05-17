@@ -8,6 +8,8 @@ import clientSide.player_StatePattern.file_player.IMusicPlayer;
 
 import java.util.*;
 
+import static clientSide.services.PrintHelper.*;
+
 public class PlaylistPlayer implements IPlaylistPlayer {
 
     private final IMusicPlayer musicPlayer;
@@ -45,19 +47,22 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     @Override
     public void setSequentialMode(){
         currentState = this.sequentialState;
-        System.out.println(icon.sequential() + " Repeat All lecture mode activate.");
+        printLNBlue(icon.sequential() + " Repeat All lecture mode activate.");
+        printWhite("Next input : ");
     }
 
     @Override
     public void setShuffleMode(){
         currentState = this.shuffleState;
-        System.out.println(icon.shuffle() + "Shuffle lecture mode activate.");
+        printLNBlue(icon.shuffle() + "Shuffle lecture mode activate.");
+        printWhite("Next input : ");
     }
 
     @Override
     public void setRepeatMode(){
         currentState = this.repeatState;
-        System.out.println(icon.repeatOne() + " Repeat One lecture mode activate.");
+        printLNBlue(icon.repeatOne() + " Repeat One lecture mode activate.");
+        printWhite("Next input : ");
     }
 
     @Override
@@ -135,5 +140,9 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     @Override
     public boolean isPaused() {
         return musicPlayer.isPaused();
+    }
+
+    public String getCurrentState() {
+        return currentState.getStateName();
     }
 }

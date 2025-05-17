@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
+import static clientSide.services.PrintHelper.*;
+
 public class PageService {
 
     ArrayList<_MenuInterface> pages = new ArrayList<>();
@@ -177,7 +179,7 @@ public class PageService {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                System.out.println("Upgrade to Premium plan now ? YES or NO");
+                printLNInfo("Upgrade to Premium plan now ? YES or NO");
                 String input = scanner.nextLine();
                 int lastPageId = this.getMenuPages().pop();
                 input = input.toLowerCase();
@@ -191,7 +193,7 @@ public class PageService {
                         getPageById(lastPageId).displayAllPage();
                         break;
                     default:
-                        System.out.print(ToolBoxView.PRINT_RED + "Invalid input.");
+                        printInfo("Invalid input.");
                         getPageById(lastPageId).displayAllPage();
                 }
             }

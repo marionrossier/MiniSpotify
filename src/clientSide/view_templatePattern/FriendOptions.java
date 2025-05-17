@@ -7,6 +7,8 @@ import serverSide.entities.User;
 
 import java.util.List;
 
+import static clientSide.services.PrintHelper.*;
+
 public class FriendOptions extends _SimplePageTemplate {
     public FriendOptions(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
@@ -22,7 +24,7 @@ public class FriendOptions extends _SimplePageTemplate {
     @Override
     public void displaySpecificContent(){
         int friendId = toolBoxView.getUserServ().getCurrentFriendId();
-        System.out.println("Current friend : " + toolBoxView.getUserServ().getUserById(friendId).getPseudonym());
+        printLNBlue("Current friend : " + toolBoxView.getUserServ().getUserById(friendId).getPseudonym());
     }
 
     @Override
@@ -47,7 +49,7 @@ public class FriendOptions extends _SimplePageTemplate {
         }
         else {
             toolBoxView.getUserServ().deleteFriend(friendID);
-            System.out.println("Friend remove from friend list.");
+            printLNGreen("Friend remove from friend list.");
         }
         pageService.friendsHomePage.displayAllPage();
     }

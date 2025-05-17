@@ -3,10 +3,9 @@ package clientSide.services;
 import serverSide.entities.MusicGender;
 import serverSide.entities.Song;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+
+import static clientSide.services.PrintHelper.*;
 
 public class SearchService {
 
@@ -40,7 +39,7 @@ public class SearchService {
                 foundedSongs = searchByGender(gender);
                 break;
             default :
-                System.out.print(ToolBoxView.PRINT_RED + "Invalid search type: " + type);
+                printInfo("Invalid search type: " + type);
                 pageService.goBack(pageId);
                 return;
         }
@@ -111,9 +110,9 @@ public class SearchService {
 
     public LinkedList<Integer> chooseFoundedSongs(List<Integer> foundedSongs, PageService pageService){
         LinkedList<Integer> selectedSongsIndex = new LinkedList<>();
-        System.out.println("Choose your songs by entering their number and press \"enter\" between each song." + icon.lineBreak+
+        printLNWhite("Choose your songs by entering their number and press \"enter\" between each song." + icon.lineBreak+
                 "End selection with an \"x\"." + icon.lineBreak);
-        System.out.print("Your selection : ");
+        printWhite("Your selection : ");
 
         loopIntInputValidation(pageService, selectedSongsIndex, foundedSongs.size());
 
@@ -149,10 +148,10 @@ public class SearchService {
                 if (songIndex >= 0 && songIndex < size) {
                     selectedSongsIndex.add(songIndex);
                 } else {
-                    System.out.print(ToolBoxView.PRINT_RED + "Invalid selection. Please try again.");
+                    printInfo("Invalid selection. Please try again.");
                 }
             } catch (NumberFormatException e) {
-                System.out.print(ToolBoxView.PRINT_RED + "Invalid input. Please enter a number or \"x\" to exit.");
+                printInfo("Invalid input. Please enter a number or \"x\" to exit.");
             }
         }
     }

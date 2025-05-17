@@ -4,6 +4,8 @@ import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 import clientSide.services.ToolBoxView;
 
+import static clientSide.services.PrintHelper.*;
+
 public class PlaylistDeletion extends _SimplePageTemplate {
 
     public PlaylistDeletion(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
@@ -25,7 +27,7 @@ public class PlaylistDeletion extends _SimplePageTemplate {
 
     @Override
     public void button2() {
-        System.out.println("Playlist not deleted !");
+        printLNInfo("Playlist not deleted !");
         pageService.playlistHomePage.displayAllPage();
     }
 }

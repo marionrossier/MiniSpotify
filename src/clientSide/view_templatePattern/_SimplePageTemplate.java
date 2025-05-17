@@ -7,6 +7,8 @@ import clientSide.services.ToolBoxView;
 
 import java.util.Scanner;
 
+import static clientSide.services.PrintHelper.*;
+
 public abstract class _SimplePageTemplate implements _MenuInterface {
 
     int index;
@@ -42,21 +44,21 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
     }
 
     public final void displayTitle(String pageTitle){
-        System.out.println();
-        System.out.println();
-        System.out.println(">>>>>> "+ pageTitle +" <<<<<<<");
-        System.out.println();
+        printLN();
+        printLN();
+        printLNBgWhite(">>>>>> "+ pageTitle +" <<<<<<<");
+        printLN();
     }
 
     public void displayContent(String pageContent){
-        System.out.println(pageContent);
+        printLNWhite(pageContent);
     }
 
     public void displaySpecificContent(){}
 
     public final void displayInput (){
-        System.out.println();
-        System.out.print("Your input : ");
+        printLN();
+        printWhite("Your input : ");
     }
 
     public void validateInput(){
@@ -64,7 +66,7 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
             index = scanner.nextInt();
             scanner.nextLine(); // Clear the newline character
         }catch (Exception e){
-            System.out.print(ToolBoxView.PRINT_RED + "Invalid input, try again.");
+            printInfo("Invalid input, try again.");
             scanner.nextLine(); // Clear the invalid input
             displayInput();
             validateInput();
@@ -102,13 +104,13 @@ public abstract class _SimplePageTemplate implements _MenuInterface {
             case 9 :
                 button9();
             default:
-                System.out.println("Option non available, try again.");
+                printLNInfo("Option non available, try again.");
                 displayContent(pageContent);
         }
     }
 
     private void invalidChoice(){
-        System.out.println(icon.warning() + "Invalid choice, try again." + icon.warning() + icon.lineBreak);
+        printLNInfo(icon.warning() + "Invalid choice, try again." + icon.warning() + icon.lineBreak);
     }
 
     public void button0() {

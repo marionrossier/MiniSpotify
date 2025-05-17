@@ -9,6 +9,8 @@ import middle.ISongRepository;
 
 import java.util.*;
 
+import static clientSide.services.PrintHelper.*;
+
 public class PlaylistServices {
 
     private final IPlaylistRepository playlistLocalRepository;
@@ -155,6 +157,6 @@ public class PlaylistServices {
                 toolBoxView.getUserServ().addOnePlaylistToCurrentUser(playlistId);
             }
         }
-        System.out.println("Playlist.s has been added.");
+        printLNGreen("Playlist.s has been added.");
     }
 }

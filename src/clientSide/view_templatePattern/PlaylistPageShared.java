@@ -5,6 +5,8 @@ import serverSide.entities.Playlist;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 
+import static clientSide.services.PrintHelper.*;
+
 public class PlaylistPageShared extends _SimplePageTemplate {
 
     public PlaylistPageShared(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
@@ -18,14 +20,14 @@ public class PlaylistPageShared extends _SimplePageTemplate {
 
     @Override
     public void displaySpecificContent(){
-        System.out.println();
+        printLN();
         Playlist playlist = toolBoxView.getPlaylistServ().getPlaylistById(toolBoxView.getPlaylistServ().getCurrentPlaylistId());
         if (playlist == null){
             pageService.playlistHomePage.displayAllPage();
         }
         else {
-        System.out.println("Playlist name : " + playlist.getName());
-        System.out.println();
+        printLNBlue("Playlist name : " + playlist.getName());
+        printLN();
         toolBoxView.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId());
         }
     }
