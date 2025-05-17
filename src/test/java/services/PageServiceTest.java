@@ -18,7 +18,7 @@ class PageServiceTest{
 
     @BeforeEach
     void setUp() {
-        testHelper = new TestHelper();
+        testHelper = new TestHelper(45000);
         dependencyProvider = testHelper.dependencyProvider;
     }
 
@@ -39,35 +39,4 @@ class PageServiceTest{
         //Assert
         assertTrue(exist);
     }
-
-    //TODO : régler ces 2 tests
-//    @Test
-//    void testGoBack() {
-//        //Arrange
-//        initializer.pageService.getMenuPages().push(initializer.pageService.login.pageId);
-//        initializer.pageService.getMenuPages().push(initializer.pageService.homePage.pageId);
-//        initializer.pageService.getMenuPages().push(initializer.pageService.playlistHomePage.pageId);
-//        initializer.pageService.getMenuPages().push(initializer.pageService.playlistPageOpen.pageId);
-//        initializer.pageService.getMenuPages().push(initializer.pageService.playlistPageOpen.pageId);
-//        int playlistHomePageId = initializer.pageService.playlistHomePage.pageId;
-//        int playlistPageOpen = initializer.pageService.playlistPageOpen.pageId;
-//        //Act
-//        initializer.pageService.goBack(playlistPageOpen);
-//        //Assert
-//        assertEquals(playlistHomePageId, initializer.pageService.getMenuPages().peek());
-//    }
-//
-//    @Test
-//    void testGotAnInput() {
-//        //Arrange
-//        initializer.menuPagesStack.push(initializer.pageService.playlistHomePage.pageId);
-//        String input = "0";
-//
-//        //Act
-//        initializer.pageService.gotAnInput(input);
-//        String inputCheck = initializer.pageService.gotAnInput(input);
-//
-//        //Assert
-//        assertEquals("", inputCheck);
-//    }
 }

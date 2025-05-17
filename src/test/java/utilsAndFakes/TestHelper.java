@@ -10,11 +10,13 @@ import serverSide.entities.*;
 
 public class TestHelper {
 
+    private int serverPort;
     public DependencyProvider dependencyProvider;
 
-    public TestHelper() {
+    public TestHelper(int serverPort) {
+        this.serverPort = serverPort;
         try {
-            this.dependencyProvider = new DependencyProvider();
+            this.dependencyProvider = new DependencyProvider(serverPort);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -80,11 +82,12 @@ public class TestHelper {
     }
 
     public void startServer() {
-        try (Socket testSocket = new Socket("127.0.0.1", 45000)) {
+        try (Socket testSocket = new Socket("127.0.0.1", serverPort)) {
             System.out.println("✅ Serveur déjà actif.");
         } catch (IOException e) {
             dependencyProvider.serverThread = new Thread(() -> {
                 try {
+                    dependencyProvider.socketServer.setPort(serverPort);
                     dependencyProvider.socketServer.socketServerMain();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);

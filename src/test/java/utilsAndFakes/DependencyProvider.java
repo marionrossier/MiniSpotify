@@ -76,7 +76,7 @@ public class DependencyProvider {
     public final AudioSocketServer audioSocketServer;
     public final SocketServer socketServer;
 
-    public DependencyProvider() throws IOException {
+    public DependencyProvider(int serverPort) throws IOException {
 
         menuPagesStack = new Stack<>();
 
@@ -123,6 +123,7 @@ public class DependencyProvider {
 
         //SOCKETS
         socketClient = new SocketClient();
+        socketClient.setServerPort(serverPort);
         frontUserRepo = new FrontUserRepo(socketClient);
         frontPlaylistRepo = new FrontPlaylistRepo(socketClient);
         frontSongRepo = new FrontSongRepo(socketClient);

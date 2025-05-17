@@ -17,8 +17,8 @@ public class PlaylistCreation extends TemplateInversePage {
         this.pageId = pageId;
         this.pageTitle = "Create Playlist Page";
         this.pageContent = "You're playlist will be : " + icon.lineBreak +
-                icon.nbr(1) + "Private" + icon.lineBreak +
-                icon.nbr(2) + "Public";
+                icon.nbr1() + "Private" + icon.lineBreak +
+                icon.nbr2() + "Public";
     }
     @Override
     public void displaySpecificContent() {

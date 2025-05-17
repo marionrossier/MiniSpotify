@@ -1,8 +1,7 @@
-package utils;
+package serverSide.entities;
 
 import clientSide.services.*;
 import commun.*;
-import serverSide.entities.*;
 import serverSide.repoLocal.*;
 
 import java.io.File;
@@ -262,7 +261,7 @@ public class JsonService {
                 new LinkedList<>(Arrays.asList(325561970, 354322599, 1925355941, 700468481)),
                 1726370281, PlaylistEnum.PRIVATE));
 
-        playlistLocalRepository.savePlaylist(new Playlist("AllSongs",
+        playlistLocalRepository.savePlaylist(new Playlist("AllSongs", 914903479,
                 new LinkedList<>(Arrays.asList(
                         1108071776, 1986076679, 2084461505, 342105258, 625427469, 325561970, 321324189, 1280045910,
                         354322599, 1925355941, 1951451340, 243871940, 1988790520, 719812166, 700468481, 469321884,

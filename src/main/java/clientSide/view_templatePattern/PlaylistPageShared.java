@@ -15,7 +15,7 @@ public class PlaylistPageShared extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Shared Playlist Page : ";
         this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak +
-                icon.nbr(1) + "Delete the playlist";
+                icon.nbr1() + "Delete the playlist";
     }
 
     @Override

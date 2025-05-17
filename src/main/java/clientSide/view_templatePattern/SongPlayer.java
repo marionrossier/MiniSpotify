@@ -16,11 +16,11 @@ public class SongPlayer extends TemplateSimplePage {
         this.pageTitle = "Song Player Page";
         this.pageContent =
                 icon.zeroBack + " |  " + icon.nineHomepage +icon.lineBreak+
-                icon.nbr(1) + ":"+ icon.sequential() + "/" + icon.shuffle() + "/" + icon.repeatOne()+ " | " +
-                icon.nbr(2) + ":"+ icon.previous() + " | " +
-                icon.nbr(3) + ":"+ icon.playPause() +" | " +
-                icon.nbr(4) + ":"+ icon.playBack() + " | " +
-                icon.nbr(5) + ":"+ icon.next();}
+                icon.nbr1() + icon.sequential() + "/" + icon.shuffle() + "/" + icon.repeatOne()+ " | " +
+                icon.nbr2() + icon.previous() + " | " +
+                icon.nbr3() +  icon.playPause() +" | " +
+                icon.nbr4() +  icon.playBack() + " | " +
+                icon.nbr5() +  icon.next();}
 
     @Override
     public void displaySpecificContent(){

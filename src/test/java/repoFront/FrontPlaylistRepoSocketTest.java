@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class FrontPlaylistRepoSocketTest extends TestHelper {
+class FrontPlaylistRepoSocketTest {
 
     private IPlaylistRepository frontPlaylistRepo;
     private TestHelper testHelper;
@@ -20,7 +20,7 @@ class FrontPlaylistRepoSocketTest extends TestHelper {
 
     @BeforeEach
     void setup() throws IOException {
-        testHelper = new TestHelper();
+        testHelper = new TestHelper(45003);
         dependencyProvider = testHelper.dependencyProvider;
         frontPlaylistRepo = dependencyProvider.frontPlaylistRepo;
         dependencyProvider.populateLocalUsers();

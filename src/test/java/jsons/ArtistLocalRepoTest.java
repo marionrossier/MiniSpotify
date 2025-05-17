@@ -26,7 +26,7 @@ class ArtistLocalRepoTest{
     void setup() throws IOException {
         tempFile = Files.createTempFile("artist", ".json").toFile();
         repo = new ArtistLocalRepository(tempFile.getAbsolutePath());
-        testHelper = new TestHelper();
+        testHelper = new TestHelper(45000);
         dependencyProvider = testHelper.dependencyProvider;
     }
 

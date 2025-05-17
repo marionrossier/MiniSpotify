@@ -14,8 +14,8 @@ public class FriendsPlaylistPage extends TemplateSimplePage {
         this.isFree = false;
         this.pageTitle = "Friend Playlist Page";
         this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak +
-                icon.nbr(1) + "Listen to playlist" + icon.lineBreak+
-                icon.nbr(2) + "Add playlist to own playlist";
+                icon.nbr1() + "Listen to playlist" + icon.lineBreak+
+                icon.nbr2() + "Add playlist to own playlist";
     }
 
     @Override

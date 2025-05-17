@@ -21,7 +21,7 @@ public class PlaylistPlayerTest{
 
     @BeforeEach
     void setUp() throws IOException {
-        testHelper = new TestHelper();
+        testHelper = new TestHelper(45000);
         dependencyProvider = testHelper.dependencyProvider;
 
         // Create Cookies_SingeltonPattern instance

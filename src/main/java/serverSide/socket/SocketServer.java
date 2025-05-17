@@ -13,16 +13,21 @@ import static clientSide.services.PrintHelper.*;
 
 
 public class SocketServer {
-    private final int PORT = 45000;
+    private int Port = 45000;
+
     private final ObjectMapper mapper = new ObjectMapper();
     private final BackPlaylistRepo backPlaylistRepo;
     private final BackUserRepo backUserRepo;
     private final BackSongRepo backSongRepo;
     private final BackArtistRepo backArtistRepo;
 
+    public void setPort(int port) {
+        this.Port = port;
+    }
+
     public void socketServerMain() {
-        try (ServerSocket serverSocket = new ServerSocket(this.PORT)) {
-            printLNSystem("🎵 MiniSpotify Server is listening on port " + PORT);
+        try (ServerSocket serverSocket = new ServerSocket(this.Port)) {
+            printLNSystem("🎵 MiniSpotify Server is listening on port " + Port);
 
             while (true) {
                 Socket socket = serverSocket.accept();

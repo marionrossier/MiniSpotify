@@ -17,7 +17,7 @@ class PlaylistLocalRepoTest{
     private final DependencyProvider dependencyProvider;
 
     public PlaylistLocalRepoTest(){
-        testHelper = new TestHelper();
+        testHelper = new TestHelper(45000);
         dependencyProvider = testHelper.dependencyProvider;
     }
 

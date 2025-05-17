@@ -15,7 +15,7 @@ public class AudioLocalRepository implements IAudioRepository {
     public AudioLocalRepository(String folderPath) {
         this.folderPath = folderPath;
         this.stockageService = new StockageService();
-        stockageService.copyAllSongsToWritableLocation("songsfiles");
+        stockageService.copyMp3FilesFromResources();
 
     }
 

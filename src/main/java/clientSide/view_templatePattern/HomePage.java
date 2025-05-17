@@ -14,10 +14,10 @@ public class HomePage extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Home Page";
         this.pageContent =
-                icon.nbr(0) + "Log out" + " | " + icon.eightMusicPlayer + icon.lineBreak +
-                icon.nbr(1) + "Playlists" + icon.lineBreak +
-                icon.nbr(2) + "Search song" + icon.lineBreak +
-                icon.nbr(3) + "Friends" + icon.premium();
+                icon.nbr0() + "Log out" + " | " + icon.eightMusicPlayer + icon.lineBreak +
+                icon.nbr1() + "Playlists" + icon.lineBreak +
+                icon.nbr2() + "Search song" + icon.lineBreak +
+                icon.nbr3() + "Friends" + icon.premium();
     }
 
     @Override

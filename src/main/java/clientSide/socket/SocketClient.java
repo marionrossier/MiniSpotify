@@ -8,11 +8,18 @@ import java.util.Map;
 
 public class SocketClient {
     private final String SERVER_ADDRESS = "127.0.0.1";
-    private final int SERVER_PORT = 45000;
+
+    public void setServerPort(int serverPort) {
+        ServerPort = serverPort;
+    }
+
+    private int ServerPort = 45000;
     private final ObjectMapper mapper = new ObjectMapper();
 
+
+
     public Map<String, Object> sendRequest(Map<String, Object> requestData) {
-        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+        try (Socket socket = new Socket(SERVER_ADDRESS, ServerPort);
              BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 

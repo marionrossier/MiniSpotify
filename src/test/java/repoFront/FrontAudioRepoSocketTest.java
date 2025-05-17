@@ -25,7 +25,7 @@ public class FrontAudioRepoSocketTest {
 
     @BeforeEach
     void setup() {
-        testHelper = new TestHelper();
+        testHelper = new TestHelper(45000);
         dependencyProvider = testHelper.dependencyProvider;
         dependencyProvider.populateLocalUsers();
         Cookies_SingletonPattern.setInstance(232928320, "marion", "hash");

@@ -17,10 +17,10 @@ public class Search extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Search Page";
         this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak +
-                icon.nbr(1) + "Search by song title" + icon.lineBreak +
-                icon.nbr(2) + "Search by artist" + icon.lineBreak +
-                icon.nbr(3) + "Search by song gender" + icon.lineBreak +
-                icon.nbr(4) + "Search by public playlist";
+                icon.nbr1() + "Search by song title" + icon.lineBreak +
+                icon.nbr2() + "Search by artist" + icon.lineBreak +
+                icon.nbr3() + "Search by song gender" + icon.lineBreak +
+                icon.nbr4() + "Search by public playlist";
     }
 
     @Override

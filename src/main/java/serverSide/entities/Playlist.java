@@ -31,7 +31,7 @@ public class Playlist {
         this.status = status;
     }
 
-    //Only for tests
+    //Only for tests and Populate
     public Playlist(String name, int playlistId, LinkedList <Integer> listSongsId, int ownerId, PlaylistEnum status) {
         this.name = name;
         this.playlistId = playlistId;

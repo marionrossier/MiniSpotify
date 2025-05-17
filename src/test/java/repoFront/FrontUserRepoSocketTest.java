@@ -19,7 +19,7 @@ public class FrontUserRepoSocketTest {
 
     @BeforeEach
     void setup() {
-        testHelper = new TestHelper();
+        testHelper = new TestHelper(45004);
         dependencyProvider = testHelper.dependencyProvider;
         dependencyProvider.populateLocalUsers();
         userRepo = dependencyProvider.frontUserRepo;

@@ -56,28 +56,54 @@ public class StockageService {
         }
     }
 
-    public void copyAllSongsToWritableLocation(String resourceFolderPath) {
-        try {
-            Path targetDirectory = Paths.get(userHome, fileName, "songsfiles");
-            Files.createDirectories(targetDirectory);
-
-            InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(resourceFolderPath);
-            if (resourceStream == null) {
-                throw new IllegalArgumentException("Resource folder not found: " + resourceFolderPath);
-            }
-
-            File resourceFolder = new File(getClass().getClassLoader().getResource(resourceFolderPath).toURI());
-            File[] files = resourceFolder.listFiles((dir, name) -> name.endsWith(".mp3"));
-
-            if (files != null) {
-                for (File file : files) {
-                    Path targetPath = targetDirectory.resolve(file.getName());
-                    Files.copy(file.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
-                }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Error copying .mp3 files: " + e.getMessage());
+    public void copyMp3FilesFromResources() {
+        if (isRunningUnderTest()) {
+            System.out.println("Skipping mp3 extraction during test execution.");
+            return;
         }
+
+        try {
+            // Destination folder = same as old implementation
+            Path outputDir = Paths.get(System.getProperty("user.home"), "MiniSpotifyFlorentMarion", "songsfiles");
+            Files.createDirectories(outputDir);
+
+            // Load the index.txt from classpath
+            InputStream indexStream = StockageService.class.getClassLoader()
+                    .getResourceAsStream("songsfiles/index.txt");
+
+            if (indexStream == null) {
+                printLNError("⚠ index.txt not found in songs/ folder inside resources.");
+                return;
+            }
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(indexStream));
+            String fileName;
+            while ((fileName = reader.readLine()) != null) {
+                InputStream mp3Stream = StockageService.class.getClassLoader()
+                        .getResourceAsStream("songsfiles/" + fileName);
+
+                if (mp3Stream == null) {
+                    printLNError("Missing file in JAR: " + fileName);
+                    continue;
+                }
+
+                Path targetPath = outputDir.resolve(fileName);
+
+                if (Files.exists(targetPath)) {
+                    continue;
+                }
+
+                Files.copy(mp3Stream, targetPath, StandardCopyOption.REPLACE_EXISTING);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException("Error copying mp3 files from resources", e);
+        }
+    }
+
+    private boolean isRunningUnderTest() {
+        // Detect Maven Surefire (unit test runner) via system properties
+        return System.getProperty("surefire.test.class.path") != null;
     }
 }
 

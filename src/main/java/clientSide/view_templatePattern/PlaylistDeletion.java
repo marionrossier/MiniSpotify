@@ -15,8 +15,8 @@ public class PlaylistDeletion extends TemplateSimplePage {
         this.pageTitle = "Delete Playlist Page";
         this.pageContent = icon.zeroBack + icon.lineBreak +
                 "Are you sure you want to delete this playlist?" + icon.lineBreak +
-                icon.nbr(1) + "YES" + icon.lineBreak +
-                icon.nbr(2) + "NO";
+                icon.nbr1() + "YES" + icon.lineBreak +
+                icon.nbr2() + "NO";
     }
 
     @Override

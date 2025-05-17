@@ -21,7 +21,7 @@ class FrontSongRepoSocketTest {
 
     @BeforeEach
     void setup() {
-        testHelper = new TestHelper();
+        testHelper = new TestHelper(45004);
         dependencyProvider = testHelper.dependencyProvider;
         songRepo = dependencyProvider.frontSongRepo;
         dependencyProvider.populateLocalUsers();

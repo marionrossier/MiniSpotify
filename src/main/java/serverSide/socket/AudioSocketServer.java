@@ -1,5 +1,6 @@
 package serverSide.socket;
 
+import commun.StockageService;
 import serverSide.repoBack.*;
 
 import java.io.*;
@@ -11,8 +12,8 @@ import static clientSide.services.PrintHelper.*;
 public class AudioSocketServer {
 
     private final int PORT = 45001;
-
     private final BackAudioRepo backAudioRepo;
+    private final StockageService stockageService = new StockageService();
 
     public void audioSocketMain() {
         printLNSystem("🎵 AudioSocketServer started on port " + PORT);
@@ -28,6 +29,7 @@ public class AudioSocketServer {
 
     public AudioSocketServer(BackAudioRepo backAudioRepo){
         this.backAudioRepo = backAudioRepo;
+        stockageService.copyMp3FilesFromResources(); // mp3 initialization
     }
 
     private void handleAudioRequest(Socket socket) {

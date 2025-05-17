@@ -13,8 +13,8 @@ public class FriendsHomePage extends TemplateSimplePage {
         this.isFree = false;
         this.pageTitle = "Friends Home Page";
         this.pageContent = icon.zeroBack + icon.nineHomepage + icon.lineBreak +
-                icon.nbr(1) + "Display friends" + icon.lineBreak +
-                icon.nbr(2) + "Search friend" + icon.lineBreak;
+                icon.nbr1() + "Display friends" + icon.lineBreak +
+                icon.nbr2() + "Search friend" + icon.lineBreak;
     }
 
     @Override

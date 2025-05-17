@@ -19,7 +19,7 @@ class FrontArtistRepoSocketTest {
 
     @BeforeEach
     void setup() {
-        testHelper = new TestHelper();
+        testHelper = new TestHelper(45002);
         dependencyProvider = testHelper.dependencyProvider;
         artistRepo = dependencyProvider.frontArtistRepo;
         dependencyProvider.populateLocalUsers();

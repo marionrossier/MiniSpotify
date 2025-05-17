@@ -18,9 +18,9 @@ public class Login extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Login Page";
         this.pageContent =
-                icon.nbr(0) + "End process" + icon.lineBreak +
-                icon.nbr(1)+ "Sign in"+icon.lineBreak +
-                icon.nbr(2)+ "Create an account";
+                icon.nbr0() + "End process" + icon.lineBreak +
+                icon.nbr1()+ "Sign in"+icon.lineBreak +
+                icon.nbr2()+ "Create an account";
         toolBoxView.getUserServ().resetCookie();
     }
 

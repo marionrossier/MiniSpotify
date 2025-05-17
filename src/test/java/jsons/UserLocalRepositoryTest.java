@@ -23,7 +23,7 @@ class UserLocalRepositoryTest {
     void setUp() throws IOException {
         tempFile = Files.createTempFile("user", ".json").toFile();
         userLocalRepository = new UserLocalRepository(tempFile.getAbsolutePath());
-        testHelper = new TestHelper();
+        testHelper = new TestHelper(45000);
         dependencyProvider = testHelper.dependencyProvider;
     }
 

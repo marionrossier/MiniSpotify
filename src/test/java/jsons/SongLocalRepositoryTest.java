@@ -18,7 +18,7 @@ class SongLocalRepositoryTest {
 
     @BeforeEach
     void setUp(){
-        testHelper = new TestHelper();
+        testHelper = new TestHelper(45000);
         dependencyProvider = testHelper.dependencyProvider;
     }
 
