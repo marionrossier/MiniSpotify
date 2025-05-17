@@ -5,6 +5,8 @@ import serverSide.entities.Playlist;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 
+import static clientSide.services.PrintHelper.*;
+
 public class SongPlayer extends _SimplePageTemplate {
 
     public SongPlayer(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
@@ -14,27 +16,38 @@ public class SongPlayer extends _SimplePageTemplate {
         this.pageTitle = "Song Player Page";
         this.pageContent =
                 icon.zeroBack + " |  " + icon.nineHomepage +icon.lineBreak+
-                icon.nbr(1) + ":"+ icon.shuffle() + " | " +
+                icon.nbr(1) + ":"+ icon.sequential() + "/" + icon.shuffle() + "/" + icon.repeatOne()+ " | " +
                 icon.nbr(2) + ":"+ icon.previous() + " | " +
                 icon.nbr(3) + ":"+ icon.playPause() +" | " +
                 icon.nbr(4) + ":"+ icon.playBack() + " | " +
-                icon.nbr(5) + ":"+ icon.next() + " | " +
-                icon.nbr(6) + ":"+ icon.repeatOne();
-    }
+                icon.nbr(5) + ":"+ icon.next();}
 
     @Override
     public void displaySpecificContent(){
+        System.out.println();
         Playlist playlist = toolBoxView.getPlaylistServ().getPlaylistById(toolBoxView.getPlaylistServ().getCurrentPlaylistId());
-        System.out.println(
+        printLNBlue(
                 "Current Playlist : " + playlist.getName() +
-                ", duration " + (toolBoxView.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())/60) + ":" +
+                ", duration " + (toolBoxView.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())/60) + " minutes " +
                         toolBoxView.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())%60 +
-                ", size : " + playlist.getSize() + icon.lineBreak);
+                " seconds, size : " + playlist.getSize() + " songs.");
     }
 
     @Override
     public void button1() {
-        spotifyPlayer.setShuffleMode();
+
+        String currentState = spotifyPlayer.getCurrentState();
+        switch (currentState) {
+            case "sequential":
+                spotifyPlayer.setShuffleMode();
+                break;
+            case "shuffle":
+                spotifyPlayer.setRepeatMode();
+                break;
+            case "repeat":
+                spotifyPlayer.setSequentialMode();
+                break;
+        }
         loop();
     }
 
@@ -63,22 +76,23 @@ public class SongPlayer extends _SimplePageTemplate {
     }
 
     @Override
-    public void button6() {
-        spotifyPlayer.setRepeatMode();
-        loop();
-    }
-
-    @Override
     public void button8(){
     //No action !
     }
 
-    void loop(){
+    void loop() {
         while (spotifyPlayer.isPlaying() || spotifyPlayer.isPaused()) {
             int currentSongId = spotifyPlayer.getCurrentSongId();
-            System.out.println("Current lecture : " + toolBoxView.getSongServ().getSongById(currentSongId).getTitle() + " - " +
-                    toolBoxView.getArtistServ().getArtistNameBySong(currentSongId));
-            displayInput();
+            String prefix = spotifyPlayer.isPaused() ? "Song paused : " : "Song played : ";
+
+            printLNBlue(prefix + toolBoxView.getSongServ().getSongById(currentSongId).getTitle() + " - " +
+                    toolBoxView.getArtistServ().getArtistNameBySong(currentSongId) + ". ");
+            printWhite("Next input : ");
+
+            validateInput();
+            switchPage();
+        }
+        while (!spotifyPlayer.isPlaying() || !spotifyPlayer.isPaused()) {
             validateInput();
             switchPage();
         }

@@ -5,6 +5,8 @@ import serverSide.entities.PlanEnum;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 
+import static clientSide.services.PrintHelper.*;
+
 public class CreateAccount extends _InversedPageTemplate {
 
     private String pseudonym;
@@ -24,18 +26,18 @@ public class CreateAccount extends _InversedPageTemplate {
     }
 
     public void displaySpecificContent () {
-        System.out.println("For going back, enter \"0\".");
-        System.out.print("Enter your pseudonym : ");
+        printLNWhite("For going back, enter \"0\".");
+        printWhite("Enter your pseudonym : ");
         pseudonym = pageService.gotAnInput(scanner.nextLine());
-        System.out.print("Enter your password : ");
+        printWhite("Enter your password : ");
         password = pageService.gotAnInput(scanner.nextLine());
-        System.out.print("Enter your email : ");
+        printWhite("Enter your email : ");
         email = pageService.gotAnInput(scanner.nextLine());
         while (!toolBoxView.getUserServ().emailValidation(email)){
             System.err.print("Enter a valid email address, like name@email.com :");
             email = pageService.gotAnInput(scanner.nextLine());
         }
-        System.out.println(icon.lineBreak + "Choose your plan : ");
+        printLNWhite(icon.lineBreak + "Choose your plan : ");
     }
 
     @Override
@@ -52,7 +54,7 @@ public class CreateAccount extends _InversedPageTemplate {
 
     private void createAccount() {
         toolBoxView.getUserServ().addUser(pseudonym,email,password, planEnum);
-        System.out.println("Account created successfully !");
+        printLNGreen("Account created successfully !");
         pageService.login.displayAllPage();
     }
 }

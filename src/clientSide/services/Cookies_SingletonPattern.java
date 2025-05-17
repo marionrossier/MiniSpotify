@@ -15,7 +15,7 @@ public class Cookies_SingletonPattern {
         this.userId = userId;
         this.userPseudonym = userPseudonym;
         this.userPassword = userPassword;
-        this.currentPlaylistId = 598327402; //AllSongs
+        this.currentPlaylistId = 1120436763; //AllSongs
         this.currentSongId = 1108071776; //Amy Rehab
         this.currentFriendId = 0; //Initialization
         this.currentFriendPlaylistId = 0; //Initialization

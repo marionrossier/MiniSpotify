@@ -6,6 +6,8 @@ import serverSide.entities.User;
 
 import java.util.List;
 
+import static clientSide.services.PrintHelper.*;
+
 public class PrintService {
 
     private final IconService icon = new IconService();
@@ -25,23 +27,23 @@ public class PrintService {
     }
 
     public void printSongFound (List<Integer> songs, String info){
-        System.out.println("Songs found with information : " + info);
+        printLNWhite("Songs found with information : " + info);
         printSongList (songs);
     }
 
     public void printSongList (List<Integer> songs){
         int i = 1;
         for (Integer song : songs) {
-            System.out.println(i + ". " + songService.getSongById(song).getTitle()+ " - " +
+            printLNWhite(i + ". " + songService.getSongById(song).getTitle()+ " - " +
                             artistService.getArtistNameBySong(song));
             i++;
         }
-        System.out.println();
+        printLN();
     }
 
     public void printPlaylist(List<Integer> playlistsId) {
         if (playlistsId == null || playlistsId.isEmpty()) {
-            System.out.println("No playlist available.");
+            printLNInfo("No playlist available.");
             return;
         }
 
@@ -49,7 +51,7 @@ public class PrintService {
         for (Integer playlistId : playlistsId) {
             Playlist playlist = playlistService.getPlaylistById(playlistId);
             if (playlist != null) {
-                System.out.println(i + ". " + playlist.getName());
+                printLNWhite(i + ". " + playlist.getName());
                 i++;
             }
         }
@@ -65,7 +67,7 @@ public class PrintService {
 
                 if (playlist != null) {
                     boolean isUserOwner = playlist.getOwnerId() == currentUser.getUserId();
-                    System.out.println(i + ". " +
+                    printLNWhite(i + ". " +
                             playlist.getName() + " - " +
                             printPlaylistStatus(playlist.getStatus()) +
                             (isUserOwner ? icon.house() : ""));
@@ -73,7 +75,7 @@ public class PrintService {
                 }
             }
         } else {
-            System.out.println("No playlists available.");
+            printLNInfo("No playlists available.");
         }
     }
 
@@ -99,7 +101,7 @@ public class PrintService {
                 User friend = userService.getUserById(friendId);
 
                 if (friend != null) {
-                    System.out.println(i + ". " + friend.getPseudonym());
+                    printLNWhite(i + ". " + friend.getPseudonym());
                     i++;
                 }
             }
@@ -109,18 +111,18 @@ public class PrintService {
 
     public void printUsers(List<Integer> usersId){
         if (usersId == null || usersId.isEmpty()) {
-            System.out.println("No user found.");
+            printLNInfo("No user found.");
             return;
         }
         int i = 1;
         for (int userId : usersId) {
             User user = userService.getUserById(userId);
             if (user != null) {
-                System.out.println(i + ". " + user.getPseudonym());
+                printLNWhite(i + ". " + user.getPseudonym());
                 i++;
             }
         }
-        System.out.println();
+        printLN();
     }
 
     public void printUserPublicPlaylists(int friendId) {
@@ -135,7 +137,7 @@ public class PrintService {
                         && (playlist.getStatus().equals(PlaylistEnum.PUBLIC))
                         && (playlist.getOwnerId() == user.getUserId())) {
                     boolean isUserOwner = playlist.getOwnerId() == user.getUserId();
-                    System.out.println(i + ". " +
+                    printLNWhite(i + ". " +
                             playlist.getName() + " - " +
                             printPlaylistStatus(playlist.getStatus()) +
                             (isUserOwner ? icon.house() : ""));
@@ -144,7 +146,7 @@ public class PrintService {
             }
         }
         else {
-            System.out.println("No public playlists available.");
+            printLNInfo("No public playlists available.");
         }
     }
 }

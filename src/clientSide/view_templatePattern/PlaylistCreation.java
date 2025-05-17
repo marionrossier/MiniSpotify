@@ -6,6 +6,8 @@ import serverSide.entities.User;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 
+import static clientSide.services.PrintHelper.*;
+
 public class PlaylistCreation extends _InversedPageTemplate {
     private String playlistName;
 
@@ -20,7 +22,7 @@ public class PlaylistCreation extends _InversedPageTemplate {
     }
     @Override
     public void displaySpecificContent() {
-        System.out.println("Enter the name of the playlist : ");
+        printLNWhite("Enter the name of the playlist : ");
         playlistNameVerification();
     }
 
@@ -45,7 +47,7 @@ public class PlaylistCreation extends _InversedPageTemplate {
         boolean playlistNameOk = toolBoxView.getPlaylistServ().verifyPlaylistName(playlistName, user);
 
         if (!playlistNameOk){
-            System.out.print("Playlist Name already exist in your playlists. Try again");
+            printInfo("Playlist Name already exist in your playlists. Try again");
             this.displayInput();
             playlistNameVerification();
         }

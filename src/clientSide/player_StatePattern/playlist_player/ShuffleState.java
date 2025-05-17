@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 class ShuffleState implements IState {
     private final PlaylistPlayer playlistPlayer;
+    public final String stateName = "shuffle";
 
     public ShuffleState(PlaylistPlayer spotifyService) {
         this.playlistPlayer = spotifyService;
@@ -22,7 +23,7 @@ class ShuffleState implements IState {
     }
 
     @Override
-    public Song getPreviousSong() {
-        return null;
+    public String getStateName() {
+        return stateName;
     }
 }

@@ -8,6 +8,8 @@ import serverSide.entities.User;
 import java.util.List;
 import java.util.Objects;
 
+import static clientSide.services.PrintHelper.*;
+
 public class FriendSearch extends _SimplePageTemplate {
     public FriendSearch(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
@@ -28,7 +30,7 @@ public class FriendSearch extends _SimplePageTemplate {
         toolBoxView.getPrintServ().printUsers(usersId);
 
         if (!usersId.isEmpty()) {
-            System.out.println("Choose your friend to add by entering his number, or enter 0 to go back.");
+            printLNWhite("Choose your friend to add by entering his number, or enter 0 to go back.");
             displayInput();
 
             String inputFriendIndex = pageService.gotAnInput(scanner.nextLine());
@@ -39,12 +41,11 @@ public class FriendSearch extends _SimplePageTemplate {
             int friendIndexInUsersId = Integer.parseInt(inputFriendIndex) - 1;
 
             while (friendIndexInUsersId >= usersId.size()) {
-                System.out.println("Invalid selection. Please try again.");
+                printLNInfo("Invalid selection. Please try again.");
                 displayInput();
                 friendIndexInUsersId = Integer.parseInt(pageService.gotAnInput(scanner.nextLine()));
             }
 
-            User user = toolBoxView.getUserServ().getUserById(toolBoxView.getUserServ().getCurrentUserId());
             toolBoxView.getUserServ().addFriend(usersId.get(friendIndexInUsersId));
         }
         pageService.friendsHomePage.displayAllPage();

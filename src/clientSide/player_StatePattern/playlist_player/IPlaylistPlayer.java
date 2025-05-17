@@ -29,4 +29,6 @@ public interface IPlaylistPlayer {
     boolean isPlaying();
 
     boolean isPaused();
+
+    String getCurrentState();
 }

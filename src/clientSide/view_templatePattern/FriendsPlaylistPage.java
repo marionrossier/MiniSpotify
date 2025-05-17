@@ -4,6 +4,8 @@ import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 import clientSide.services.ToolBoxView;
 
+import static clientSide.services.PrintHelper.*;
+
 public class FriendsPlaylistPage extends _SimplePageTemplate {
     public FriendsPlaylistPage(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
         super(pageService, spotifyPlayer);
@@ -19,7 +21,7 @@ public class FriendsPlaylistPage extends _SimplePageTemplate {
     @Override
     public void displaySpecificContent(){
         int playlistId = toolBoxView.getPlaylistServ().getCurrentFriendPlaylistId();
-        System.out.println("Current playlist : " + toolBoxView.getPlaylistServ().getPlaylistById(playlistId).getName());
+        printLNBlue("Current playlist : " + toolBoxView.getPlaylistServ().getPlaylistById(playlistId).getName());
         toolBoxView.getPrintServ().printSongList(toolBoxView.getPlaylistServ().getPlaylistById(playlistId).getPlaylistSongsListWithId());
     }
 
@@ -37,7 +39,7 @@ public class FriendsPlaylistPage extends _SimplePageTemplate {
     public void button2(){
         int friendPlaylistId = toolBoxView.getPlaylistServ().getCurrentFriendPlaylistId();
         toolBoxView.getUserServ().addOnePlaylistToCurrentUser(friendPlaylistId);
-        System.out.println("Playlist has been added.");
+        printLNGreen("Playlist has been added.");
         pageService.friendPlaylists.displayAllPage();
     }
 }

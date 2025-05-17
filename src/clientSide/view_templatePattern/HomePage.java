@@ -4,6 +4,8 @@ import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 import clientSide.services.ToolBoxView;
 
+import static clientSide.services.PrintHelper.*;
+
 public class HomePage extends _SimplePageTemplate {
 
     public HomePage(PageService pageService, IPlaylistPlayer spotifyPlayer, ToolBoxView toolBoxView, int pageId) {
@@ -20,7 +22,7 @@ public class HomePage extends _SimplePageTemplate {
 
     @Override
     public void button0() {
-        System.out.println("Logging you out ...");
+        printLNWhite("Logging you out ...");
         spotifyPlayer.stop();
 
         toolBoxView.getUserServ().resetCookie();

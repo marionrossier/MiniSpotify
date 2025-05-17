@@ -5,13 +5,18 @@ import serverSide.socket.SocketServer;
 
 import java.util.Scanner;
 
+import static clientSide.services.PrintHelper.*;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Do you want to start the app with or without socket handeling ?");
-        System.out.println("1. With socket");
-        System.out.println("2. Without socket");
 
-        System.out.print("Enter your choice: ");
+
+
+        printLNWhite("Do you want to start the app with or without socket handeling ?");
+        printLNWhite("1. With socket");
+        printLNWhite("2. Without socket");
+
+        printWhite("Enter your choice: ");
         Scanner scanner = new Scanner(System.in);
         int input = scanner.nextInt();
 
@@ -23,7 +28,7 @@ public class Main {
                 noSocketApp();
                 break;
             default:
-                System.out.println("Invalid argument");
+                printLNInfo("Invalid argument");
                 break;
         }
     }
@@ -49,10 +54,13 @@ public class Main {
 
         // ✅ Lancer les serveurs AVANT
         new Thread(socketServer::main).start();
-        new Thread(audioSocketServer::main).start();
+        new Thread(audioSocketServer::audioSocketMain).start();
 
         // ⏱ Petite pause pour éviter que le client tente une connexion trop tôt
         try { Thread.sleep(1000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+
+        compositionRootServerSide.copySongs();
+        compositionRootServerSide.copyJsons();
 
         // ✅ Puis démarrer le client
         CompositionRootClientSide compositionRootClientSide = new CompositionRootClientSide();

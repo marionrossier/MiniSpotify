@@ -1,13 +1,14 @@
 package clientSide.view_templatePattern;
 
 import clientSide.services.ToolBoxView;
-import serverSide.entities.Playlist;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 import serverSide.entities.User;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import static clientSide.services.PrintHelper.*;
 
 public class Search extends _SimplePageTemplate {
 
@@ -25,9 +26,9 @@ public class Search extends _SimplePageTemplate {
 
     @Override
     public void button1() {
-        System.out.print(icon.lineBreak + icon.search() + "Enter the title of the song : ");
+        printWhite(icon.lineBreak + icon.search() + "Enter the title of the song : ");
         String songTitle = scanner.nextLine();
-        System.out.println();
+        printLN();
 
         toolBoxView.getSearchServ().searchSong(songTitle, "byTitle", getPageId(), pageService, toolBoxView.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
@@ -35,9 +36,9 @@ public class Search extends _SimplePageTemplate {
 
     @Override
     public void button2() {
-        System.out.print(icon.lineBreak + icon.search() + "Enter the name of the artist : " + icon.lineBreak);
+        printWhite(icon.lineBreak + icon.search() + "Enter the name of the artist : " + icon.lineBreak);
         String artistName = scanner.nextLine();
-        System.out.println();
+        printLN();
 
         toolBoxView.getSearchServ().searchSong(artistName, "byArtist", getPageId(), pageService, toolBoxView.getPlaylistServ());
         pageService.actionFoundedSongs.displayAllPage();
@@ -50,12 +51,11 @@ public class Search extends _SimplePageTemplate {
 
     @Override
     public void button4(){
-        System.out.println();
-        System.out.println("Select your Playlist to add by entering their number and press \"enter\" between each song." + icon.lineBreak +
+        printLN();
+        printLNWhite("Select your Playlist to add by entering their number and press \"enter\" between each song." + icon.lineBreak +
                 "End selection with an \"x\"." + icon.lineBreak);
 
         List<Integer> playlist = toolBoxView.getPlaylistServ().getPublicPlaylists();
-        User user = toolBoxView.getUserServ().getUserById(toolBoxView.getUserServ().getCurrentUserId());
         toolBoxView.getPrintServ().printPlaylist(playlist);
         this.displayInput();
         LinkedList<Integer> chosenPlaylists = toolBoxView.getSearchServ().chooseFoundedPlaylist(playlist, pageService);

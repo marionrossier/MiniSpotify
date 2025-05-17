@@ -11,6 +11,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
 
+import static clientSide.services.PrintHelper.*;
+
 public class SocketServer {
     private final int PORT = 45000;
     private final ObjectMapper mapper = new ObjectMapper();
@@ -21,11 +23,11 @@ public class SocketServer {
 
     public void main() {
         try (ServerSocket serverSocket = new ServerSocket(this.PORT)) {
-            System.out.println("🎵 MiniSpotify Server is listening on port " + PORT);
+            printLNSystem("🎵 MiniSpotify Server is listening on port " + PORT);
 
             while (true) {
                 Socket socket = serverSocket.accept();
-//                System.out.println("📡 Client connected");
+//                printLNSystem("📡 Client connected");
 
                 new Thread(() -> handleClient(socket)).start();
             }

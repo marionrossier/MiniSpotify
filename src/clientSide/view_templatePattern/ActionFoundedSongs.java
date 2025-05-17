@@ -4,6 +4,7 @@ import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 import clientSide.services.ToolBoxView;
 
+import static clientSide.services.PrintHelper.*;
 
 public class ActionFoundedSongs extends _SimplePageTemplate {
 
@@ -25,7 +26,7 @@ public class ActionFoundedSongs extends _SimplePageTemplate {
 
     @Override
     public void button2() {
-        System.out.println("Your Playlists : ");
+        printLNWhite("Your Playlists : ");
         toolBoxView.getPrintServ().printUserPlaylists(toolBoxView.getUserServ().getCurrentUserId());
 
         displayInput();

@@ -5,6 +5,8 @@ import clientSide.services.PageService;
 import clientSide.services.ToolBoxView;
 import serverSide.entities.User;
 
+import static clientSide.services.PrintHelper.*;
+
 import java.util.List;
 
 public class FriendsDisplayFriends extends _SimplePageTemplate {
@@ -20,7 +22,7 @@ public class FriendsDisplayFriends extends _SimplePageTemplate {
 
     @Override
     public void displaySpecificContent (){
-        System.out.println( "Enter your friend number to see future options.");
+        printLNWhite( "Enter your friend number to see future options.");
         int userId = toolBoxView.getUserServ().getCurrentUserId();
         boolean friendsExists = toolBoxView.getPrintServ().printUserFriends(userId);
 
@@ -37,7 +39,7 @@ public class FriendsDisplayFriends extends _SimplePageTemplate {
         String friendIndex = pageService.gotAnInput(scanner.nextLine());
 
         while(Integer.parseInt(friendIndex)>friends.size()){
-            System.out.print(ToolBoxView.PRINT_RED + "Invalide input. Please try again.");
+            printInfo("Invalide input. Please try again.");
             friendIndex = pageService.gotAnInput(scanner.nextLine());
             displayInput();
         }

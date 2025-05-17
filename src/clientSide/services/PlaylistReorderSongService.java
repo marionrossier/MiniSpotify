@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import static clientSide.services.PrintHelper.*;
+
 public class PlaylistReorderSongService {
 
     private final Scanner scanner;
@@ -33,7 +35,7 @@ public class PlaylistReorderSongService {
         LinkedList<Integer> newOrder = new LinkedList<>();
         int songIndex;
 
-        System.out.println("Enter the new order of songs (one by one). Press \"x\" to finish:");
+        printLNWhite("Enter the new order of songs (one by one). Press \"x\" to finish:");
 
         while (true) {
             String input = scanner.nextLine();
@@ -52,10 +54,10 @@ public class PlaylistReorderSongService {
                         System.err.println("This song is already in the new order. Try again.");
                     }
                 } else {
-                    System.out.print(ToolBoxView.PRINT_RED + "Invalid selection. Please try again.");
+                    printInfo("Invalid selection. Please try again.");
                 }
             } catch (NumberFormatException e) {
-                System.out.print(ToolBoxView.PRINT_RED + "Invalid input. Please enter a number or \"x\" to finish.");
+                printInfo("Invalid input. Please enter a number or \"x\" to finish.");
             }
         }
 
@@ -77,9 +79,9 @@ public class PlaylistReorderSongService {
 
     private void printSuccessMessage(Playlist playlist, List<Integer> newOrder) {
         if (newOrder.size() < playlist.getSize()) {
-            System.out.println("Playlist reordered successfully with remaining songs added at the end!");
+            printLNGreen("Playlist reordered successfully with remaining songs added at the end!");
         } else {
-            System.out.println("Playlist reordered successfully!");
+            printLNGreen("Playlist reordered successfully!");
         }
     }
 
