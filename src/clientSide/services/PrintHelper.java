@@ -38,7 +38,6 @@ public class PrintHelper {
         System.out.println(PRINT_YELLOW + message + PRINT_RESET);
     }
 
-    //TODO : vérifier les impressions d'erreur
     public static void printLNError(String message) {
         System.out.println(PRINT_RED + message + PRINT_RESET);
     }

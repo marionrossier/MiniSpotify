@@ -14,7 +14,7 @@ public class FrontSongRepo implements ISongRepository {
     private final SocketClient socketClient;
 
     public FrontSongRepo(SocketClient socketClient) {
-        this.socketClient = new SocketClient();
+        this.socketClient = socketClient;
     }
 
     @Override

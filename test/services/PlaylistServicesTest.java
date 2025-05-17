@@ -61,13 +61,6 @@ class PlaylistServicesTest{
         // Create Cookies_SingeltonPattern instance
         Cookies_SingletonPattern.setInstance(400953820, "tester", "password"); //testUsers
 
-        // Create a FakeMusicPlayer for testing
-        FakeMusicPlayer fakeMusicPlayer = new FakeMusicPlayer();
-
-        // Instantiate the PlaylistPlayer with the fake player and repositories
-        PlaylistPlayer playlistPlayer = new PlaylistPlayer(
-                fakeMusicPlayer, dependencyProvider.audioLocalRepository, dependencyProvider.songService, dependencyProvider.playlistService);
-
         // Create playlistServices
         dependencyProvider.playlistService = new PlaylistServices(
                 dependencyProvider.toolBoxService,
@@ -107,9 +100,6 @@ class PlaylistServicesTest{
 
         //Act
         dependencyProvider.playlistService.createTemporaryPlaylist(chosenSongs, PlaylistEnum.PUBLIC);
-        int temporaryPlaylistId = dependencyProvider.playlistLocalRepository.getPlaylistByName("temporaryPlaylist").getPlaylistId();
-        int firstSongId = dependencyProvider.playlistLocalRepository
-                .getPlaylistById(temporaryPlaylistId).getPlaylistSongsListWithId().getFirst();
 
         //Assert
         assertEquals("temporaryPlaylist",

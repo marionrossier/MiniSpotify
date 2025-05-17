@@ -54,6 +54,7 @@ public class BackUserRepo {
                             : "{\"status\": \"ERROR\", \"message\": \"User not found\"}";
                 }
                 case "saveUser" -> {
+                    @SuppressWarnings("unchecked")
                     Map<String, Object> userMap = (Map<String, Object>) request.get("user");
                     User user = mapper.convertValue(userMap, User.class);
                     userRepo.saveUser(user);

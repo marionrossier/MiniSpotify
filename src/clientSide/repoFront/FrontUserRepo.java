@@ -13,7 +13,7 @@ public class FrontUserRepo implements IUserRepository {
     private final SocketClient socketClient;
 
     public FrontUserRepo(SocketClient socketClient) {
-        this.socketClient = new SocketClient();
+        this.socketClient = socketClient;
     }
 
     @Override

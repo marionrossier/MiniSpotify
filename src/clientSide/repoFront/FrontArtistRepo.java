@@ -16,7 +16,7 @@ public class FrontArtistRepo implements IArtistRepository {
     private final SocketClient socketClient;
 
     public FrontArtistRepo(SocketClient socketClient) {
-        this.socketClient = new SocketClient();
+        this.socketClient = socketClient;
     }
 
     @Override

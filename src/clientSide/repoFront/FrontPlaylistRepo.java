@@ -17,7 +17,7 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
     private final SocketClient socketClient;
 
     public FrontPlaylistRepo(SocketClient socketClient) {
-        this.socketClient = new SocketClient();
+        this.socketClient = socketClient;
     }
 
     @Override
