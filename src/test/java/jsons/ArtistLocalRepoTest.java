@@ -1,6 +1,6 @@
 package jsons;
 
-import serverSide.entities.*;
+import common.entities.Artist;
 import serverSide.repoLocal.*;
 import org.junit.jupiter.api.*;
 import utilsAndFakes.*;

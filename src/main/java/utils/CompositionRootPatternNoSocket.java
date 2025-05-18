@@ -1,7 +1,9 @@
 package utils;
 
 import clientSide.services.*;
-import commun.*;
+import common.*;
+import common.services.StockageService;
+import common.services.UniqueIdService;
 import serverSide.repoLocal.*;
 import clientSide.player_StatePattern.file_player.*;
 import clientSide.player_StatePattern.playlist_player.*;
@@ -12,6 +14,11 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class CompositionRootPatternNoSocket {
+
+    public static void main(String[] args) {
+        CompositionRootPatternNoSocket compositionRoot = new CompositionRootPatternNoSocket();
+        compositionRoot.startApp();
+    }
 
     Scanner scanner = new Scanner(System.in);
     public final Stack<Integer> menuPagesStack = new Stack<>();

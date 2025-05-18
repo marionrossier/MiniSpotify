@@ -1,6 +1,8 @@
 package clientSide.services;
 
-import serverSide.entities.*;
+import common.entities.Playlist;
+import common.entities.PlaylistEnum;
+import common.entities.User;
 
 import java.util.List;
 

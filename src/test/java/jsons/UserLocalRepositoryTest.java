@@ -1,6 +1,7 @@
 package jsons;
 
-import serverSide.entities.*;
+import common.entities.PlanEnum;
+import common.entities.User;
 import serverSide.repoLocal.*;
 import org.junit.jupiter.api.*;
 import utilsAndFakes.*;

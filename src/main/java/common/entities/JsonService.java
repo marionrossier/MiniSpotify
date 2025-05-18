@@ -1,7 +1,8 @@
-package serverSide.entities;
+package common.entities;
 
 import clientSide.services.*;
-import commun.*;
+import common.*;
+import common.services.StockageService;
 import serverSide.repoLocal.*;
 
 import java.io.File;

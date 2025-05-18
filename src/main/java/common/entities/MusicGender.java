@@ -1,4 +1,4 @@
-package serverSide.entities;
+package common.entities;
 
 public enum MusicGender {
     SOUL_RNB("Soul RnB"),

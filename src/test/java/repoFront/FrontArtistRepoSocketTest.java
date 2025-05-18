@@ -1,10 +1,10 @@
 package repoFront;
 
-import commun.*;
+import common.*;
+import common.entities.Artist;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import serverSide.entities.*;
 import utilsAndFakes.*;
 
 import java.util.List;

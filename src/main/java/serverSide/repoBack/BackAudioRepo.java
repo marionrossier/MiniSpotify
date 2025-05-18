@@ -1,7 +1,7 @@
 package serverSide.repoBack;
 
-import commun.*;
-import serverSide.entities.*;
+import common.*;
+import common.entities.User;
 
 import java.io.*;
 import java.util.Optional;

@@ -1,8 +1,10 @@
 package playlistPlayer;
 
 import clientSide.services.*;
+import common.entities.Playlist;
+import common.entities.PlaylistEnum;
+import common.entities.Song;
 import utilsAndFakes.*;
-import serverSide.entities.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,9 +44,9 @@ public class PlaylistPlayerTest{
         playlist.setPlaylistId(1);
         dependencyProvider.playlistLocalRepository.savePlaylist(playlist);
 
-        testHelper.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), dependencyProvider.playlistLocalRepository, dependencyProvider.playlistService);
-        testHelper.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), dependencyProvider.playlistLocalRepository, dependencyProvider.playlistService);
-        testHelper.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), dependencyProvider.playlistLocalRepository, dependencyProvider.playlistService);
+        testHelper.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), dependencyProvider.playlistLocalRepository);
+        testHelper.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), dependencyProvider.playlistLocalRepository);
+        testHelper.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), dependencyProvider.playlistLocalRepository);
     }
     
     @AfterEach

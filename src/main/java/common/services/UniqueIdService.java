@@ -1,4 +1,4 @@
-package clientSide.services;
+package common.services;
 
 import java.util.*;
 

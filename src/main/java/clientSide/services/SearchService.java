@@ -1,6 +1,7 @@
 package clientSide.services;
 
-import serverSide.entities.*;
+import common.entities.MusicGender;
+import common.entities.Song;
 
 import java.util.*;
 

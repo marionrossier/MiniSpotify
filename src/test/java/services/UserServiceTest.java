@@ -1,7 +1,7 @@
 package services;
 
-import serverSide.entities.PlanEnum;
-import serverSide.entities.User;
+import common.entities.PlanEnum;
+import common.entities.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

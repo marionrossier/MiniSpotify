@@ -1,6 +1,6 @@
-package serverSide.entities;
+package common.entities;
 
-import clientSide.services.UniqueIdService;
+import common.services.UniqueIdService;
 
 public class Song {
     private String title;

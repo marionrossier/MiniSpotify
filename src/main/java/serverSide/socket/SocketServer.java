@@ -9,9 +9,6 @@ import java.util.Map;
 
 import serverSide.repoBack.*;
 
-import static clientSide.services.PrintHelper.*;
-
-
 public class SocketServer {
     private int Port = 45000;
 
@@ -27,11 +24,11 @@ public class SocketServer {
 
     public void socketServerMain() {
         try (ServerSocket serverSocket = new ServerSocket(this.Port)) {
-            printLNSystem("🎵 MiniSpotify Server is listening on port " + Port);
+            System.out.println("🎵 MiniSpotify Server is listening on port " + Port);
 
             while (true) {
                 Socket socket = serverSocket.accept();
-//                printLNSystem("📡 Client connected");
+//                System.out.println("📡 Client connected");
 
                 new Thread(() -> handleClient(socket)).start();
             }

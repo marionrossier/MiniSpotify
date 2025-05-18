@@ -1,6 +1,6 @@
 package clientSide.player_StatePattern.playlist_player;
 
-import serverSide.entities.*;
+import common.entities.Song;
 
 class RepeatState implements IState{
     private final PlaylistPlayer context;

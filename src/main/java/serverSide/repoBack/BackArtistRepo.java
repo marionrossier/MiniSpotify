@@ -1,8 +1,9 @@
 package serverSide.repoBack;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import commun.*;
-import serverSide.entities.*;
+import common.*;
+import common.entities.Artist;
+import common.entities.User;
 
 import java.util.List;
 import java.util.Map;

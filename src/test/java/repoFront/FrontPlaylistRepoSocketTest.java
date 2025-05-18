@@ -1,7 +1,7 @@
 package repoFront;
 
-import commun.*;
-import serverSide.entities.*;
+import common.*;
+import common.entities.Playlist;
 import utilsAndFakes.*;
 
 import java.io.IOException;

@@ -1,8 +1,6 @@
-package serverSide.entities;
+package common.entities;
 
-import clientSide.services.UniqueIdService;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import common.services.UniqueIdService;
 
 import java.util.*;
 

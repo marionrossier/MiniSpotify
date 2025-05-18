@@ -1,6 +1,6 @@
 package clientSide.player_StatePattern.playlist_player;
 
-import serverSide.entities.Song;
+import common.entities.Song;
 
 interface IState {
     Song getNextSong();

@@ -1,6 +1,6 @@
-package commun;
+package common;
 
-import serverSide.entities.Artist;
+import common.entities.Artist;
 
 import java.util.List;
 

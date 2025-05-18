@@ -1,11 +1,21 @@
-package utils;
+package serverSide;
 
-import commun.*;
+import common.*;
+import common.services.StockageService;
 import serverSide.repoBack.*;
 import serverSide.repoLocal.*;
 import serverSide.socket.*;
 
 public class CompositionRootServerSide {
+
+    public static void main(String[] args) {
+        CompositionRootServerSide compositionRoot = new CompositionRootServerSide();
+        AudioSocketServer audioSocketServer = new AudioSocketServer(compositionRoot.backAudioRepo);
+        SocketServer socketServer = new SocketServer(compositionRoot.backUserRepo, compositionRoot.backPlaylistRepo,
+                compositionRoot.backSongRepo, compositionRoot.backArtistRepo);
+
+        compositionRoot.startApp(socketServer, audioSocketServer);
+    }
 
     //Json-Mp3
     StockageService stockageService;

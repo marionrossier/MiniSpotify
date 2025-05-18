@@ -1,6 +1,7 @@
 package jsons;
 
-import serverSide.entities.*;
+import common.entities.MusicGender;
+import common.entities.Song;
 import utilsAndFakes.*;
 
 import java.util.LinkedList;

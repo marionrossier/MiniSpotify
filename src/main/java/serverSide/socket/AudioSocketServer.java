@@ -1,13 +1,11 @@
 package serverSide.socket;
 
-import commun.StockageService;
+import common.services.StockageService;
 import serverSide.repoBack.*;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import static clientSide.services.PrintHelper.*;
 
 public class AudioSocketServer {
 
@@ -16,14 +14,14 @@ public class AudioSocketServer {
     private final StockageService stockageService = new StockageService();
 
     public void audioSocketMain() {
-        printLNSystem("🎵 AudioSocketServer started on port " + PORT);
+        System.out.println("🎵 AudioSocketServer started on port " + PORT);
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 new Thread(() -> handleAudioRequest(clientSocket)).start();
             }
         } catch (IOException e) {
-            printLNError("❌ Server error: " + e.getMessage());
+            System.err.println("❌ Server error: " + e.getMessage());
         }
     }
 
@@ -52,7 +50,7 @@ public class AudioSocketServer {
             out.write(bytes);
 
         } catch (IOException e) {
-            printLNError("❌ Audio handler error: " + e.getMessage());
+            System.err.println("❌ Audio handler error: " + e.getMessage());
         }
     }
 }

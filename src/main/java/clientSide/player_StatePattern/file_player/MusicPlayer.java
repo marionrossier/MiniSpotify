@@ -1,7 +1,7 @@
 package clientSide.player_StatePattern.file_player;
 
 import javazoom.jlgui.basicplayer.*;
-import commun.*;
+import common.*;
 
 import java.util.Map;
 

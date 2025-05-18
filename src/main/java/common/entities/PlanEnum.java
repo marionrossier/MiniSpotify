@@ -1,4 +1,4 @@
-package serverSide.entities;
+package common.entities;
 
 public enum PlanEnum {
     FREE,
