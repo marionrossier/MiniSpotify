@@ -1,6 +1,6 @@
 package clientSide.services;
 
-import commun.*;
+import common.*;
 
 public class ArtistService {
     private final IArtistRepository artistLocalRepository;

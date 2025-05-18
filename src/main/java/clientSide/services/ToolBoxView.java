@@ -1,5 +1,7 @@
 package clientSide.services;
 
+import common.services.UniqueIdService;
+
 public class ToolBoxView {
 
     final PlaylistServices playlistServ;

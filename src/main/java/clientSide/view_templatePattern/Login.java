@@ -1,12 +1,10 @@
 package clientSide.view_templatePattern;
 
 import clientSide.services.ToolBoxView;
-import serverSide.entities.User;
+import common.entities.User;
 import clientSide.services.Cookies_SingletonPattern;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
-
-import java.util.Arrays;
 
 import static clientSide.services.PrintHelper.*;
 

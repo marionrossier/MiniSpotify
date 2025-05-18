@@ -1,7 +1,7 @@
-package commun;
+package common;
 
-import serverSide.entities.MusicGender;
-import serverSide.entities.Song;
+import common.entities.MusicGender;
+import common.entities.Song;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

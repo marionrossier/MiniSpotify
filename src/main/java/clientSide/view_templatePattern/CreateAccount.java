@@ -1,7 +1,7 @@
 package clientSide.view_templatePattern;
 
 import clientSide.services.ToolBoxView;
-import serverSide.entities.PlanEnum;
+import common.entities.PlanEnum;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 

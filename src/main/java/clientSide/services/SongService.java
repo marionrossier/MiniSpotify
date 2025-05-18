@@ -1,7 +1,8 @@
 package clientSide.services;
 
-import serverSide.entities.*;
-import commun.*;
+import common.entities.MusicGender;
+import common.entities.Song;
+import common.*;
 
 import java.util.LinkedList;
 

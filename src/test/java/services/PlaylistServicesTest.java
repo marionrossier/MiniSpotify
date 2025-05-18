@@ -1,7 +1,7 @@
 package services;
 
 import clientSide.services.*;
-import serverSide.entities.*;
+import common.entities.*;
 import utilsAndFakes.TestHelper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,9 +41,9 @@ class PlaylistServicesTest{
         playlist = new Playlist("Test Playlist", PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(1);
         dependencyProvider.playlistLocalRepository.savePlaylist(playlist);
-        testHelper.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), dependencyProvider.playlistLocalRepository, dependencyProvider.playlistService);
-        testHelper.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), dependencyProvider.playlistLocalRepository, dependencyProvider.playlistService);
-        testHelper.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), dependencyProvider.playlistLocalRepository, dependencyProvider.playlistService);
+        testHelper.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), dependencyProvider.playlistLocalRepository);
+        testHelper.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), dependencyProvider.playlistLocalRepository);
+        testHelper.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), dependencyProvider.playlistLocalRepository);
 
         // Add playlist to repository
         dependencyProvider.playlistLocalRepository.savePlaylist(playlist);
@@ -126,9 +126,9 @@ class PlaylistServicesTest{
     @Test
     public void testReorderSongsInPlaylist() {
         //Arrange
-        testHelper.addSongToPlaylist(playlist.getPlaylistId(), 1, dependencyProvider.playlistLocalRepository, dependencyProvider.playlistService);
-        testHelper.addSongToPlaylist(playlist.getPlaylistId(), 2, dependencyProvider.playlistLocalRepository, dependencyProvider.playlistService);
-        testHelper.addSongToPlaylist(playlist.getPlaylistId(), 3, dependencyProvider.playlistLocalRepository, dependencyProvider.playlistService);
+        testHelper.addSongToPlaylist(playlist.getPlaylistId(), 1, dependencyProvider.playlistLocalRepository);
+        testHelper.addSongToPlaylist(playlist.getPlaylistId(), 2, dependencyProvider.playlistLocalRepository);
+        testHelper.addSongToPlaylist(playlist.getPlaylistId(), 3, dependencyProvider.playlistLocalRepository);
 
         // Simuler l'entrée utilisateur
         String input = "2\n1\n3\nx\n";

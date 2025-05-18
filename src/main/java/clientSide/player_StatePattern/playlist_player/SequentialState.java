@@ -1,6 +1,6 @@
 package clientSide.player_StatePattern.playlist_player;
 
-import serverSide.entities.*;
+import common.entities.Song;
 
 import java.util.*;
 

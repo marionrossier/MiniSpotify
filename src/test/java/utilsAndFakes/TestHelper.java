@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.net.Socket;
 
 import clientSide.services.*;
-import commun.*;
+import common.*;
 
-import serverSide.entities.*;
+import common.entities.*;
 
 public class TestHelper {
 
@@ -22,8 +22,7 @@ public class TestHelper {
         }
     }
 
-    public void addSongToPlaylist(int currentPlaylistId, int currentSongId, IPlaylistRepository playlistLocalRepository,
-                                  PlaylistServices playlistServices) {
+    public void addSongToPlaylist(int currentPlaylistId, int currentSongId, IPlaylistRepository playlistLocalRepository) {
         Playlist playlist = playlistLocalRepository.getPlaylistById(currentPlaylistId);
         playlist.getPlaylistSongsListWithId().add(currentSongId);
 
@@ -35,8 +34,8 @@ public class TestHelper {
             Song song = createTestSong(id, "Song " + id);
             this.addSongToPlaylist(playlist.getPlaylistId(),
                     song.getSongId(),
-                    dependencyProvider.playlistLocalRepository,
-                    dependencyProvider.playlistService);
+                    dependencyProvider.playlistLocalRepository
+            );
         }
     }
 

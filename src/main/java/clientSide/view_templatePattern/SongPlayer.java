@@ -1,7 +1,7 @@
 package clientSide.view_templatePattern;
 
 import clientSide.services.ToolBoxView;
-import serverSide.entities.Playlist;
+import common.entities.Playlist;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.*;
 

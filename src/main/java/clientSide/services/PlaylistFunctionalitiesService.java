@@ -1,7 +1,9 @@
 package clientSide.services;
 
-import serverSide.entities.*;
-import commun.*;
+import common.entities.Playlist;
+import common.entities.PlaylistEnum;
+import common.entities.User;
+import common.*;
 import java.util.*;
 
 import static clientSide.services.PrintHelper.*;
@@ -89,9 +91,6 @@ public class PlaylistFunctionalitiesService {
 
     public void deleteSongFromPlaylist(int playlistId, int songIndex) {
         Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
-
-        int songId = songService.getSongById(playlist.getPlaylistSongsListWithId().get(songIndex)).getSongId();
-        int currentSongId = songService.getCurrentSongId();
 
         playlist.getPlaylistSongsListWithId().remove(songIndex);
         playlistLocalRepository.savePlaylist(playlist);

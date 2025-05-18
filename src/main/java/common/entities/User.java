@@ -1,7 +1,6 @@
-package serverSide.entities;
+package common.entities;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import clientSide.services.UniqueIdService;
+import common.services.UniqueIdService;
 
 import java.util.List;
 

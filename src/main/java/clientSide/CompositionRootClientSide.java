@@ -1,18 +1,24 @@
-package utils;
+package clientSide;
 
 import clientSide.repoFront.*;
 import clientSide.services.*;
-import commun.*;
+import common.*;
 import clientSide.player_StatePattern.file_player.*;
 import clientSide.player_StatePattern.playlist_player.*;
 import clientSide.socket.*;
 
+import common.services.UniqueIdService;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 
 import java.util.Scanner;
 import java.util.Stack;
 
 public class CompositionRootClientSide {
+
+    public static void main(String[] args) {
+        CompositionRootClientSide compositionRoot = new CompositionRootClientSide();
+        compositionRoot.startApp();
+    }
 
     Scanner scanner = new Scanner(System.in);
     public final Stack<Integer> menuPagesStack = new Stack<>();

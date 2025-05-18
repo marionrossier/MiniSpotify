@@ -3,7 +3,7 @@ package clientSide.view_templatePattern;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 import clientSide.services.ToolBoxView;
-import serverSide.entities.User;
+import common.entities.User;
 
 import java.util.List;
 

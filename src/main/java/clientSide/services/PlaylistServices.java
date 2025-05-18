@@ -1,7 +1,10 @@
 package clientSide.services;
 
-import serverSide.entities.*;
-import commun.*;
+import common.entities.Playlist;
+import common.entities.PlaylistEnum;
+import common.entities.Song;
+import common.entities.User;
+import common.*;
 
 import java.util.*;
 
@@ -132,7 +135,7 @@ public class PlaylistServices {
         return temporaryPlaylistService.getTemporaryPlaylistId();
     }
     public void createTemporaryPlaylist(LinkedList<Integer> chosenSongs, PlaylistEnum status) {
-        temporaryPlaylistService.createTemporaryPlaylist(chosenSongs,status, this);
+        temporaryPlaylistService.createTemporaryPlaylist(chosenSongs,status);
     }
     public void adjustTemporaryPlaylistToNewPlaylist(String playlistName, PlaylistEnum status) {
         temporaryPlaylistService.adjustTemporaryPlaylistToNewPlaylist(playlistName,status);

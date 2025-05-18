@@ -1,5 +1,7 @@
 package utils;
 
+import clientSide.CompositionRootClientSide;
+import serverSide.CompositionRootServerSide;
 import serverSide.socket.AudioSocketServer;
 import serverSide.socket.SocketServer;
 

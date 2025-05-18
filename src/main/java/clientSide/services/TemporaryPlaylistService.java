@@ -1,7 +1,8 @@
 package clientSide.services;
 
-import serverSide.entities.*;
-import commun.*;
+import common.entities.Playlist;
+import common.entities.PlaylistEnum;
+import common.*;
 
 import java.util.LinkedList;
 
@@ -25,8 +26,7 @@ public class TemporaryPlaylistService {
         return playlist.getPlaylistId();
     }
 
-    public void createTemporaryPlaylist(LinkedList<Integer> chosenSongs, PlaylistEnum status,
-                                        PlaylistServices playlistServices) {
+    public void createTemporaryPlaylist(LinkedList<Integer> chosenSongs, PlaylistEnum status) {
         if (chosenSongs==null){
             return;
         }

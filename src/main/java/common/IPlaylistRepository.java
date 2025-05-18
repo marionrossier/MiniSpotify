@@ -1,7 +1,7 @@
-package commun;
+package common;
 
-import serverSide.entities.Playlist;
-import serverSide.entities.PlaylistEnum;
+import common.entities.Playlist;
+import common.entities.PlaylistEnum;
 
 import java.util.List;
 

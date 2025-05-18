@@ -2,10 +2,12 @@ package utilsAndFakes;
 
 import clientSide.repoFront.*;
 import clientSide.services.*;
-import commun.*;
+import common.*;
 import clientSide.player_StatePattern.playlist_player.*;
 import clientSide.socket.*;
-import serverSide.entities.*;
+import common.entities.*;
+import common.services.StockageService;
+import common.services.UniqueIdService;
 import serverSide.repoBack.*;
 import serverSide.repoLocal.*;
 import serverSide.socket.*;

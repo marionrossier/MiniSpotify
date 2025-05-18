@@ -1,6 +1,6 @@
-package commun;
+package common;
 
-import serverSide.entities.User;
+import common.entities.User;
 
 import java.util.List;
 import java.util.Optional;

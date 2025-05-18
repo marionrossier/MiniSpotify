@@ -1,8 +1,8 @@
 package clientSide.view_templatePattern;
 
 import clientSide.services.ToolBoxView;
-import serverSide.entities.PlaylistEnum;
-import serverSide.entities.User;
+import common.entities.PlaylistEnum;
+import common.entities.User;
 import clientSide.player_StatePattern.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 

@@ -1,7 +1,7 @@
 package clientSide.services;
 
-import serverSide.entities.*;
-import commun.*;
+import common.entities.User;
+import common.*;
 
 import java.util.*;
 

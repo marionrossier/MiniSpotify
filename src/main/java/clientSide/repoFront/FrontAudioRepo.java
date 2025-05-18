@@ -1,7 +1,7 @@
 package clientSide.repoFront;
 
 import clientSide.services.*;
-import commun.*;
+import common.*;
 
 import java.io.*;
 import java.net.Socket;

@@ -1,8 +1,10 @@
 package serverSide.repoBack;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import commun.*;
-import serverSide.entities.*;
+import common.*;
+import common.entities.MusicGender;
+import common.entities.Song;
+import common.entities.User;
 
 import java.util.List;
 import java.util.Map;
@@ -57,7 +59,7 @@ public class BackSongRepo {
 
                 case "getSongsByGender" -> {
                     String gender = (String) request.get("gender");
-                    List<Song> songs = songRepo.getSongsByGender(Enum.valueOf(serverSide.entities.MusicGender.class, gender));
+                    List<Song> songs = songRepo.getSongsByGender(Enum.valueOf(MusicGender.class, gender));
                     return mapper.writeValueAsString(Map.of("status", "OK", "songs", songs));
                 }
 

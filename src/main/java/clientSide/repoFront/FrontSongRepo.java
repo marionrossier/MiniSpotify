@@ -5,8 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import clientSide.services.*;
 import clientSide.socket.*;
-import commun.*;
-import serverSide.entities.*;
+import common.*;
+import common.entities.MusicGender;
+import common.entities.Song;
 
 import java.util.*;
 

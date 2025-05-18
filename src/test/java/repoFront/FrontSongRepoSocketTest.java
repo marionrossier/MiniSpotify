@@ -1,7 +1,8 @@
 package repoFront;
 
-import commun.*;
-import serverSide.entities.*;
+import common.*;
+import common.entities.MusicGender;
+import common.entities.Song;
 import utilsAndFakes.*;
 
 import java.util.ArrayList;
@@ -93,7 +94,7 @@ class FrontSongRepoSocketTest {
     @Test
     void getAllSongs_shouldReturnList() {
         // Act
-        ArrayList<serverSide.entities.Song> songs = songRepo.getAllSongs();
+        ArrayList<Song> songs = songRepo.getAllSongs();
 
         // Assert
         assertNotNull(songs);
