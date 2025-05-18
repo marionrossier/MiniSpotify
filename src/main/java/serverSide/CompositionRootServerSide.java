@@ -27,11 +27,11 @@ public class CompositionRootServerSide {
     final IArtistRepository artistLocalRepository;
     final IAudioRepository audioLocalRepository;
 
-    final BackPlaylistRepo backPlaylistRepo;
-    final BackUserRepo backUserRepo;
-    final BackSongRepo backSongRepo;
-    final BackArtistRepo backArtistRepo;
-    final BackAudioRepo backAudioRepo;
+    public final BackPlaylistRepo backPlaylistRepo;
+    public final BackUserRepo backUserRepo;
+    public final BackSongRepo backSongRepo;
+    public final BackArtistRepo backArtistRepo;
+    public final BackAudioRepo backAudioRepo;
 
     public CompositionRootServerSide(){
         //Json-Mp3
