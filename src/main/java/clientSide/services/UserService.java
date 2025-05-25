@@ -18,15 +18,6 @@ public class UserService {
         this.passwordService = passwordService;
     }
 
-    public int getUserIdByPseudo(String pseudo) {
-
-        User searchedUser = getUserByPseudonym(pseudo);
-        if (searchedUser == null) {
-            return -1; // Return -1 if the pseudo was not found
-        }
-        return searchedUser.getUserId();
-    }
-
     public void addUser(String pseudonym, String email, String password, PlanEnum plan) {
         byte[] salt = passwordService.generateSalt();
         String hashedPassword = passwordService.hashPassword(password, salt);
@@ -55,16 +46,12 @@ public class UserService {
         }
     }
 
-    public int getCurrentUserId(){
-        return Cookies.getInstance().getUserId();
-    }
-
-    public void saveUser (User user){
-        userLocalRepository.saveUser(user);
-    }
-
-    public void resetCookie (){
-        Cookies.resetCookies();
+    public boolean emailValidation(String email) {
+        String emailRegex = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
+        if (email != null && email.matches(emailRegex)) {
+            return true;
+        }
+        return false;
     }
 
     public void addOnePlaylistToCurrentUser(int playlistId) {
@@ -97,6 +84,27 @@ public class UserService {
         userLocalRepository.saveUser(user);
     }
 
+    public void saveUser (User user){
+        userLocalRepository.saveUser(user);
+    }
+
+    public int getCurrentUserId(){
+        return Cookies.getInstance().getUserId();
+    }
+
+    public void resetCookie (){
+        Cookies.resetCookies();
+    }
+
+    public int getUserIdByPseudo(String pseudo) {
+
+        User searchedUser = getUserByPseudonym(pseudo);
+        if (searchedUser == null) {
+            return -1; // Return -1 if the pseudo was not found
+        }
+        return searchedUser.getUserId();
+    }
+
     public User getUserByPseudonym(String pseudonym) {
         return userLocalRepository.getUserByPseudonym(pseudonym);
     }
@@ -117,14 +125,6 @@ public class UserService {
 
     public User getUserById(int userId) {
         return userLocalRepository.getUserById(userId);
-    }
-
-    public boolean emailValidation(String email) {
-        String emailRegex = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
-        if (email != null && email.matches(emailRegex)) {
-            return true;
-        }
-        return false;
     }
 
     public User getUserByPseudonymLogin(String pseudonym) {
