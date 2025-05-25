@@ -17,7 +17,6 @@ public class PlaylistReorderSongService {
     public PlaylistReorderSongService(ToolBoxService toolBoxService, Scanner scanner) {
         this.playlistLocalRepository = toolBoxService.playlistLocalRepository;
         this.scanner = scanner;
-
     }
 
     public void reorderSongsInPlaylist(int playlistId, PlaylistServices playlistServices) {
@@ -28,8 +27,11 @@ public class PlaylistReorderSongService {
         playlist.setListSongsId(newOrder);
         playlistLocalRepository.savePlaylist(playlist);
 
-        printSuccessMessage(playlist, newOrder);
-    }
+        if (newOrder.size() < playlist.getPlaylistSongsListWithId().size()) {
+            printLNGreen("Playlist reordered successfully with remaining songs added at the end!");
+        } else {
+            printLNGreen("Playlist reordered successfully!");
+        }    }
 
     private LinkedList<Integer> collectNewOrderFromUser(Playlist playlist) {
         LinkedList<Integer> newOrder = new LinkedList<>();
@@ -76,13 +78,4 @@ public class PlaylistReorderSongService {
             }
         }
     }
-
-    private void printSuccessMessage(Playlist playlist, List<Integer> newOrder) {
-        if (newOrder.size() < playlist.getPlaylistSongsListWithId().size()) {
-            printLNGreen("Playlist reordered successfully with remaining songs added at the end!");
-        } else {
-            printLNGreen("Playlist reordered successfully!");
-        }
-    }
-
 }
