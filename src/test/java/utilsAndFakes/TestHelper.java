@@ -101,6 +101,6 @@ public class TestHelper {
                 Thread.currentThread().interrupt();
             }
         }
-        Cookies_SingletonPattern.setUser(232928320, "marion", "hash");
+        Cookies.initializeInstance(232928320, "marion", "hash");
     }
 }

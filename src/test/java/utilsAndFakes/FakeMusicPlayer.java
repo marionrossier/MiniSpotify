@@ -1,12 +1,20 @@
 package utilsAndFakes;
 
-import clientSide.player_StatePattern.file_player.IMusicPlayer;
+import clientSide.player.file_player.IMusicPlayer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FakeMusicPlayer implements IMusicPlayer {
     private boolean isPlaying = false;
     private boolean isPaused = false;
     private String currentSongFileName = null;
-    private Runnable onSongEndCallback;
+    private final List<Runnable> songEndObservers = new ArrayList<>();
+
+    @Override
+    public void addSongEndObserver(Runnable observer) {
+        songEndObservers.add(observer);
+    }
 
     @Override
     public void playOrPause(String songPath) {
@@ -68,18 +76,14 @@ public class FakeMusicPlayer implements IMusicPlayer {
         return isPaused;
     }
 
-    @Override
-    public void setOnSongEndAction(Runnable action) {
-        this.onSongEndCallback = action;
-    }
-
     public void triggerSongEnd() {
         System.out.println("[FakeMusicPlayer] Song ended: " + currentSongFileName);
         isPlaying = false;
-        if (onSongEndCallback != null) {
-            onSongEndCallback.run();
+        for (Runnable observer : songEndObservers) {
+            observer.run();
         }
     }
+
 
     public String getCurrentSongFileName() {
         return currentSongFileName;

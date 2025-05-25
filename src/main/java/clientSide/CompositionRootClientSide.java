@@ -3,8 +3,8 @@ package clientSide;
 import clientSide.repoFront.*;
 import clientSide.services.*;
 import common.*;
-import clientSide.player_StatePattern.file_player.*;
-import clientSide.player_StatePattern.playlist_player.*;
+import clientSide.player.file_player.*;
+import clientSide.player.playlist_player.*;
 import clientSide.socket.*;
 
 import common.services.UniqueIdService;

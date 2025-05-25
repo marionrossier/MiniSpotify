@@ -27,7 +27,7 @@ public class PlaylistPlayerTest{
         dependencyProvider = testHelper.dependencyProvider;
 
         // Create Cookies_SingeltonPattern instance
-        Cookies_SingletonPattern.setInstance(400953820, "tester", "password"); //testUsers
+        Cookies.initializeInstance(400953820, "tester", "password"); //testUsers
 
         // Create test songs
         Song song1 = testHelper.createSong(1, "Song 1", "song1.mp3");

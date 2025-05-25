@@ -16,11 +16,11 @@ public class SongService {
     }
 
     public void setCurrentSongId (int songId){
-        Cookies_SingletonPattern.setCurrentSongId(songId);
+        Cookies.setCurrentSongId(songId);
     }
 
     public int getCurrentSongId() {
-        return Cookies_SingletonPattern.getInstance().getCurrentSongId();
+        return Cookies.getInstance().getCurrentSongId();
     }
 
     public Song getSongById(int songId) {

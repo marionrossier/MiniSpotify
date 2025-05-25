@@ -56,7 +56,7 @@ public class UserService {
     }
 
     public int getCurrentUserId(){
-        return Cookies_SingletonPattern.getInstance().getUserId();
+        return Cookies.getInstance().getUserId();
     }
 
     public void saveUser (User user){
@@ -64,7 +64,7 @@ public class UserService {
     }
 
     public void resetCookie (){
-        Cookies_SingletonPattern.resetCookies();
+        Cookies.resetCookies();
     }
 
     public void addOnePlaylistToCurrentUser(int playlistId) {
@@ -132,10 +132,10 @@ public class UserService {
     }
 
     public void setCurrentFriendId (int friendId){
-        Cookies_SingletonPattern.getInstance().setCurrentFriendId(friendId);
+        Cookies.getInstance().setCurrentFriendId(friendId);
     }
 
     public int getCurrentFriendId (){
-        return Cookies_SingletonPattern.getInstance().getCurrentFriendId();
+        return Cookies.getInstance().getCurrentFriendId();
     }
 }

@@ -25,8 +25,8 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
     public Playlist getPlaylistById(int playlistId) {
         return getPlaylistFromServer(Map.of(
                 "command", "getPlaylistById",
-                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
+                "userPseudonym", Cookies.getInstance().getUserPseudonym(),
+                "password", Cookies.getInstance().getUserPassword(),
                 "playlistId", playlistId
         ));
     }
@@ -35,8 +35,8 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
     public Playlist getPlaylistByName(String name) {
         return getPlaylistFromServer(Map.of(
                 "command", "getPlaylistByName",
-                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
+                "userPseudonym", Cookies.getInstance().getUserPseudonym(),
+                "password", Cookies.getInstance().getUserPassword(),
                 "name", name
         ));
     }
@@ -46,8 +46,8 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
         try {
             Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getAllPlaylists",
-                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                    "password", Cookies_SingletonPattern.getInstance().getUserPassword()
+                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
+                    "password", Cookies.getInstance().getUserPassword()
             ));
 
             if (!"OK".equals(response.get("status"))) return null;
@@ -64,8 +64,8 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
     public void deletePlaylistById(int playlistId) {
         socketClient.sendRequest(Map.of(
                 "command", "deletePlaylistById",
-                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
+                "userPseudonym", Cookies.getInstance().getUserPseudonym(),
+                "password", Cookies.getInstance().getUserPassword(),
                 "playlistId", playlistId
         ));
     }
@@ -75,8 +75,8 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
         try {
             Map<String, Object> request = Map.of(
                     "command", "savePlaylist",
-                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
+                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
+                    "password", Cookies.getInstance().getUserPassword(),
                     "playlist", mapper.convertValue(playlist, Map.class)
             );
             socketClient.sendRequest(request);
@@ -90,8 +90,8 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
         try {
             Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getPlaylistStatus",
-                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
+                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
+                    "password", Cookies.getInstance().getUserPassword(),
                     "playlist", mapper.convertValue(playlist, Map.class)
             ));
             return PlaylistEnum.valueOf((String) response.get("playlistStatus"));
@@ -104,8 +104,8 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
     public Playlist getTemporaryPlaylistOfCurrentUser(int currentUserId) {
         return getPlaylistFromServer(Map.of(
                 "command", "getTemporaryPlaylistOfCurrentUser",
-                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                "password", Cookies_SingletonPattern.getInstance().getUserPassword()
+                "userPseudonym", Cookies.getInstance().getUserPseudonym(),
+                "password", Cookies.getInstance().getUserPassword()
         ));
     }
 

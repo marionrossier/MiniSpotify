@@ -42,11 +42,11 @@ public class PlaylistServices {
     }
 
     public void setCurrentPlaylistId (int playlistId){
-        Cookies_SingletonPattern.setCurrentPlaylistId(playlistId);
+        Cookies.setCurrentPlaylistId(playlistId);
     }
 
     public int getCurrentPlaylistId (){
-        return Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
+        return Cookies.getInstance().getCurrentPlaylistId();
     }
 
     public PlaylistEnum getPlaylistStatus (){
@@ -91,11 +91,11 @@ public class PlaylistServices {
     }
 
     public int getCurrentFriendPlaylistId (){
-        return Cookies_SingletonPattern.getInstance().getCurrentFriendPlaylistId();
+        return Cookies.getInstance().getCurrentFriendPlaylistId();
     }
 
     public void setCurrentFriendPlaylistId (int playlistId){
-        Cookies_SingletonPattern.getInstance().setCurrentFriendPlaylistId(playlistId);
+        Cookies.getInstance().setCurrentFriendPlaylistId(playlistId);
     }
 
     //PLAYLIST FUNCTIONALITIES :

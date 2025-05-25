@@ -54,7 +54,7 @@ class PlaylistServicesTest{
         dependencyProvider.userLocalRepository.saveUser(user);
 
         // Create Cookies_SingeltonPattern instance
-        Cookies_SingletonPattern.setInstance(400953820, "tester", "password"); //testUsers
+        Cookies.initializeInstance(400953820, "tester", "password"); //testUsers
 
         // Create playlistServices
         dependencyProvider.playlistService = new PlaylistServices(

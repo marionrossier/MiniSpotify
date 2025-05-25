@@ -1,9 +1,9 @@
 package clientSide.services;
 
-import clientSide.view_templatePattern.*;
+import clientSide.views.*;
 import common.entities.PlanEnum;
 import common.entities.User;
-import clientSide.player_StatePattern.playlist_player.*;
+import clientSide.player.playlist_player.*;
 
 import java.util.*;
 

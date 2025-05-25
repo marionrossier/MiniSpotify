@@ -5,8 +5,8 @@ import common.*;
 import common.services.StockageService;
 import common.services.UniqueIdService;
 import serverSide.repoLocal.*;
-import clientSide.player_StatePattern.file_player.*;
-import clientSide.player_StatePattern.playlist_player.*;
+import clientSide.player.file_player.*;
+import clientSide.player.playlist_player.*;
 
 import javazoom.jlgui.basicplayer.BasicPlayer;
 
