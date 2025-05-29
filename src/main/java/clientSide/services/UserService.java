@@ -55,13 +55,15 @@ public class UserService {
     }
 
     public void addOnePlaylistToCurrentUser(int playlistId) {
-        List<Integer> playlists = userLocalRepository.getUserById(getCurrentUserId()).getPlaylists();
+        User user = userLocalRepository.getUserById(getCurrentUserId());
+        List<Integer> playlists = user.getPlaylists();
         if (playlists == null) {
             playlists = new ArrayList<>();
-            userLocalRepository.getUserById(getCurrentUserId()).setPlaylists(playlists);
+            user.setPlaylists(playlists);
         }
-        User user = userLocalRepository.getUserById(getCurrentUserId());
-        userLocalRepository.addPlaylistToUser(user,playlistId);
+        playlists.add(playlistId);
+        userLocalRepository.saveUser(user);
+        printLNGreen("Playlist has been added.");
     }
 
     public void addFriend(int friendId) {

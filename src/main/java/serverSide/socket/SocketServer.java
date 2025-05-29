@@ -71,8 +71,7 @@ public class SocketServer {
                         -> backSongRepo.handleRequest(request);
 
                 // 👤 User
-                case "getAllUsers", "getUserById", "getUserByPseudonymLogin", "getUserByPseudonym", "saveUser",
-                     "addPlaylistToUser", "addFriendToUser", "deleteFriendFromUser"
+                case "getAllUsers", "getUserById", "getUserByPseudonymLogin", "getUserByPseudonym", "saveUser"
                         -> backUserRepo.handleRequest(request);
 
                 default -> "{\"status\": \"ERROR\", \"message\": \"Unknown command at server switch\"}";

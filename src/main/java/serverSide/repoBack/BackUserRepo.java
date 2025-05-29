@@ -53,24 +53,6 @@ public class BackUserRepo {
                     userRepo.saveUser(user);
                     return "{\"status\": \"OK\"}";
                 }
-                case "addPlaylistToUser" -> {
-                    User user = mapper.convertValue(request.get("user"), User.class);
-                    int playlistId = (int) request.get("playlistId");
-                    userRepo.addPlaylistToUser(user, playlistId);
-                    return "{\"status\": \"OK\"}";
-                }
-                case "addFriendToUser" -> {
-                    User user = mapper.convertValue(request.get("user"), User.class);
-                    int friendId = (int) request.get("friendId");
-                    userRepo.addFriendToUser(user, friendId);
-                    return "{\"status\": \"OK\"}";
-                }
-                case "deleteFriendFromUser" -> {
-                    User user = mapper.convertValue(request.get("user"), User.class);
-                    int friendId = (int) request.get("friendId");
-                    userRepo.deleteFriendFromUser(user, friendId);
-                    return "{\"status\": \"OK\"}";
-                }
                 default -> {
                     return "{\"status\": \"ERROR\", \"message\": \"Unknown command (user)\"}";
                 }

@@ -40,7 +40,6 @@ public class FriendsPlaylistPage extends TemplateSimplePage {
     public void button2(){
         int friendPlaylistId = toolBoxView.getPlaylistServ().getCurrentFriendPlaylistId();
         toolBoxView.getUserServ().addOnePlaylistToCurrentUser(friendPlaylistId);
-        printLNGreen("Playlist has been added.");
         pageService.friendPlaylists.displayAllPage();
     }
 }

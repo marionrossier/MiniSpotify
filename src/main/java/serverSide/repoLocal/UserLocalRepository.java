@@ -62,42 +62,4 @@ public class UserLocalRepository implements IUserRepository {
                 .findFirst()
                 .orElse(null);
     }
-
-    public void addPlaylistToUser(User user, int playlistId) {
-        if (user != null) {
-            List<Integer> playlists = user.getPlaylists();
-            if (playlists == null) {
-                playlists = new ArrayList<>();
-                user.setPlaylists(playlists);
-            }
-            if (!playlists.contains(playlistId)) {
-                playlists.add(playlistId);
-                saveUser(user);
-            }
-        }
-    }
-
-    public void addFriendToUser(User user, int friendId) {
-        if (user != null) {
-            List<Integer> friends = user.getFriends();
-            if (friends == null) {
-                friends = new ArrayList<>();
-                user.setFriends(friends);
-            }
-            if (!friends.contains(friendId)) {
-                friends.add(friendId);
-                saveUser(user);
-            }
-        }
-    }
-
-    public void deleteFriendFromUser(User user, int friendId) {
-        if (user != null) {
-            List<Integer> friends = user.getFriends();
-            if (friends != null && friends.contains(friendId)) {
-                friends.remove(Integer.valueOf(friendId));
-                saveUser(user);
-            }
-        }
-    }
 }

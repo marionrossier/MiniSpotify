@@ -103,54 +103,6 @@ public class FrontUserRepo implements IUserRepository {
         ));
     }
 
-    @Override
-    public void addPlaylistToUser(User user, int playlistId) {
-        try {
-            Map<String, Object> request = Map.of(
-                    "command", "addPlaylistToUser",
-                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword(),
-                    "user", mapper.convertValue(user, Map.class),
-                    "playlistId", playlistId
-            );
-            socketClient.sendRequest(request);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void addFriendToUser(User user, int friendId) {
-        try {
-            Map<String, Object> request = Map.of(
-                    "command", "addFriendToUser",
-                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword(),
-                    "user", mapper.convertValue(user, Map.class),
-                    "friendId", friendId
-            );
-            socketClient.sendRequest(request);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void deleteFriendFromUser(User user, int friendId) {
-        try {
-            Map<String, Object> request = Map.of(
-                    "command", "deleteFriendFromUser",
-                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword(),
-                    "user", mapper.convertValue(user, Map.class),
-                    "friendId", friendId
-            );
-            socketClient.sendRequest(request);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private User getUserFromServer(Map<String, Object> request) {
         try {
             Map<String, Object> response = socketClient.sendRequest(request);
