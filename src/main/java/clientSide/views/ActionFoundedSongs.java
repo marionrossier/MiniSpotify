@@ -17,7 +17,7 @@ public class ActionFoundedSongs extends TemplateSimplePage {
                 icon.separator + icon.lineBreak +
                     icon.nbr1() + "Add to current playlist" + icon.lineBreak +
                     icon.nbr2() + "Add to an other playlist" +icon.lineBreak +
-                    icon.nbr3() + "Create a new playlist" + icon.lineBreak;
+                    icon.nbr3() + "Create a new playlist";
     }
 
     @Override
@@ -49,7 +49,9 @@ public class ActionFoundedSongs extends TemplateSimplePage {
             pageService.playlistPageOpen.displayAllPage();
         }
         else {
-            printLNInfo("You're not the owner of this playlist.");
+            printLNInfo("You're not the owner of your current playlist \"" +
+                    toolBoxView.getPlaylistServ().getPlaylistById(currentPlaylistId).getName() +
+                    "\". You can't add songs to it.");
             pageService.actionFoundedSongs.displayAllPage();
         }
     }
