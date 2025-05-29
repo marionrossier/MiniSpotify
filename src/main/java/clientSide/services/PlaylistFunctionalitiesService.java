@@ -47,7 +47,7 @@ public class PlaylistFunctionalitiesService {
         List<Integer> actualPlaylists = user.getPlaylists();
 
         actualPlaylists.remove((Integer) playlistId);
-        userService.saveUser(user);
+        userLocalRepository.saveUser(user);
     }
 
     public void deletePlaylist(int playlistId) {

@@ -10,11 +10,11 @@ import java.util.List;
 import static clientSide.services.PrintHelper.*;
 
 public class UserService {
-    private final IUserRepository userLocalRepository;
+    private final IUserRepository userRepository;
     private final PasswordService passwordService;
 
     public UserService(ToolBoxService toolBoxService, PasswordService passwordService){
-        this.userLocalRepository = toolBoxService.userLocalRepository;
+        this.userRepository = toolBoxService.userLocalRepository;
         this.passwordService = passwordService;
     }
 
@@ -28,7 +28,8 @@ public class UserService {
         }
         else {
             User newUser = new User(pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
-            userLocalRepository.saveUser(newUser);
+            saveUser(newUser);
+            printLNGreen("Account created successfully !");
         }
     }
 
@@ -42,7 +43,7 @@ public class UserService {
         }
         else {
             User newUser = new User(id, pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
-            userLocalRepository.saveUser(newUser);
+            saveUser(newUser);
         }
     }
 
@@ -55,23 +56,23 @@ public class UserService {
     }
 
     public void addOnePlaylistToCurrentUser(int playlistId) {
-        User user = userLocalRepository.getUserById(getCurrentUserId());
+        User user = userRepository.getUserById(getCurrentUserId());
         List<Integer> playlists = user.getPlaylists();
         if (playlists == null) {
             playlists = new ArrayList<>();
             user.setPlaylists(playlists);
         }
         playlists.add(playlistId);
-        userLocalRepository.saveUser(user);
+        saveUser(user);
         printLNGreen("Playlist has been added.");
     }
 
     public void addFriend(int friendId) {
-        User user = userLocalRepository.getUserById(getCurrentUserId());
+        User user = userRepository.getUserById(getCurrentUserId());
         List<Integer> friends = user.getFriends();
         if (!friends.contains(friendId)) {
             friends.add(friendId);
-            userLocalRepository.saveUser(user);
+            saveUser(user);
             printLNGreen("Friend add to your friend list.");
         }
         else {
@@ -80,14 +81,14 @@ public class UserService {
     }
 
     public void deleteFriend(int friendId) {
-        User user = userLocalRepository.getUserById(getCurrentUserId());
+        User user = userRepository.getUserById(getCurrentUserId());
         List<Integer> friends = user.getFriends();
         friends.remove(Integer.valueOf(friendId));
-        userLocalRepository.saveUser(user);
+        saveUser(user);
     }
 
     public void saveUser (User user){
-        userLocalRepository.saveUser(user);
+        userRepository.saveUser(user);
     }
 
     public int getCurrentUserId(){
@@ -98,22 +99,13 @@ public class UserService {
         Cookies.resetCookies();
     }
 
-    public int getUserIdByPseudo(String pseudo) {
-
-        User searchedUser = getUserByPseudonym(pseudo);
-        if (searchedUser == null) {
-            return -1; // Return -1 if the pseudo was not found
-        }
-        return searchedUser.getUserId();
-    }
-
     public User getUserByPseudonym(String pseudonym) {
-        return userLocalRepository.getUserByPseudonym(pseudonym);
+        return userRepository.getUserByPseudonym(pseudonym);
     }
 
     public List<Integer> getUsersByPseudonym(String pseudonym){
         List<Integer> userIds = new ArrayList<>();
-        List<User> allUsers = userLocalRepository.getAllUsers();
+        List<User> allUsers = userRepository.getAllUsers();
         if (pseudonym == null || pseudonym.isEmpty()) {
             return userIds;
         }
@@ -126,11 +118,7 @@ public class UserService {
     }
 
     public User getUserById(int userId) {
-        return userLocalRepository.getUserById(userId);
-    }
-
-    public User getUserByPseudonymLogin(String pseudonym) {
-        return userLocalRepository.getUserByPseudonymLogin(pseudonym);
+        return userRepository.getUserById(userId);
     }
 
     public void setCurrentFriendId (int friendId){

@@ -41,11 +41,24 @@ public class FrontUserRepo implements IUserRepository {
     }
 
     @Override
-    public User getUserByPseudonymLogin(String pseudonym) {
+    public User getUserByPseudonym(String pseudonym) {
         return getUserFromServer(Map.of(
-                "command", "getUserByPseudonymLogin",
+                "command", "getUserByPseudonym",
                 "pseudonym", pseudonym
         ));
+    }
+
+    @Override
+    public void saveUser(User user) {
+        try {
+            Map<String, Object> request = Map.of(
+                    "command", "saveUser",
+                    "user", mapper.convertValue(user, Map.class)
+            );
+            socketClient.sendRequest(request);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -69,37 +82,12 @@ public class FrontUserRepo implements IUserRepository {
     }
 
     @Override
-    public void saveUser(User user) {
-        try {
-            Map<String, Object> request = Map.of(
-                    "command", "saveUser",
-                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword(),
-                    "user", mapper.convertValue(user, Map.class)
-            );
-            socketClient.sendRequest(request);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
     public User getUserById(int userId) {
         return getUserFromServer(Map.of(
                 "command", "getUserById",
                 "userPseudonym", Cookies.getInstance().getUserPseudonym(),
                 "password", Cookies.getInstance().getUserPassword(),
                 "userId", userId
-        ));
-    }
-
-    @Override
-    public User getUserByPseudonym(String pseudonym) {
-        return getUserFromServer(Map.of(
-                "command", "getUserByPseudonym",
-                "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                "password", Cookies.getInstance().getUserPassword(),
-                "pseudonym", pseudonym
         ));
     }
 

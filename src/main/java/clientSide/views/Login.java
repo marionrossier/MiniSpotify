@@ -39,7 +39,7 @@ public class Login extends TemplateSimplePage {
 
         //Check the password...
         if (toolBoxView.getPasswordServ().passwordCheck(pseudonym, password)){
-            User user = toolBoxView.getUserServ().getUserByPseudonymLogin(pseudonym);
+            User user = toolBoxView.getUserServ().getUserByPseudonym(pseudonym);
             Cookies.initializeInstance(user.getUserId(), user.getPseudonym(), user.getPassword());
             printLNGreen(icon.lineBreak + icon.ok() + "Login successful !");
             toolBoxView.getPlaylistServ().createAllSongPlaylist(user);

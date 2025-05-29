@@ -32,7 +32,7 @@ public class UserLocalRepository implements IUserRepository {
                 .findFirst();
     }
 
-    public User getUserByPseudonymLogin(String pseudonym) {
+    public User getUserByPseudonym(String pseudonym) {
         return data.stream()
                 .filter(user -> user.getPseudonym().equals(pseudonym))
                 .findFirst()
@@ -52,13 +52,6 @@ public class UserLocalRepository implements IUserRepository {
     public User getUserById(int userId) {
         return data.stream()
                 .filter(user -> user.getUserId() == userId)
-                .findFirst()
-                .orElse(null);
-    }
-
-    public User getUserByPseudonym(String pseudonym) {
-        return data.stream()
-                .filter(user -> user.getPseudonym().equals(pseudonym))
                 .findFirst()
                 .orElse(null);
     }

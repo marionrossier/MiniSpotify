@@ -40,7 +40,7 @@ public class PasswordService {
 
     public boolean verifyUserAuthentification(String pseudonym, String password) {
 
-        User searchedUser = userLocalRepository.getUserByPseudonymLogin(pseudonym);
+        User searchedUser = userLocalRepository.getUserByPseudonym(pseudonym);
 
         if (searchedUser == null) {
             printInfo("This user does not exist.");

@@ -54,7 +54,6 @@ public class CreateAccount extends TemplateInversePage {
 
     private void createAccount() {
         toolBoxView.getUserServ().addUser(pseudonym,email,password, planEnum);
-        printLNGreen("Account created successfully !");
         pageService.login.displayAllPage();
     }
 }

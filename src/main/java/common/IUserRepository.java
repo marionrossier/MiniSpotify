@@ -8,9 +8,8 @@ import java.util.Optional;
 public interface IUserRepository {
 
     Optional<User> authenticate(String pseudonym, String hashedPassword);
-    User getUserByPseudonymLogin(String pseudonym);
+    User getUserByPseudonym(String pseudonym);
     List<User> getAllUsers();
     void saveUser(User user);
     User getUserById(int userId);
-    User getUserByPseudonym(String pseudonym);
 }

@@ -23,7 +23,7 @@ public class BackUserRepo {
             String password = (String) request.get("password");
 
             Optional<User> optUser = userRepo.authenticate(username, password);
-            if (optUser.isEmpty() && !command.equals("getUserByPseudonymLogin")) {
+            if (optUser.isEmpty() && !(command.equals("getUserByPseudonym") || command.equals("saveUser"))) {
                 return "{\"status\": \"ERROR\", \"message\": \"Authentication failed\"}";
             }
 
@@ -39,12 +39,17 @@ public class BackUserRepo {
                             ? mapper.writeValueAsString(Map.of("status", "OK", "user", user))
                             : "{\"status\": \"ERROR\", \"message\": \"User not found\"}";
                 }
-                case "getUserByPseudonymLogin", "getUserByPseudonym"  -> {
+                case "getUserByPseudonym" -> {
                     String pseudo = (String) request.get("pseudonym");
-                    User user = userRepo.getUserByPseudonym(pseudo);
-                    return user != null
-                            ? mapper.writeValueAsString(Map.of("status", "OK", "user", user))
-                            : "{\"status\": \"ERROR\", \"message\": \"User not found\"}";
+                    User user = null;
+                    try {
+                        user = userRepo.getUserByPseudonym(pseudo);
+                    } catch (Exception ignored) {}
+
+                    Map<String, Object> response = new java.util.HashMap<>();
+                    response.put("status", "OK");
+                    response.put("user", user); // peut être null sans problème ici
+                    return mapper.writeValueAsString(response);
                 }
                 case "saveUser" -> {
                     @SuppressWarnings("unchecked")
