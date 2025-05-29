@@ -79,9 +79,10 @@ public class BackPlaylistRepo {
 
                 case "getTemporaryPlaylistOfCurrentUser" -> {
                     Playlist temp = playlistRepo.getTemporaryPlaylistOfCurrentUser(user.getUserId());
-                    return temp != null
-                            ? mapper.writeValueAsString(Map.of("status", "OK", "playlist", temp))
-                            : "{\"status\": \"ERROR\", \"message\": \"No temporary playlist\"}";
+                    if (temp != null) {
+                        return mapper.writeValueAsString(Map.of("status", "OK", "playlist", temp));
+                    }
+                    return null;
                 }
 
                 default -> {
