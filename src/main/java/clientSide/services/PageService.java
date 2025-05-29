@@ -174,35 +174,35 @@ public class PageService {
     }
 
     public void pageIsPremium (boolean isFree){
-        if (!isFree){
-            int userId = toolBoxView.getUserServ().getCurrentUserId();
-            User user = toolBoxView.getUserServ().getUserById(userId);
-
-            if (user.getPlanEnum().equals(PlanEnum.FREE)) {
-                printLNInfo("Premium Client option only.");
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                printLNInfo("Upgrade to Premium plan now ? YES or NO");
-                String input = scanner.nextLine();
-                int lastPageId = this.getMenuPages().pop();
-                input = input.toLowerCase();
-
-                switch (input) {
-                    case "yes":
-                        user.setPlanEnum(PlanEnum.PREMIUM);
-                        toolBoxView.getUserServ().saveUser(user);
-                        break;
-                    case "no":
-                        getPageById(lastPageId).displayAllPage();
-                        break;
-                    default:
-                        printInvalidInput();
-                        getPageById(lastPageId).displayAllPage();
-                }
-            }
+        if (isFree) {
+            return;
         }
+
+        int userId = toolBoxView.getUserServ().getCurrentUserId();
+        User user = toolBoxView.getUserServ().getUserById(userId);
+
+        if (user.getPlanEnum().equals(PlanEnum.FREE)) {
+           printLNInfo("Premium Client option only.");
+           printLNWhite("Upgrade to Premium plan now ? YES or NO");
+           printYourInput();
+           String input;
+            do {
+                input = scanner.nextLine().toLowerCase();
+                input = input.toLowerCase();
+                switch (input) {
+                   case "yes":
+                       user.setPlanEnum(PlanEnum.PREMIUM);
+                       toolBoxView.getUserServ().saveUser(user);
+                       break;
+                   case "no":
+                       int lastPageId = this.getMenuPages().pop();
+                       getPageById(lastPageId).displayAllPage();
+                       break;
+                   default:
+                       printInvalidInputTryAgain();
+                       printYourInput();
+               }
+           } while (!input.equals("yes") && !input.equals("no"));
+       }
     }
 }

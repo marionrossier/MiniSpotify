@@ -57,10 +57,6 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
 
     public void displaySpecificContent(){}
 
-    public final void printYourInput(){
-        printWhite("Your input : ");
-    }
-
     public void validateInput() {
         while (true) {
             String input = scanner.nextLine().trim();

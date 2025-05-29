@@ -9,8 +9,6 @@ public interface InterfaceMenu {
     void displayTitle(String pageTitle);
     void displayContent(String pageContent);
 
-    void printYourInput();
-
     void displaySpecificContent();
 
     void validateInput();

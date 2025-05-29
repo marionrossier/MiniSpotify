@@ -57,7 +57,7 @@ public class Search extends TemplateSimplePage {
         List<Integer> playlist = toolBoxView.getPlaylistServ().getPublicPlaylists();
         toolBoxView.getPrintServ().printPlaylist(playlist);
 
-        this.printYourInput();
+        printYourInput();
 
         LinkedList<Integer> chosenPlaylists = toolBoxView.getSearchServ().chooseFoundedPlaylist(playlist, pageService);
         toolBoxView.getPlaylistServ().getAndAddSelectionOfPlaylistsToCurrentUserPlaylists(playlist, chosenPlaylists, toolBoxView);

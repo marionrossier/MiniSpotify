@@ -42,6 +42,10 @@ public class PrintHelper {
         System.out.println(PRINT_YELLOW + "Invalid input, try again." + PRINT_RESET);
     }
 
+    public static void printYourInput(){
+        printWhite("Your input : ");
+    }
+
     public static void printInvalidInputTryAgainOrBack(){
         System.out.println(PRINT_YELLOW + "Invalid input, try again or press \"0\" to go back." + PRINT_RESET);
     }
