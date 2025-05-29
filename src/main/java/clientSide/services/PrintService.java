@@ -1,8 +1,6 @@
 package clientSide.services;
 
-import common.entities.Playlist;
-import common.entities.PlaylistEnum;
-import common.entities.User;
+import common.entities.*;
 
 import java.util.List;
 
@@ -34,7 +32,7 @@ public class PrintService {
     public void printSongList (List<Integer> songs){
         int i = 1;
         for (Integer song : songs) {
-            printLNWhite(i + ". " + songService.getSongById(song).getTitle()+ " - " +
+            printLNGrey(i + ". " + songService.getSongById(song).getTitle()+ " - " +
                             artistService.getArtistNameBySong(song));
             i++;
         }
@@ -51,10 +49,11 @@ public class PrintService {
         for (Integer playlistId : playlistsId) {
             Playlist playlist = playlistService.getPlaylistById(playlistId);
             if (playlist != null) {
-                printLNWhite(i + ". " + playlist.getName());
+                printLNGrey(i + ". " + playlist.getName());
                 i++;
             }
         }
+        printLN();
     }
 
     public void printUserPlaylists(int userId){
@@ -67,7 +66,7 @@ public class PrintService {
 
                 if (playlist != null) {
                     boolean isUserOwner = playlist.getOwnerId() == currentUser.getUserId();
-                    printLNWhite(i + ". " +
+                    printLNGrey(i + ". " +
                             playlist.getName() + " - " +
                             printPlaylistStatus(playlist.getStatus()) +
                             (isUserOwner ? icon.house() : ""));
@@ -77,6 +76,7 @@ public class PrintService {
         } else {
             printLNInfo("No playlists available.");
         }
+        printLN();
     }
 
     private String printPlaylistStatus(PlaylistEnum status) {
@@ -101,10 +101,11 @@ public class PrintService {
                 User friend = userService.getUserById(friendId);
 
                 if (friend != null) {
-                    printLNWhite(i + ". " + friend.getPseudonym());
+                    printLNGrey(i + ". " + friend.getPseudonym());
                     i++;
                 }
             }
+            printLN();
         }
         return true;
     }
@@ -118,7 +119,7 @@ public class PrintService {
         for (int userId : usersId) {
             User user = userService.getUserById(userId);
             if (user != null) {
-                printLNWhite(i + ". " + user.getPseudonym());
+                printLNGrey(i + ". " + user.getPseudonym());
                 i++;
             }
         }
@@ -137,12 +138,13 @@ public class PrintService {
                         && (playlist.getStatus().equals(PlaylistEnum.PUBLIC))
                         && (playlist.getOwnerId() == user.getUserId())) {
                     boolean isUserOwner = playlist.getOwnerId() == user.getUserId();
-                    printLNWhite(i + ". " +
+                    printLNGrey(i + ". " +
                             playlist.getName() + " - " +
                             printPlaylistStatus(playlist.getStatus()) +
                             (isUserOwner ? icon.house() : ""));
                     i++;
                 }
+                printLN();
             }
         }
         else {
