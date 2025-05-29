@@ -12,10 +12,10 @@ import static clientSide.services.PrintHelper.*;
 public class PlaylistReorderSongService {
 
     private final Scanner scanner;
-    private final IPlaylistRepository playlistLocalRepository;
+    private final IPlaylistRepository playlistRepository;
 
     public PlaylistReorderSongService(ToolBoxService toolBoxService, Scanner scanner) {
-        this.playlistLocalRepository = toolBoxService.playlistLocalRepository;
+        this.playlistRepository = toolBoxService.playlistRepository;
         this.scanner = scanner;
     }
 
@@ -25,7 +25,7 @@ public class PlaylistReorderSongService {
 
         completeWithRemainingSongs(playlist, newOrder);
         playlist.setListSongsId(newOrder);
-        playlistLocalRepository.updateOrInsertPlaylist(playlist);
+        playlistRepository.updateOrInsertPlaylist(playlist);
 
         if (newOrder.size() < playlist.getPlaylistSongsListWithId().size()) {
             printLNGreen("Playlist reordered successfully with remaining songs added at the end!");

@@ -3,13 +3,13 @@ package clientSide.services;
 import common.*;
 
 public class ArtistService {
-    private final IArtistRepository artistLocalRepository;
+    private final IArtistRepository artistRepository;
 
     public ArtistService(ToolBoxService toolBoxService) {
-        this.artistLocalRepository = toolBoxService.artistLocalRepository;
+        this.artistRepository = toolBoxService.artistRepository;
     }
 
     public String getArtistNameBySong(int songId) {
-        return artistLocalRepository.getArtistBySongId(songId).getArtistName();
+        return artistRepository.getArtistBySongId(songId).getArtistName();
     }
 }

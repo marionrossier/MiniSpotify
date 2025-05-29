@@ -8,11 +8,11 @@ import java.util.LinkedList;
 
 public class SongService {
 
-    private final ISongRepository songLocalRepository;
+    private final ISongRepository songRepository;
 
     // Constructor
     public SongService(ToolBoxService toolBoxService) {
-        this.songLocalRepository = toolBoxService.songLocalRepository;
+        this.songRepository = toolBoxService.songRepository;
     }
 
     public void setCurrentSongId (int songId){
@@ -24,18 +24,18 @@ public class SongService {
     }
 
     public Song getSongById(int songId) {
-        return songLocalRepository.getSongById(songId);
+        return songRepository.getSongById(songId);
     }
 
     public LinkedList<Song> getSongByTitle(String songTitle) {
-        return songLocalRepository.getSongsByTitle(songTitle);
+        return songRepository.getSongsByTitle(songTitle);
     }
 
     public LinkedList<Song> getSongsByArtist(String artistName) {
-        return songLocalRepository.getSongsByArtist(artistName);
+        return songRepository.getSongsByArtist(artistName);
     }
 
     public LinkedList<Song> getSongsByGender(MusicGender genderName) {
-        return songLocalRepository.getSongsByGender(genderName);
+        return songRepository.getSongsByGender(genderName);
     }
 }
