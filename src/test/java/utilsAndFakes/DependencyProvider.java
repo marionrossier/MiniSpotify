@@ -154,7 +154,7 @@ public class DependencyProvider {
     }
 
     public void populateLocalArtist(){
-        LinkedList<Integer> amy = new LinkedList<>(Arrays.asList(1108071776,342105258,625427469,661206135));
+        LinkedList<Integer> amy = new LinkedList<>(Arrays.asList(1108071776,342105258,625427469,661206135, 1, 2, 3));
         Artist amyWinehouse = new Artist(960571432, "Amy Winehouse", amy);
 
         artistLocalRepository.updateOrInsertArtist(amyWinehouse);

@@ -25,6 +25,7 @@ public class PlaylistPlayerTest{
     void setUp() throws IOException {
         testHelper = new TestHelper(45000);
         dependencyProvider = testHelper.dependencyProvider;
+        dependencyProvider.populateLocalArtist();
 
         // Create Cookies_SingeltonPattern instance
         Cookies.initializeInstance(400953820, "tester", "password"); //testUsers
