@@ -73,7 +73,7 @@ public class JsonService {
         marionPlaylists.add(girlsId);
         marionPlaylists.add(boysId);
         marion.setPlaylists(marionPlaylists);
-        userLocalRepository.saveUser(marion);
+        userLocalRepository.updateOrInsertUser(marion);
 
         User florent = userLocalRepository.getUserById(1726370281);
         List<Integer> florentPlaylists = new ArrayList<>();
@@ -82,7 +82,7 @@ public class JsonService {
         florentPlaylists.add(randomFavoriteId);
         florentPlaylists.add(imagineThisId);
         florent.setPlaylists(florentPlaylists);
-        userLocalRepository.saveUser(florent);
+        userLocalRepository.updateOrInsertUser(florent);
 
 
         User admin = userLocalRepository.getUserById(1);
@@ -93,7 +93,7 @@ public class JsonService {
         adminPlaylists.add(quickHitsId);
         adminPlaylists.add(soulRnBId);
         admin.setPlaylists(adminPlaylists);
-        userLocalRepository.saveUser(admin);
+        userLocalRepository.updateOrInsertUser(admin);
 
     }
 
@@ -218,51 +218,51 @@ public class JsonService {
     public static void addPlaylist(PlaylistLocalRepository playlistLocalRepository) {
 
 
-        playlistLocalRepository.savePlaylist(new Playlist("POP Vibes",
+        playlistLocalRepository.updateOrInsertPlaylist(new Playlist("POP Vibes",
                 new LinkedList<>(Arrays.asList(1986076679, 2084461505, 1988790520, 700468481, 998984026, 1290739974)),
                 1, PlaylistEnum.PUBLIC));
 
-        playlistLocalRepository.savePlaylist(new Playlist("Rock Legends",
+        playlistLocalRepository.updateOrInsertPlaylist(new Playlist("Rock Legends",
                 new LinkedList<>(Arrays.asList(243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482)),
                 1, PlaylistEnum.PUBLIC));
 
-        playlistLocalRepository.savePlaylist(new Playlist("Amy Forever",
+        playlistLocalRepository.updateOrInsertPlaylist(new Playlist("Amy Forever",
                 new LinkedList<>(Arrays.asList(1108071776, 342105258, 625427469, 661206135)),
                 1, PlaylistEnum.PUBLIC));
 
-        playlistLocalRepository.savePlaylist(new Playlist("Imagine This",
+        playlistLocalRepository.updateOrInsertPlaylist(new Playlist("Imagine This",
                 new LinkedList<>(Arrays.asList(1287974581, 614172035, 494087492, 515539482)),
                 1726370281, PlaylistEnum.PUBLIC));
 
-        playlistLocalRepository.savePlaylist(new Playlist("Quick Hits",
+        playlistLocalRepository.updateOrInsertPlaylist(new Playlist("Quick Hits",
                 new LinkedList<>(Arrays.asList(625427469, 1280045910, 354322599, 1925355941, 661206135, 1252829874, 494087492)),
                 1, PlaylistEnum.PUBLIC));
 
-        playlistLocalRepository.savePlaylist(new Playlist("Girls",
+        playlistLocalRepository.updateOrInsertPlaylist(new Playlist("Girls",
                 new LinkedList<>(Arrays.asList(1108071776, 342105258, 625427469, 661206135, 1986076679, 2084461505, 1290739974, 1951451340, 469321884, 1252829874, 1988790520, 700468481)),
                 232928320, PlaylistEnum.PUBLIC));
 
-        playlistLocalRepository.savePlaylist(new Playlist("Boys",
+        playlistLocalRepository.updateOrInsertPlaylist(new Playlist("Boys",
                 new LinkedList<>(Arrays.asList(325561970, 321324189, 521970022, 1280045910, 719812166, 243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482, 998984026)),
                 232928320, PlaylistEnum.PUBLIC));
 
-        playlistLocalRepository.savePlaylist(new Playlist("Soul & RnB Grooves",
+        playlistLocalRepository.updateOrInsertPlaylist(new Playlist("Soul & RnB Grooves",
                 new LinkedList<>(Arrays.asList(1108071776, 342105258, 625427469, 1280045910, 1951451340, 719812166, 661206135)),
                 1, PlaylistEnum.PUBLIC));
 
-        playlistLocalRepository.savePlaylist(new Playlist("Dance Floor",
+        playlistLocalRepository.updateOrInsertPlaylist(new Playlist("Dance Floor",
                 new LinkedList<>(Arrays.asList(325561970, 1252829874, 321324189, 521970022)),
                 232928320, PlaylistEnum.PRIVATE));
 
-        playlistLocalRepository.savePlaylist(new Playlist("Random Favorites",
+        playlistLocalRepository.updateOrInsertPlaylist(new Playlist("Random Favorites",
                 new LinkedList<>(Arrays.asList(1280045910, 1951451340, 1252829874, 719812166, 521970022)),
                 1726370281, PlaylistEnum.PUBLIC));
 
-        playlistLocalRepository.savePlaylist(new Playlist("Before 2000",
+        playlistLocalRepository.updateOrInsertPlaylist(new Playlist("Before 2000",
                 new LinkedList<>(Arrays.asList(325561970, 354322599, 1925355941, 700468481)),
                 1726370281, PlaylistEnum.PRIVATE));
 
-        playlistLocalRepository.savePlaylist(new Playlist("AllSongs", 914903479,
+        playlistLocalRepository.updateOrInsertPlaylist(new Playlist("AllSongs", 914903479,
                 new LinkedList<>(Arrays.asList(
                         1108071776, 1986076679, 2084461505, 342105258, 625427469, 325561970, 321324189, 1280045910,
                         354322599, 1925355941, 1951451340, 243871940, 1988790520, 719812166, 700468481, 469321884,

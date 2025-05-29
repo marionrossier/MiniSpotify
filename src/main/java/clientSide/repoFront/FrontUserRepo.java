@@ -49,10 +49,10 @@ public class FrontUserRepo implements IUserRepository {
     }
 
     @Override
-    public void saveUser(User user) {
+    public void updateOrInsertUser(User user) {
         try {
             Map<String, Object> request = Map.of(
-                    "command", "saveUser",
+                    "command", "updateOrInsertUser",
                     "user", mapper.convertValue(user, Map.class)
             );
             socketClient.sendRequest(request);

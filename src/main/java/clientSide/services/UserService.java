@@ -88,7 +88,7 @@ public class UserService {
     }
 
     public void saveUser (User user){
-        userRepository.saveUser(user);
+        userRepository.updateOrInsertUser(user);
     }
 
     public int getCurrentUserId(){

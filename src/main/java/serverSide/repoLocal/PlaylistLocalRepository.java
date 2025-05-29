@@ -30,7 +30,7 @@ public class PlaylistLocalRepository implements IPlaylistRepository {
         return new ArrayList<>(data);
     }
 
-    public void savePlaylist(Playlist playlist) {
+    public void updateOrInsertPlaylist(Playlist playlist) {
         data.removeIf(p -> p.getPlaylistId() == playlist.getPlaylistId());
         data.add(playlist);
         stockageService.saveToJson(filePath, data);

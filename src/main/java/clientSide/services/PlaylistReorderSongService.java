@@ -25,7 +25,7 @@ public class PlaylistReorderSongService {
 
         completeWithRemainingSongs(playlist, newOrder);
         playlist.setListSongsId(newOrder);
-        playlistLocalRepository.savePlaylist(playlist);
+        playlistLocalRepository.updateOrInsertPlaylist(playlist);
 
         if (newOrder.size() < playlist.getPlaylistSongsListWithId().size()) {
             printLNGreen("Playlist reordered successfully with remaining songs added at the end!");

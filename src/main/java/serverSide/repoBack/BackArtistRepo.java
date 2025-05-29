@@ -60,14 +60,14 @@ public class BackArtistRepo {
                             : "{\"status\": \"ERROR\", \"message\": \"Artist not found for song\"}";
                 }
 
-                case "addArtist", "saveArtist" -> {
+                case "addArtist", "updateOrInsertArtist" -> {
                     @SuppressWarnings("unchecked")
                     Map<String, Object> artistMap = (Map<String, Object>) request.get("artist");
                     Artist artist = mapper.convertValue(artistMap, Artist.class);
                     if ("addArtist".equals(command)) {
                         artistRepo.addArtist(artist);
                     } else {
-                        artistRepo.saveArtist(artist);
+                        artistRepo.updateOrInsertArtist(artist);
                     }
                     return "{\"status\": \"OK\"}";
                 }

@@ -42,7 +42,7 @@ public class PlaylistPlayerTest{
         // Create a test playlist
         Playlist playlist = new Playlist("Test Playlist", PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(1);
-        dependencyProvider.playlistLocalRepository.savePlaylist(playlist);
+        dependencyProvider.playlistLocalRepository.updateOrInsertPlaylist(playlist);
 
         testHelper.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), dependencyProvider.playlistLocalRepository);
         testHelper.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), dependencyProvider.playlistLocalRepository);

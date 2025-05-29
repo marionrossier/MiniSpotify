@@ -43,7 +43,7 @@ public class UserLocalRepository implements IUserRepository {
         return new ArrayList<>(data);
     }
 
-    public void saveUser(User user) {
+    public void updateOrInsertUser(User user) {
         data.removeIf(u -> u.getUserId() == user.getUserId());
         data.add(user);
         stockageService.saveToJson(filePath, data);

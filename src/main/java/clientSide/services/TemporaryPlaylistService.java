@@ -35,14 +35,14 @@ public class TemporaryPlaylistService {
 
         if (temporaryPlaylist == null) {
             temporaryPlaylist = new Playlist("temporaryPlaylist", PlaylistEnum.PRIVATE);
-            playlistLocalRepository.savePlaylist(temporaryPlaylist);
+            playlistLocalRepository.updateOrInsertPlaylist(temporaryPlaylist);
         }
         temporaryPlaylist.setListSongsId(chosenSongs);
 
         temporaryPlaylist.setOwnerId(currentUserId);
         temporaryPlaylist.setStatus(status);
 
-        playlistLocalRepository.savePlaylist(temporaryPlaylist);
+        playlistLocalRepository.updateOrInsertPlaylist(temporaryPlaylist);
     }
 
     public void adjustTemporaryPlaylistToNewPlaylist(String playlistName, PlaylistEnum status) {
@@ -51,7 +51,7 @@ public class TemporaryPlaylistService {
         if (newPlaylist != null) {
             newPlaylist.setName(playlistName);
             newPlaylist.setStatus(status);
-            playlistLocalRepository.savePlaylist(newPlaylist);
+            playlistLocalRepository.updateOrInsertPlaylist(newPlaylist);
             userService.addOnePlaylistToCurrentUser(newPlaylist.getPlaylistId());
         } else {
             printLNError("Temporary playlist not found.");
@@ -68,7 +68,7 @@ public class TemporaryPlaylistService {
                     targetPlaylist.getPlaylistSongsListWithId().add(songId);
                 }
             }
-            playlistLocalRepository.savePlaylist(targetPlaylist);
+            playlistLocalRepository.updateOrInsertPlaylist(targetPlaylist);
         } else {
             printLNError("Target playlist or temporary playlist not found.");
         }

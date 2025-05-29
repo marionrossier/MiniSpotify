@@ -10,6 +10,6 @@ public interface IUserRepository {
     Optional<User> authenticate(String pseudonym, String hashedPassword);
     User getUserByPseudonym(String pseudonym);
     List<User> getAllUsers();
-    void saveUser(User user);
+    void updateOrInsertUser(User user);
     User getUserById(int userId);
 }

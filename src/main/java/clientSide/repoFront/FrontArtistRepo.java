@@ -65,10 +65,10 @@ public class FrontArtistRepo implements IArtistRepository {
     }
 
     @Override
-    public void saveArtist(Artist artist) {
+    public void updateOrInsertArtist(Artist artist) {
         try {
             Map<String, Object> request = Map.of(
-                    "command", "saveArtist",
+                    "command", "updateOrInsertArtist",
                     "userPseudonym", Cookies.getInstance().getUserPseudonym(),
                     "password", Cookies.getInstance().getUserPassword(),
                     "artist", mapper.convertValue(artist, Map.class)

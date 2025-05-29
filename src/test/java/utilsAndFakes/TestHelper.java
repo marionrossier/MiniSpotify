@@ -26,7 +26,7 @@ public class TestHelper {
         Playlist playlist = playlistLocalRepository.getPlaylistById(currentPlaylistId);
         playlist.getPlaylistSongsListWithId().add(currentSongId);
 
-        playlistLocalRepository.savePlaylist(playlist);
+        playlistLocalRepository.updateOrInsertPlaylist(playlist);
     }
 
     public void addSongsToPlaylist(Playlist playlist, int... songIds) {
@@ -50,7 +50,7 @@ public class TestHelper {
     public Playlist createTestPlaylist(int id, String name, IPlaylistRepository playlistLocalRepository) {
         Playlist playlist = new Playlist(name, PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(id);
-        playlistLocalRepository.savePlaylist(playlist);
+        playlistLocalRepository.updateOrInsertPlaylist(playlist);
         return playlist;
     }
 
@@ -70,7 +70,7 @@ public class TestHelper {
 
         Artist artist = new Artist(artistName);
         artist.setArtistId(100 + id); // Unique ID for artist
-        artistLocalRepository.saveArtist(artist);
+        artistLocalRepository.updateOrInsertArtist(artist);
 
         song.setArtistId(artist.getArtistId());
 

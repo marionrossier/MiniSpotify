@@ -77,7 +77,6 @@ public class SocketServer {
                 default -> "{\"status\": \"ERROR\", \"message\": \"Unknown command at server switch\"}";
             };
 
-
             out.write(responseJson);
             out.newLine();
             out.flush();

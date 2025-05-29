@@ -36,7 +36,7 @@ class PlaylistLocalRepoTest{
         Playlist playlist = testHelper.createTestPlaylist(1, "Test Playlist", dependencyProvider.playlistLocalRepository);
 
         // Act
-        dependencyProvider.playlistLocalRepository.savePlaylist(playlist);
+        dependencyProvider.playlistLocalRepository.updateOrInsertPlaylist(playlist);
 
         // Assert
         List<Playlist> playlists = dependencyProvider.playlistLocalRepository.getAllPlaylists();
@@ -53,7 +53,7 @@ class PlaylistLocalRepoTest{
         testHelper.addSongsToPlaylist(playlist, songsId);
 
         // Act
-        dependencyProvider.playlistLocalRepository.savePlaylist(playlist);
+        dependencyProvider.playlistLocalRepository.updateOrInsertPlaylist(playlist);
 
         // Assert
         List<Playlist> playlists = dependencyProvider.playlistLocalRepository.getAllPlaylists();
@@ -66,11 +66,11 @@ class PlaylistLocalRepoTest{
         // Arrange
         Playlist playlistOne = testHelper.createTestPlaylist(1, "Playlist One", dependencyProvider.playlistLocalRepository);
         testHelper.addSongsToPlaylist(playlistOne,  1,2);
-        dependencyProvider.playlistLocalRepository.savePlaylist(playlistOne);
+        dependencyProvider.playlistLocalRepository.updateOrInsertPlaylist(playlistOne);
 
         Playlist playlistTwo = testHelper.createTestPlaylist(2, "Playlist Two", dependencyProvider.playlistLocalRepository);
         testHelper.addSongsToPlaylist(playlistTwo,  3,4);
-        dependencyProvider.playlistLocalRepository.savePlaylist(playlistTwo);
+        dependencyProvider.playlistLocalRepository.updateOrInsertPlaylist(playlistTwo);
 
         // Act
         dependencyProvider.playlistLocalRepository.deletePlaylistById(playlistOne.getPlaylistId());
@@ -86,7 +86,7 @@ class PlaylistLocalRepoTest{
         // Arrange
         Playlist playlist = testHelper.createTestPlaylist(1, "Test Playlist", dependencyProvider.playlistLocalRepository);
         testHelper.addSongsToPlaylist(playlist, 1,2,3);
-        dependencyProvider.playlistLocalRepository.savePlaylist(playlist);
+        dependencyProvider.playlistLocalRepository.updateOrInsertPlaylist(playlist);
 
         // Act
         Playlist result = dependencyProvider.playlistLocalRepository.getPlaylistById(playlist.getPlaylistId());
@@ -101,7 +101,7 @@ class PlaylistLocalRepoTest{
         // Arrange
         Playlist playlist = testHelper.createTestPlaylist(1, "Test Playlist", dependencyProvider.playlistLocalRepository);
         testHelper.addSongsToPlaylist(playlist, 1,2,3);
-        dependencyProvider.playlistLocalRepository.savePlaylist(playlist);
+        dependencyProvider.playlistLocalRepository.updateOrInsertPlaylist(playlist);
 
         // Act
         Playlist result = dependencyProvider.playlistLocalRepository.getPlaylistById(999);
@@ -114,7 +114,7 @@ class PlaylistLocalRepoTest{
     void updatePlaylist_shouldModifyThePlaylist() {
         // Arrange
         Playlist playlist = testHelper.createTestPlaylist(1, "Original Name", dependencyProvider.playlistLocalRepository);
-        dependencyProvider.playlistLocalRepository.savePlaylist(playlist);
+        dependencyProvider.playlistLocalRepository.updateOrInsertPlaylist(playlist);
         testHelper.addSongsToPlaylist(playlist, 1,2);
 
         // Act
@@ -134,7 +134,7 @@ class PlaylistLocalRepoTest{
         // Arrange
         Playlist playlist = testHelper.createTestPlaylist(1, "Test Playlist", dependencyProvider.playlistLocalRepository);
         testHelper.addSongsToPlaylist(playlist, 1,2,3);
-        dependencyProvider.playlistLocalRepository.savePlaylist(playlist);
+        dependencyProvider.playlistLocalRepository.updateOrInsertPlaylist(playlist);
 
         // Act
         Playlist result = dependencyProvider.playlistLocalRepository.getPlaylistByName("Test Playlist");
@@ -149,7 +149,7 @@ class PlaylistLocalRepoTest{
         // Arrange
         Playlist playlist = testHelper.createTestPlaylist(1, "Test Playlist", dependencyProvider.playlistLocalRepository);
         testHelper.addSongsToPlaylist(playlist, 1,2,3);
-        dependencyProvider.playlistLocalRepository.savePlaylist(playlist);
+        dependencyProvider.playlistLocalRepository.updateOrInsertPlaylist(playlist);
 
         // Act
         Playlist result = dependencyProvider.playlistLocalRepository.getPlaylistByName("test PLAYLIST");
@@ -164,7 +164,7 @@ class PlaylistLocalRepoTest{
         // Arrange
         Playlist playlist = testHelper.createTestPlaylist(1, "Test Playlist", dependencyProvider.playlistLocalRepository);
         testHelper.addSongsToPlaylist(playlist, 1,2,3);
-        dependencyProvider.playlistLocalRepository.savePlaylist(playlist);
+        dependencyProvider.playlistLocalRepository.updateOrInsertPlaylist(playlist);
 
         // Act
         Playlist result = dependencyProvider.playlistLocalRepository.getPlaylistByName("Nonexistent Playlist");

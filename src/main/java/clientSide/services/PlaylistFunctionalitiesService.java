@@ -39,7 +39,7 @@ public class PlaylistFunctionalitiesService {
         if (!playlists.contains(allSongsPlaylistId)) {
             playlists.addFirst(allSongsPlaylistId);
         }
-        userLocalRepository.saveUser(user);
+        userLocalRepository.updateOrInsertUser(user);
     }
 
     public void removePlaylistFromUser (int playlistId){
@@ -47,7 +47,7 @@ public class PlaylistFunctionalitiesService {
         List<Integer> actualPlaylists = user.getPlaylists();
 
         actualPlaylists.remove((Integer) playlistId);
-        userLocalRepository.saveUser(user);
+        userLocalRepository.updateOrInsertUser(user);
     }
 
     public void deletePlaylist(int playlistId) {
@@ -73,7 +73,7 @@ public class PlaylistFunctionalitiesService {
         Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
         playlist.setName(newName);
 
-        playlistLocalRepository.savePlaylist(playlist);
+        playlistLocalRepository.updateOrInsertPlaylist(playlist);
         printLNGreen("Playlist renamed to " + newName + " !");
     }
 
@@ -93,7 +93,7 @@ public class PlaylistFunctionalitiesService {
         Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
 
         playlist.getPlaylistSongsListWithId().remove(songIndex);
-        playlistLocalRepository.savePlaylist(playlist);
+        playlistLocalRepository.updateOrInsertPlaylist(playlist);
     }
 
     public boolean isCurrentUserOwnerOfPlaylist(int playlistId) {

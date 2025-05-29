@@ -51,11 +51,11 @@ public class BackUserRepo {
                     response.put("user", user); // peut être null sans problème ici
                     return mapper.writeValueAsString(response);
                 }
-                case "saveUser" -> {
+                case "updateOrInsertUser" -> {
                     @SuppressWarnings("unchecked")
                     Map<String, Object> userMap = (Map<String, Object>) request.get("user");
                     User user = mapper.convertValue(userMap, User.class);
-                    userRepo.saveUser(user);
+                    userRepo.updateOrInsertUser(user);
                     return "{\"status\": \"OK\"}";
                 }
                 default -> {

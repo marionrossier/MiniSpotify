@@ -41,7 +41,7 @@ public class ArtistLocalRepository implements IArtistRepository {
                 .orElse(null);
     }
 
-    public void saveArtist(Artist artist) {
+    public void updateOrInsertArtist(Artist artist) {
         data.add(artist);
         stockageService.saveToJson(filePath, data);
     }

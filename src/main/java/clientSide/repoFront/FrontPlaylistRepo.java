@@ -71,10 +71,10 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
     }
 
     @Override
-    public void savePlaylist(Playlist playlist) {
+    public void updateOrInsertPlaylist(Playlist playlist) {
         try {
             Map<String, Object> request = Map.of(
-                    "command", "savePlaylist",
+                    "command", "updateOrInsertPlaylist",
                     "userPseudonym", Cookies.getInstance().getUserPseudonym(),
                     "password", Cookies.getInstance().getUserPassword(),
                     "playlist", mapper.convertValue(playlist, Map.class)
