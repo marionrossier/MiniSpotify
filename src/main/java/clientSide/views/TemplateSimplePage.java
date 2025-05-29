@@ -101,12 +101,12 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
             case 9 :
                 button9();
             default:
+                printInvalidInputTryAgain();
                 handelInvalidIndex();
         }
     }
 
-    private void handelInvalidIndex() {
-        printInvalidInputTryAgain();
+    public void handelInvalidIndex() {
         printYourInput();
         validateInput();
         switchPage();
@@ -116,24 +116,31 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
         pageService.goBack(getPageId());
     }
     public void button1(){
+        printInvalidInputTryAgain();
         handelInvalidIndex();
     }
     public void button2(){
+        printInvalidInputTryAgain();
         handelInvalidIndex();
     }
     public void button3(){
+        printInvalidInputTryAgain();
         handelInvalidIndex();
     }
     public void button4(){
+        printInvalidInputTryAgain();
         handelInvalidIndex();
     }
     public void button5(){
+        printInvalidInputTryAgain();
         handelInvalidIndex();
     }
     public void button6(){
+        printInvalidInputTryAgain();
         handelInvalidIndex();
     }
     public void button7(){
+        printInvalidInputTryAgain();
         handelInvalidIndex();
     }
     public void button8(){

@@ -112,7 +112,7 @@ public class SearchService {
         LinkedList<Integer> selectedSongsIndex = new LinkedList<>();
         printLNWhite("Choose your songs by entering their number and press \"enter\" between each song." + icon.lineBreak+
                 "End selection with an \"x\"." + icon.lineBreak);
-        printWhite("Your selection : ");
+        printYourInput();
 
         loopIntInputValidation(pageService, selectedSongsIndex, foundedSongs.size());
 
@@ -147,11 +147,14 @@ public class SearchService {
                 int songIndex = Integer.parseInt(input) - 1;
                 if (songIndex >= 0 && songIndex < size) {
                     selectedSongsIndex.add(songIndex);
+                    printYourInput();
                 } else {
-                    printInfo("Invalid selection. Please try again.");
+                    printLNInfo("Invalid selection. Please try again.");
+                    printYourInput();
                 }
             } catch (NumberFormatException e) {
-                printInfo("Invalid input. Please enter a number or \"x\" to exit.");
+                printLNInfo("Invalid input. Please enter a number or \"x\" to exit.");
+                printYourInput();
             }
         }
     }

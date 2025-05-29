@@ -27,6 +27,7 @@ public class ActionFoundedSongs extends TemplateSimplePage {
 
     @Override
     public void button2() {
+        printLN();
         printLNWhite("Your Playlists : ");
         toolBoxView.getPrintServ().printUserPlaylists(toolBoxView.getUserServ().getCurrentUserId());
 
@@ -52,7 +53,8 @@ public class ActionFoundedSongs extends TemplateSimplePage {
             printLNInfo("You're not the owner of your current playlist \"" +
                     toolBoxView.getPlaylistServ().getPlaylistById(currentPlaylistId).getName() +
                     "\". You can't add songs to it.");
-            pageService.actionFoundedSongs.displayAllPage();
+            printLNInfo("Please choose another option.");
+            handelInvalidIndex();
         }
     }
 
@@ -63,5 +65,12 @@ public class ActionFoundedSongs extends TemplateSimplePage {
 
     @Override
     public void button8(){//no action !
+    }
+
+    @Override
+    public void handelInvalidIndex() {
+        printYourInput();
+        validateInput();
+        switchPage();
     }
 }
