@@ -5,6 +5,7 @@ import clientSide.services.*;
 import common.entities.Playlist;
 import common.entities.Song;
 import clientSide.player.file_player.*;
+import serverSide.repoLocal.SongLocalRepository;
 
 import java.util.*;
 
@@ -14,6 +15,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     private final IMusicPlayer musicPlayer;
     protected PlaylistServices playlistServices;
+    protected ArtistService artistService;
     protected SongService songService;
     protected IAudioRepository audioRepository;
     private final IconService icon = new IconService();
@@ -30,10 +32,11 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     private final IState repeatState;
 
     public PlaylistPlayer(IMusicPlayer musicPlayer, IAudioRepository audioRepository, SongService songService,
-                          PlaylistServices playlistServices) {
+                          PlaylistServices playlistServices, ArtistService artistService) {
         this.musicPlayer = musicPlayer;
         this.songService = songService;
         this.playlistServices = playlistServices;
+        this.artistService = artistService;
         this.audioRepository = audioRepository;
 
         this.sequentialState = new SequentialState(this);
@@ -76,6 +79,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     public void playOrPause(int songId) {
         this.currentSong = songService.getSongById(songId);
         musicPlayer.playOrPause(this.currentSong.getAudioFileName());
+        printCurrentSong();
     }
 
     @Override
@@ -100,6 +104,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     @Override
     public void playback() {
+        printCurrentSong();
         musicPlayer.play(this.currentSong.getAudioFileName());
     }
 
@@ -108,6 +113,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         this.songIdHistory.push(currentSong.getSongId());
         this.currentSong = currentState.getNextSong();
         songService.setCurrentSongId(this.currentSong.getSongId());
+        printCurrentSong();
         this.musicPlayer.play(this.currentSong.getAudioFileName());
     }
 
@@ -122,6 +128,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
             this.currentSong = songService.getSongById(previousSongId);
         }
         songService.setCurrentSongId(this.currentSong.getSongId());
+        printCurrentSong();
         this.musicPlayer.play(this.currentSong.getAudioFileName());
     }
 
@@ -141,5 +148,14 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     public String getCurrentState() {
         return currentState.getStateName();
+    }
+
+    public void printCurrentSong(){
+        int currentSongId = this.getCurrentSongId();
+        String prefix = this.isPaused() ? "Song paused : " : "Song played : ";
+        String songTitle = songService.getSongById(currentSongId).getTitle();
+
+        printLNBlue(prefix + songTitle + " - " +
+                artistService.getArtistNameBySong(currentSongId) + ". ");
     }
 }

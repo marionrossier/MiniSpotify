@@ -21,12 +21,10 @@ public class SongPlayer extends TemplateSimplePage {
                                 icon.nbr2() + icon.playPause() + icon.lineBreak +
                                 icon.nbr3()+ icon.previous() + "\t" +
                                 icon.nbr4() + " " + icon.next() + "\t " + icon.nbr5() + icon.playBack();
-
     }
 
     @Override
     public void displaySpecificContent(){
-        System.out.println();
         Playlist playlist = toolBoxView.getPlaylistServ().getPlaylistById(toolBoxView.getPlaylistServ().getCurrentPlaylistId());
         printLNBlue(
                 "Current Playlist : " + playlist.getName() +
@@ -84,11 +82,7 @@ public class SongPlayer extends TemplateSimplePage {
 
     void loop() {
         while (spotifyPlayer.isPlaying() || spotifyPlayer.isPaused()) {
-            int currentSongId = spotifyPlayer.getCurrentSongId();
-            String prefix = spotifyPlayer.isPaused() ? "Song paused : " : "Song played : ";
 
-            printLNBlue(prefix + toolBoxView.getSongServ().getSongById(currentSongId).getTitle() + " - " +
-                    toolBoxView.getArtistServ().getArtistNameBySong(currentSongId) + ". ");
             printWhite("Next input : ");
 
             validateInput();
