@@ -30,7 +30,7 @@ public class ActionFoundedSongs extends TemplateSimplePage {
         printLNWhite("Your Playlists : ");
         toolBoxView.getPrintServ().printUserPlaylists(toolBoxView.getUserServ().getCurrentUserId());
 
-        displayYourInput();
+        printYourInput();
 
         int userId = toolBoxView.getUserServ().getCurrentUserId();
         int totalPlaylist = toolBoxView.getUserServ().getUserById(userId).getPlaylists().size();

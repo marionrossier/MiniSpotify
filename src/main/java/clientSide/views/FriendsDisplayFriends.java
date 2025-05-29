@@ -17,7 +17,7 @@ public class FriendsDisplayFriends extends TemplateSimplePage {
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Display actual Friends Page";
-        this.pageContent = icon.zeroBack + icon.separator + icon.lineBreak;
+        this.pageContent = icon.zeroBack + icon.lineBreak + icon.separator + icon.lineBreak;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class FriendsDisplayFriends extends TemplateSimplePage {
         while(Integer.parseInt(friendIndex)>friends.size()){
             printInfo("Invalid input. Please try again.");
             friendIndex = pageService.gotAnInputGoBackIf0(scanner.nextLine());
-            displayYourInput();
+            printYourInput();
         }
         int friendId = friends.get(Integer.parseInt(friendIndex)-1);
 

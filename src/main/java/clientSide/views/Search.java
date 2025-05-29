@@ -51,12 +51,14 @@ public class Search extends TemplateSimplePage {
     @Override
     public void button4(){
         printLN();
-        printLNWhite("Select your Playlist to add by entering their number and press \"enter\" between each song." + icon.lineBreak +
+        printLNWhite("Select your playlist to add by entering their number and press \"enter\" between each playlist." + icon.lineBreak +
                 "End selection with an \"x\"." + icon.lineBreak);
 
         List<Integer> playlist = toolBoxView.getPlaylistServ().getPublicPlaylists();
         toolBoxView.getPrintServ().printPlaylist(playlist);
-        this.displayYourInput();
+
+        this.printYourInput();
+
         LinkedList<Integer> chosenPlaylists = toolBoxView.getSearchServ().chooseFoundedPlaylist(playlist, pageService);
         toolBoxView.getPlaylistServ().getAndAddSelectionOfPlaylistsToCurrentUserPlaylists(playlist, chosenPlaylists, toolBoxView);
         pageService.playlistHomePage.displayAllPage();

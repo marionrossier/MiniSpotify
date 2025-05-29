@@ -72,7 +72,7 @@ public class UserLocalRepository implements IUserRepository {
             }
             if (!playlists.contains(playlistId)) {
                 playlists.add(playlistId);
-                stockageService.saveToJson(filePath, data);
+                saveUser(user);
             }
         }
     }
@@ -86,7 +86,7 @@ public class UserLocalRepository implements IUserRepository {
             }
             if (!friends.contains(friendId)) {
                 friends.add(friendId);
-                stockageService.saveToJson(filePath, data);
+                saveUser(user);
             }
         }
     }
@@ -96,7 +96,7 @@ public class UserLocalRepository implements IUserRepository {
             List<Integer> friends = user.getFriends();
             if (friends != null && friends.contains(friendId)) {
                 friends.remove(Integer.valueOf(friendId));
-                stockageService.saveToJson(filePath, data);
+                saveUser(user);
             }
         }
     }

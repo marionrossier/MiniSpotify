@@ -48,7 +48,7 @@ public class PlaylistCreation extends TemplateInversePage {
 
         if (!playlistNameOk){
             printInfo("Playlist Name already exist in your playlists. Try again");
-            this.displayYourInput();
+            this.printYourInput();
             playlistNameVerification();
         }
     }

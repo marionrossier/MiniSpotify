@@ -22,7 +22,7 @@ public class FriendSearch extends TemplateSimplePage {
 
     @Override
     public void displaySpecificContent(){
-        displayYourInput();
+        printYourInput();
         String input = pageService.gotAnInputGoBackIf0(scanner.nextLine());
 
         List<Integer> usersId = toolBoxView.getSearchServ().searchUserByPseudonym(input);
@@ -30,7 +30,7 @@ public class FriendSearch extends TemplateSimplePage {
 
         if (!usersId.isEmpty()) {
             printLNWhite("Choose your friend to add by entering his number, or enter 0 to go back.");
-            displayYourInput();
+            printYourInput();
 
             String inputFriendIndex;
             int friendIndexInUsersId;
@@ -40,7 +40,7 @@ public class FriendSearch extends TemplateSimplePage {
                 friendIndexInUsersId = pageService.tryParseInt(inputFriendIndex) - 1;
                 if (friendIndexInUsersId < 0 || friendIndexInUsersId >= usersId.size()) {
                     printInvalidInputTryAgainOrBack();
-                    displayYourInput();
+                    printYourInput();
                 }
             } while (friendIndexInUsersId < 0 || friendIndexInUsersId >= usersId.size());
 

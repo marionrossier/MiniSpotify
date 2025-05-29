@@ -34,7 +34,7 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
         displayTitle(pageTitle);
         displayContent(pageContent);
         displaySpecificContent();
-        displayYourInput();
+        printYourInput();
         validateInput();
         switchPage();
     }
@@ -56,7 +56,7 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
 
     public void displaySpecificContent(){}
 
-    public final void displayYourInput(){
+    public final void printYourInput(){
         printLN();
         printWhite("Your input : ");
     }
@@ -68,7 +68,7 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
         }catch (Exception e){
             printInvalidInputTryAgain();
             scanner.nextLine(); // Clear the invalid input
-            displayYourInput();
+            printYourInput();
             validateInput();
         }
     }
