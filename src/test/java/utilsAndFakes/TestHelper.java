@@ -82,7 +82,7 @@ public class TestHelper {
 
     public void startServer() {
         try (Socket testSocket = new Socket("127.0.0.1", serverPort)) {
-            System.out.println("✅ Serveur déjà actif.");
+            System.out.println("✅ Server all ready running.");
         } catch (IOException e) {
             dependencyProvider.serverThread = new Thread(() -> {
                 try {

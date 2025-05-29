@@ -118,13 +118,21 @@ public class PageService {
         login.displayAllPage();
     }
 
-    public String gotAnInput(String input){
+    public String gotAnInputGoBackIf0(String input){
         if (input.equals("0")){
             int menuPageId = menuPagesStack.peek();
             goBack(menuPageId);
             return "";
         }
         return input;
+    }
+
+    public int tryParseInt(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 
     public Stack<Integer> getMenuPages() {
@@ -191,7 +199,7 @@ public class PageService {
                         getPageById(lastPageId).displayAllPage();
                         break;
                     default:
-                        printInfo("Invalid input.");
+                        printInvalidInput();
                         getPageById(lastPageId).displayAllPage();
                 }
             }

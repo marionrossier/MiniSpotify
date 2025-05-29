@@ -28,7 +28,7 @@ public class Main {
                 noSocketApp();
                 break;
             default:
-                printLNInfo("Invalid argument");
+                printInvalidInput();
                 break;
         }
     }

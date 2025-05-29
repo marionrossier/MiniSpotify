@@ -40,7 +40,7 @@ public class PlaylistCreation extends TemplateInversePage {
 
     private void playlistNameVerification (){
 
-        this.playlistName = pageService.gotAnInput(scanner.nextLine());
+        this.playlistName = pageService.gotAnInputGoBackIf0(scanner.nextLine());
 
         User user = toolBoxView.getUserServ().getUserById(toolBoxView.getUserServ().getCurrentUserId());
 
@@ -48,7 +48,7 @@ public class PlaylistCreation extends TemplateInversePage {
 
         if (!playlistNameOk){
             printInfo("Playlist Name already exist in your playlists. Try again");
-            this.displayInput();
+            this.displayYourInput();
             playlistNameVerification();
         }
     }

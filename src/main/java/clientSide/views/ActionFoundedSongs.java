@@ -30,9 +30,12 @@ public class ActionFoundedSongs extends TemplateSimplePage {
         printLNWhite("Your Playlists : ");
         toolBoxView.getPrintServ().printUserPlaylists(toolBoxView.getUserServ().getCurrentUserId());
 
-        displayInput();
+        displayYourInput();
 
-        int chosenPlaylist = toolBoxView.getPlaylistServ().takeAndValidationInputPlaylistChoice();
+        int userId = toolBoxView.getUserServ().getCurrentUserId();
+        int totalPlaylist = toolBoxView.getUserServ().getUserById(userId).getPlaylists().size();
+
+        int chosenPlaylist = toolBoxView.getPlaylistServ().takeAndValidateInputChoice(totalPlaylist, pageService);
         toolBoxView.getPlaylistServ().setCurrentPlaylistId(chosenPlaylist);
         verificationAndThenAction();
     }

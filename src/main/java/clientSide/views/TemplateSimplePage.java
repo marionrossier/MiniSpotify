@@ -34,7 +34,7 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
         displayTitle(pageTitle);
         displayContent(pageContent);
         displaySpecificContent();
-        displayInput();
+        displayYourInput();
         validateInput();
         switchPage();
     }
@@ -56,7 +56,7 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
 
     public void displaySpecificContent(){}
 
-    public final void displayInput (){
+    public final void displayYourInput(){
         printLN();
         printWhite("Your input : ");
     }
@@ -66,9 +66,9 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
             index = scanner.nextInt();
             scanner.nextLine(); // Clear the newline character
         }catch (Exception e){
-            printInfo("Invalid input, try again.");
+            printInvalidInputTryAgain();
             scanner.nextLine(); // Clear the invalid input
-            displayInput();
+            displayYourInput();
             validateInput();
         }
     }
@@ -104,44 +104,40 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
             case 9 :
                 button9();
             default:
-                printLNInfo("Option non available, try again.");
+                printInvalidInputTryAgain();
                 displayContent(pageContent);
         }
-    }
-
-    private void invalidChoice(){
-        printLNInfo(icon.warning() + "Invalid choice, try again." + icon.warning() + icon.lineBreak);
     }
 
     public void button0() {
         pageService.goBack(getPageId());
     }
     public void button1(){
-        invalidChoice();
+        printInvalidInputTryAgain();
         displayAllPage();
     }
     public void button2(){
-        invalidChoice();
+        printInvalidInputTryAgain();
         displayAllPage();
     }
     public void button3(){
-        invalidChoice();
+        printInvalidInputTryAgain();
         displayAllPage();
     }
     public void button4(){
-        invalidChoice();
+        printInvalidInputTryAgain();
         displayAllPage();
     }
     public void button5(){
-        invalidChoice();
+        printInvalidInputTryAgain();
         displayAllPage();
     }
     public void button6(){
-        invalidChoice();
+        printInvalidInputTryAgain();
         displayAllPage();
     }
     public void button7(){
-        invalidChoice();
+        printInvalidInputTryAgain();
         displayAllPage();
     }
     public void button8(){

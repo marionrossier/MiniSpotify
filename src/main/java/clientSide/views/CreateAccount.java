@@ -28,14 +28,14 @@ public class CreateAccount extends TemplateInversePage {
     public void displaySpecificContent () {
         printLNWhite("For going back, enter \"0\".");
         printWhite("Enter your pseudonym : ");
-        pseudonym = pageService.gotAnInput(scanner.nextLine());
+        pseudonym = pageService.gotAnInputGoBackIf0(scanner.nextLine());
         printWhite("Enter your password : ");
-        password = pageService.gotAnInput(scanner.nextLine());
+        password = pageService.gotAnInputGoBackIf0(scanner.nextLine());
         printWhite("Enter your email : ");
-        email = pageService.gotAnInput(scanner.nextLine());
+        email = pageService.gotAnInputGoBackIf0(scanner.nextLine());
         while (!toolBoxView.getUserServ().emailValidation(email)){
             printInfo("Enter a valid email address, like name@email.com :");
-            email = pageService.gotAnInput(scanner.nextLine());
+            email = pageService.gotAnInputGoBackIf0(scanner.nextLine());
         }
         printLNWhite(icon.lineBreak + "Choose your plan : ");
     }

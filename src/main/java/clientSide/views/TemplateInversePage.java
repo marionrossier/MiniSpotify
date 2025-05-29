@@ -16,7 +16,7 @@ public abstract class TemplateInversePage extends TemplateSimplePage {
         displayTitle(pageTitle);
         displaySpecificContent();
         displayContent(pageContent);
-        displayInput();
+        displayYourInput();
         validateInput();
         switchPage();
     }

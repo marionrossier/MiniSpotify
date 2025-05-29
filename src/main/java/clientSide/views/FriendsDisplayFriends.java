@@ -36,12 +36,12 @@ public class FriendsDisplayFriends extends TemplateSimplePage {
         User user = toolBoxView.getUserServ().getUserById(toolBoxView.getUserServ().getCurrentUserId());
         List<Integer> friends = user.getFriends();
 
-        String friendIndex = pageService.gotAnInput(scanner.nextLine());
+        String friendIndex = pageService.gotAnInputGoBackIf0(scanner.nextLine());
 
         while(Integer.parseInt(friendIndex)>friends.size()){
             printInfo("Invalid input. Please try again.");
-            friendIndex = pageService.gotAnInput(scanner.nextLine());
-            displayInput();
+            friendIndex = pageService.gotAnInputGoBackIf0(scanner.nextLine());
+            displayYourInput();
         }
         int friendId = friends.get(Integer.parseInt(friendIndex)-1);
 

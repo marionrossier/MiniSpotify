@@ -136,7 +136,7 @@ public class SearchService {
     private void loopIntInputValidation(PageService pageService, LinkedList<Integer> selectedSongsIndex, int size) {
         String input;
         while (true) {
-            input = pageService.gotAnInput(scanner.nextLine());
+            input = pageService.gotAnInputGoBackIf0(scanner.nextLine());
             if (input.equals("x")) {
                 break;
             }

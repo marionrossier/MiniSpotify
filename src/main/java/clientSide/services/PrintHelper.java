@@ -38,6 +38,18 @@ public class PrintHelper {
         System.out.println(PRINT_YELLOW + message + PRINT_RESET);
     }
 
+    public static void printInvalidInputTryAgain(){
+        System.out.println(PRINT_YELLOW + "Invalid input, try again." + PRINT_RESET);
+    }
+
+    public static void printInvalidInputTryAgainOrBack(){
+        System.out.println(PRINT_YELLOW + "Invalid input, try again or press \"0\" to go back." + PRINT_RESET);
+    }
+
+    public static void printInvalidInput(){
+        System.out.println(PRINT_YELLOW + "Invalid input." + PRINT_RESET);
+    }
+
     public static void printLNError(String message) {
         System.out.println(PRINT_RED + message + PRINT_RESET);
     }

@@ -5,7 +5,6 @@ import clientSide.services.PageService;
 import clientSide.services.ToolBoxView;
 
 import java.util.List;
-import java.util.Objects;
 
 import static clientSide.services.PrintHelper.*;
 
@@ -23,28 +22,27 @@ public class FriendSearch extends TemplateSimplePage {
 
     @Override
     public void displaySpecificContent(){
-        displayInput();
-        String input = pageService.gotAnInput(scanner.nextLine());
+        displayYourInput();
+        String input = pageService.gotAnInputGoBackIf0(scanner.nextLine());
 
         List<Integer> usersId = toolBoxView.getSearchServ().searchUserByPseudonym(input);
         toolBoxView.getPrintServ().printUsers(usersId);
 
         if (!usersId.isEmpty()) {
             printLNWhite("Choose your friend to add by entering his number, or enter 0 to go back.");
-            displayInput();
+            displayYourInput();
 
-            String inputFriendIndex = pageService.gotAnInput(scanner.nextLine());
-            if (Objects.equals(inputFriendIndex, "9")){
-                pageService.homePage.displayAllPage();
-                return;
-            }
-            int friendIndexInUsersId = Integer.parseInt(inputFriendIndex) - 1;
+            String inputFriendIndex;
+            int friendIndexInUsersId;
 
-            while (friendIndexInUsersId >= usersId.size()) {
-                printLNInfo("Invalid selection. Please try again.");
-                displayInput();
-                friendIndexInUsersId = Integer.parseInt(pageService.gotAnInput(scanner.nextLine()));
-            }
+            do {
+                inputFriendIndex = pageService.gotAnInputGoBackIf0(scanner.nextLine());
+                friendIndexInUsersId = pageService.tryParseInt(inputFriendIndex) - 1;
+                if (friendIndexInUsersId < 0 || friendIndexInUsersId >= usersId.size()) {
+                    printInvalidInputTryAgainOrBack();
+                    displayYourInput();
+                }
+            } while (friendIndexInUsersId < 0 || friendIndexInUsersId >= usersId.size());
 
             toolBoxView.getUserServ().addFriend(usersId.get(friendIndexInUsersId));
         }

@@ -82,19 +82,17 @@ public class CompositionRootClientSide {
         playlistReorderSongService = new PlaylistReorderSongService(toolBoxService, scanner);
         temporaryPlaylistService = new TemporaryPlaylistService(toolBoxService, userService);
 
+        musicPlayer = new MusicPlayer(frontAudioRepo, basicPlayer);
         playlistFunctionalitiesService = new PlaylistFunctionalitiesService(toolBoxService, userService,
                 songService);
         playlistServices = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService);
+        spotifyPlayer = new PlaylistPlayer(musicPlayer, frontAudioRepo, songService, playlistServices);
         printService = new PrintService(songService, artistService, playlistServices, userService);
         searchService = new SearchService(songService, printService, userService);
         uniqueIdService = new UniqueIdService();
-
-        musicPlayer = new MusicPlayer(frontAudioRepo, basicPlayer);
-        spotifyPlayer = new PlaylistPlayer(musicPlayer, frontAudioRepo, songService, playlistServices);
         toolBoxView = new ToolBoxView(playlistServices, userService, songService, artistService,
                 printService, searchService, passwordService, playlistReorderSongService,
                 temporaryPlaylistService, uniqueIdService);
-
         pageService = new PageService(spotifyPlayer, toolBoxView, userService, menuPagesStack);
     }
 

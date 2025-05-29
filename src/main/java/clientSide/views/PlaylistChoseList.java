@@ -22,7 +22,9 @@ public class PlaylistChoseList extends TemplateSimplePage {
 
     @Override
     public void validateInput() {
-        toolBoxView.getPlaylistServ().playlistPageRouter(pageService);
+        int userId = toolBoxView.getUserServ().getCurrentUserId();
+        int totalPlaylist = toolBoxView.getUserServ().getUserById(userId).getPlaylists().size();
+        toolBoxView.getPlaylistServ().playlistPageRouter(totalPlaylist,pageService);
     }
 
     @Override

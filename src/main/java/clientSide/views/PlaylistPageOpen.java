@@ -43,7 +43,7 @@ public class PlaylistPageOpen extends TemplateSimplePage {
     @Override
     public void button1() {
         printWhite(icon.zeroBack + icon.lineBreak + "Enter the new name of the playlist : ");
-        String newName = pageService.gotAnInput(in.nextLine());
+        String newName = pageService.gotAnInputGoBackIf0(in.nextLine());
         int playlistId = toolBoxView.getPlaylistServ().getCurrentPlaylistId();
         toolBoxView.getPlaylistServ().renamePlayList(playlistId, newName);
         pageService.playlistPageOpen.displayAllPage();
@@ -56,13 +56,12 @@ public class PlaylistPageOpen extends TemplateSimplePage {
 
     @Override
     public void button3() {
-        printWhite("Enter the number of the song you want to remove : ");
+        printWhite("Enter the number of the song you want to remove or \"0\" to go back: ");
 
         int playlistId = toolBoxView.getPlaylistServ().getCurrentPlaylistId();
-        int songIndex = toolBoxView.getPlaylistServ().takeAndValidateInputSongChoice(playlistId);
-        if (songIndex == 0){
-            pageService.playlistHomePage.displayAllPage();
-        }
+        int playlistSize = toolBoxView.getPlaylistServ().getPlaylistById(playlistId).getPlaylistSongsListWithId().size();
+        int songIndex = toolBoxView.getPlaylistServ().takeAndValidateInputChoice(playlistSize, pageService);
+
         int currentPlaylistId = toolBoxView.getPlaylistServ().getCurrentPlaylistId();
         toolBoxView.getPlaylistServ().deleteSongFromPlaylist(currentPlaylistId, songIndex-1);
         pageService.playlistPageOpen.displayAllPage();

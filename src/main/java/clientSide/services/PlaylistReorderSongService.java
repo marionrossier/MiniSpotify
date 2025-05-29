@@ -56,10 +56,11 @@ public class PlaylistReorderSongService {
                         printLNInfo("This song is already in the new order. Try again.");
                     }
                 } else {
-                    printInfo("Invalid selection. Please try again.");
+                    printInvalidInputTryAgain();
                 }
             } catch (NumberFormatException e) {
-                printInfo("Invalid input. Please enter a number or \"x\" to finish.");
+                printInvalidInput();
+                printInfo("Please enter a number or \"x\" to finish.");
             }
         }
 

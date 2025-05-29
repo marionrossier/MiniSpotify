@@ -120,14 +120,11 @@ public class PlaylistServices {
     public boolean isCurrentUserOwnerOfPlaylist(int playlistId) {
         return playlistFuncService.isCurrentUserOwnerOfPlaylist(playlistId);
     }
-    public int takeAndValidateInputSongChoice(int playlistId) {
-       return playlistFuncService.takeAndValidateInputSongChoice(playlistId, this);
+    public int takeAndValidateInputChoice(int totalSize, PageService pageService) {
+       return playlistFuncService.takeAndValidateInputChoice(totalSize, pageService);
     }
-    public int takeAndValidationInputPlaylistChoice() {
-        return playlistFuncService.takeAndValidationInputPlaylistChoice();
-    }
-    public void playlistPageRouter(PageService pageService) {
-        playlistFuncService.playlistPageRouter(this, pageService);
+    public void playlistPageRouter(int totalSize, PageService pageService) {
+        playlistFuncService.playlistPageRouter(totalSize, this, pageService);
     }
 
     //TEMPORARY PLAYLIST :

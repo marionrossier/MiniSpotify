@@ -32,10 +32,10 @@ public class Login extends TemplateSimplePage {
         printLN();
         printLNWhite("For going back, enter \"0\".");
         printWhite("Enter your pseudonym : ");
-        String pseudonym = pageService.gotAnInput(scanner.nextLine());
+        String pseudonym = pageService.gotAnInputGoBackIf0(scanner.nextLine());
 
         printWhite("Enter your password : ");
-        String password = pageService.gotAnInput(scanner.nextLine());
+        String password = pageService.gotAnInputGoBackIf0(scanner.nextLine());
 
         //Check the password...
         if (toolBoxView.getPasswordServ().passwordCheck(pseudonym, password)){

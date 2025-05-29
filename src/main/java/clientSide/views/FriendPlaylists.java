@@ -29,7 +29,7 @@ public class FriendPlaylists extends TemplateSimplePage {
     @Override
     public void validateInput() {
         User friend  = toolBoxView.getUserServ().getUserById(toolBoxView.getUserServ().getCurrentFriendId());
-        String playlistIndex = pageService.gotAnInput(scanner.nextLine());
+        String playlistIndex = pageService.gotAnInputGoBackIf0(scanner.nextLine());
 
         List<Integer> publicPlaylists = toolBoxView.getPlaylistServ().getUserPublicPlaylists(friend);
         int playlistId = publicPlaylists.get(Integer.parseInt(playlistIndex));

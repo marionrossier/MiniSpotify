@@ -105,76 +105,34 @@ public class PlaylistFunctionalitiesService {
         return playlist.getOwnerId() == currentUserId;
     }
 
-    public int takeAndValidateInputSongChoice(int playlistId, PlaylistServices playlistServices) {
-        Playlist playlist = playlistServices.getPlaylistById(playlistId);
-        int chosenSong;
-
+    public int takeAndValidateInputChoice(int totalSize, PageService pageService) {
+        int choice;
         while (true) {
-            String input = this.scanner.nextLine();
+            String input = pageService.gotAnInputGoBackIf0(this.scanner.nextLine());
 
-            if (input.equals("0")) {
-                return 0;
-            }
+            int inputNumber = pageService.tryParseInt(input);
 
-            try {
-                int inputNumber = Integer.parseInt(input);
-
-                if (inputNumber < 1 || inputNumber > playlist.getPlaylistSongsListWithId().size()) {
-                    printInfo("Invalid Playlist number.");
-                    printLNInfo("Try again or press \"0\" to go back : ");
-                } else {
-                    chosenSong = inputNumber;
-                    break;
-                }
-            } catch (NumberFormatException e) {
-                printInfo("Invalid input, please enter a number : ");
+            if (inputNumber < 1 || inputNumber > totalSize) {
+                printInvalidInputTryAgainOrBack();
+                printWhite("Your input : ");
+            } else {
+                choice = inputNumber;
+                break;
             }
         }
-
-        return chosenSong;
+        return choice;
     }
 
-    public int takeAndValidationInputPlaylistChoice() {
-        User currentUser = userLocalRepository.getUserById(userService.getCurrentUserId());
+    public void playlistPageRouter(int totalSize, PlaylistServices playlistServices, PageService pageService) {
 
-        int chosenPlaylist;
+        int chosenPlaylist = takeAndValidateInputChoice(totalSize, pageService);
+        int userId = userService.getCurrentUserId();
+        int playlistId = userService.getUserById(userId).getPlaylists().get(chosenPlaylist-1);
 
-        while (true) {
-            String input = this.scanner.nextLine();
+        playlistServices.setCurrentPlaylistId(playlistId);
+        songService.setCurrentSongId(playlistServices.getPlaylistById(playlistId).getPlaylistSongsListWithId().getFirst());
 
-            if (input.equals("0")) {
-                return 0;
-            }
-
-            try {
-                int inputNumber = Integer.parseInt(input);
-
-                if (inputNumber < 1 || inputNumber > currentUser.getPlaylists().size()) {
-                    printInfo("Invalid Playlist number.");
-                    printLNInfo("Try again or press \"0\" to go back : ");
-                } else {
-                    chosenPlaylist = currentUser.getPlaylists().get(inputNumber - 1);
-                    break;
-                }
-            } catch (NumberFormatException e) {
-                printInfo("Invalid input, please enter a number : ");
-            }
-        }
-
-        return chosenPlaylist;
-    }
-
-    public void playlistPageRouter(PlaylistServices playlistServices, PageService pageService) {
-        int chosenPlaylist = takeAndValidationInputPlaylistChoice();
-
-        if (chosenPlaylist == 0) {
-            pageService.homePage.displayAllPage();
-            return;
-        }
-        playlistServices.setCurrentPlaylistId(chosenPlaylist);
-        songService.setCurrentSongId(playlistServices.getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
-
-        if (isCurrentUserOwnerOfPlaylist(chosenPlaylist)){
+        if (isCurrentUserOwnerOfPlaylist(playlistId)){
             pageService.playlistPageOpen.displayAllPage();
         }
         else {

@@ -9,7 +9,7 @@ public interface InterfaceMenu {
     void displayTitle(String pageTitle);
     void displayContent(String pageContent);
 
-    void displayInput ();
+    void displayYourInput();
 
     void displaySpecificContent();
 
