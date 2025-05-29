@@ -46,7 +46,7 @@ public class Login extends TemplateSimplePage {
             pageService.homePage.displayAllPage();
         }
         else {
-            printLNInfo(icon.warning() + "Login failed ! Please try again.");
+            printLNInfo("Login failed ! Please try again.");
             button1();
         }
     }

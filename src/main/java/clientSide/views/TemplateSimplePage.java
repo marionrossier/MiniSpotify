@@ -52,24 +52,25 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
 
     public void displayContent(String pageContent){
         printLNWhite(pageContent);
+        printLN();
     }
 
     public void displaySpecificContent(){}
 
     public final void printYourInput(){
-        printLN();
         printWhite("Your input : ");
     }
 
-    public void validateInput(){
-        try{
-            index = scanner.nextInt();
-            scanner.nextLine(); // Clear the newline character
-        }catch (Exception e){
-            printInvalidInputTryAgain();
-            scanner.nextLine(); // Clear the invalid input
-            printYourInput();
-            validateInput();
+    public void validateInput() {
+        while (true) {
+            String input = scanner.nextLine().trim();
+            try {
+                index = Integer.parseInt(input);
+                break;
+            } catch (NumberFormatException e) {
+                printInvalidInputTryAgain();
+                printYourInput();
+            }
         }
     }
 
@@ -104,45 +105,43 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
             case 9 :
                 button9();
             default:
-                printInvalidInputTryAgain();
-                displayContent(pageContent);
+                handelInvalidIndex();
         }
+    }
+
+    private void handelInvalidIndex() {
+        printInvalidInputTryAgain();
+        printYourInput();
+        validateInput();
+        switchPage();
     }
 
     public void button0() {
         pageService.goBack(getPageId());
     }
     public void button1(){
-        printInvalidInputTryAgain();
-        displayAllPage();
+        handelInvalidIndex();
     }
     public void button2(){
-        printInvalidInputTryAgain();
-        displayAllPage();
+        handelInvalidIndex();
     }
     public void button3(){
-        printInvalidInputTryAgain();
-        displayAllPage();
+        handelInvalidIndex();
     }
     public void button4(){
-        printInvalidInputTryAgain();
-        displayAllPage();
+        handelInvalidIndex();
     }
     public void button5(){
-        printInvalidInputTryAgain();
-        displayAllPage();
+        handelInvalidIndex();
     }
     public void button6(){
-        printInvalidInputTryAgain();
-        displayAllPage();
+        handelInvalidIndex();
     }
     public void button7(){
-        printInvalidInputTryAgain();
-        displayAllPage();
+        handelInvalidIndex();
     }
     public void button8(){
         pageService.songPlayer.displayAllPage();
-
     }
     public void button9(){
         pageService.homePage.displayAllPage();
