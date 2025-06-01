@@ -43,18 +43,6 @@ public class UserServiceTest{
     }
 
     @Test
-    void getUserIdByPseudo_ShouldReturnTheUserId(){
-        // Arrange
-        dependencyProvider.userService.addUser("TestUser", "test@test.com", "TestPassword", PlanEnum.FREE);
-
-        // Act
-        int userId = dependencyProvider.userService.getUserIdByPseudo("TestUser");
-
-        // Assert
-        assertTrue(userId > 0);
-    }
-
-    @Test
     void verifyUserAuthentification_ShouldReturnTrue_WhenCorrectCredentialAreGiven() {
         // Arrange
         dependencyProvider.userService.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);

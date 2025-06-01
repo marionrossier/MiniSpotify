@@ -8,7 +8,7 @@ import java.util.List;
 public interface IPlaylistRepository {
 
     List<Playlist> getAllPlaylists();
-    void savePlaylist(Playlist playlist);
+    void updateOrInsertPlaylist(Playlist playlist);
     void deletePlaylistById(int playlistId);
     Playlist getPlaylistById(int playlistId);
     Playlist getPlaylistByName(String name);

@@ -28,7 +28,7 @@ public class FrontAudioRepoSocketTest {
         testHelper = new TestHelper(45000);
         dependencyProvider = testHelper.dependencyProvider;
         dependencyProvider.populateLocalUsers();
-        Cookies_SingletonPattern.setInstance(232928320, "marion", "hash");
+        Cookies.initializeInstance(232928320, "marion", "hash");
 
         try (Socket socket = new Socket("127.0.0.1", 45001)) {
             System.out.println("✅ Audio server already running.");

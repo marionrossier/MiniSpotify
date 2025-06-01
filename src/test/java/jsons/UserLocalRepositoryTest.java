@@ -34,12 +34,12 @@ class UserLocalRepositoryTest {
     }
 
     @Test
-    void saveUser_shouldSaveTheUser() {
+    void saveUser_shouldUpdateOrInsertTheUser() {
         // Arrange
         User user = new User("TestUser", "test@example.com", "1234", PlanEnum.FREE);
 
         // Act
-        userLocalRepository.saveUser(user);
+        userLocalRepository.updateOrInsertUser(user);
 
         // Assert
         List<User> users = userLocalRepository.getAllUsers();
@@ -51,7 +51,7 @@ class UserLocalRepositoryTest {
     void getUserById_shouldFindTheUser() {
         // Arrange
         User user = new User("TestUser", "test@example.com", "1234", PlanEnum.FREE);
-        userLocalRepository.saveUser(user);
+        userLocalRepository.updateOrInsertUser(user);
 
         // Act
         User result = userLocalRepository.getUserById(user.getUserId());
@@ -65,7 +65,7 @@ class UserLocalRepositoryTest {
     void getUserByPseudonym_shouldFindTheUser() {
         // Arrange
         User user = new User("TestUser", "test@example.com", "1234", PlanEnum.FREE);
-        userLocalRepository.saveUser(user);
+        userLocalRepository.updateOrInsertUser(user);
 
         // Act
         User result = userLocalRepository.getUserByPseudonym("TestUser");
@@ -79,12 +79,12 @@ class UserLocalRepositoryTest {
     void updateAccount_shouldModifyTheUser() {
         // Arrange
         User user = new User("OldUser", "old@example.com", "1234", PlanEnum.FREE);
-        userLocalRepository.saveUser(user);
+        userLocalRepository.updateOrInsertUser(user);
         int userId = user.getUserId();
 
         // Act
         user.setPseudonym("NewUser");
-        userLocalRepository.saveUser(user);
+        userLocalRepository.updateOrInsertUser(user);
         User updatedUser = userLocalRepository.getUserById(userId);
 
         // Assert

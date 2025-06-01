@@ -11,15 +11,15 @@ import static clientSide.services.PrintHelper.*;
 public class PlaylistFunctionalitiesService {
 
     Scanner scanner = new Scanner(System.in);
-    private final IUserRepository userLocalRepository;
-    private final IPlaylistRepository playlistLocalRepository;
+    private final IUserRepository userRepository;
+    private final IPlaylistRepository playlistRepository;
     private final UserService userService;
     private final SongService songService;
 
     public PlaylistFunctionalitiesService(ToolBoxService toolBoxService, UserService userService,
                                           SongService songService){
-        this.playlistLocalRepository = toolBoxService.playlistLocalRepository;
-        this.userLocalRepository = toolBoxService.userLocalRepository;
+        this.playlistRepository = toolBoxService.playlistRepository;
+        this.userRepository = toolBoxService.userRepository;
         this.userService = userService;
         this.songService = songService;
     }
@@ -39,24 +39,24 @@ public class PlaylistFunctionalitiesService {
         if (!playlists.contains(allSongsPlaylistId)) {
             playlists.addFirst(allSongsPlaylistId);
         }
-        userLocalRepository.saveUser(user);
+        userRepository.updateOrInsertUser(user);
     }
 
     public void removePlaylistFromUser (int playlistId){
-        User user = userLocalRepository.getUserById(userService.getCurrentUserId());
+        User user = userRepository.getUserById(userService.getCurrentUserId());
         List<Integer> actualPlaylists = user.getPlaylists();
 
         actualPlaylists.remove((Integer) playlistId);
-        userService.saveUser(user);
+        userRepository.updateOrInsertUser(user);
     }
 
     public void deletePlaylist(int playlistId) {
         User user = userService.getUserById(userService.getCurrentUserId());
-        Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
+        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
         int playlistOwner = playlist.getOwnerId();
 
         if (playlistOwner == user.getUserId()){
-            playlistLocalRepository.deletePlaylistById(playlistId);
+            playlistRepository.deletePlaylistById(playlistId);
             removePlaylistFromUser(playlistId);
             printLNGreen("Playlist deleted !");
         }
@@ -70,10 +70,10 @@ public class PlaylistFunctionalitiesService {
     }
 
     public void renamePlayList(int playlistId, String newName) {
-        Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
+        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
         playlist.setName(newName);
 
-        playlistLocalRepository.savePlaylist(playlist);
+        playlistRepository.updateOrInsertPlaylist(playlist);
         printLNGreen("Playlist renamed to " + newName + " !");
     }
 
@@ -81,7 +81,7 @@ public class PlaylistFunctionalitiesService {
         List<Integer> userPlaylistsIds = user.getPlaylists();
 
         for (Integer playlistId : userPlaylistsIds) {
-            Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
+            Playlist playlist = playlistRepository.getPlaylistById(playlistId);
             if (playlist != null && playlist.getName().equalsIgnoreCase(playlistName)) {
                 return false;
             }
@@ -90,14 +90,14 @@ public class PlaylistFunctionalitiesService {
     }
 
     public void deleteSongFromPlaylist(int playlistId, int songIndex) {
-        Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
+        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
 
         playlist.getPlaylistSongsListWithId().remove(songIndex);
-        playlistLocalRepository.savePlaylist(playlist);
+        playlistRepository.updateOrInsertPlaylist(playlist);
     }
 
     public boolean isCurrentUserOwnerOfPlaylist(int playlistId) {
-        Playlist playlist = playlistLocalRepository.getPlaylistById(playlistId);
+        Playlist playlist = playlistRepository.getPlaylistById(playlistId);
         if (playlist == null) {
             return false;
         }
@@ -105,76 +105,34 @@ public class PlaylistFunctionalitiesService {
         return playlist.getOwnerId() == currentUserId;
     }
 
-    public int takeAndValidateInputSongChoice(int playlistId, PlaylistServices playlistServices) {
-        Playlist playlist = playlistServices.getPlaylistById(playlistId);
-        int chosenSong;
-
+    public int takeAndValidateInputChoice(int totalSize, PageService pageService) {
+        int choice;
         while (true) {
-            String input = this.scanner.nextLine();
+            String input = pageService.gotAnInputGoBackIf0(this.scanner.nextLine());
 
-            if (input.equals("0")) {
-                return 0;
-            }
+            int inputNumber = pageService.tryParseInt(input);
 
-            try {
-                int inputNumber = Integer.parseInt(input);
-
-                if (inputNumber < 1 || inputNumber > playlist.getPlaylistSongsListWithId().size()) {
-                    printInfo("Invalid Playlist number.");
-                    printLNInfo("Try again or press \"0\" to go back : ");
-                } else {
-                    chosenSong = inputNumber;
-                    break;
-                }
-            } catch (NumberFormatException e) {
-                printInfo("Invalid input, please enter a number : ");
+            if (inputNumber < 1 || inputNumber > totalSize) {
+                printInvalidInputTryAgainOrBack();
+                printWhite("Your input : ");
+            } else {
+                choice = inputNumber;
+                break;
             }
         }
-
-        return chosenSong;
+        return choice;
     }
 
-    public int takeAndValidationInputPlaylistChoice() {
-        User currentUser = userLocalRepository.getUserById(userService.getCurrentUserId());
+    public void playlistPageRouter(int totalSize, PlaylistServices playlistServices, PageService pageService) {
 
-        int chosenPlaylist;
+        int chosenPlaylist = takeAndValidateInputChoice(totalSize, pageService);
+        int userId = userService.getCurrentUserId();
+        int playlistId = userService.getUserById(userId).getPlaylists().get(chosenPlaylist-1);
 
-        while (true) {
-            String input = this.scanner.nextLine();
+        playlistServices.setCurrentPlaylistId(playlistId);
+        songService.setCurrentSongId(playlistServices.getPlaylistById(playlistId).getPlaylistSongsListWithId().getFirst());
 
-            if (input.equals("0")) {
-                return 0;
-            }
-
-            try {
-                int inputNumber = Integer.parseInt(input);
-
-                if (inputNumber < 1 || inputNumber > currentUser.getPlaylists().size()) {
-                    printInfo("Invalid Playlist number.");
-                    printLNInfo("Try again or press \"0\" to go back : ");
-                } else {
-                    chosenPlaylist = currentUser.getPlaylists().get(inputNumber - 1);
-                    break;
-                }
-            } catch (NumberFormatException e) {
-                printInfo("Invalid input, please enter a number : ");
-            }
-        }
-
-        return chosenPlaylist;
-    }
-
-    public void playlistPageRouter(PlaylistServices playlistServices, PageService pageService) {
-        int chosenPlaylist = takeAndValidationInputPlaylistChoice();
-
-        if (chosenPlaylist == 0) {
-            pageService.homePage.displayAllPage();
-            return;
-        }
-        playlistServices.setCurrentPlaylistId(chosenPlaylist);
-        songService.setCurrentSongId(playlistServices.getPlaylistById(chosenPlaylist).getPlaylistSongsListWithId().getFirst());
-
-        if (isCurrentUserOwnerOfPlaylist(chosenPlaylist)){
+        if (isCurrentUserOwnerOfPlaylist(playlistId)){
             pageService.playlistPageOpen.displayAllPage();
         }
         else {

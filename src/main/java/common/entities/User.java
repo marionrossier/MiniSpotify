@@ -50,6 +50,10 @@ public class User {
         this.friends = friends;
     }
 
+    public void setPlanEnum(PlanEnum planEnum) {
+        this.planEnum = planEnum;
+    }
+
     public int getUserId() {
         return userId;
     }
@@ -92,10 +96,6 @@ public class User {
 
     public PlanEnum getPlanEnum() {
         return planEnum;
-    }
-
-    public void setPlanEnum(PlanEnum planEnum) {
-        this.planEnum = planEnum;
     }
 
     public List<Integer> getPlaylists() {

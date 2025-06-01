@@ -18,8 +18,8 @@ public class FrontAudioRepo implements IAudioRepository {
              DataInputStream in = new DataInputStream(socket.getInputStream())) {
 
             out.writeUTF("getAudioFile");
-            out.writeUTF(String.valueOf(Cookies_SingletonPattern.getInstance().getUserPseudonym()));
-            out.writeUTF(Cookies_SingletonPattern.getInstance().getUserPassword());
+            out.writeUTF(String.valueOf(Cookies.getInstance().getUserPseudonym()));
+            out.writeUTF(Cookies.getInstance().getUserPassword());
             out.writeUTF(fileName);
             out.flush();
 

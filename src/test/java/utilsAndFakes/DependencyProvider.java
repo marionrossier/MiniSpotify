@@ -3,7 +3,7 @@ package utilsAndFakes;
 import clientSide.repoFront.*;
 import clientSide.services.*;
 import common.*;
-import clientSide.player_StatePattern.playlist_player.*;
+import clientSide.player.playlist_player.*;
 import clientSide.socket.*;
 import common.entities.*;
 import common.services.StockageService;
@@ -115,7 +115,7 @@ public class DependencyProvider {
 
         fakeMusicPlayer = new FakeMusicPlayer();
         playlistPlayer = new PlaylistPlayer(
-                fakeMusicPlayer, audioLocalRepository, songService, playlistService);
+                fakeMusicPlayer, audioLocalRepository, songService, playlistService, artistService);
 
         toolBoxView = new ToolBoxView(playlistService, userService, songService, artistService, printService,
                 searchService, passwordService, playlistReorderSongService, temporaryPlaylistService, uniqueIdService);
@@ -149,15 +149,15 @@ public class DependencyProvider {
         User florent = new User("florent", "florent@example.com", "hash", PlanEnum.FREE);
         florent.setUserId(1726370281);
 
-        userLocalRepository.saveUser(marion);
-        userLocalRepository.saveUser(florent);
+        userLocalRepository.updateOrInsertUser(marion);
+        userLocalRepository.updateOrInsertUser(florent);
     }
 
     public void populateLocalArtist(){
-        LinkedList<Integer> amy = new LinkedList<>(Arrays.asList(1108071776,342105258,625427469,661206135));
+        LinkedList<Integer> amy = new LinkedList<>(Arrays.asList(1108071776,342105258,625427469,661206135, 1, 2, 3));
         Artist amyWinehouse = new Artist(960571432, "Amy Winehouse", amy);
 
-        artistLocalRepository.saveArtist(amyWinehouse);
+        artistLocalRepository.updateOrInsertArtist(amyWinehouse);
     }
 
     public void populateLocalSong(){
@@ -179,8 +179,8 @@ public class DependencyProvider {
                 new LinkedList<>(Arrays.asList(243871940, 1824616046, 1287974581, 614172035, 494087492, 515539482)),
                 1, PlaylistEnum.PUBLIC);
 
-        playlistLocalRepository.savePlaylist(playlist1);
-        playlistLocalRepository.savePlaylist(playlist2);
+        playlistLocalRepository.updateOrInsertPlaylist(playlist1);
+        playlistLocalRepository.updateOrInsertPlaylist(playlist2);
     }
 
     public void cleanUp() {

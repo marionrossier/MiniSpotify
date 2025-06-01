@@ -32,7 +32,7 @@ public class UserLocalRepository implements IUserRepository {
                 .findFirst();
     }
 
-    public User getUserByPseudonymLogin(String pseudonym) {
+    public User getUserByPseudonym(String pseudonym) {
         return data.stream()
                 .filter(user -> user.getPseudonym().equals(pseudonym))
                 .findFirst()
@@ -43,7 +43,7 @@ public class UserLocalRepository implements IUserRepository {
         return new ArrayList<>(data);
     }
 
-    public void saveUser(User user) {
+    public void updateOrInsertUser(User user) {
         data.removeIf(u -> u.getUserId() == user.getUserId());
         data.add(user);
         stockageService.saveToJson(filePath, data);
@@ -54,50 +54,5 @@ public class UserLocalRepository implements IUserRepository {
                 .filter(user -> user.getUserId() == userId)
                 .findFirst()
                 .orElse(null);
-    }
-
-    public User getUserByPseudonym(String pseudonym) {
-        return data.stream()
-                .filter(user -> user.getPseudonym().equals(pseudonym))
-                .findFirst()
-                .orElse(null);
-    }
-
-    public void addPlaylistToUser(User user, int playlistId) {
-        if (user != null) {
-            List<Integer> playlists = user.getPlaylists();
-            if (playlists == null) {
-                playlists = new ArrayList<>();
-                user.setPlaylists(playlists);
-            }
-            if (!playlists.contains(playlistId)) {
-                playlists.add(playlistId);
-                stockageService.saveToJson(filePath, data);
-            }
-        }
-    }
-
-    public void addFriendToUser(User user, int friendId) {
-        if (user != null) {
-            List<Integer> friends = user.getFriends();
-            if (friends == null) {
-                friends = new ArrayList<>();
-                user.setFriends(friends);
-            }
-            if (!friends.contains(friendId)) {
-                friends.add(friendId);
-                stockageService.saveToJson(filePath, data);
-            }
-        }
-    }
-
-    public void deleteFriendFromUser(User user, int friendId) {
-        if (user != null) {
-            List<Integer> friends = user.getFriends();
-            if (friends != null && friends.contains(friendId)) {
-                friends.remove(Integer.valueOf(friendId));
-                stockageService.saveToJson(filePath, data);
-            }
-        }
     }
 }

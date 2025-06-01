@@ -10,6 +10,7 @@ public class PrintHelper {
     static final String PRINT_YELLOW = "\u001B[33m";
     static final String PRINT_BLUE = "\u001B[34m";
     static final String PRINT_WHITE = "\u001B[28m";
+    static final String PRINT_GREY = "\u001B[90m";
 
     static final String PRINT_BG_WHITE = "\u001B[47m";
     static final String PRINT_BOLD = "\u001B[1m";
@@ -34,8 +35,28 @@ public class PrintHelper {
         System.out.println(PRINT_GREEN + message + PRINT_RESET);
     }
 
+    public static void printLNGrey(String message) {
+        System.out.println(PRINT_GREY + message + PRINT_RESET);
+    }
+
     public static void printLNInfo(String message) {
         System.out.println(PRINT_YELLOW + message + PRINT_RESET);
+    }
+
+    public static void printInvalidInputTryAgain(){
+        System.out.println(PRINT_YELLOW + "Invalid input, try again." + PRINT_RESET);
+    }
+
+    public static void printYourInput(){
+        printWhite("Your input : ");
+    }
+
+    public static void printInvalidInputTryAgainOrBack(){
+        System.out.println(PRINT_YELLOW + "Invalid input, try again or press \"0\" to go back." + PRINT_RESET);
+    }
+
+    public static void printInvalidInput(){
+        System.out.println(PRINT_YELLOW + "Invalid input." + PRINT_RESET);
     }
 
     public static void printLNError(String message) {

@@ -41,11 +41,24 @@ public class FrontUserRepo implements IUserRepository {
     }
 
     @Override
-    public User getUserByPseudonymLogin(String pseudonym) {
+    public User getUserByPseudonym(String pseudonym) {
         return getUserFromServer(Map.of(
-                "command", "getUserByPseudonymLogin",
+                "command", "getUserByPseudonym",
                 "pseudonym", pseudonym
         ));
+    }
+
+    @Override
+    public void updateOrInsertUser(User user) {
+        try {
+            Map<String, Object> request = Map.of(
+                    "command", "updateOrInsertUser",
+                    "user", mapper.convertValue(user, Map.class)
+            );
+            socketClient.sendRequest(request);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -53,8 +66,8 @@ public class FrontUserRepo implements IUserRepository {
         try {
             Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getAllUsers",
-                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                    "password", Cookies_SingletonPattern.getInstance().getUserPassword()
+                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
+                    "password", Cookies.getInstance().getUserPassword()
             ));
 
             if (!"OK".equals(response.get("status"))) return null;
@@ -69,86 +82,13 @@ public class FrontUserRepo implements IUserRepository {
     }
 
     @Override
-    public void saveUser(User user) {
-        try {
-            Map<String, Object> request = Map.of(
-                    "command", "saveUser",
-                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
-                    "user", mapper.convertValue(user, Map.class)
-            );
-            socketClient.sendRequest(request);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
     public User getUserById(int userId) {
         return getUserFromServer(Map.of(
                 "command", "getUserById",
-                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
+                "userPseudonym", Cookies.getInstance().getUserPseudonym(),
+                "password", Cookies.getInstance().getUserPassword(),
                 "userId", userId
         ));
-    }
-
-    @Override
-    public User getUserByPseudonym(String pseudonym) {
-        return getUserFromServer(Map.of(
-                "command", "getUserByPseudonym",
-                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
-                "pseudonym", pseudonym
-        ));
-    }
-
-    @Override
-    public void addPlaylistToUser(User user, int playlistId) {
-        try {
-            Map<String, Object> request = Map.of(
-                    "command", "addPlaylistToUser",
-                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
-                    "user", mapper.convertValue(user, Map.class),
-                    "playlistId", playlistId
-            );
-            socketClient.sendRequest(request);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void addFriendToUser(User user, int friendId) {
-        try {
-            Map<String, Object> request = Map.of(
-                    "command", "addFriendToUser",
-                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
-                    "user", mapper.convertValue(user, Map.class),
-                    "friendId", friendId
-            );
-            socketClient.sendRequest(request);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void deleteFriendFromUser(User user, int friendId) {
-        try {
-            Map<String, Object> request = Map.of(
-                    "command", "deleteFriendFromUser",
-                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
-                    "user", mapper.convertValue(user, Map.class),
-                    "friendId", friendId
-            );
-            socketClient.sendRequest(request);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private User getUserFromServer(Map<String, Object> request) {

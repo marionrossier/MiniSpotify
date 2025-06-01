@@ -25,8 +25,8 @@ public class FrontArtistRepo implements IArtistRepository {
         try {
             Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getAllArtists",
-                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                    "password", Cookies_SingletonPattern.getInstance().getUserPassword()
+                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
+                    "password", Cookies.getInstance().getUserPassword()
             ));
 
             if (!"OK".equals(response.get("status"))) return null;
@@ -44,8 +44,8 @@ public class FrontArtistRepo implements IArtistRepository {
         try {
             Map<String, Object> request = Map.of(
                     "command", "addArtist",
-                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
+                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
+                    "password", Cookies.getInstance().getUserPassword(),
                     "artist", mapper.convertValue(artist, Map.class)
             );
             socketClient.sendRequest(request);
@@ -58,19 +58,19 @@ public class FrontArtistRepo implements IArtistRepository {
     public Artist getArtistById(int artistId) {
         return getArtistFromServer(Map.of(
                 "command", "getArtistById",
-                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
+                "userPseudonym", Cookies.getInstance().getUserPseudonym(),
+                "password", Cookies.getInstance().getUserPassword(),
                 "artistId", artistId
         ));
     }
 
     @Override
-    public void saveArtist(Artist artist) {
+    public void updateOrInsertArtist(Artist artist) {
         try {
             Map<String, Object> request = Map.of(
-                    "command", "saveArtist",
-                    "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                    "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
+                    "command", "updateOrInsertArtist",
+                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
+                    "password", Cookies.getInstance().getUserPassword(),
                     "artist", mapper.convertValue(artist, Map.class)
             );
             socketClient.sendRequest(request);
@@ -83,8 +83,8 @@ public class FrontArtistRepo implements IArtistRepository {
     public Artist getArtistByName(String name) {
         return getArtistFromServer(Map.of(
                 "command", "getArtistByName",
-                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
+                "userPseudonym", Cookies.getInstance().getUserPseudonym(),
+                "password", Cookies.getInstance().getUserPassword(),
                 "artistName", name
         ));
     }
@@ -93,8 +93,8 @@ public class FrontArtistRepo implements IArtistRepository {
     public Artist getArtistBySongId(int songId) {
         return getArtistFromServer(Map.of(
                 "command", "getArtistBySongId",
-                "userPseudonym", Cookies_SingletonPattern.getInstance().getUserPseudonym(),
-                "password", Cookies_SingletonPattern.getInstance().getUserPassword(),
+                "userPseudonym", Cookies.getInstance().getUserPseudonym(),
+                "password", Cookies.getInstance().getUserPassword(),
                 "songId", songId
         ));
     }

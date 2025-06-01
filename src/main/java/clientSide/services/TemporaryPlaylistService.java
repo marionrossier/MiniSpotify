@@ -10,16 +10,16 @@ import static clientSide.services.PrintHelper.*;
 
 public class TemporaryPlaylistService {
 
-    private final IPlaylistRepository playlistLocalRepository;
+    private final IPlaylistRepository playlistRepository;
     private final UserService userService;
 
     public TemporaryPlaylistService(ToolBoxService toolBoxService, UserService userService){
-        this.playlistLocalRepository = toolBoxService.playlistLocalRepository;
+        this.playlistRepository = toolBoxService.playlistRepository;
         this.userService = userService;
     }
 
     public int getTemporaryPlaylistId() {
-        Playlist playlist = playlistLocalRepository.getPlaylistByName("temporaryPlaylist");
+        Playlist playlist = playlistRepository.getPlaylistByName("temporaryPlaylist");
         if (playlist == null) {
             return new Playlist("temporaryPlaylist", PlaylistEnum.PRIVATE).getPlaylistId();
         }
@@ -31,27 +31,27 @@ public class TemporaryPlaylistService {
             return;
         }
         int currentUserId = userService.getCurrentUserId();
-        Playlist temporaryPlaylist = playlistLocalRepository.getTemporaryPlaylistOfCurrentUser(currentUserId);
+        Playlist temporaryPlaylist = playlistRepository.getTemporaryPlaylistOfCurrentUser(currentUserId);
 
         if (temporaryPlaylist == null) {
             temporaryPlaylist = new Playlist("temporaryPlaylist", PlaylistEnum.PRIVATE);
-            playlistLocalRepository.savePlaylist(temporaryPlaylist);
+            playlistRepository.updateOrInsertPlaylist(temporaryPlaylist);
         }
         temporaryPlaylist.setListSongsId(chosenSongs);
 
         temporaryPlaylist.setOwnerId(currentUserId);
         temporaryPlaylist.setStatus(status);
 
-        playlistLocalRepository.savePlaylist(temporaryPlaylist);
+        playlistRepository.updateOrInsertPlaylist(temporaryPlaylist);
     }
 
     public void adjustTemporaryPlaylistToNewPlaylist(String playlistName, PlaylistEnum status) {
         int currentUserId = userService.getCurrentUserId();
-        Playlist newPlaylist = playlistLocalRepository.getTemporaryPlaylistOfCurrentUser(currentUserId);
+        Playlist newPlaylist = playlistRepository.getTemporaryPlaylistOfCurrentUser(currentUserId);
         if (newPlaylist != null) {
             newPlaylist.setName(playlistName);
             newPlaylist.setStatus(status);
-            playlistLocalRepository.savePlaylist(newPlaylist);
+            playlistRepository.updateOrInsertPlaylist(newPlaylist);
             userService.addOnePlaylistToCurrentUser(newPlaylist.getPlaylistId());
         } else {
             printLNError("Temporary playlist not found.");
@@ -59,8 +59,8 @@ public class TemporaryPlaylistService {
     }
 
     public void addSongToPlaylistFromTemporaryPlaylist(int temporaryPlaylistId, int finalPlaylistId) {
-        Playlist temporaryPlaylist = playlistLocalRepository.getPlaylistById(temporaryPlaylistId);
-        Playlist targetPlaylist = playlistLocalRepository.getPlaylistById(finalPlaylistId);
+        Playlist temporaryPlaylist = playlistRepository.getPlaylistById(temporaryPlaylistId);
+        Playlist targetPlaylist = playlistRepository.getPlaylistById(finalPlaylistId);
 
         if (targetPlaylist != null && temporaryPlaylist != null) {
             for (Integer songId : temporaryPlaylist.getPlaylistSongsListWithId()) {
@@ -68,7 +68,7 @@ public class TemporaryPlaylistService {
                     targetPlaylist.getPlaylistSongsListWithId().add(songId);
                 }
             }
-            playlistLocalRepository.savePlaylist(targetPlaylist);
+            playlistRepository.updateOrInsertPlaylist(targetPlaylist);
         } else {
             printLNError("Target playlist or temporary playlist not found.");
         }

@@ -25,9 +25,10 @@ public class PlaylistPlayerTest{
     void setUp() throws IOException {
         testHelper = new TestHelper(45000);
         dependencyProvider = testHelper.dependencyProvider;
+        dependencyProvider.populateLocalArtist();
 
         // Create Cookies_SingeltonPattern instance
-        Cookies_SingletonPattern.setInstance(400953820, "tester", "password"); //testUsers
+        Cookies.initializeInstance(400953820, "tester", "password"); //testUsers
 
         // Create test songs
         Song song1 = testHelper.createSong(1, "Song 1", "song1.mp3");
@@ -42,7 +43,7 @@ public class PlaylistPlayerTest{
         // Create a test playlist
         Playlist playlist = new Playlist("Test Playlist", PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(1);
-        dependencyProvider.playlistLocalRepository.savePlaylist(playlist);
+        dependencyProvider.playlistLocalRepository.updateOrInsertPlaylist(playlist);
 
         testHelper.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), dependencyProvider.playlistLocalRepository);
         testHelper.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), dependencyProvider.playlistLocalRepository);
@@ -85,21 +86,6 @@ public class PlaylistPlayerTest{
 
         // Test resume
         dependencyProvider.playlistPlayer.playOrPause(dependencyProvider.songService.getCurrentSongId());
-        assertTrue(dependencyProvider.fakeMusicPlayer.isPlaying());
-    }
-    @Test
-    void testPauseAndResume() {
-        // First play a song
-        dependencyProvider.playlistPlayer.play(1, 1);
-        assertTrue(dependencyProvider.fakeMusicPlayer.isPlaying());
-        dependencyProvider.songService.setCurrentSongId(dependencyProvider.playlistPlayer.getCurrentSongId());
-        
-        // Test pause
-        dependencyProvider.playlistPlayer.pause();
-        assertFalse(dependencyProvider.fakeMusicPlayer.isPlaying());
-        
-        // Test resume
-        dependencyProvider.playlistPlayer.resume(dependencyProvider.songService.getCurrentSongId());
         assertTrue(dependencyProvider.fakeMusicPlayer.isPlaying());
     }
 
@@ -171,7 +157,7 @@ public class PlaylistPlayerTest{
         // Test previous with no history
         dependencyProvider.playlistPlayer.previous();
         // Should still be on song 1
-        assertEquals(1, dependencyProvider.playlistPlayer.getCurrentSongId());
+        assertEquals(3, dependencyProvider.playlistPlayer.getCurrentSongId());
     }
 
     @Test

@@ -4,23 +4,23 @@ import common.*;
 
 public class ToolBoxService {
 
-    public final IUserRepository userLocalRepository;
-    public final IPlaylistRepository playlistLocalRepository;
-    public final ISongRepository songLocalRepository;
-    public final IArtistRepository artistLocalRepository;
-    public final IAudioRepository audioLocalRepository;
+    public final IUserRepository userRepository;
+    public final IPlaylistRepository playlistRepository;
+    public final ISongRepository songRepository;
+    public final IArtistRepository artistRepository;
+    public final IAudioRepository audioRepository;
 
 
-    public ToolBoxService(IPlaylistRepository playlistLocalRepository,
-                          IUserRepository userLocalRepository,
-                          ISongRepository songLocalRepository,
-                          IArtistRepository artistLocalRepository,
-                          IAudioRepository audioLocalRepository){
+    public ToolBoxService(IPlaylistRepository playlistRepository,
+                          IUserRepository userRepository,
+                          ISongRepository songRepository,
+                          IArtistRepository artistRepository,
+                          IAudioRepository audioRepository){
 
-        this.playlistLocalRepository = playlistLocalRepository;
-        this.userLocalRepository = userLocalRepository;
-        this.songLocalRepository = songLocalRepository;
-        this.artistLocalRepository = artistLocalRepository;
-        this.audioLocalRepository = audioLocalRepository;
+        this.playlistRepository = playlistRepository;
+        this.userRepository = userRepository;
+        this.songRepository = songRepository;
+        this.artistRepository = artistRepository;
+        this.audioRepository = audioRepository;
     }
 }

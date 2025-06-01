@@ -12,27 +12,27 @@ import static clientSide.services.PrintHelper.*;
 
 public class PlaylistServices {
 
-    private final IPlaylistRepository playlistLocalRepository;
+    private final IPlaylistRepository playlistRepository;
     private final TemporaryPlaylistService temporaryPlaylistService;
     private final PlaylistFunctionalitiesService playlistFuncService;
-    private final ISongRepository songLocalRepository;
+    private final ISongRepository songRepository;
 
 
     public PlaylistServices (ToolBoxService toolBoxService,
                              PlaylistFunctionalitiesService playlistFuncService,
                              TemporaryPlaylistService temporaryPlaylistService){
-        this.playlistLocalRepository = toolBoxService.playlistLocalRepository;
+        this.playlistRepository = toolBoxService.playlistRepository;
         this.temporaryPlaylistService = temporaryPlaylistService;
         this.playlistFuncService = playlistFuncService;
-        this.songLocalRepository = toolBoxService.songLocalRepository;
+        this.songRepository = toolBoxService.songRepository;
     }
 
     public int setDurationSeconds(int playlistId) {
         int totalSeconds = 0;
-        Playlist playlist = this.playlistLocalRepository.getPlaylistById(playlistId);
+        Playlist playlist = this.playlistRepository.getPlaylistById(playlistId);
         if (playlist != null) {
             for (Integer songId : playlist.getPlaylistSongsListWithId()) {
-                Song song = songLocalRepository.getSongById(songId);
+                Song song = songRepository.getSongById(songId);
                 if (song != null) {
                     totalSeconds += song.getDurationSeconds();
                 }
@@ -42,32 +42,32 @@ public class PlaylistServices {
     }
 
     public void setCurrentPlaylistId (int playlistId){
-        Cookies_SingletonPattern.setCurrentPlaylistId(playlistId);
+        Cookies.setCurrentPlaylistId(playlistId);
     }
 
     public int getCurrentPlaylistId (){
-        return Cookies_SingletonPattern.getInstance().getCurrentPlaylistId();
+        return Cookies.getInstance().getCurrentPlaylistId();
     }
 
     public PlaylistEnum getPlaylistStatus (){
         Playlist playlist = getPlaylistById(getCurrentPlaylistId());
-        return playlistLocalRepository.getPlaylistStatus(playlist);
+        return playlistRepository.getPlaylistStatus(playlist);
     }
 
     public int getAllSongsPlaylistId (){
-        return playlistLocalRepository.getPlaylistByName("AllSongs").getPlaylistId();
+        return playlistRepository.getPlaylistByName("AllSongs").getPlaylistId();
     }
 
     public Playlist getPlaylistByName(String name) {
-        return playlistLocalRepository.getPlaylistByName(name);
+        return playlistRepository.getPlaylistByName(name);
     }
 
     public Playlist getPlaylistById(int id) {
-        return playlistLocalRepository.getPlaylistById(id);
+        return playlistRepository.getPlaylistById(id);
     }
 
     public List<Integer> getPublicPlaylists() {
-        List<Playlist> allPlaylists = playlistLocalRepository.getAllPlaylists();
+        List<Playlist> allPlaylists = playlistRepository.getAllPlaylists();
         List<Integer> publicPlaylistIds = new ArrayList<>();
 
         for (Playlist playlist : allPlaylists){
@@ -91,11 +91,11 @@ public class PlaylistServices {
     }
 
     public int getCurrentFriendPlaylistId (){
-        return Cookies_SingletonPattern.getInstance().getCurrentFriendPlaylistId();
+        return Cookies.getInstance().getCurrentFriendPlaylistId();
     }
 
     public void setCurrentFriendPlaylistId (int playlistId){
-        Cookies_SingletonPattern.getInstance().setCurrentFriendPlaylistId(playlistId);
+        Cookies.getInstance().setCurrentFriendPlaylistId(playlistId);
     }
 
     //PLAYLIST FUNCTIONALITIES :
@@ -120,14 +120,11 @@ public class PlaylistServices {
     public boolean isCurrentUserOwnerOfPlaylist(int playlistId) {
         return playlistFuncService.isCurrentUserOwnerOfPlaylist(playlistId);
     }
-    public int takeAndValidateInputSongChoice(int playlistId) {
-       return playlistFuncService.takeAndValidateInputSongChoice(playlistId, this);
+    public int takeAndValidateInputChoice(int totalSize, PageService pageService) {
+       return playlistFuncService.takeAndValidateInputChoice(totalSize, pageService);
     }
-    public int takeAndValidationInputPlaylistChoice() {
-        return playlistFuncService.takeAndValidationInputPlaylistChoice();
-    }
-    public void playlistPageRouter(PageService pageService) {
-        playlistFuncService.playlistPageRouter(this, pageService);
+    public void playlistPageRouter(int totalSize, PageService pageService) {
+        playlistFuncService.playlistPageRouter(totalSize, this, pageService);
     }
 
     //TEMPORARY PLAYLIST :

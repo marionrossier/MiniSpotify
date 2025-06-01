@@ -10,21 +10,12 @@ import java.util.List;
 import static clientSide.services.PrintHelper.*;
 
 public class UserService {
-    private final IUserRepository userLocalRepository;
+    private final IUserRepository userRepository;
     private final PasswordService passwordService;
 
     public UserService(ToolBoxService toolBoxService, PasswordService passwordService){
-        this.userLocalRepository = toolBoxService.userLocalRepository;
+        this.userRepository = toolBoxService.userRepository;
         this.passwordService = passwordService;
-    }
-
-    public int getUserIdByPseudo(String pseudo) {
-
-        User searchedUser = getUserByPseudonym(pseudo);
-        if (searchedUser == null) {
-            return -1; // Return -1 if the pseudo was not found
-        }
-        return searchedUser.getUserId();
     }
 
     public void addUser(String pseudonym, String email, String password, PlanEnum plan) {
@@ -37,7 +28,8 @@ public class UserService {
         }
         else {
             User newUser = new User(pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
-            userLocalRepository.saveUser(newUser);
+            saveUser(newUser);
+            printLNGreen("Account created successfully !");
         }
     }
 
@@ -51,38 +43,36 @@ public class UserService {
         }
         else {
             User newUser = new User(id, pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
-            userLocalRepository.saveUser(newUser);
+            saveUser(newUser);
         }
     }
 
-    public int getCurrentUserId(){
-        return Cookies_SingletonPattern.getInstance().getUserId();
-    }
-
-    public void saveUser (User user){
-        userLocalRepository.saveUser(user);
-    }
-
-    public void resetCookie (){
-        Cookies_SingletonPattern.resetCookies();
+    public boolean emailValidation(String email) {
+        String emailRegex = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
+        if (email != null && email.matches(emailRegex)) {
+            return true;
+        }
+        return false;
     }
 
     public void addOnePlaylistToCurrentUser(int playlistId) {
-        List<Integer> playlists = userLocalRepository.getUserById(getCurrentUserId()).getPlaylists();
+        User user = userRepository.getUserById(getCurrentUserId());
+        List<Integer> playlists = user.getPlaylists();
         if (playlists == null) {
             playlists = new ArrayList<>();
-            userLocalRepository.getUserById(getCurrentUserId()).setPlaylists(playlists);
+            user.setPlaylists(playlists);
         }
-        User user = userLocalRepository.getUserById(getCurrentUserId());
-        userLocalRepository.addPlaylistToUser(user,playlistId);
+        playlists.add(playlistId);
+        saveUser(user);
+        printLNGreen("Playlist has been added.");
     }
 
     public void addFriend(int friendId) {
-        User user = userLocalRepository.getUserById(getCurrentUserId());
+        User user = userRepository.getUserById(getCurrentUserId());
         List<Integer> friends = user.getFriends();
         if (!friends.contains(friendId)) {
             friends.add(friendId);
-            userLocalRepository.saveUser(user);
+            saveUser(user);
             printLNGreen("Friend add to your friend list.");
         }
         else {
@@ -91,19 +81,31 @@ public class UserService {
     }
 
     public void deleteFriend(int friendId) {
-        User user = userLocalRepository.getUserById(getCurrentUserId());
+        User user = userRepository.getUserById(getCurrentUserId());
         List<Integer> friends = user.getFriends();
         friends.remove(Integer.valueOf(friendId));
-        userLocalRepository.saveUser(user);
+        saveUser(user);
+    }
+
+    public void saveUser (User user){
+        userRepository.updateOrInsertUser(user);
+    }
+
+    public int getCurrentUserId(){
+        return Cookies.getInstance().getUserId();
+    }
+
+    public void resetCookie (){
+        Cookies.resetCookies();
     }
 
     public User getUserByPseudonym(String pseudonym) {
-        return userLocalRepository.getUserByPseudonym(pseudonym);
+        return userRepository.getUserByPseudonym(pseudonym);
     }
 
     public List<Integer> getUsersByPseudonym(String pseudonym){
         List<Integer> userIds = new ArrayList<>();
-        List<User> allUsers = userLocalRepository.getAllUsers();
+        List<User> allUsers = userRepository.getAllUsers();
         if (pseudonym == null || pseudonym.isEmpty()) {
             return userIds;
         }
@@ -116,26 +118,14 @@ public class UserService {
     }
 
     public User getUserById(int userId) {
-        return userLocalRepository.getUserById(userId);
-    }
-
-    public boolean emailValidation(String email) {
-        String emailRegex = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
-        if (email != null && email.matches(emailRegex)) {
-            return true;
-        }
-        return false;
-    }
-
-    public User getUserByPseudonymLogin(String pseudonym) {
-        return userLocalRepository.getUserByPseudonymLogin(pseudonym);
+        return userRepository.getUserById(userId);
     }
 
     public void setCurrentFriendId (int friendId){
-        Cookies_SingletonPattern.getInstance().setCurrentFriendId(friendId);
+        Cookies.getInstance().setCurrentFriendId(friendId);
     }
 
     public int getCurrentFriendId (){
-        return Cookies_SingletonPattern.getInstance().getCurrentFriendId();
+        return Cookies.getInstance().getCurrentFriendId();
     }
 }

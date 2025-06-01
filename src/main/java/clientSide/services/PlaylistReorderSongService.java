@@ -12,12 +12,11 @@ import static clientSide.services.PrintHelper.*;
 public class PlaylistReorderSongService {
 
     private final Scanner scanner;
-    private final IPlaylistRepository playlistLocalRepository;
+    private final IPlaylistRepository playlistRepository;
 
     public PlaylistReorderSongService(ToolBoxService toolBoxService, Scanner scanner) {
-        this.playlistLocalRepository = toolBoxService.playlistLocalRepository;
+        this.playlistRepository = toolBoxService.playlistRepository;
         this.scanner = scanner;
-
     }
 
     public void reorderSongsInPlaylist(int playlistId, PlaylistServices playlistServices) {
@@ -26,10 +25,13 @@ public class PlaylistReorderSongService {
 
         completeWithRemainingSongs(playlist, newOrder);
         playlist.setListSongsId(newOrder);
-        playlistLocalRepository.savePlaylist(playlist);
+        playlistRepository.updateOrInsertPlaylist(playlist);
 
-        printSuccessMessage(playlist, newOrder);
-    }
+        if (newOrder.size() < playlist.getPlaylistSongsListWithId().size()) {
+            printLNGreen("Playlist reordered successfully with remaining songs added at the end!");
+        } else {
+            printLNGreen("Playlist reordered successfully!");
+        }    }
 
     private LinkedList<Integer> collectNewOrderFromUser(Playlist playlist) {
         LinkedList<Integer> newOrder = new LinkedList<>();
@@ -54,10 +56,11 @@ public class PlaylistReorderSongService {
                         printLNInfo("This song is already in the new order. Try again.");
                     }
                 } else {
-                    printInfo("Invalid selection. Please try again.");
+                    printInvalidInputTryAgain();
                 }
             } catch (NumberFormatException e) {
-                printInfo("Invalid input. Please enter a number or \"x\" to finish.");
+                printInvalidInput();
+                printInfo("Please enter a number or \"x\" to finish.");
             }
         }
 
@@ -76,13 +79,4 @@ public class PlaylistReorderSongService {
             }
         }
     }
-
-    private void printSuccessMessage(Playlist playlist, List<Integer> newOrder) {
-        if (newOrder.size() < playlist.getPlaylistSongsListWithId().size()) {
-            printLNGreen("Playlist reordered successfully with remaining songs added at the end!");
-        } else {
-            printLNGreen("Playlist reordered successfully!");
-        }
-    }
-
 }

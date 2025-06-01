@@ -61,11 +61,11 @@ public class BackPlaylistRepo {
                     return "{\"status\": \"OK\"}";
                 }
 
-                case "savePlaylist" -> {
+                case "updateOrInsertPlaylist" -> {
                     @SuppressWarnings("unchecked")
                     Map<String, Object> playlistData = (Map<String, Object>) request.get("playlist");
                     Playlist playlist = mapper.convertValue(playlistData, Playlist.class);
-                    playlistRepo.savePlaylist(playlist);
+                    playlistRepo.updateOrInsertPlaylist(playlist);
                     return "{\"status\": \"OK\"}";
                 }
 
@@ -78,11 +78,14 @@ public class BackPlaylistRepo {
                 }
 
                 case "getTemporaryPlaylistOfCurrentUser" -> {
-                    Playlist temp = playlistRepo.getTemporaryPlaylistOfCurrentUser(user.getUserId());
-                    return temp != null
-                            ? mapper.writeValueAsString(Map.of("status", "OK", "playlist", temp))
-                            : "{\"status\": \"ERROR\", \"message\": \"No temporary playlist\"}";
+                    int userId = Integer.parseInt((String) request.get("userId")); // ou autre
+                    Playlist temp = playlistRepo.getTemporaryPlaylistOfCurrentUser(userId);
+                    return mapper.writeValueAsString(Map.of(
+                            "status", "OK",
+                            "playlist", temp // peut être null → c'est OK
+                    ));
                 }
+
 
                 default -> {
                     return "{\"status\": \"ERROR\", \"message\": \"Unknown command\"}";

@@ -13,10 +13,10 @@ import static clientSide.services.PrintHelper.*;
 
 public class PasswordService {
 
-    private final IUserRepository userLocalRepository;
+    private final IUserRepository userRepository;
 
-    public PasswordService(IUserRepository userLocalRepository) {
-        this.userLocalRepository = userLocalRepository;
+    public PasswordService(IUserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public byte[] generateSalt() {
@@ -40,7 +40,7 @@ public class PasswordService {
 
     public boolean verifyUserAuthentification(String pseudonym, String password) {
 
-        User searchedUser = userLocalRepository.getUserByPseudonymLogin(pseudonym);
+        User searchedUser = userRepository.getUserByPseudonym(pseudonym);
 
         if (searchedUser == null) {
             printInfo("This user does not exist.");

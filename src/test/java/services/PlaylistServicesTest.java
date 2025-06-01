@@ -40,21 +40,21 @@ class PlaylistServicesTest{
         // Create a test playlist
         playlist = new Playlist("Test Playlist", PlaylistEnum.PRIVATE);
         playlist.setPlaylistId(1);
-        dependencyProvider.playlistLocalRepository.savePlaylist(playlist);
+        dependencyProvider.playlistLocalRepository.updateOrInsertPlaylist(playlist);
         testHelper.addSongToPlaylist(playlist.getPlaylistId(), song1.getSongId(), dependencyProvider.playlistLocalRepository);
         testHelper.addSongToPlaylist(playlist.getPlaylistId(), song2.getSongId(), dependencyProvider.playlistLocalRepository);
         testHelper.addSongToPlaylist(playlist.getPlaylistId(), song3.getSongId(), dependencyProvider.playlistLocalRepository);
 
         // Add playlist to repository
-        dependencyProvider.playlistLocalRepository.savePlaylist(playlist);
+        dependencyProvider.playlistLocalRepository.updateOrInsertPlaylist(playlist);
 
         // Create a test user
         User user = new User("testUsers","email", "testUsers", PlanEnum.FREE);
         user.setUserId(400953820);
-        dependencyProvider.userLocalRepository.saveUser(user);
+        dependencyProvider.userLocalRepository.updateOrInsertUser(user);
 
         // Create Cookies_SingeltonPattern instance
-        Cookies_SingletonPattern.setInstance(400953820, "tester", "password"); //testUsers
+        Cookies.initializeInstance(400953820, "tester", "password"); //testUsers
 
         // Create playlistServices
         dependencyProvider.playlistService = new PlaylistServices(
