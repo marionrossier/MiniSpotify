@@ -1,0 +1,194 @@
+@startuml
+class common.entities.User {
+- int userId
+- String pseudonym
+- String email
+- String password
+- byte[] salt
+- PlanEnum planEnum
+- List<Integer> playlists
+- List<Integer> friends
+- UniqueIdService uniqueIdService
++ <<Create>> User()
++ <<Create>> User(String,String,String,PlanEnum)
++ <<Create>> User(String,String,String,byte[],PlanEnum,List<Integer>,List<Integer>)
++ <<Create>> User(int,String,String,String,byte[],PlanEnum,List<Integer>,List<Integer>)
++ void setPlanEnum(PlanEnum)
++ int getUserId()
++ void setUserId(int)
++ String getPseudonym()
++ void setPseudonym(String)
++ String getEmail()
++ void setEmail(String)
++ String getPassword()
++ void setPassword(String)
++ byte[] getSalt()
++ void setSalt(byte[])
++ PlanEnum getPlanEnum()
++ List<Integer> getPlaylists()
++ void setPlaylists(List<Integer>)
++ List<Integer> getFriends()
++ void setFriends(List<Integer>)
+}
+
+
+enum common.entities.MusicGender {
++  SOUL_RNB
++  POP
++  HIP_HOP
++  ROCK
++  FRENCH_VARIETY
++  ELECTRO
++  DISCO
++  REGGAE
++  NULL
+- String displayName
+~ <<Create>> MusicGender(String)
++ String getDisplayName()
+}
+
+
+class common.entities.Artist {
+- String artistName
+- int artistId
+- LinkedList<Integer> artistSongsID
+- UniqueIdService uniqueIdService
++ <<Create>> Artist()
++ <<Create>> Artist(String)
++ <<Create>> Artist(int,String,LinkedList<Integer>)
++ String getArtistName()
++ int getArtistId()
++ LinkedList<Integer> getArtistSongsID()
++ void setArtistName(String)
++ void setArtistId(int)
++ void setArtistSongsID(LinkedList<Integer>)
+}
+
+
+class common.entities.Playlist {
+- String name
+- int playlistId
+- LinkedList<Integer> listSongsId
+- int ownerId
+- PlaylistEnum status
+- UniqueIdService uniqueIdService
++ <<Create>> Playlist()
++ <<Create>> Playlist(String,PlaylistEnum)
++ <<Create>> Playlist(String,LinkedList<Integer>,int,PlaylistEnum)
++ <<Create>> Playlist(String,int,LinkedList<Integer>,int,PlaylistEnum)
++ String getName()
++ void setName(String)
++ int getPlaylistId()
++ void setPlaylistId(int)
++ LinkedList<Integer> getPlaylistSongsListWithId()
++ void setListSongsId(LinkedList<Integer>)
++ int getOwnerId()
++ void setOwnerId(int)
++ PlaylistEnum getStatus()
++ void setStatus(PlaylistEnum)
+}
+
+
+interface common.IUserRepository {
+~ Optional<User> authenticate(String,String)
+~ User getUserByPseudonym(String)
+~ List<User> getAllUsers()
+~ void updateOrInsertUser(User)
+~ User getUserById(int)
+}
+
+class common.entities.Song {
+- String title
+- int artistId
+- int durationSeconds
+- MusicGender gender
+- int songId
+- String audioFileName
+- UniqueIdService uniqueIdService
++ <<Create>> Song()
++ <<Create>> Song(int,String,int,int,MusicGender,String)
++ <<Create>> Song(String,int,int,MusicGender,String)
++ String getTitle()
++ void setTitle(String)
++ int getArtistId()
++ void setArtistId(int)
++ int getDurationSeconds()
++ void setDurationSeconds(int)
++ MusicGender getGender()
++ void setGender(MusicGender)
++ int getSongId()
++ void setSongId(int)
++ String getAudioFileName()
++ void setAudioFileName(String)
+}
+
+
+enum common.entities.PlanEnum {
++  FREE
++  PREMIUM
+}
+
+class common.entities.JsonService {
++ {static} void main(String[])
+- {static} void addPlaylistToUser(PlaylistLocalRepository,UserLocalRepository)
++ {static} void addArtist(ArtistLocalRepository)
++ {static} void addSong(ISongRepository,ArtistLocalRepository)
++ {static} void addUser(UserService)
++ {static} void addPlaylist(PlaylistLocalRepository)
+}
+
+enum common.entities.PlaylistEnum {
++  PRIVATE
++  PUBLIC
+}
+
+interface common.ISongRepository {
+~ ArrayList<Song> getAllSongs()
+~ void addSong(Song)
+~ Song getSongById(int)
+~ LinkedList<Song> getSongsByTitle(String)
+~ LinkedList<Song> getSongsByArtist(String)
+~ LinkedList<Song> getSongsByGender(MusicGender)
+}
+
+class common.services.UniqueIdService {
++ <<Create>> UniqueIdService()
++ int setUniqueId()
+}
+
+class common.services.StockageService {
+~ String userHome
+~ String fileName
+- {static} ObjectMapper objectMapper
++ List<T> loadFromJson(String,TypeReference<List<T>>)
++ void saveToJson(String,List<T>)
++ void copyResourceToWritableLocation(String)
++ void copyMp3FilesFromResources()
+- boolean isRunningUnderTest()
+}
+
+
+interface common.IPlaylistRepository {
+~ List<Playlist> getAllPlaylists()
+~ void updateOrInsertPlaylist(Playlist)
+~ void deletePlaylistById(int)
+~ Playlist getPlaylistById(int)
+~ Playlist getPlaylistByName(String)
+~ PlaylistEnum getPlaylistStatus(Playlist)
+~ Playlist getTemporaryPlaylistOfCurrentUser(int)
+}
+
+interface common.IAudioRepository {
+~ InputStream getStream(String)
+}
+
+interface common.IArtistRepository {
+~ List<Artist> getAllArtists()
+~ void addArtist(Artist)
+~ Artist getArtistById(int)
+~ void updateOrInsertArtist(Artist)
+~ Artist getArtistByName(String)
+~ Artist getArtistBySongId(int)
+}
+
+@enduml

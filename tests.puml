@@ -1,0 +1,271 @@
+@startuml
+class services.PlaylistServicesTest {
+- Playlist playlist
+- TestHelper testHelper
+- DependencyProvider dependencyProvider
++ <<Create>> PlaylistServicesTest()
+~ void setUp()
+~ void tearDown()
++ void testRenamePlayList()
++ void testCreateTemporaryPlaylist()
++ void testAdjustTemporaryPlaylistToNewPlaylist()
++ void testReorderSongsInPlaylist()
+}
+
+
+class repoFront.FrontSongRepoSocketTest {
+- ISongRepository songRepo
+- TestHelper testHelper
+- DependencyProvider dependencyProvider
+~ void setup()
+~ void tearDown()
+~ void getSongById_shouldReturnExpectedSong()
+~ void getSongsByTitle_shouldReturnMatchingSongs()
+~ void getSongsByArtist_shouldReturnSongs()
+~ void getSongsByGender_shouldReturnSongs()
+~ void getAllSongs_shouldReturnList()
+}
+
+
+class jsons.PlaylistLocalRepoTest {
+- TestHelper testHelper
+- DependencyProvider dependencyProvider
++ <<Create>> PlaylistLocalRepoTest()
+~ void setUp()
+~ void tearDown()
+~ void savePlaylist_shouldSaveThePlaylist()
+~ void savePlaylist_shouldAddPlaylistToRepository()
+~ void deletePlaylistById_shouldRemoveThePlaylist()
+~ void getPlaylistById_shouldFindThePlaylist()
+~ void getPlaylistById_withNonexistentId_shouldReturnNull()
+~ void updatePlaylist_shouldModifyThePlaylist()
+~ void getPlaylistByName_shouldFindThePlaylist()
+~ void getPlaylistByName_shouldBeCaseInsensitive()
+~ void getPlaylistByName_withNonexistentName_shouldReturnNull()
+~ void getAllPlaylists_withEmptyRepository_shouldReturnEmptyList()
+}
+
+
+class utilsAndFakes.TestHelper {
+- int serverPort
++ DependencyProvider dependencyProvider
++ <<Create>> TestHelper(int)
++ void addSongToPlaylist(int,int,IPlaylistRepository)
++ void addSongsToPlaylist(Playlist,int)
++ Song createSong(int,String,String)
++ Playlist createTestPlaylist(int,String,IPlaylistRepository)
+- Song createTestSong(int,String)
++ Song createTestSong(int,String,String,MusicGender,IArtistRepository)
++ void startServer()
+}
+
+
+class repoFront.FrontAudioRepoSocketTest {
+- IAudioRepository audioRepo
+- Thread audioServerThread
+- TestHelper testHelper
+- DependencyProvider dependencyProvider
+- String TEST_FILE_NAME
+- File SOURCE_FILE
+~ void setup()
+~ void tearDown()
+~ void getStream_shouldReturnAudioFileMatchingSource()
+}
+
+
+class repoFront.FrontPlaylistRepoSocketTest {
+- IPlaylistRepository frontPlaylistRepo
+- TestHelper testHelper
+- DependencyProvider dependencyProvider
+~ void setup()
+~ void tearDown()
+~ void getPlaylistById_shouldReturnCorrectPlaylist()
+~ void getAllPlaylists_shouldContainKnownPlaylist()
+~ void getPlaylistByName_shouldFindPlaylist()
+~ void getTemporaryPlaylistOfCurrentUser_shouldReturnNull()
+}
+
+
+class repoFront.FrontArtistRepoSocketTest {
+- IArtistRepository artistRepo
+- TestHelper testHelper
+- DependencyProvider dependencyProvider
+~ void setup()
+~ void tearDown()
+~ void getArtistById_shouldReturnExpectedArtist()
+~ void getArtistByName_shouldReturnExpectedArtist()
+~ void getAllArtists_shouldIncludeKnownArtist()
+~ void getArtistBySongId_shouldReturnExpectedArtist()
+}
+
+
+class repoFront.FrontUserRepoSocketTest {
++ IUserRepository userRepo
++ TestHelper testHelper
++ DependencyProvider dependencyProvider
+~ void setup()
+~ void tearDown()
+~ void getUserById_shouldReturnUser()
+~ void getUserByPseudonym_shouldReturnUser()
+~ void getAllUsers_shouldReturnList()
+}
+
+
+class utilsAndFakes.DependencyProvider {
+~ Scanner scanner
++ Thread serverThread
++ File tempPlaylistsFile
++ File tempSongsFile
++ File tempUsersFile
++ File tempArtistFile
++ IPlaylistRepository playlistLocalRepository
++ ISongRepository songLocalRepository
++ IUserRepository userLocalRepository
++ IAudioRepository audioLocalRepository
++ IArtistRepository artistLocalRepository
++ ToolBoxService toolBoxService
++ PlaylistServices playlistService
+# StockageService stockageService
++ PlaylistFunctionalitiesService playlistFunctionalitiesService
++ TemporaryPlaylistService temporaryPlaylistService
++ UserService userService
++ PasswordService passwordService
+# ArtistService artistService
+# PrintService printService
+# SearchService searchService
+# PlaylistReorderSongService playlistReorderSongService
+# UniqueIdService uniqueIdService
++ SongService songService
+# ToolBoxView toolBoxView
++ IPlaylistPlayer playlistPlayer
++ FakeMusicPlayer fakeMusicPlayer
++ PageService pageService
++ Stack<Integer> menuPagesStack
+# SocketClient socketClient
++ IUserRepository frontUserRepo
++ IPlaylistRepository frontPlaylistRepo
++ ISongRepository frontSongRepo
++ IArtistRepository frontArtistRepo
++ IAudioRepository frontAudioRepo
++ BackAudioRepo backAudioRepo
++ BackPlaylistRepo backPlaylistRepo
++ BackUserRepo backUserRepo
++ BackSongRepo backSongRepo
++ BackArtistRepo backArtistRepo
++ AudioSocketServer audioSocketServer
++ SocketServer socketServer
++ <<Create>> DependencyProvider(int)
++ void populateLocalUsers()
++ void populateLocalArtist()
++ void populateLocalSong()
++ void populateLocalPlaylists()
++ void cleanUp()
+- void deleteIfExists(File)
+}
+
+
+class jsons.SongLocalRepositoryTest {
+- TestHelper testHelper
+- DependencyProvider dependencyProvider
+~ void setUp()
+~ void tearDown()
+~ void addSong_shouldSaveTheSong()
+~ void getSongById_shouldFindTheSong()
+~ void getSongsByTitle_shouldReturnMatchingSongs()
+~ void getSongsByArtist_shouldReturnMatchingSongs()
+~ void getSongsByGender_shouldReturnMatchingSongs()
+~ void getAllSongs_withEmptyRepository_shouldReturnEmptyList()
+}
+
+
+class jsons.UserLocalRepositoryTest {
+- File tempFile
+- UserLocalRepository userLocalRepository
+- TestHelper testHelper
+- DependencyProvider dependencyProvider
+~ void setUp()
+~ void tearDown()
+~ void saveUser_shouldUpdateOrInsertTheUser()
+~ void getUserById_shouldFindTheUser()
+~ void getUserByPseudonym_shouldFindTheUser()
+~ void updateAccount_shouldModifyTheUser()
+}
+
+
+class utilsAndFakes.FakeMusicPlayer {
+- boolean isPlaying
+- boolean isPaused
+- String currentSongFileName
+- List<Runnable> songEndObservers
++ void addSongEndObserver(Runnable)
++ void playOrPause(String)
++ void play(String)
++ void pause()
++ void resume(String)
++ void stop()
++ boolean isPlaying()
++ boolean isPaused()
++ void triggerSongEnd()
++ String getCurrentSongFileName()
+}
+
+
+class playlistPlayer.PlaylistPlayerTest {
+- TestHelper testHelper
+- DependencyProvider dependencyProvider
++ <<Create>> PlaylistPlayerTest()
+~ void setUp()
+~ void tearDown()
+~ void testPlay()
+~ void testPlayOrPause()
+~ void testPlayback()
+~ void testNextInSequentialMode()
+~ void testPrevious()
+~ void testPreviousWithEmptyHistory()
+~ void testShuffleMode()
+~ void testRepeatMode()
+~ void testAutoAdvanceWhenSongEnds()
+~ void testSetModes()
+}
+
+
+class services.UserServiceTest {
+- TestHelper testHelper
+- DependencyProvider dependencyProvider
++ <<Create>> UserServiceTest()
+~ void setUp()
+~ void tearDown()
+~ void addUser_ShouldCreateANewUser()
+~ void verifyUserAuthentification_ShouldReturnTrue_WhenCorrectCredentialAreGiven()
+~ void verifyUserAuthentification_ShouldReturnFalse_WhenWrongCredentialAreGiven()
+}
+
+
+class jsons.ArtistLocalRepoTest {
+- File tempFile
+- ArtistLocalRepository repo
+- TestHelper testHelper
+- DependencyProvider dependencyProvider
++ <<Create>> ArtistLocalRepoTest()
+~ void setup()
+~ void tearDown()
+~ void addArtist_shouldSaveTheArtist()
+~ void getArtistById_shouldFindTheArtist()
+~ void getArtistByName_shouldFindTheArtist()
+}
+
+
+class services.PageServiceTest {
+- TestHelper testHelper
+- DependencyProvider dependencyProvider
++ <<Create>> PageServiceTest()
+~ void setUp()
+~ void tearDown()
+~ void testGetPageById()
+}
+
+
+
+
+clientSide.player.file_player.IMusicPlayer <|.. utilsAndFakes.FakeMusicPlayer
+@enduml
