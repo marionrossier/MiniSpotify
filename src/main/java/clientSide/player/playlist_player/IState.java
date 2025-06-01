@@ -4,6 +4,6 @@ import common.entities.Song;
 
 interface IState {
     Song getNextSong();
-
+    Song getPreviousSong();
     String getStateName ();
 }

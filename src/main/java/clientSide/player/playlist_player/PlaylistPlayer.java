@@ -5,7 +5,6 @@ import clientSide.services.*;
 import common.entities.Playlist;
 import common.entities.Song;
 import clientSide.player.file_player.*;
-import serverSide.repoLocal.SongLocalRepository;
 
 import java.util.*;
 
@@ -20,10 +19,13 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     protected IAudioRepository audioRepository;
     private final IconService icon = new IconService();
 
-    protected Stack<Integer> songIdHistory = new Stack<>();
+    protected LinkedList<Integer> songIdHistory = new LinkedList<>();
+    int currentHistoryIndex = -1;
 
     protected Song currentSong;
     protected Playlist currentPlaylist;
+    private int lastPlayedPlaylistId = -1;
+
 
     //STATE PATTERN
     private IState currentState;
@@ -50,18 +52,27 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     @Override
     public void setSequentialMode(){
         currentState = this.sequentialState;
+        songIdHistory.clear();
+        songIdHistory.add(songService.getCurrentSongId());
+        currentHistoryIndex = 0;
         printLNBlue(icon.sequential() + " Repeat All lecture mode activate.");
     }
 
     @Override
     public void setShuffleMode(){
         currentState = this.shuffleState;
+        songIdHistory.clear();
+        songIdHistory.add(songService.getCurrentSongId());
+        currentHistoryIndex = 0;
         printLNBlue(icon.shuffle() + "Shuffle lecture mode activate.");
     }
 
     @Override
     public void setRepeatMode(){
         currentState = this.repeatState;
+        songIdHistory.clear();
+        songIdHistory.add(songService.getCurrentSongId());
+        currentHistoryIndex = 0;
         printLNBlue(icon.repeatOne() + " Repeat One lecture mode activate.");
     }
 
@@ -77,7 +88,17 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     @Override
     public void playOrPause(int songId) {
+        this.currentPlaylist = playlistServices.getPlaylistById(playlistServices.getCurrentPlaylistId());
         this.currentSong = songService.getSongById(songId);
+
+        if (lastPlayedPlaylistId != currentPlaylist.getPlaylistId()) {
+            // historic is cleared when changing playlist
+            songIdHistory.clear();
+            currentHistoryIndex = -1;
+        }
+        playlistServices.setCurrentPlaylistId(this.currentPlaylist.getPlaylistId());
+        lastPlayedPlaylistId = currentPlaylist.getPlaylistId();
+
         musicPlayer.playOrPause(this.currentSong.getAudioFileName());
         printCurrentSong();
     }
@@ -92,17 +113,6 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     }
 
     @Override
-    public void pause() {
-        musicPlayer.pause();
-    }
-
-    @Override
-    public void resume(int currentSongId) {
-        this.currentSong = songService.getSongById(currentSongId);
-        musicPlayer.resume(this.currentSong.getAudioFileName());
-    }
-
-    @Override
     public void playback() {
         printCurrentSong();
         musicPlayer.play(this.currentSong.getAudioFileName());
@@ -110,26 +120,18 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     @Override
     public void next() {
-        this.songIdHistory.push(currentSong.getSongId());
         this.currentSong = currentState.getNextSong();
         songService.setCurrentSongId(this.currentSong.getSongId());
         printCurrentSong();
-        this.musicPlayer.play(this.currentSong.getAudioFileName());
+        musicPlayer.play(this.currentSong.getAudioFileName());
     }
 
     @Override
-    public void previous(){
-        if (currentState == repeatState){
-            this.currentSong = currentState.getNextSong();
-        }
-        else {
-            if (songIdHistory.isEmpty()) return;
-            int previousSongId = songIdHistory.pop();
-            this.currentSong = songService.getSongById(previousSongId);
-        }
+    public void previous() {
+        this.currentSong = currentState.getPreviousSong();
         songService.setCurrentSongId(this.currentSong.getSongId());
         printCurrentSong();
-        this.musicPlayer.play(this.currentSong.getAudioFileName());
+        musicPlayer.play(this.currentSong.getAudioFileName());
     }
 
     public void stop (){
@@ -152,10 +154,13 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     public void printCurrentSong(){
         int currentSongId = this.getCurrentSongId();
-        String prefix = this.isPaused() ? "Song paused : " : "Song played : ";
         String songTitle = songService.getSongById(currentSongId).getTitle();
 
-        printLNBlue(prefix + songTitle + " - " +
+        printLNBlue("Current song : " + songTitle + " - " +
                 artistService.getArtistNameBySong(currentSongId) + ". ");
+    }
+
+    public void setCurrentSong(Song currentSong) {
+        this.currentSong = currentSong;
     }
 }

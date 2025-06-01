@@ -98,12 +98,12 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
 
     @Override
     public void opened(Object stream, Map properties) {
-        // rien à faire ici pour toi
+        // nothing to do here
     }
 
     @Override
     public void progress(int bytesRead, long microseconds, byte[] pcmData, Map properties) {
-        // rien à faire ici pour toi
+        // nothing to do here
     }
 
     @Override
@@ -118,7 +118,7 @@ public class MusicPlayer implements IMusicPlayer, BasicPlayerListener {
 
     @Override
     public void setController(BasicController controller) {
-        // rien à faire ici pour toi
+        // nothing to do here
     }
 
 }

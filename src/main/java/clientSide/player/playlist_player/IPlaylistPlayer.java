@@ -1,13 +1,12 @@
 package clientSide.player.playlist_player;
 
+import common.entities.Song;
+
 public interface IPlaylistPlayer {
 
     void playOrPause(int songId);
 
     void play(int playlistId, int songId);
-
-    void pause();
-    void resume(int currentSongId);
 
     void playback();
 
@@ -31,4 +30,6 @@ public interface IPlaylistPlayer {
     boolean isPaused();
 
     String getCurrentState();
-}
+
+    void setCurrentSong(Song currentSong);
+    }

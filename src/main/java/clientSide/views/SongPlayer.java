@@ -1,9 +1,11 @@
 package clientSide.views;
 
 import clientSide.services.ToolBoxView;
+import common.entities.Artist;
 import common.entities.Playlist;
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.*;
+import common.entities.Song;
 
 import static clientSide.services.PrintHelper.*;
 

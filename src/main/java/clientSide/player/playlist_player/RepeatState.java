@@ -2,17 +2,22 @@ package clientSide.player.playlist_player;
 
 import common.entities.Song;
 
-class RepeatState implements IState{
-    private final PlaylistPlayer context;
+class RepeatState implements IState {
+    private final PlaylistPlayer playlistPlayer;
     public final String stateName = "repeat";
 
-    public RepeatState(PlaylistPlayer spotifyService) {
-        this.context = spotifyService;
+    public RepeatState(PlaylistPlayer playlistPlayer) {
+        this.playlistPlayer = playlistPlayer;
     }
 
     @Override
     public Song getNextSong() {
-        return context.currentSong;
+        return playlistPlayer.currentSong;
+    }
+
+    @Override
+    public Song getPreviousSong() {
+        return playlistPlayer.currentSong;
     }
 
     @Override

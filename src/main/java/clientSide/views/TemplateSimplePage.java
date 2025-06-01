@@ -144,6 +144,7 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
         handelInvalidIndex();
     }
     public void button8(){
+
         pageService.songPlayer.displayAllPage();
     }
     public void button9(){
