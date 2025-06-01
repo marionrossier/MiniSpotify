@@ -1,162 +1,240 @@
 @startuml
-class serverSide.repoBack.BackAudioRepo {
-- String AUDIO_FOLDER
-- IUserRepository userRepo
-+ <<Create>> BackAudioRepo(IUserRepository)
-+ byte[] handleGetAudioFile(DataInputStream)
-- {static} byte[] readAllBytes(File)
+left to right direction
+
+'--- Focus sur serverSide et dépendances utiles dans common ---
+package common {
+    interface IUserRepository{
+        ~ Optional<User> authenticate(String,String)
+        ~ User getUserByPseudonym(String)
+        ~ List<User> getAllUsers()
+        ~ void updateOrInsertUser(User)
+        ~ User getUserById(int)
+    }
+    interface ISongRepository{
+        ~ ArrayList<Song> getAllSongs()
+        ~ void addSong(Song)
+        ~ Song getSongById(int)
+        ~ LinkedList<Song> getSongsByTitle(String)
+        ~ LinkedList<Song> getSongsByArtist(String)
+        ~ LinkedList<Song> getSongsByGender(MusicGender)
+    }
+    interface IPlaylistRepository{
+        ~ List<Playlist> getAllPlaylists()
+        ~ void updateOrInsertPlaylist(Playlist)
+        ~ void deletePlaylistById(int)
+        ~ Playlist getPlaylistById(int)
+        ~ Playlist getPlaylistByName(String)
+        ~ PlaylistEnum getPlaylistStatus(Playlist)
+        ~ Playlist getTemporaryPlaylistOfCurrentUser(int)
+    }
+    interface IAudioRepository{
+        ~ InputStream getStream(String)
+    }
+    interface IArtistRepository{
+        ~ List<Artist> getAllArtists()
+        ~ void addArtist(Artist)
+        ~ Artist getArtistById(int)
+        ~ void updateOrInsertArtist(Artist)
+        ~ Artist getArtistByName(String)
+        ~ Artist getArtistBySongId(int)
+    }
 }
 
-
-class serverSide.repoLocal.SongLocalRepository {
-- String filePath
-- StockageService stockageService
-- IArtistRepository artistLocalRepository
-- List<Song> data
-+ <<Create>> SongLocalRepository(String,StockageService,IArtistRepository)
-+ <<Create>> SongLocalRepository(StockageService,IArtistRepository)
-+ ArrayList<Song> getAllSongs()
-+ void addSong(Song)
-+ Song getSongById(int)
-+ LinkedList<Song> getSongsByTitle(String)
-+ LinkedList<Song> getSongsByArtist(String)
-+ LinkedList<Song> getSongsByGender(MusicGender)
+package common.services {
+    class StockageService{
+        ~ String userHome
+        ~ String fileName
+        - {static} ObjectMapper objectMapper
+        + List<T> loadFromJson(String,TypeReference<List<T>>)
+        + void saveToJson(String,List<T>)
+        + void copyResourceToWritableLocation(String)
+        + void copyMp3FilesFromResources()
+        - boolean isRunningUnderTest()
+    }
 }
 
+package serverSide/repoBack {
+    class BackAudioRepo {
+        - String AUDIO_FOLDER
+        - IUserRepository userRepo
+        + <<Create>> BackAudioRepo(IUserRepository)
+        + byte[] handleGetAudioFile(DataInputStream)
+        - {static} byte[] readAllBytes(File)
+    }
 
-class serverSide.repoBack.BackUserRepo {
-- ObjectMapper mapper
-- IUserRepository userRepo
-+ <<Create>> BackUserRepo(IUserRepository)
-+ String handleRequest(Map<String,Object>)
+    class BackUserRepo {
+        - ObjectMapper mapper
+        - IUserRepository userRepo
+        + <<Create>> BackUserRepo(IUserRepository)
+        + String handleRequest(Map<String,Object>)
+    }
+
+    class BackSongRepo {
+       - ObjectMapper mapper
+       - ISongRepository songRepo
+       - IUserRepository userRepo
+       + <<Create>> BackSongRepo(ISongRepository,IUserRepository)
+       + String handleRequest(Map<String,Object>)
+    }
+
+    class BackPlaylistRepo {
+        - ObjectMapper mapper
+        - IPlaylistRepository playlistRepo
+        - IUserRepository userRepo
+        + <<Create>> BackPlaylistRepo(IPlaylistRepository,IUserRepository)
+        + String handleRequest(Map<String,Object>)
+    }
+
+    class BackArtistRepo {
+         - ObjectMapper mapper
+         - IArtistRepository artistRepo
+         - IUserRepository userRepo
+         + <<Create>> BackArtistRepo(IArtistRepository,IUserRepository)
+         + String handleRequest(Map<String,Object>)
+    }
 }
 
+package serverSide/repoLocal {
+    class SongLocalRepository {
+        - String filePath
+        - StockageService stockageService
+        - IArtistRepository artistLocalRepository
+        - List<Song> data
+        + <<Create>> SongLocalRepository(String,StockageService,IArtistRepository)
+        + <<Create>> SongLocalRepository(StockageService,IArtistRepository)
+        + ArrayList<Song> getAllSongs()
+        + void addSong(Song)
+        + Song getSongById(int)
+        + LinkedList<Song> getSongsByTitle(String)
+        + LinkedList<Song> getSongsByArtist(String)
+        + LinkedList<Song> getSongsByGender(MusicGender)
+    }
 
-class serverSide.repoBack.BackSongRepo {
-- ObjectMapper mapper
-- ISongRepository songRepo
-- IUserRepository userRepo
-+ <<Create>> BackSongRepo(ISongRepository,IUserRepository)
-+ String handleRequest(Map<String,Object>)
+    class PlaylistLocalRepository {
+        - String filePath
+        - StockageService stockageService
+        - List<Playlist> data
+        + <<Create>> PlaylistLocalRepository(String)
+        + <<Create>> PlaylistLocalRepository()
+        + List<Playlist> getAllPlaylists()
+        + void updateOrInsertPlaylist(Playlist)
+        + void deletePlaylistById(int)
+        + Playlist getPlaylistById(int)
+        + Playlist getPlaylistByName(String)
+        + PlaylistEnum getPlaylistStatus(Playlist)
+        + Playlist getTemporaryPlaylistOfCurrentUser(int)
+    }
+
+    class UserLocalRepository {
+        - String filePath
+        - StockageService stockageService
+        - List<User> data
+        + <<Create>> UserLocalRepository(String)
+        + <<Create>> UserLocalRepository()
+        + Optional<User> authenticate(String,String)
+        + User getUserByPseudonym(String)
+        + List<User> getAllUsers()
+        + void updateOrInsertUser(User)
+        + User getUserById(int)
+    }
+
+    class ArtistLocalRepository {
+        - String filePath
+        - StockageService stockageService
+        - List<Artist> data
+        + <<Create>> ArtistLocalRepository(String)
+        + <<Create>> ArtistLocalRepository()
+        + List<Artist> getAllArtists()
+        + void addArtist(Artist)
+        + Artist getArtistById(int)
+        + void updateOrInsertArtist(Artist)
+        + Artist getArtistByName(String)
+        + Artist getArtistBySongId(int)
+    }
+
+    class AudioLocalRepository {
+        - String folderPath
+        - StockageService stockageService
+        + <<Create>> AudioLocalRepository(String)
+        + <<Create>> AudioLocalRepository()
+        + InputStream getStream(String)
+    }
 }
 
+package serverSide/socket {
+    class AudioSocketServer {
+        - int PORT
+        - BackAudioRepo backAudioRepo
+        - StockageService stockageService
+        + <<Create>> AudioSocketServer(BackAudioRepo)
+        + void audioSocketMain()
+        - void handleAudioRequest(Socket)
+    }
 
-class serverSide.repoLocal.PlaylistLocalRepository {
-- String filePath
-- StockageService stockageService
-- List<Playlist> data
-+ <<Create>> PlaylistLocalRepository(String)
-+ <<Create>> PlaylistLocalRepository()
-+ List<Playlist> getAllPlaylists()
-+ void updateOrInsertPlaylist(Playlist)
-+ void deletePlaylistById(int)
-+ Playlist getPlaylistById(int)
-+ Playlist getPlaylistByName(String)
-+ PlaylistEnum getPlaylistStatus(Playlist)
-+ Playlist getTemporaryPlaylistOfCurrentUser(int)
+    class SocketServer {
+       - int Port
+       - ObjectMapper mapper
+       - BackPlaylistRepo backPlaylistRepo
+       - BackUserRepo backUserRepo
+       - BackSongRepo backSongRepo
+       - BackArtistRepo backArtistRepo
+       + <<Create>> SocketServer(BackUserRepo,BackPlaylistRepo,BackSongRepo,BackArtistRepo)
+       + void setPort(int)
+       + void socketServerMain()
+       - void handleClient(Socket)
+    }
 }
-
-
-class serverSide.repoBack.BackPlaylistRepo {
-- ObjectMapper mapper
-- IPlaylistRepository playlistRepo
-- IUserRepository userRepo
-+ <<Create>> BackPlaylistRepo(IPlaylistRepository,IUserRepository)
-+ String handleRequest(Map<String,Object>)
-}
-
 
 class serverSide.CompositionRootServerSide {
-~ StockageService stockageService
-~ IPlaylistRepository playlistLocalRepository
-~ IUserRepository userLocalRepository
-~ ISongRepository songLocalRepository
-~ IArtistRepository artistLocalRepository
-~ IAudioRepository audioLocalRepository
-+ BackPlaylistRepo backPlaylistRepo
-+ BackUserRepo backUserRepo
-+ BackSongRepo backSongRepo
-+ BackArtistRepo backArtistRepo
-+ BackAudioRepo backAudioRepo
-+ <<Create>> CompositionRootServerSide()
-+ {static} void main(String[])
-+ void startApp(SocketServer,AudioSocketServer)
+    ~ StockageService stockageService
+    ~ IPlaylistRepository playlistLocalRepository
+    ~ IUserRepository userLocalRepository
+    ~ ISongRepository songLocalRepository
+    ~ IArtistRepository artistLocalRepository
+    ~ IAudioRepository audioLocalRepository
+    + BackPlaylistRepo backPlaylistRepo
+    + BackUserRepo backUserRepo
+    + BackSongRepo backSongRepo
+    + BackArtistRepo backArtistRepo
+    + BackAudioRepo backAudioRepo
+    + <<Create>> CompositionRootServerSide()
+    + {static} void main(String[])
+    + void startApp(SocketServer,AudioSocketServer)
 }
 
 
-class serverSide.repoLocal.UserLocalRepository {
-- String filePath
-- StockageService stockageService
-- List<User> data
-+ <<Create>> UserLocalRepository(String)
-+ <<Create>> UserLocalRepository()
-+ Optional<User> authenticate(String,String)
-+ User getUserByPseudonym(String)
-+ List<User> getAllUsers()
-+ void updateOrInsertUser(User)
-+ User getUserById(int)
-}
+'--- Dépendances avec -u-> ---
+"serverSide/repoBack.BackAudioRepo" -u-> common.IUserRepository
+"serverSide/repoBack.BackAudioRepo" -u-> common.IUserRepository
+"serverSide/repoBack.BackSongRepo" -u-> common.ISongRepository
+"serverSide/repoBack.BackSongRepo" -u-> common.IUserRepository
+"serverSide/repoBack.BackPlaylistRepo" -u-> common.IPlaylistRepository
+"serverSide/repoBack.BackPlaylistRepo" -u-> common.IUserRepository
+"serverSide/repoBack.BackArtistRepo" -u-> common.IArtistRepository
+"serverSide/repoBack.BackArtistRepo" -u-> common.IUserRepository
 
+"serverSide/repoLocal.SongLocalRepository" -d-> common.services.StockageService
+"serverSide/repoLocal.SongLocalRepository" -d-> common.IArtistRepository
+"serverSide/repoLocal.PlaylistLocalRepository" -d-> common.services.StockageService
+"serverSide/repoLocal.UserLocalRepository" -d-> common.services.StockageService
+"serverSide/repoLocal.ArtistLocalRepository" -d-> common.services.StockageService
+"serverSide/repoLocal.AudioLocalRepository" -d-> common.services.StockageService
 
-class serverSide.socket.AudioSocketServer {
-- int PORT
-- BackAudioRepo backAudioRepo
-- StockageService stockageService
-+ <<Create>> AudioSocketServer(BackAudioRepo)
-+ void audioSocketMain()
-- void handleAudioRequest(Socket)
-}
+"serverSide/socket.AudioSocketServer" -u-> "serverSide/repoBack.BackAudioRepo"
+"serverSide/socket.AudioSocketServer" -u-> common.services.StockageService
+"serverSide/socket.SocketServer" -u-> "serverSide/repoBack.BackPlaylistRepo"
+"serverSide/socket.SocketServer" -u-> "serverSide/repoBack.BackUserRepo"
+"serverSide/socket.SocketServer" -u-> "serverSide/repoBack.BackSongRepo"
+"serverSide/socket.SocketServer" -u-> "serverSide/repoBack.BackArtistRepo"
 
+"serverSide.CompositionRootServerSide" -r-> common : initialize all
+"serverSide.CompositionRootServerSide" -r-> "serverSide/repoBack"  : initialize all
 
-class serverSide.repoLocal.ArtistLocalRepository {
-- String filePath
-- StockageService stockageService
-- List<Artist> data
-+ <<Create>> ArtistLocalRepository(String)
-+ <<Create>> ArtistLocalRepository()
-+ List<Artist> getAllArtists()
-+ void addArtist(Artist)
-+ Artist getArtistById(int)
-+ void updateOrInsertArtist(Artist)
-+ Artist getArtistByName(String)
-+ Artist getArtistBySongId(int)
-}
+'--- Implémentations des interfaces par les repositories locaux avec ..u.|> ---
+common.ISongRepository ..|> "serverSide/repoLocal.SongLocalRepository"
+common.IPlaylistRepository ..|> "serverSide/repoLocal.PlaylistLocalRepository"
+common.IUserRepository ..|> "serverSide/repoLocal.UserLocalRepository"
+common.IArtistRepository ..|> "serverSide/repoLocal.ArtistLocalRepository"
+common.IAudioRepository ..|> "serverSide/repoLocal.AudioLocalRepository"
 
-
-class serverSide.repoBack.BackArtistRepo {
-- ObjectMapper mapper
-- IArtistRepository artistRepo
-- IUserRepository userRepo
-+ <<Create>> BackArtistRepo(IArtistRepository,IUserRepository)
-+ String handleRequest(Map<String,Object>)
-}
-
-
-class serverSide.socket.SocketServer {
-- int Port
-- ObjectMapper mapper
-- BackPlaylistRepo backPlaylistRepo
-- BackUserRepo backUserRepo
-- BackSongRepo backSongRepo
-- BackArtistRepo backArtistRepo
-+ <<Create>> SocketServer(BackUserRepo,BackPlaylistRepo,BackSongRepo,BackArtistRepo)
-+ void setPort(int)
-+ void socketServerMain()
-- void handleClient(Socket)
-}
-
-
-class serverSide.repoLocal.AudioLocalRepository {
-- String folderPath
-- StockageService stockageService
-+ <<Create>> AudioLocalRepository(String)
-+ <<Create>> AudioLocalRepository()
-+ InputStream getStream(String)
-}
-
-common.ISongRepository <|.. serverSide.repoLocal.SongLocalRepository
-common.IPlaylistRepository <|.. serverSide.repoLocal.PlaylistLocalRepository
-common.IUserRepository <|.. serverSide.repoLocal.UserLocalRepository
-common.IArtistRepository <|.. serverSide.repoLocal.ArtistLocalRepository
-common.IAudioRepository <|.. serverSide.repoLocal.AudioLocalRepository
 @enduml
