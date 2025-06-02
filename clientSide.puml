@@ -49,7 +49,7 @@ class clientSide.services.ToolBoxView {
 
 
 class clientSide.services.PrintService {
-- IconService icon
+- MenuService icon
 - UserService userService
 - PlaylistServices playlistService
 - SongService songService
@@ -72,7 +72,7 @@ class clientSide.player.playlist_player.PlaylistPlayer {
 # ArtistService artistService
 # SongService songService
 # IAudioRepository audioRepository
-- IconService icon
+- MenuService icon
 # LinkedList<Integer> songIdHistory
 ~ int currentHistoryIndex
 # Song currentSong
@@ -137,7 +137,7 @@ enum common.entities.PlanEnum {
 
 class clientSide.services.SearchService {
 ~ Scanner scanner
-- IconService icon
+- MenuService icon
 - SongService songService
 - PrintService printService
 - UserService userService
@@ -310,7 +310,7 @@ abstract class clientSide.views.TemplateSimplePage {
 ~ Scanner scanner
 ~ boolean isFree
 + ToolBoxView toolBoxView
-# IconService icon
+# MenuService icon
 + <<Create>> TemplateSimplePage(PageService,IPlaylistPlayer)
 + void displayAllPage()
 + int getPageId()
@@ -440,39 +440,37 @@ class clientSide.views.PlaylistHomePage {
 + void button2()
 }
 
-class clientSide.services.IconService {
-+ String lineBreak
-+ String eightMusicPlayer
-+ String nineHomepage
-+ String zeroBack
-+ String separator
-+ String backHomePageMusicPlayer
-+ String nbr0()
-+ String nbr1()
-+ String nbr2()
-+ String nbr3()
-+ String nbr4()
-+ String nbr5()
-+ String nbr6()
-+ String nbr7()
-+ String nbr8()
-+ String nbr9()
-+ String playPause()
-+ String playBack()
-+ String next()
-+ String previous()
-+ String shuffle()
-+ String sequential()
-+ String repeatOne()
-+ String ok()
-+ String warning()
-+ String lock()
-+ String premium()
-+ String free()
-+ String group()
-+ String house()
-+ String earth()
-+ String search()
+class clientSide.services.MenuService {
+ + String nbr0
+    + String nbr1
+    + String nbr2
+    + String nbr3
+    + String nbr4
+    + String nbr5
+    + String nbr6
+    + String nbr7
+    + String nbr8
+    + String nbr9
+    + String playPause
+    + String playBack
+    + String next
+    + String previous
+    + String shuffle
+    + String sequential
+    + String repeatOne
+    + String lock
+    + String premium
+    + String free
+    + String group
+    + String house
+    + String earth
+    + String search
+    + String lineBreak
+    + String eightMusicPlayer
+    + String nineHomepage
+    + String zeroBack
+    + String separator
+    + String backHomePageMusicPlayer
 }
 
 
