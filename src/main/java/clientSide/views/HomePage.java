@@ -2,6 +2,7 @@ package clientSide.views;
 
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 
 import static clientSide.services.PrintHelper.*;
@@ -14,11 +15,11 @@ public class HomePage extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Home Page";
         this.pageContent =
-                icon.nbr0 + "[LOG OUT]" + " | " + icon.eightMusicPlayer + icon.lineBreak +
-                        icon.separator + icon.lineBreak +
-                icon.nbr1 + "Playlists" + icon.lineBreak +
-                icon.nbr2 + "Search song or playlist" + icon.lineBreak +
-                icon.nbr3 + "Friends" + icon.premium;
+                PrintHelper.nbr0 + "[LOG OUT]" + " | " + PrintHelper.eightMusicPlayer + PrintHelper.lineBreak +
+                        PrintHelper.separator + PrintHelper.lineBreak +
+                PrintHelper.nbr1 + "Playlists" + PrintHelper.lineBreak +
+                PrintHelper.nbr2 + "Search song or playlist" + PrintHelper.lineBreak +
+                PrintHelper.nbr3 + "Friends" + PrintHelper.premium;
     }
 
     @Override

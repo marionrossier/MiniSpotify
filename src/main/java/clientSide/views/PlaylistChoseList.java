@@ -2,6 +2,7 @@ package clientSide.views;
 
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 
 public class PlaylistChoseList extends TemplateSimplePage {
@@ -11,7 +12,7 @@ public class PlaylistChoseList extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Chose Your Playlist Page";
-        this.pageContent = icon.zeroBack + icon.lineBreak + icon.separator + icon.lineBreak +
+        this.pageContent = PrintHelper.zeroBack + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
                 "Chose your Playlist below";
     }
 

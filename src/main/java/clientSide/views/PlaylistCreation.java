@@ -1,5 +1,6 @@
 package clientSide.views;
 
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 import common.entities.PlaylistEnum;
 import common.entities.User;
@@ -16,9 +17,9 @@ public class PlaylistCreation extends TemplateInversePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Create Playlist Page";
-        this.pageContent = "You're playlist will be : " + icon.lineBreak +
-                icon.nbr1 + "Private" + icon.lineBreak +
-                icon.nbr2 + "Public";
+        this.pageContent = "You're playlist will be : " + PrintHelper.lineBreak +
+                PrintHelper.nbr1 + "Private" + PrintHelper.lineBreak +
+                PrintHelper.nbr2 + "Public";
     }
     @Override
     public void displaySpecificContent() {

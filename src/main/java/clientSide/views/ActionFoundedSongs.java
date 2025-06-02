@@ -2,8 +2,8 @@ package clientSide.views;
 
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
-
 import static clientSide.services.PrintHelper.*;
 
 public class ActionFoundedSongs extends TemplateSimplePage {
@@ -13,11 +13,11 @@ public class ActionFoundedSongs extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Chose your action for the selected songs";
-        this.pageContent = icon.zeroBack + " |  " + icon.nineHomepage + icon.lineBreak +
-                icon.separator + icon.lineBreak +
-                    icon.nbr1 + "Add to current playlist" + icon.lineBreak +
-                    icon.nbr2 + "Add to an other playlist" +icon.lineBreak +
-                    icon.nbr3 + "Create a new playlist";
+        this.pageContent = PrintHelper.zeroBack + " |  " + PrintHelper.nineHomepage + PrintHelper.lineBreak +
+                PrintHelper.separator + PrintHelper.lineBreak +
+                    PrintHelper.nbr1 + "Add to current playlist" + PrintHelper.lineBreak +
+                    PrintHelper.nbr2 + "Add to an other playlist" +PrintHelper.lineBreak +
+                    PrintHelper.nbr3 + "Create a new playlist";
     }
 
     @Override

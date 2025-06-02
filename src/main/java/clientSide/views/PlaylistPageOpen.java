@@ -1,5 +1,6 @@
 package clientSide.views;
 
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 import common.entities.Playlist;
 import clientSide.player.playlist_player.IPlaylistPlayer;
@@ -18,12 +19,12 @@ public class PlaylistPageOpen extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Playlist Page : ";
-        this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak + icon.separator + icon.lineBreak +
-                icon.nbr1 + "Rename Playlist" + icon.lineBreak +
-                icon.nbr2 + "Add song" + icon.lineBreak +
-                icon.nbr3 + "Remove song" + icon.lineBreak +
-                icon.nbr4 + "Reorder song" + icon.lineBreak +
-                icon.nbr5 + "Delete the playlist";
+        this.pageContent = PrintHelper.backHomePageMusicPlayer + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
+                PrintHelper.nbr1 + "Rename Playlist" + PrintHelper.lineBreak +
+                PrintHelper.nbr2 + "Add song" + PrintHelper.lineBreak +
+                PrintHelper.nbr3 + "Remove song" + PrintHelper.lineBreak +
+                PrintHelper.nbr4 + "Reorder song" + PrintHelper.lineBreak +
+                PrintHelper.nbr5 + "Delete the playlist";
     }
 
     @Override
@@ -42,7 +43,7 @@ public class PlaylistPageOpen extends TemplateSimplePage {
 
     @Override
     public void button1() {
-        printWhite(icon.zeroBack + icon.lineBreak + "Enter the new name of the playlist : ");
+        printWhite(PrintHelper.zeroBack + PrintHelper.lineBreak + "Enter the new name of the playlist : ");
         String newName = pageService.gotAnInputGoBackIf0(in.nextLine());
         int playlistId = toolBoxView.getPlaylistServ().getCurrentPlaylistId();
         toolBoxView.getPlaylistServ().renamePlayList(playlistId, newName);

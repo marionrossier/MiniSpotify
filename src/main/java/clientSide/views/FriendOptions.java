@@ -2,6 +2,7 @@ package clientSide.views;
 
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 import common.entities.User;
 
@@ -16,9 +17,9 @@ public class FriendOptions extends TemplateSimplePage {
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Manage your friend Page";
-        this.pageContent = icon.zeroBack + icon.lineBreak + icon.separator + icon.lineBreak +
-                icon.nbr1 + "Friend Playlist.s" + icon.lineBreak +
-                icon.nbr2 + "Delete friend from your list";
+        this.pageContent = PrintHelper.zeroBack + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
+                PrintHelper.nbr1 + "Friend Playlist.s" + PrintHelper.lineBreak +
+                PrintHelper.nbr2 + "Delete friend from your list";
     }
 
     @Override

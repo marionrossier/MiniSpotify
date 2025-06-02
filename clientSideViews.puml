@@ -200,44 +200,10 @@ class clientSide/views.PlaylistHomePage {
 + void button2()
 }
 
-class "clientSide.services.MenuService" {
- + String nbr0
-    + String nbr1
-    + String nbr2
-    + String nbr3
-    + String nbr4
-    + String nbr5
-    + String nbr6
-    + String nbr7
-    + String nbr8
-    + String nbr9
-    + String playPause
-    + String playBack
-    + String next
-    + String previous
-    + String shuffle
-    + String sequential
-    + String repeatOne
-    + String lock
-    + String premium
-    + String free
-    + String group
-    + String house
-    + String earth
-    + String search
-    + String lineBreak
-    + String eightMusicPlayer
-    + String nineHomepage
-    + String zeroBack
-    + String separator
-    + String backHomePageMusicPlayer
-}
-
 class clientSide/views.FriendSearch {
 + <<Create>> FriendSearch(PageService,IPlaylistPlayer,ToolBoxView,int)
 + void displaySpecificContent()
 }
-
 
 class clientSide/views.Login {
 + <<Create>> Login(PageService,IPlaylistPlayer,ToolBoxView,int)
@@ -246,6 +212,36 @@ class clientSide/views.Login {
 + void button2()
 }
 class "clientSide.services.PrintHelper" << (S, #FF7700) static >> {
+    ~ {static} String nbr0
+    ~ {static} String nbr1
+    ~ {static} String nbr2
+    ~ {static} String nbr3
+    ~ {static} String nbr4
+    ~ {static} String nbr5
+    ~ {static} String nbr6
+    ~ {static} String nbr7
+    ~ {static} String nbr8
+    ~ {static} String nbr9
+    ~ {static} String playPause
+    ~ {static} String playBack
+    ~ {static} String next
+    ~ {static} String previous
+    ~ {static} String shuffle
+    ~ {static} String sequential
+    ~ {static} String repeatOne
+    ~ {static} String lock
+    ~ {static} String premium
+    ~ {static} String free
+    ~ {static} String group
+    ~ {static} String house
+    ~ {static} String earth
+    ~ {static} String search
+    ~ {static} String lineBreak
+    ~ {static} String eightMusicPlayer
+    ~ {static} String nineHomepage
+    ~ {static} String zeroBack
+    ~ {static} String separator
+    ~ {static} String backHomePageMusicPlayer
     ~ {static} String PRINT_RESET
     ~ {static} String PRINT_BLACK
     ~ {static} String PRINT_RED
@@ -388,9 +384,8 @@ interface "clientSide.player/playlist_player.IPlaylistPlayer" {
 "clientSide/views.CreateAccount" -u-|> "clientSide/views.TemplateInversePage"
 
 
-
 "clientSide/views" -u-> "clientSide" : used by all classes and abstract of package
 
-"clientSide.services.MenuService" -[hidden]r-> "clientSide.services.PageService"
+"clientSide.services.PrintHelper" -[hidden]r-> "clientSide.services.PageService"
 
 @enduml

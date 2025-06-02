@@ -2,6 +2,7 @@ package clientSide.views;
 
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 
 public class SearchGender extends TemplateSimplePage {
@@ -11,15 +12,15 @@ public class SearchGender extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Select your desired gender";
-        this.pageContent = icon.zeroBack + icon.lineBreak + icon.separator + icon.lineBreak +
-                icon.nbr1 + "Soul RnB" + icon.lineBreak +
-                icon.nbr2 + "Pop" + icon.lineBreak +
-                icon.nbr3 + "Hip Hop" + icon.lineBreak +
-                icon.nbr4 + "Rock" + icon.lineBreak +
-                icon.nbr5 + "French Variety" + icon.lineBreak +
-                icon.nbr6 + "Electro" + icon.lineBreak +
-                icon.nbr7 + "Disco" + icon.lineBreak +
-                icon.nbr8 + "Reggae" + icon.lineBreak;
+        this.pageContent = PrintHelper.zeroBack + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
+                PrintHelper.nbr1 + "Soul RnB" + PrintHelper.lineBreak +
+                PrintHelper.nbr2 + "Pop" + PrintHelper.lineBreak +
+                PrintHelper.nbr3 + "Hip Hop" + PrintHelper.lineBreak +
+                PrintHelper.nbr4 + "Rock" + PrintHelper.lineBreak +
+                PrintHelper.nbr5 + "French Variety" + PrintHelper.lineBreak +
+                PrintHelper.nbr6 + "Electro" + PrintHelper.lineBreak +
+                PrintHelper.nbr7 + "Disco" + PrintHelper.lineBreak +
+                PrintHelper.nbr8 + "Reggae" + PrintHelper.lineBreak;
     }
 
     @Override

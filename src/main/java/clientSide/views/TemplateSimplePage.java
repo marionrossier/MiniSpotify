@@ -1,6 +1,5 @@
 package clientSide.views;
 
-import clientSide.services.MenuService;
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 import clientSide.services.ToolBoxView;
@@ -20,8 +19,6 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
     Scanner scanner = new Scanner(System.in);
     boolean isFree = true;
     public ToolBoxView toolBoxView;
-
-    protected MenuService icon = new MenuService();
 
     public TemplateSimplePage(PageService pageService, IPlaylistPlayer spotifyPlayer) {
         this.pageService = pageService;
