@@ -1,8 +1,5 @@
 package clientSide.services;
 
-import clientSide.services.entities.PlaylistServices;
-import clientSide.services.entities.SongService;
-import clientSide.services.entities.UserService;
 import common.entities.MusicGender;
 import common.entities.Song;
 

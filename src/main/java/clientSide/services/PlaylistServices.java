@@ -1,7 +1,6 @@
-package clientSide.services.entities;
+package clientSide.services;
 
-import clientSide.services.*;
-import clientSide.services.entities.playlist.*;
+import clientSide.services.playlist.*;
 import common.entities.*;
 import common.repository.*;
 

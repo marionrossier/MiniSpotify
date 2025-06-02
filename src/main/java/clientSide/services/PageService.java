@@ -1,6 +1,5 @@
 package clientSide.services;
 
-import clientSide.services.entities.UserService;
 import clientSide.views.*;
 import common.entities.PlanEnum;
 import common.entities.User;

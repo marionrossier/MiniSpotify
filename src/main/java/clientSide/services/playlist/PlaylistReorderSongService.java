@@ -1,6 +1,6 @@
-package clientSide.services.entities.playlist;
+package clientSide.services.playlist;
 
-import clientSide.services.entities.PlaylistServices;
+import clientSide.services.PlaylistServices;
 import common.entities.Playlist;
 import common.repository.IPlaylistRepository;
 

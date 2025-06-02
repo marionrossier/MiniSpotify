@@ -1,13 +1,13 @@
 package utils;
 
 import clientSide.services.*;
-import clientSide.services.entities.ArtistService;
-import clientSide.services.entities.PlaylistServices;
-import clientSide.services.entities.SongService;
-import clientSide.services.entities.UserService;
-import clientSide.services.entities.playlist.PlaylistFunctionalitiesService;
-import clientSide.services.entities.playlist.PlaylistReorderSongService;
-import clientSide.services.entities.playlist.TemporaryPlaylistService;
+import clientSide.services.ArtistService;
+import clientSide.services.PlaylistServices;
+import clientSide.services.SongService;
+import clientSide.services.UserService;
+import clientSide.services.playlist.PlaylistFunctionalitiesService;
+import clientSide.services.playlist.PlaylistReorderSongService;
+import clientSide.services.playlist.TemporaryPlaylistService;
 import common.repository.*;
 import common.services.StockageService;
 import common.services.UniqueIdService;

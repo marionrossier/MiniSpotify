@@ -1,8 +1,5 @@
-package clientSide.services.entities;
+package clientSide.services;
 
-import clientSide.services.Cookies;
-import clientSide.services.PasswordService;
-import clientSide.services.ToolBoxService;
 import common.entities.PlanEnum;
 import common.entities.User;
 import common.repository.IUserRepository;

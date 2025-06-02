@@ -1,9 +1,9 @@
-package clientSide.services.entities.playlist;
+package clientSide.services.playlist;
 
 import clientSide.services.PageService;
-import clientSide.services.entities.PlaylistServices;
-import clientSide.services.entities.SongService;
-import clientSide.services.entities.UserService;
+import clientSide.services.PlaylistServices;
+import clientSide.services.SongService;
+import clientSide.services.UserService;
 import common.entities.Playlist;
 import common.entities.PlaylistEnum;
 import common.entities.User;

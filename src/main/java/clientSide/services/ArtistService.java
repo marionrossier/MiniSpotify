@@ -1,6 +1,5 @@
-package clientSide.services.entities;
+package clientSide.services;
 
-import clientSide.services.ToolBoxService;
 import common.repository.IArtistRepository;
 
 public class ArtistService {
