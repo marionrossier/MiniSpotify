@@ -1,5 +1,6 @@
 @startuml
-class common.entities.User {
+
+class entities.User {
 - int userId
 - String pseudonym
 - String email
@@ -32,7 +33,7 @@ class common.entities.User {
 }
 
 
-enum common.entities.MusicGender {
+enum entities.MusicGender {
 +  SOUL_RNB
 +  POP
 +  HIP_HOP
@@ -48,7 +49,7 @@ enum common.entities.MusicGender {
 }
 
 
-class common.entities.Artist {
+class entities.Artist {
 - String artistName
 - int artistId
 - LinkedList<Integer> artistSongsID
@@ -65,7 +66,7 @@ class common.entities.Artist {
 }
 
 
-class common.entities.Playlist {
+class entities.Playlist {
 - String name
 - int playlistId
 - LinkedList<Integer> listSongsId
@@ -89,7 +90,7 @@ class common.entities.Playlist {
 }
 
 
-interface common.IUserRepository {
+interface repository.IUserRepository {
 ~ Optional<User> authenticate(String,String)
 ~ User getUserByPseudonym(String)
 ~ List<User> getAllUsers()
@@ -97,7 +98,7 @@ interface common.IUserRepository {
 ~ User getUserById(int)
 }
 
-class common.entities.Song {
+class entities.Song {
 - String title
 - int artistId
 - int durationSeconds
@@ -123,26 +124,17 @@ class common.entities.Song {
 }
 
 
-enum common.entities.PlanEnum {
+enum entities.PlanEnum {
 +  FREE
 +  PREMIUM
 }
 
-class common.entities.JsonService {
-+ {static} void main(String[])
-- {static} void addPlaylistToUser(PlaylistLocalRepository,UserLocalRepository)
-+ {static} void addArtist(ArtistLocalRepository)
-+ {static} void addSong(ISongRepository,ArtistLocalRepository)
-+ {static} void addUser(UserService)
-+ {static} void addPlaylist(PlaylistLocalRepository)
-}
-
-enum common.entities.PlaylistEnum {
+enum entities.PlaylistEnum {
 +  PRIVATE
 +  PUBLIC
 }
 
-interface common.ISongRepository {
+interface repository.ISongRepository {
 ~ ArrayList<Song> getAllSongs()
 ~ void addSong(Song)
 ~ Song getSongById(int)
@@ -151,12 +143,12 @@ interface common.ISongRepository {
 ~ LinkedList<Song> getSongsByGender(MusicGender)
 }
 
-class common.services.UniqueIdService {
+class services.UniqueIdService {
 + <<Create>> UniqueIdService()
 + int setUniqueId()
 }
 
-class common.services.StockageService {
+class services.StockageService {
 ~ String userHome
 ~ String fileName
 - {static} ObjectMapper objectMapper
@@ -168,7 +160,7 @@ class common.services.StockageService {
 }
 
 
-interface common.IPlaylistRepository {
+interface repository.IPlaylistRepository {
 ~ List<Playlist> getAllPlaylists()
 ~ void updateOrInsertPlaylist(Playlist)
 ~ void deletePlaylistById(int)
@@ -178,11 +170,11 @@ interface common.IPlaylistRepository {
 ~ Playlist getTemporaryPlaylistOfCurrentUser(int)
 }
 
-interface common.IAudioRepository {
+interface repository.IAudioRepository {
 ~ InputStream getStream(String)
 }
 
-interface common.IArtistRepository {
+interface repository.IArtistRepository {
 ~ List<Artist> getAllArtists()
 ~ void addArtist(Artist)
 ~ Artist getArtistById(int)
@@ -191,4 +183,22 @@ interface common.IArtistRepository {
 ~ Artist getArtistBySongId(int)
 }
 
+'--- Dépendances basées sur les <<Create>> ---
+entities.User -d-> services.UniqueIdService
+entities.Artist -d-> services.UniqueIdService
+entities.Playlist -d-> services.UniqueIdService
+entities.Song -d-> services.UniqueIdService
+
+services.StockageService -l-> ObjectMapper
+
+repository.ISongRepository -d-> entities.Song
+repository.IUserRepository -d-> entities.User
+repository.IPlaylistRepository -d-> entities.Playlist
+repository.IArtistRepository -d-> entities.Artist
+
+entities.Song -l-> entities.MusicGender
+entities.Playlist -l-> entities.PlaylistEnum
+entities.User -l-> entities.PlanEnum
+
+services.StockageService -[hidden]r-> services.UniqueIdService
 @enduml

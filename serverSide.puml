@@ -1,8 +1,7 @@
 @startuml
 left to right direction
 
-'--- Focus sur serverSide et dépendances utiles dans common ---
-package common {
+package common.repository {
     interface IUserRepository{
         ~ Optional<User> authenticate(String,String)
         ~ User getUserByPseudonym(String)
@@ -204,17 +203,17 @@ class serverSide.CompositionRootServerSide {
 
 
 '--- Dépendances avec -u-> ---
-"serverSide/repoBack.BackAudioRepo" -u-> common.IUserRepository
-"serverSide/repoBack.BackAudioRepo" -u-> common.IUserRepository
-"serverSide/repoBack.BackSongRepo" -u-> common.ISongRepository
-"serverSide/repoBack.BackSongRepo" -u-> common.IUserRepository
-"serverSide/repoBack.BackPlaylistRepo" -u-> common.IPlaylistRepository
-"serverSide/repoBack.BackPlaylistRepo" -u-> common.IUserRepository
-"serverSide/repoBack.BackArtistRepo" -u-> common.IArtistRepository
-"serverSide/repoBack.BackArtistRepo" -u-> common.IUserRepository
+"serverSide/repoBack.BackAudioRepo" -u-> common.repository.IUserRepository
+"serverSide/repoBack.BackAudioRepo" -u-> common.repository.IUserRepository
+"serverSide/repoBack.BackSongRepo" -u-> common.repository.ISongRepository
+"serverSide/repoBack.BackSongRepo" -u-> common.repository.IUserRepository
+"serverSide/repoBack.BackPlaylistRepo" -u-> common.repository.IPlaylistRepository
+"serverSide/repoBack.BackPlaylistRepo" -u-> common.repository.IUserRepository
+"serverSide/repoBack.BackArtistRepo" -u-> common.repository.IArtistRepository
+"serverSide/repoBack.BackArtistRepo" -u-> common.repository.IUserRepository
+"serverSide/repoLocal.SongLocalRepository" -d-> common.repository.IArtistRepository
 
 "serverSide/repoLocal.SongLocalRepository" -d-> common.services.StockageService
-"serverSide/repoLocal.SongLocalRepository" -d-> common.IArtistRepository
 "serverSide/repoLocal.PlaylistLocalRepository" -d-> common.services.StockageService
 "serverSide/repoLocal.UserLocalRepository" -d-> common.services.StockageService
 "serverSide/repoLocal.ArtistLocalRepository" -d-> common.services.StockageService
@@ -227,14 +226,15 @@ class serverSide.CompositionRootServerSide {
 "serverSide/socket.SocketServer" -u-> "serverSide/repoBack.BackSongRepo"
 "serverSide/socket.SocketServer" -u-> "serverSide/repoBack.BackArtistRepo"
 
-"serverSide.CompositionRootServerSide" -r-> common : initialize all
 "serverSide.CompositionRootServerSide" -r-> "serverSide/repoBack"  : initialize all
+"serverSide.CompositionRootServerSide" -u-> "serverSide/repoLocal"  : initialize all
+"serverSide.CompositionRootServerSide" -u-> "common.services.StockageService"  : initialize all
 
 '--- Implémentations des interfaces par les repositories locaux avec ..u.|> ---
-common.ISongRepository ..|> "serverSide/repoLocal.SongLocalRepository"
-common.IPlaylistRepository ..|> "serverSide/repoLocal.PlaylistLocalRepository"
-common.IUserRepository ..|> "serverSide/repoLocal.UserLocalRepository"
-common.IArtistRepository ..|> "serverSide/repoLocal.ArtistLocalRepository"
-common.IAudioRepository ..|> "serverSide/repoLocal.AudioLocalRepository"
+common.repository.ISongRepository ..|> "serverSide/repoLocal.SongLocalRepository"
+common.repository.IPlaylistRepository ..|> "serverSide/repoLocal.PlaylistLocalRepository"
+common.repository.IUserRepository ..|> "serverSide/repoLocal.UserLocalRepository"
+common.repository.IArtistRepository ..|> "serverSide/repoLocal.ArtistLocalRepository"
+common.repository.IAudioRepository ..|> "serverSide/repoLocal.AudioLocalRepository"
 
 @enduml
