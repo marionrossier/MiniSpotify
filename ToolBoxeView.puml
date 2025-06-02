@@ -1,5 +1,4 @@
 @startuml
-left to right direction
 
 class clientSide.services.SongService {
 - ISongRepository songRepository
@@ -12,32 +11,6 @@ class clientSide.services.SongService {
 + LinkedList<Song> getSongsByGender(MusicGender)
 }
 
-
-class clientSide.services.playlist.PlaylistFunctionalitiesService {
-- UserService userService
-- SongService songService
-+ <<Create>> PlaylistFunctionalitiesService(UserService,SongService)
-+ void createNewPlaylist(String,PlaylistEnum,PlaylistServices)
-+ void createAllSongPlaylist(User,PlaylistServices, IUserRepository)
-+ void removePlaylistFromUser(int, IUserRepository)
-+ void deletePlaylist(int, IPlaylistRepository, IUserRepository)
-+ void renamePlayList(int,String, IPlaylistRepository)
-+ boolean verifyPlaylistName(String,User, IPlaylistRepository)
-+ void deleteSongFromPlaylist(int,int, IPlaylistRepository)
-+ boolean isCurrentUserOwnerOfPlaylist(int, IPlaylistRepository)
-+ int takeAndValidateInputChoice(int,PageService)
-+ void playlistPageRouter(int,PlaylistServices,PageService, IPlaylistRepository)
-}
-
-class clientSide.services.playlist.PlaylistReorderSongService {
-+ <<Create>> PlaylistReorderSongService()
-+ void reorderSongsInPlaylist(int,PlaylistServices,Scanner, IPlaylistRepository)
-- LinkedList<Integer> collectNewOrderFromUser(Playlist)
-- boolean isValidIndex(int,Playlist)
-- void completeWithRemainingSongs(Playlist,List<Integer>)
-}
-
-
 class clientSide.services.ToolBoxView {
 ~ PlaylistServices playlistServ
 ~ SongService songServ
@@ -47,7 +20,8 @@ class clientSide.services.ToolBoxView {
 ~ PasswordService passwordServ
 ~ ArtistService artistServ
 ~ UniqueIdService uniqueIdServ
-+ <<Create>> ToolBoxView(PlaylistServices,UserService,SongService,ArtistService,PrintService,SearchService,PasswordService,UniqueIdService)
++ <<Create>> ToolBoxView(PlaylistServices,UserService,SongService,ArtistService,
+PrintService,SearchService,PasswordService,UniqueIdService)
 + PlaylistServices getPlaylistServ()
 + SearchService getSearchServ()
 + UserService getUserServ()
@@ -57,13 +31,13 @@ class clientSide.services.ToolBoxView {
 + PasswordService getPasswordServ()
 }
 
-
 class clientSide.services.PrintService {
 - UserService userService
 - PlaylistServices playlistService
 - SongService songService
 - ArtistService artistService
-+ <<Create>> PrintService(SongService,ArtistService,PlaylistServices,UserService)
++ <<Create>> PrintService(SongService,ArtistService,
+PlaylistServices,UserService)
 + void printSongFound(List<Integer>,String)
 + void printSongList(List<Integer>)
 + void printPlaylist(List<Integer>)
@@ -74,41 +48,11 @@ class clientSide.services.PrintService {
 + void printUserPublicPlaylists(int)
 }
 
-
 class clientSide.services.ArtistService {
 - IArtistRepository artistRepository
 + <<Create>> ArtistService(ToolBoxService)
 + String getArtistNameBySong(int)
 }
-
-
-class clientSide.services.Cookies << (S, #FF7700) static >>{
-- {static} Cookies instance
-- int userId
-- String userPseudonym
-- String userPassword
-- int currentFriendId
-- int currentFriendPlaylistId
-- int currentPlaylistId
-- int currentSongId
-- <<Create>> Cookies(int,String,String)
-+ {static} void initializeInstance(int,String,String)
-+ {static} void setCurrentPlaylistId(int)
-+ {static} void setCurrentSongId(int)
-+ {static} void resetCookies()
-+ {static} Cookies getInstance()
-+ int getUserId()
-+ String getUserPseudonym()
-+ String getUserPassword()
-+ int getCurrentPlaylistId()
-+ int getCurrentSongId()
-+ String toString()
-+ int getCurrentFriendId()
-+ void setCurrentFriendId(int)
-+ int getCurrentFriendPlaylistId()
-+ void setCurrentFriendPlaylistId(int)
-}
-
 
 class clientSide.services.PlaylistServices {
 - IPlaylistRepository playlistRepository
@@ -116,7 +60,8 @@ class clientSide.services.PlaylistServices {
 - PlaylistFunctionalitiesService playlistFuncService
 - PlaylistReorderSongService playlistReorderSongService
 - ISongRepository songRepository
-+ <<Create>> PlaylistServices(ToolBoxService,PlaylistFunctionalitiesService,TemporaryPlaylistService, PlaylistReorderSongService)
++ <<Create>> PlaylistServices(ToolBoxService,PlaylistFunctionalitiesService,
+TemporaryPlaylistService, PlaylistReorderSongService)
 + int setDurationSeconds(int)
 + void setCurrentPlaylistId(int)
 + int getCurrentPlaylistId()
@@ -141,9 +86,9 @@ class clientSide.services.PlaylistServices {
 + void createTemporaryPlaylist(LinkedList<Integer>,PlaylistEnum)
 + void adjustTemporaryPlaylistToNewPlaylist(String,PlaylistEnum)
 + void addSongToPlaylistFromTemporaryPlaylist(int,int)
-+ void getAndAddSelectionOfPlaylistsToCurrentUserPlaylists(List<Integer>,LinkedList<Integer>,ToolBoxView)
++ void getAndAddSelectionOfPlaylistsToCurrentUserPlaylists(List<Integer>,
+LinkedList<Integer>,ToolBoxView)
 }
-
 
 class clientSide.services.SearchService {
 ~ Scanner scanner
@@ -161,7 +106,6 @@ class clientSide.services.SearchService {
 - void loopIntInputValidation(PageService,LinkedList<Integer>,int)
 + List<Integer> searchUserByPseudonym(String)
 }
-
 
 class clientSide.services.UserService {
 - IUserRepository userRepository
@@ -183,75 +127,6 @@ class clientSide.services.UserService {
 + int getCurrentFriendId()
 }
 
-
-class clientSide.services.playlist.TemporaryPlaylistService {
-- UserService userService
-+ <<Create>> TemporaryPlaylistService(UserService)
-+ int getTemporaryPlaylistId(IPlaylistRepository)
-+ void createTemporaryPlaylist(LinkedList<Integer>,PlaylistEnum, IPlaylistRepository)
-+ void adjustTemporaryPlaylistToNewPlaylist(String,PlaylistEnum, IPlaylistRepository)
-+ void addSongToPlaylistFromTemporaryPlaylist(int,int, IPlaylistRepository)
-}
-
-
-class clientSide.services.PrintHelper << (S, #FF7700) static >>{
-+ {static} String nbr0
-+ {static} String nbr1
-+ {static} String nbr2
-+ {static} String nbr3
-+ {static} String nbr4
-+ {static} String nbr5
-+ {static} String nbr6
-+ {static} String nbr7
-+ {static} String nbr8
-+ {static} String nbr9
-+ {static} String playPause
-+ {static} String playBack
-+ {static} String next
-+ {static} String previous
-+ {static} String shuffle
-+ {static} String sequential
-+ {static} String repeatOne
-+ {static} String lock
-+ {static} String premium
-+ {static} String free
-+ {static} String group
-+ {static} String house
-+ {static} String earth
-+ {static} String search
-+ {static} String lineBreak
-+ {static} String eightMusicPlayer
-+ {static} String nineHomepage
-+ {static} String zeroBack
-+ {static} String separator
-+ {static} String backHomePageMusicPlayer
-~ {static} String PRINT_RESET
-~ {static} String PRINT_BLACK
-~ {static} String PRINT_RED
-~ {static} String PRINT_GREEN
-~ {static} String PRINT_YELLOW
-~ {static} String PRINT_BLUE
-~ {static} String PRINT_WHITE
-~ {static} String PRINT_GREY
-~ {static} String PRINT_BG_WHITE
-~ {static} String PRINT_BOLD
-+ {static} void printLN()
-+ {static} void printLNBgWhite(String)
-+ {static} void printLNWhite(String)
-+ {static} void printLNBlue(String)
-+ {static} void printLNGreen(String)
-+ {static} void printLNGrey(String)
-+ {static} void printLNInfo(String)
-+ {static} void printInvalidInputTryAgain()
-+ {static} void printYourInput()
-+ {static} void printInvalidInputTryAgainOrBack()
-+ {static} void printInvalidInput()
-+ {static} void printLNError(String)
-+ {static} void printWhite(String)
-+ {static} void printInfo(String)
-}
-
-
 class clientSide.services.PasswordService {
 - IUserRepository userRepository
 + <<Create>> PasswordService(IUserRepository)
@@ -260,7 +135,6 @@ class clientSide.services.PasswordService {
 + boolean verifyUserAuthentification(String,String)
 + boolean passwordCheck(String,String)
 }
-
 
 class clientSide.services.PageService {
 ~ ArrayList<InterfaceMenu> pages
@@ -300,58 +174,13 @@ class clientSide.services.PageService {
 + void pageIsPremium(boolean)
 }
 
-interface common.repository.IUserRepository {
-~ Optional<User> authenticate(String,String)
-~ User getUserByPseudonym(String)
-~ List<User> getAllUsers()
-~ void updateOrInsertUser(User)
-~ User getUserById(int)
-}
-
-interface common.repository.ISongRepository {
-~ ArrayList<Song> getAllSongs()
-~ void addSong(Song)
-~ Song getSongById(int)
-~ LinkedList<Song> getSongsByTitle(String)
-~ LinkedList<Song> getSongsByArtist(String)
-~ LinkedList<Song> getSongsByGender(MusicGender)
-}
-
-interface common.repository.IPlaylistRepository {
-~ List<Playlist> getAllPlaylists()
-~ void updateOrInsertPlaylist(Playlist)
-~ void deletePlaylistById(int)
-~ Playlist getPlaylistById(int)
-~ Playlist getPlaylistByName(String)
-~ PlaylistEnum getPlaylistStatus(Playlist)
-~ Playlist getTemporaryPlaylistOfCurrentUser(int)
-}
-
-interface common.repository.IAudioRepository {
-~ InputStream getStream(String)
-}
-
-interface common.repository.IArtistRepository {
-~ List<Artist> getAllArtists()
-~ void addArtist(Artist)
-~ Artist getArtistById(int)
-~ void updateOrInsertArtist(Artist)
-~ Artist getArtistByName(String)
-~ Artist getArtistBySongId(int)
-}
-
-
-class common.services.UniqueIdService {
+class common/services.UniqueIdService {
 + <<Create>> UniqueIdService()
 + int setUniqueId()
 }
 
+
 ' --- Dépendances générées ---
-
-
-clientSide.services.playlist.PlaylistFunctionalitiesService -u-> clientSide.services.UserService
-clientSide.services.playlist.PlaylistFunctionalitiesService -u-> clientSide.services.SongService
-
 clientSide.services.ToolBoxView -u-> clientSide.services.PlaylistServices
 clientSide.services.ToolBoxView -u-> clientSide.services.SongService
 clientSide.services.ToolBoxView -u-> clientSide.services.SearchService
@@ -359,31 +188,8 @@ clientSide.services.ToolBoxView -u-> clientSide.services.UserService
 clientSide.services.ToolBoxView -u-> clientSide.services.PrintService
 clientSide.services.ToolBoxView -u-> clientSide.services.PasswordService
 clientSide.services.ToolBoxView -u-> clientSide.services.ArtistService
-clientSide.services.ToolBoxView -u-> common.services.UniqueIdService
 
-clientSide.services.PrintService -u-> clientSide.services.SongService
-clientSide.services.PrintService -u-> clientSide.services.ArtistService
-clientSide.services.PrintService -u-> clientSide.services.PlaylistServices
-clientSide.services.PrintService -u-> clientSide.services.UserService
-
-clientSide.services.PlaylistServices --> clientSide.services.playlist.PlaylistFunctionalitiesService
-clientSide.services.PlaylistServices --> clientSide.services.playlist.TemporaryPlaylistService
-clientSide.services.PlaylistServices --> clientSide.services.playlist.PlaylistReorderSongService
-
-clientSide.services.SearchService -u-> clientSide.services.SongService
-clientSide.services.SearchService -u-> clientSide.services.PrintService
-clientSide.services.SearchService -u-> clientSide.services.UserService
-
-clientSide.services.UserService -u-> clientSide.services.PasswordService
-
-clientSide.services.playlist.TemporaryPlaylistService -u-> clientSide.services.UserService
-
-clientSide.services.PasswordService -u-> common.repository.IUserRepository
-
-clientSide.services.PageService -u-> clientSide.services.ToolBoxView
-clientSide.services.PageService -u-> clientSide.services.UserService
-
-' --- Fin des dépendances ---
-
+clientSide.services.ToolBoxView -d-> "common/services.UniqueIdService"
+clientSide.services.PageService -l-> clientSide.services.ToolBoxView
 
 @enduml

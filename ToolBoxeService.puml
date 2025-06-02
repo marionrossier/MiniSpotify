@@ -1,5 +1,4 @@
 @startuml
-'left to right direction
 
 class clientSide/services.SongService {
 - ISongRepository songRepository
@@ -12,56 +11,11 @@ class clientSide/services.SongService {
 + LinkedList<Song> getSongsByGender(MusicGender)
 }
 
-
-class "clientSide/services.playlist.PlaylistFunctionalitiesService" {
-- UserService userService
-- SongService songService
-+ <<Create>> PlaylistFunctionalitiesService(UserService,SongService)
-+ void createNewPlaylist(String,PlaylistEnum,PlaylistServices)
-+ void createAllSongPlaylist(User,PlaylistServices, IUserRepository)
-+ void removePlaylistFromUser(int, IUserRepository)
-+ void deletePlaylist(int, IPlaylistRepository, IUserRepository)
-+ void renamePlayList(int,String, IPlaylistRepository)
-+ boolean verifyPlaylistName(String,User, IPlaylistRepository)
-+ void deleteSongFromPlaylist(int,int, IPlaylistRepository)
-+ boolean isCurrentUserOwnerOfPlaylist(int, IPlaylistRepository)
-+ int takeAndValidateInputChoice(int,PageService)
-+ void playlistPageRouter(int,PlaylistServices,PageService,
-IPlaylistRepository)
-}
-
-class "clientSide/services.playlist.PlaylistReorderSongService" {
-+ <<Create>> PlaylistReorderSongService()
-+ void reorderSongsInPlaylist(int,PlaylistServices,Scanner,
-IPlaylistRepository)
-- LinkedList<Integer> collectNewOrderFromUser(Playlist)
-- boolean isValidIndex(int,Playlist)
-- void completeWithRemainingSongs(Playlist,List<Integer>)
-}
-
-
-class "clientSide/services.PrintService" {
-- UserService userService
-- PlaylistServices playlistService
-- SongService songService
-- ArtistService artistService
-+ <<Create>> PrintService(SongService,ArtistService,PlaylistServices,UserService)
-+ void printSongList(List<Integer>)
-+ void printPlaylist(List<Integer>)
-+ void printUserPlaylists(int)
-- String printPlaylistStatus(PlaylistEnum)
-+ boolean printUserFriends(int)
-+ void printUsers(List<Integer>)
-+ void printUserPublicPlaylists(int)
-}
-
-
 class "clientSide/services.ArtistService" {
 - IArtistRepository artistRepository
 + <<Create>> ArtistService(ToolBoxService)
 + String getArtistNameBySong(int)
 }
-
 
 class "clientSide/services.PlaylistServices" {
 - IPlaylistRepository playlistRepository
@@ -100,25 +54,6 @@ TemporaryPlaylistService, PlaylistReorderSongService)
 + void reorderSongsInPlaylist(int,PlaylistServices,Scanner, IPlaylistRepository)
 }
 
-
-class clientSide/services.SearchService {
-~ Scanner scanner
-- SongService songService
-- PrintService printService
-- UserService userService
-+ <<Create>> SearchService(SongService,PrintService,UserService)
-+ void searchSong(String,String,int,PageService,PlaylistServices)
-+ LinkedList<Integer> searchByTitle(String)
-- LinkedList<Integer> searchByArtist(String)
-- LinkedList<Integer> searchByGender(MusicGender)
-- LinkedList<Integer> listSongToListInt(LinkedList<Song>)
-+ LinkedList<Integer> chooseFoundedSongs(List<Integer>,PageService)
-+ LinkedList<Integer> chooseFoundedPlaylist(List<Integer>,PageService)
-- void loopIntInputValidation(PageService,LinkedList<Integer>,int)
-+ List<Integer> searchUserByPseudonym(String)
-}
-
-
 class clientSide/services.UserService {
 - IUserRepository userRepository
 - PasswordService passwordService
@@ -148,69 +83,6 @@ class "clientSide/services.ToolBoxService" {
 + IAudioRepository audioRepository
 + <<Create>> ToolBoxService(IPlaylistRepository,IUserRepository,
 ISongRepository,IArtistRepository,IAudioRepository)
-}
-
-
-class "clientSide/services.playlist.TemporaryPlaylistService" {
-- UserService userService
-+ <<Create>> TemporaryPlaylistService(UserService)
-+ int getTemporaryPlaylistId(IPlaylistRepository)
-+ void createTemporaryPlaylist(LinkedList<Integer>,PlaylistEnum,
-IPlaylistRepository)
-+ void adjustTemporaryPlaylistToNewPlaylist(String,PlaylistEnum,
-IPlaylistRepository)
-+ void addSongToPlaylistFromTemporaryPlaylist(int,int,
-IPlaylistRepository)
-}
-
-
-class "clientSide/services.PasswordService" {
-- IUserRepository userRepository
-+ <<Create>> PasswordService(IUserRepository)
-+ byte[] generateSalt()
-+ String hashPassword(String,byte[])
-+ boolean verifyUserAuthentification(String,String)
-+ boolean passwordCheck(String,String)
-}
-
-
-class clientSide/services.PageService {
-~ ArrayList<InterfaceMenu> pages
-- Scanner scanner
-- Stack<Integer> menuPagesStack
-- IPlaylistPlayer spotifyPlayer
-+ Login login
-+ CreateAccount createAccount
-+ HomePage homePage
-+ PlaylistHomePage playlistHomePage
-+ PlaylistChoseList playlistChoseList
-+ PlaylistPageShared playlistPageShared
-+ PlaylistPageOpen playlistPageOpen
-+ PlaylistCreation playlistCreation
-+ PlaylistDeletion playlistDeletion
-+ Search search
-+ ActionFoundedSongs actionFoundedSongs
-+ SearchGender searchGender
-+ FriendsPlaylistPage friendsPlaylistPage
-+ FriendsDisplayFriends friendsDisplayFriends
-+ FriendsHomePage friendsHomePage
-+ FriendSearch friendSearch
-+ FriendPlaylists friendPlaylists
-+ FriendOptions friendOptions
-+ SongPlayer songPlayer
-- UserService userService
-- ToolBoxView toolBoxView
-+ <<Create>> PageService(IPlaylistPlayer,ToolBoxView,UserService,
-Stack<Integer>)
-- void setUpPages()
-+ void startLogin()
-+ String gotAnInputGoBackIf0(String)
-+ int tryParseInt(String)
-+ Stack<Integer> getMenuPages()
-+ void addToStack(int)
-+ void goBack(int)
-+ InterfaceMenu getPageById(int)
-+ void pageIsPremium(boolean)
 }
 
 interface "common/repository.IUserRepository" {
@@ -255,48 +127,15 @@ interface common/repository.IArtistRepository {
 
 
 ' --- Dépendances générées ---
-
 "clientSide/services.SongService" -u-> "clientSide/services.ToolBoxService"
-
-"clientSide/services.playlist.PlaylistFunctionalitiesService" -u-> "clientSide/services.UserService"
-"clientSide/services.playlist.PlaylistFunctionalitiesService" -u-> "clientSide/services.SongService"
-
-"clientSide/services.PrintService" -u-> "clientSide/services.SongService"
-"clientSide/services.PrintService" -u-> "clientSide/services.ArtistService"
-"clientSide/services.PrintService" -u-> "clientSide/services.PlaylistServices"
-"clientSide/services.PrintService" -u-> "clientSide/services.UserService"
-
 "clientSide/services.ArtistService" -u-> "clientSide/services.ToolBoxService"
-
 "clientSide/services.PlaylistServices" -u-> "clientSide/services.ToolBoxService"
-"clientSide/services.PlaylistServices" -r-> "clientSide/services.playlist.PlaylistFunctionalitiesService"
-"clientSide/services.PlaylistServices" -r-> "clientSide/services.playlist.TemporaryPlaylistService"
-"clientSide/services.PlaylistServices" -r-> "clientSide/services.playlist.PlaylistReorderSongService"
-
-"clientSide/services.SearchService" -u--> "clientSide/services.SongService"
-"clientSide/services.SearchService" -l--> "clientSide/services.PrintService"
-"clientSide/services.SearchService" -u--> "clientSide/services.UserService"
-
 "clientSide/services.UserService" -u-> "clientSide/services.ToolBoxService"
-"clientSide/services.UserService" -u-> "clientSide/services.PasswordService"
-
-"clientSide/services.playlist.TemporaryPlaylistService" -u-> "clientSide/services.UserService"
-
-"clientSide/services.PasswordService" -u-> "common/repository.IUserRepository"
 
 "clientSide/services.ToolBoxService" -u-> "common/repository.IPlaylistRepository"
 "clientSide/services.ToolBoxService" -u-> "common/repository.IUserRepository"
 "clientSide/services.ToolBoxService" -u-> "common/repository.ISongRepository"
 "clientSide/services.ToolBoxService" -u-> "common/repository.IArtistRepository"
 "clientSide/services.ToolBoxService" -u-> "common/repository.IAudioRepository"
-
-"clientSide/services.PageService" -l-> "clientSide/services.UserService"
-
-' --- Fin des dépendances ---
-
-"clientSide/services.PlaylistServices" -[hidden]l-> "clientSide/services.ArtistService"
-"clientSide/services.PlaylistServices" -[hidden]r-> "clientSide/services.UserService"
-"clientSide/services.SongService" -[hidden]r-> "clientSide/services.ArtistService"
-
 
 @enduml
