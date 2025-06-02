@@ -122,7 +122,7 @@ public class DependencyProvider {
 
         fakeMusicPlayer = new FakeMusicPlayer();
         playlistPlayer = new PlaylistPlayer(
-                fakeMusicPlayer, audioLocalRepository, songService, playlistService, artistService);
+                fakeMusicPlayer, songService, playlistService, artistService);
 
         toolBoxView = new ToolBoxView(playlistService, userService, songService, artistService, printService,
                 searchService, passwordService, uniqueIdService);

@@ -98,7 +98,7 @@ public class CompositionRootPatternNoSocket {
         uniqueIdService = new UniqueIdService();
 
         musicPlayer = new MusicPlayer(audioLocalRepository, basicPlayer);
-        spotifyPlayer = new PlaylistPlayer(musicPlayer, audioLocalRepository, songService, playlistServices, artistService);
+        spotifyPlayer = new PlaylistPlayer(musicPlayer, songService, playlistServices, artistService);
         toolBoxView = new ToolBoxView(playlistServices, userService, songService, artistService,
                 printService, searchService, passwordService, uniqueIdService);
 

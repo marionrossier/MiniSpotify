@@ -6,7 +6,6 @@ import clientSide.services.SongService;
 import common.entities.Playlist;
 import common.entities.Song;
 import clientSide.player.file_player.*;
-import common.repository.IAudioRepository;
 
 import java.util.*;
 
@@ -18,7 +17,6 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     protected PlaylistServices playlistServices;
     protected ArtistService artistService;
     protected SongService songService;
-    protected IAudioRepository audioRepository;
 
     protected LinkedList<Integer> songIdHistory = new LinkedList<>();
     int currentHistoryIndex = -1;
@@ -34,13 +32,12 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     private final IState shuffleState;
     private final IState repeatState;
 
-    public PlaylistPlayer(IMusicPlayer musicPlayer, IAudioRepository audioRepository, SongService songService,
+    public PlaylistPlayer(IMusicPlayer musicPlayer, SongService songService,
                           PlaylistServices playlistServices, ArtistService artistService) {
         this.musicPlayer = musicPlayer;
         this.songService = songService;
         this.playlistServices = playlistServices;
         this.artistService = artistService;
-        this.audioRepository = audioRepository;
 
         this.sequentialState = new SequentialState(this);
         this.shuffleState = new ShuffleState(this);
