@@ -1,0 +1,82 @@
+@startuml
+class clientSide.repoFront.FrontAudioRepo {
+- {static} String SERVER_ADDRESS
+- {static} int SERVER_PORT
++ InputStream getStream(String)
+}
+
+
+class clientSide.repoFront.FrontArtistRepo {
+- ObjectMapper mapper
+- SocketClient socketClient
++ <<Create>> FrontArtistRepo(SocketClient)
++ List<Artist> getAllArtists()
++ void addArtist(Artist)
++ Artist getArtistById(int)
++ void updateOrInsertArtist(Artist)
++ Artist getArtistByName(String)
++ Artist getArtistBySongId(int)
+- Artist getArtistFromServer(Map<String,Object>)
+}
+
+
+class clientSide.socket.SocketClient {
+- String SERVER_ADDRESS
+- int ServerPort
+- ObjectMapper mapper
++ void setServerPort(int)
++ Map<String,Object> sendRequest(Map<String,Object>)
+}
+
+
+class clientSide.repoFront.FrontUserRepo {
+- ObjectMapper mapper
+- SocketClient socketClient
++ <<Create>> FrontUserRepo(SocketClient)
++ Optional<User> authenticate(String,String)
++ User getUserByPseudonym(String)
++ void updateOrInsertUser(User)
++ List<User> getAllUsers()
++ User getUserById(int)
+- User getUserFromServer(Map<String,Object>)
+}
+
+
+class clientSide.repoFront.FrontPlaylistRepo {
+- ObjectMapper mapper
+- SocketClient socketClient
++ <<Create>> FrontPlaylistRepo(SocketClient)
++ Playlist getPlaylistById(int)
++ Playlist getPlaylistByName(String)
++ List<Playlist> getAllPlaylists()
++ void deletePlaylistById(int)
++ void updateOrInsertPlaylist(Playlist)
++ PlaylistEnum getPlaylistStatus(Playlist)
++ Playlist getTemporaryPlaylistOfCurrentUser(int)
+- Playlist getPlaylistFromServer(Map<String,Object>)
+}
+
+
+class clientSide.repoFront.FrontSongRepo {
+- ObjectMapper mapper
+- SocketClient socketClient
++ <<Create>> FrontSongRepo(SocketClient)
++ ArrayList<Song> getAllSongs()
++ void addSong(Song)
++ Song getSongById(int)
++ LinkedList<Song> getSongsByTitle(String)
++ LinkedList<Song> getSongsByArtist(String)
++ LinkedList<Song> getSongsByGender(MusicGender)
+- LinkedList<Song> getResponse(Map<String,Object>)
+- Song getSongFromServer(Map<String,Object>)
+}
+
+
+
+
+common.repository.IAudioRepository <|.. clientSide.repoFront.FrontAudioRepo
+common.repository.IArtistRepository <|.. clientSide.repoFront.FrontArtistRepo
+common.repository.IUserRepository <|.. clientSide.repoFront.FrontUserRepo
+common.repository.IPlaylistRepository <|.. clientSide.repoFront.FrontPlaylistRepo
+common.repository.ISongRepository <|.. clientSide.repoFront.FrontSongRepo
+@enduml
