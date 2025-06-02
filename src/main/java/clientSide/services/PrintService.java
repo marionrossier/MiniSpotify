@@ -27,11 +27,6 @@ public class PrintService {
         this.playlistService = playlistServices;
     }
 
-    public void printSongFound (List<Integer> songs, String info){
-        printLNWhite("Songs found with information : " + info);
-        printSongList (songs);
-    }
-
     public void printSongList (List<Integer> songs){
         int i = 1;
         for (Integer song : songs) {
