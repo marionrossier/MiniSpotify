@@ -1,7 +1,8 @@
-package common.entities;
+package utils;
 
 import clientSide.services.*;
-import common.*;
+import common.entities.*;
+import common.repository.ISongRepository;
 import common.services.StockageService;
 import serverSide.repoLocal.*;
 
@@ -14,7 +15,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class JsonService {
+public class JsonPopulate {
     public static void main(String[] args) throws IOException {
 
         Files.deleteIfExists(Path.of("src/main/resources/jsons/user.json"));
@@ -43,7 +44,7 @@ public class JsonService {
 
         UserService userService = new UserService(toolBoxService, passwordService);
 
-        JsonService.addUser(userService);
+        JsonPopulate.addUser(userService);
         addArtist(artistLocalRepository);
         addSong(songLocalRepository, artistLocalRepository);
         addPlaylist(playlistLocalRepository);
