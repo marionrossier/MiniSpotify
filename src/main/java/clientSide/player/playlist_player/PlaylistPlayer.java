@@ -17,7 +17,6 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     protected ArtistService artistService;
     protected SongService songService;
     protected IAudioRepository audioRepository;
-    private final MenuService icon = new MenuService();
 
     protected LinkedList<Integer> songIdHistory = new LinkedList<>();
     int currentHistoryIndex = -1;
@@ -55,7 +54,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         songIdHistory.clear();
         songIdHistory.add(songService.getCurrentSongId());
         currentHistoryIndex = 0;
-        printLNBlue(icon.sequential() + " Repeat All lecture mode activate.");
+        printLNBlue(" Repeat All lecture mode activate.");
     }
 
     @Override
@@ -64,7 +63,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         songIdHistory.clear();
         songIdHistory.add(songService.getCurrentSongId());
         currentHistoryIndex = 0;
-        printLNBlue(icon.shuffle() + "Shuffle lecture mode activate.");
+        printLNBlue("Shuffle lecture mode activate.");
     }
 
     @Override
@@ -73,7 +72,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         songIdHistory.clear();
         songIdHistory.add(songService.getCurrentSongId());
         currentHistoryIndex = 0;
-        printLNBlue(icon.repeatOne() + " Repeat One lecture mode activate.");
+        printLNBlue(" Repeat One lecture mode activate.");
     }
 
     @Override

@@ -17,15 +17,15 @@ public class Search extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Search Page";
         this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak + icon.separator + icon.lineBreak +
-                icon.nbr1() + "Search by song title" + icon.lineBreak +
-                icon.nbr2() + "Search by artist" + icon.lineBreak +
-                icon.nbr3() + "Search by song gender" + icon.lineBreak +
-                icon.nbr4() + "Search by public playlist";
+                icon.nbr1 + "Search by song title" + icon.lineBreak +
+                icon.nbr2 + "Search by artist" + icon.lineBreak +
+                icon.nbr3 + "Search by song gender" + icon.lineBreak +
+                icon.nbr4 + "Search by public playlist";
     }
 
     @Override
     public void button1() {
-        printWhite(icon.lineBreak + icon.search() + "Enter the title of the song : ");
+        printWhite(icon.lineBreak + icon.search + "Enter the title of the song : ");
         String songTitle = scanner.nextLine();
         printLN();
 
@@ -35,7 +35,7 @@ public class Search extends TemplateSimplePage {
 
     @Override
     public void button2() {
-        printWhite(icon.lineBreak + icon.search() + "Enter the name of the artist : " + icon.lineBreak);
+        printWhite(icon.lineBreak + icon.search + "Enter the name of the artist : " + icon.lineBreak);
         String artistName = scanner.nextLine();
         printLN();
 

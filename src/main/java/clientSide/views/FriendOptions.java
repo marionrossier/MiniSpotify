@@ -17,8 +17,8 @@ public class FriendOptions extends TemplateSimplePage {
         this.isFree = false;
         this.pageTitle = "Manage your friend Page";
         this.pageContent = icon.zeroBack + icon.lineBreak + icon.separator + icon.lineBreak +
-                icon.nbr1() + "Friend Playlist.s" + icon.lineBreak +
-                icon.nbr2() + "Delete friend from your list";
+                icon.nbr1 + "Friend Playlist.s" + icon.lineBreak +
+                icon.nbr2 + "Delete friend from your list";
     }
 
     @Override

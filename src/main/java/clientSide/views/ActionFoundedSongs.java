@@ -15,9 +15,9 @@ public class ActionFoundedSongs extends TemplateSimplePage {
         this.pageTitle = "Chose your action for the selected songs";
         this.pageContent = icon.zeroBack + " |  " + icon.nineHomepage + icon.lineBreak +
                 icon.separator + icon.lineBreak +
-                    icon.nbr1() + "Add to current playlist" + icon.lineBreak +
-                    icon.nbr2() + "Add to an other playlist" +icon.lineBreak +
-                    icon.nbr3() + "Create a new playlist";
+                    icon.nbr1 + "Add to current playlist" + icon.lineBreak +
+                    icon.nbr2 + "Add to an other playlist" +icon.lineBreak +
+                    icon.nbr3 + "Create a new playlist";
     }
 
     @Override

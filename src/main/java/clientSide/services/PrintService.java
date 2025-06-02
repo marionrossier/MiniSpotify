@@ -69,7 +69,7 @@ public class PrintService {
                     printLNGrey(i + ". " +
                             playlist.getName() + " - " +
                             printPlaylistStatus(playlist.getStatus()) +
-                            (isUserOwner ? icon.house() : ""));
+                            (isUserOwner ? icon.house : ""));
                     i++;
                 }
             }
@@ -82,9 +82,9 @@ public class PrintService {
     private String printPlaylistStatus(PlaylistEnum status) {
 
         if (status == PlaylistEnum.PUBLIC){
-            return icon.earth();
+            return icon.earth;
         }
-        return icon.lock();
+        return icon.lock;
     }
 
     public boolean printUserFriends(int userId){
@@ -141,7 +141,7 @@ public class PrintService {
                     printLNGrey(i + ". " +
                             playlist.getName() + " - " +
                             printPlaylistStatus(playlist.getStatus()) +
-                            (isUserOwner ? icon.house() : ""));
+                            (isUserOwner ? icon.house : ""));
                     i++;
                 }
                 printLN();

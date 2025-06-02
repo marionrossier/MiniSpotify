@@ -19,11 +19,11 @@ public class PlaylistPageOpen extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Playlist Page : ";
         this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak + icon.separator + icon.lineBreak +
-                icon.nbr1() + "Rename Playlist" + icon.lineBreak +
-                icon.nbr2() + "Add song" + icon.lineBreak +
-                icon.nbr3() + "Remove song" + icon.lineBreak +
-                icon.nbr4() + "Reorder song" + icon.lineBreak +
-                icon.nbr5() + "Delete the playlist";
+                icon.nbr1 + "Rename Playlist" + icon.lineBreak +
+                icon.nbr2 + "Add song" + icon.lineBreak +
+                icon.nbr3 + "Remove song" + icon.lineBreak +
+                icon.nbr4 + "Reorder song" + icon.lineBreak +
+                icon.nbr5 + "Delete the playlist";
     }
 
     @Override

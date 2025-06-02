@@ -10,7 +10,6 @@ import static clientSide.services.PrintHelper.*;
 public class SearchService {
 
     Scanner scanner = new Scanner(System.in);
-    private final MenuService icon = new MenuService();
     private final SongService songService;
     private final PrintService printService;
     private final UserService userService;
@@ -110,8 +109,8 @@ public class SearchService {
 
     public LinkedList<Integer> chooseFoundedSongs(List<Integer> foundedSongs, PageService pageService){
         LinkedList<Integer> selectedSongsIndex = new LinkedList<>();
-        printLNWhite("Choose your songs by entering their number and press \"enter\" between each song." + icon.lineBreak+
-                "End selection with an \"x\"." + icon.lineBreak);
+        printLNWhite("Choose your songs by entering their number and press \"enter\" between each song. \n" +
+                "End selection with an \"x\".\n");
         printYourInput();
 
         loopIntInputValidation(pageService, selectedSongsIndex, foundedSongs.size());

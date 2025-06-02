@@ -17,10 +17,10 @@ public class SongPlayer extends TemplateSimplePage {
         this.pageContent =
                         icon.backHomePageMusicPlayer + icon.lineBreak +
                         icon.separator + icon.lineBreak +
-                        icon.nbr1() + icon.sequential() + " / " + icon.shuffle() + " / " + icon.repeatOne() + icon.lineBreak +
-                                icon.nbr2() + icon.playPause() + icon.lineBreak +
-                                icon.nbr3()+ icon.previous() + "\t" +
-                                icon.nbr4() + " " + icon.next() + "\t " + icon.nbr5() + icon.playBack();
+                        icon.nbr1 + icon.sequential + " / " + icon.shuffle + " / " + icon.repeatOne + icon.lineBreak +
+                                icon.nbr2 + icon.playPause + icon.lineBreak +
+                                icon.nbr3+ icon.previous + "\t" +
+                                icon.nbr4 + " " + icon.next + "\t " + icon.nbr5 + icon.playBack;
     }
 
     @Override
