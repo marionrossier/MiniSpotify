@@ -643,32 +643,34 @@ class clientSide.views.Login {
 + void button2()
 }
 
-class clientSide.services.PrintHelper {
-~ {static} String PRINT_RESET
-~ {static} String PRINT_BLACK
-~ {static} String PRINT_RED
-~ {static} String PRINT_GREEN
-~ {static} String PRINT_YELLOW
-~ {static} String PRINT_BLUE
-~ {static} String PRINT_WHITE
-~ {static} String PRINT_GREY
-~ {static} String PRINT_BG_WHITE
-~ {static} String PRINT_BOLD
-+ {static} void printLN()
-+ {static} void printLNBgWhite(String)
-+ {static} void printLNWhite(String)
-+ {static} void printLNBlue(String)
-+ {static} void printLNGreen(String)
-+ {static} void printLNGrey(String)
-+ {static} void printLNInfo(String)
-+ {static} void printInvalidInputTryAgain()
-+ {static} void printYourInput()
-+ {static} void printInvalidInputTryAgainOrBack()
-+ {static} void printInvalidInput()
-+ {static} void printLNError(String)
-+ {static} void printWhite(String)
-+ {static} void printInfo(String)
+class clientSide.services.PrintHelper << (S, #FF7700) static >> {
+    ~ {static} String PRINT_RESET
+    ~ {static} String PRINT_BLACK
+    ~ {static} String PRINT_RED
+    ~ {static} String PRINT_GREEN
+    ~ {static} String PRINT_YELLOW
+    ~ {static} String PRINT_BLUE
+    ~ {static} String PRINT_WHITE
+    ~ {static} String PRINT_GREY
+    ~ {static} String PRINT_BG_WHITE
+    ~ {static} String PRINT_BOLD
+
+    + {static} void printLN()
+    + {static} void printLNBgWhite(String)
+    + {static} void printLNWhite(String)
+    + {static} void printLNBlue(String)
+    + {static} void printLNGreen(String)
+    + {static} void printLNGrey(String)
+    + {static} void printLNInfo(String)
+    + {static} void printInvalidInputTryAgain()
+    + {static} void printYourInput()
+    + {static} void printInvalidInputTryAgainOrBack()
+    + {static} void printInvalidInput()
+    + {static} void printLNError(String)
+    + {static} void printWhite(String)
+    + {static} void printInfo(String)
 }
+
 
 
 class clientSide.socket.SocketClient {
