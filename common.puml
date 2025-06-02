@@ -159,7 +159,6 @@ class services.StockageService {
 - boolean isRunningUnderTest()
 }
 
-
 interface repository.IPlaylistRepository {
 ~ List<Playlist> getAllPlaylists()
 ~ void updateOrInsertPlaylist(Playlist)

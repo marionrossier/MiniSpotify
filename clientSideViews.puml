@@ -380,8 +380,8 @@ interface "clientSide.player/playlist_player.IPlaylistPlayer" {
 "clientSide/views.FriendPlaylists" -u-|> "clientSide/views.TemplateSimplePage"
 
 '--- Dépendances vers clientSide/views.TemplateInversePage ---
-"clientSide/views.PlaylistCreation" -u-|> "clientSide/views.TemplateInversePage"
-"clientSide/views.CreateAccount" -u-|> "clientSide/views.TemplateInversePage"
+"clientSide/views.PlaylistCreation" -r-|> "clientSide/views.TemplateInversePage"
+"clientSide/views.CreateAccount" -r-|> "clientSide/views.TemplateInversePage"
 
 
 "clientSide/views" -u-> "clientSide" : used by all classes and abstract of package
