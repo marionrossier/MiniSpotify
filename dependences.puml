@@ -1,0 +1,1321 @@
+@startuml
+class clientSide.views.PlaylistPageOpen {
+~ Scanner in
++ <<Create>> PlaylistPageOpen(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void displaySpecificContent()
++ void button1()
++ void button2()
++ void button3()
++ void button4()
++ void button5()
+}
+
+
+class clientSide.views.HomePage {
++ <<Create>> HomePage(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void button0()
++ void button1()
++ void button2()
++ void button3()
++ void button9()
+}
+
+abstract class clientSide.views.TemplateInversePage {
++ <<Create>> TemplateInversePage(PageService,IPlaylistPlayer)
++ void displayAllPage()
+}
+
+class clientSide.services.ToolBoxView {
+~ PlaylistServices playlistServ
+~ SongService songServ
+~ SearchService searchServ
+~ UserService userServ
+~ PrintService printServ
+~ PasswordService passwordServ
+~ ArtistService artistServ
+~ UniqueIdService uniqueIdServ
++ <<Create>> ToolBoxView(PlaylistServices,UserService,SongService,ArtistService,PrintService,SearchService,PasswordService,UniqueIdService)
++ PlaylistServices getPlaylistServ()
++ SearchService getSearchServ()
++ UserService getUserServ()
++ PrintService getPrintServ()
++ SongService getSongServ()
++ ArtistService getArtistServ()
++ PasswordService getPasswordServ()
+}
+
+
+class clientSide.services.PrintService {
+- UserService userService
+- PlaylistServices playlistService
+- SongService songService
+- ArtistService artistService
++ <<Create>> PrintService(SongService,ArtistService,PlaylistServices,UserService)
++ void printSongList(List<Integer>)
++ void printPlaylist(List<Integer>)
++ void printUserPlaylists(int)
+- String printPlaylistStatus(PlaylistEnum)
++ boolean printUserFriends(int)
++ void printUsers(List<Integer>)
++ void printUserPublicPlaylists(int)
+}
+
+
+class serverSide.repoBack.BackSongRepo {
+- ObjectMapper mapper
+- ISongRepository songRepo
+- IUserRepository userRepo
++ <<Create>> BackSongRepo(ISongRepository,IUserRepository)
++ String handleRequest(Map<String,Object>)
+}
+
+
+class clientSide.player.playlist_player.PlaylistPlayer {
+- IMusicPlayer musicPlayer
+# PlaylistServices playlistServices
+# ArtistService artistService
+# SongService songService
+# LinkedList<Integer> songIdHistory
+~ int currentHistoryIndex
+# Song currentSong
+# Playlist currentPlaylist
+- int lastPlayedPlaylistId
+- IState currentState
+- IState sequentialState
+- IState shuffleState
+- IState repeatState
++ <<Create>> PlaylistPlayer(IMusicPlayer,SongService,PlaylistServices,ArtistService)
++ void setSequentialMode()
++ void setShuffleMode()
++ void setRepeatMode()
++ int getCurrentPlaylistId()
++ int getCurrentSongId()
++ void playOrPause(int)
++ void play(int,int)
++ void playback()
++ void next()
++ void previous()
++ void stop()
++ boolean isPlaying()
++ boolean isPaused()
++ String getCurrentState()
++ void printCurrentSong()
++ void setCurrentSong(Song)
+}
+
+
+class clientSide.services.Cookies {
+- {static} Cookies instance
+- int userId
+- String userPseudonym
+- String userPassword
+- int currentFriendId
+- int currentFriendPlaylistId
+- int currentPlaylistId
+- int currentSongId
+- <<Create>> Cookies(int,String,String)
++ {static} void initializeInstance(int,String,String)
++ {static} void setCurrentPlaylistId(int)
++ {static} void setCurrentSongId(int)
++ {static} void resetCookies()
++ {static} Cookies getInstance()
++ int getUserId()
++ String getUserPseudonym()
++ String getUserPassword()
++ int getCurrentPlaylistId()
++ int getCurrentSongId()
++ String toString()
++ int getCurrentFriendId()
++ void setCurrentFriendId(int)
++ int getCurrentFriendPlaylistId()
++ void setCurrentFriendPlaylistId(int)
+}
+
+
+class serverSide.repoBack.BackPlaylistRepo {
+- ObjectMapper mapper
+- IPlaylistRepository playlistRepo
+- IUserRepository userRepo
++ <<Create>> BackPlaylistRepo(IPlaylistRepository,IUserRepository)
++ String handleRequest(Map<String,Object>)
+}
+
+
+enum common.entities.PlanEnum {
++  FREE
++  PREMIUM
+}
+
+class clientSide.services.SearchService {
+~ Scanner scanner
+- SongService songService
+- PrintService printService
+- UserService userService
++ <<Create>> SearchService(SongService,PrintService,UserService)
++ void searchSong(String,String,int,PageService,PlaylistServices)
++ LinkedList<Integer> searchByTitle(String)
+- LinkedList<Integer> searchByArtist(String)
+- LinkedList<Integer> searchByGender(MusicGender)
+- LinkedList<Integer> listSongToListInt(LinkedList<Song>)
++ LinkedList<Integer> chooseFoundedSongs(List<Integer>,PageService)
++ LinkedList<Integer> chooseFoundedPlaylist(List<Integer>,PageService)
+- void loopIntInputValidation(PageService,LinkedList<Integer>,int)
++ List<Integer> searchUserByPseudonym(String)
+}
+
+
+class clientSide.services.playlist.PlaylistFunctionalitiesService {
+- UserService userService
+- SongService songService
++ <<Create>> PlaylistFunctionalitiesService(UserService,SongService)
++ void createNewPlaylist(String,PlaylistEnum,PlaylistServices)
++ void createAllSongPlaylist(User,PlaylistServices,IUserRepository)
++ void removePlaylistFromUser(int,IUserRepository)
++ void deletePlaylist(int,IPlaylistRepository,IUserRepository)
++ void renamePlayList(int,String,IPlaylistRepository)
++ boolean verifyPlaylistName(String,User,IPlaylistRepository)
++ void deleteSongFromPlaylist(int,int,IPlaylistRepository)
++ boolean isCurrentUserOwnerOfPlaylist(int,IPlaylistRepository)
++ int takeAndValidateInputChoice(int,PageService)
++ void playlistPageRouter(int,PlaylistServices,PageService,IPlaylistRepository)
+}
+
+
+interface common.repository.IAudioRepository {
+~ InputStream getStream(String)
+}
+
+class clientSide.services.ToolBoxService {
++ IUserRepository userRepository
++ IPlaylistRepository playlistRepository
++ ISongRepository songRepository
++ IArtistRepository artistRepository
++ IAudioRepository audioRepository
++ <<Create>> ToolBoxService(IPlaylistRepository,IUserRepository,ISongRepository,IArtistRepository,IAudioRepository)
+}
+
+
+class serverSide.socket.AudioSocketServer {
+- int PORT
+- BackAudioRepo backAudioRepo
+- StockageService stockageService
++ <<Create>> AudioSocketServer(BackAudioRepo)
++ void audioSocketMain()
+- void handleAudioRequest(Socket)
+}
+
+
+class clientSide.views.FriendOptions {
++ <<Create>> FriendOptions(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void displaySpecificContent()
++ void button1()
++ void button2()
+}
+
+class clientSide.views.FriendsDisplayFriends {
++ <<Create>> FriendsDisplayFriends(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void displaySpecificContent()
++ void validateInput()
+}
+
+class clientSide.services.PasswordService {
+- IUserRepository userRepository
++ <<Create>> PasswordService(IUserRepository)
++ byte[] generateSalt()
++ String hashPassword(String,byte[])
++ boolean verifyUserAuthentification(String,String)
++ boolean passwordCheck(String,String)
+}
+
+
+class clientSide.player.playlist_player.RepeatState {
+- PlaylistPlayer playlistPlayer
++ String stateName
++ <<Create>> RepeatState(PlaylistPlayer)
++ Song getNextSong()
++ Song getPreviousSong()
++ String getStateName()
+}
+
+
+class clientSide.services.PageService {
+~ ArrayList<InterfaceMenu> pages
+- Scanner scanner
+- Stack<Integer> menuPagesStack
+- IPlaylistPlayer spotifyPlayer
++ Login login
++ CreateAccount createAccount
++ HomePage homePage
++ PlaylistHomePage playlistHomePage
++ PlaylistChoseList playlistChoseList
++ PlaylistPageShared playlistPageShared
++ PlaylistPageOpen playlistPageOpen
++ PlaylistCreation playlistCreation
++ PlaylistDeletion playlistDeletion
++ Search search
++ ActionFoundedSongs actionFoundedSongs
++ SearchGender searchGender
++ FriendsPlaylistPage friendsPlaylistPage
++ FriendsDisplayFriends friendsDisplayFriends
++ FriendsHomePage friendsHomePage
++ FriendSearch friendSearch
++ FriendPlaylists friendPlaylists
++ FriendOptions friendOptions
++ SongPlayer songPlayer
+- UserService userService
+- ToolBoxView toolBoxView
++ <<Create>> PageService(IPlaylistPlayer,ToolBoxView,UserService,Stack<Integer>)
+- void setUpPages()
++ void startLogin()
++ String gotAnInputGoBackIf0(String)
++ int tryParseInt(String)
++ Stack<Integer> getMenuPages()
++ void addToStack(int)
++ void goBack(int)
++ InterfaceMenu getPageById(int)
++ void pageIsPremium(boolean)
+}
+
+
+class serverSide.repoBack.BackArtistRepo {
+- ObjectMapper mapper
+- IArtistRepository artistRepo
+- IUserRepository userRepo
++ <<Create>> BackArtistRepo(IArtistRepository,IUserRepository)
++ String handleRequest(Map<String,Object>)
+}
+
+
+class serverSide.repoLocal.AudioLocalRepository {
+- String folderPath
+- StockageService stockageService
++ <<Create>> AudioLocalRepository(String)
++ <<Create>> AudioLocalRepository()
++ InputStream getStream(String)
+}
+
+
+interface clientSide.views.InterfaceMenu {
+~ void displayAllPage()
+~ int getPageId()
+~ void displayTitle(String)
+~ void displayContent(String)
+~ void displaySpecificContent()
+~ void validateInput()
+~ void switchPage()
+~ void button0()
+~ void button1()
+~ void button2()
+~ void button3()
+~ void button4()
+~ void button5()
+~ void button6()
+~ void button7()
+~ void button8()
+~ void button9()
+}
+
+class clientSide.views.PlaylistCreation {
+- String playlistName
++ <<Create>> PlaylistCreation(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void displaySpecificContent()
++ void button1()
++ void button2()
+- void playlistNameVerification()
+}
+
+
+class clientSide.player.playlist_player.ShuffleState {
+- PlaylistPlayer playlistPlayer
++ String stateName
++ <<Create>> ShuffleState(PlaylistPlayer)
++ Song getNextSong()
++ Song getPreviousSong()
++ String getStateName()
+}
+
+
+abstract class clientSide.views.TemplateSimplePage {
+~ int index
++ String pageTitle
++ int pageId
++ String pageContent
++ IPlaylistPlayer spotifyPlayer
+~ PageService pageService
+~ Scanner scanner
+~ boolean isFree
++ ToolBoxView toolBoxView
++ <<Create>> TemplateSimplePage(PageService,IPlaylistPlayer)
++ void displayAllPage()
++ int getPageId()
++ void displayTitle(String)
++ void displayContent(String)
++ void displaySpecificContent()
++ void validateInput()
++ void switchPage()
++ void handelInvalidIndex()
++ void button0()
++ void button1()
++ void button2()
++ void button3()
++ void button4()
++ void button5()
++ void button6()
++ void button7()
++ void button8()
++ void button9()
+}
+
+
+enum common.entities.MusicGender {
++  SOUL_RNB
++  POP
++  HIP_HOP
++  ROCK
++  FRENCH_VARIETY
++  ELECTRO
++  DISCO
++  REGGAE
++  NULL
+- String displayName
+~ <<Create>> MusicGender(String)
++ String getDisplayName()
+}
+
+
+class common.entities.Artist {
+- String artistName
+- int artistId
+- LinkedList<Integer> artistSongsID
+- UniqueIdService uniqueIdService
++ <<Create>> Artist()
++ <<Create>> Artist(String)
++ <<Create>> Artist(int,String,LinkedList<Integer>)
++ String getArtistName()
++ int getArtistId()
++ LinkedList<Integer> getArtistSongsID()
++ void setArtistName(String)
++ void setArtistId(int)
++ void setArtistSongsID(LinkedList<Integer>)
+}
+
+
+class clientSide.views.CreateAccount {
+- String pseudonym
+- String password
+- String email
+- PlanEnum planEnum
++ <<Create>> CreateAccount(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void displaySpecificContent()
++ void button1()
++ void button2()
+- void createAccount()
+}
+
+
+class clientSide.views.PlaylistDeletion {
++ <<Create>> PlaylistDeletion(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void button1()
++ void button2()
+}
+
+class serverSide.repoBack.BackUserRepo {
+- ObjectMapper mapper
+- IUserRepository userRepo
++ <<Create>> BackUserRepo(IUserRepository)
++ String handleRequest(Map<String,Object>)
+}
+
+
+class clientSide.views.ActionFoundedSongs {
++ <<Create>> ActionFoundedSongs(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void button1()
++ void button2()
+- void verificationAndThenAction()
++ void button3()
++ void button8()
++ void handelInvalidIndex()
+}
+
+class common.entities.Playlist {
+- String name
+- int playlistId
+- LinkedList<Integer> listSongsId
+- int ownerId
+- PlaylistEnum status
+- UniqueIdService uniqueIdService
++ <<Create>> Playlist()
++ <<Create>> Playlist(String,PlaylistEnum)
++ <<Create>> Playlist(String,LinkedList<Integer>,int,PlaylistEnum)
++ <<Create>> Playlist(String,int,LinkedList<Integer>,int,PlaylistEnum)
++ String getName()
++ void setName(String)
++ int getPlaylistId()
++ void setPlaylistId(int)
++ LinkedList<Integer> getPlaylistSongsListWithId()
++ void setListSongsId(LinkedList<Integer>)
++ int getOwnerId()
++ void setOwnerId(int)
++ PlaylistEnum getStatus()
++ void setStatus(PlaylistEnum)
+}
+
+
+interface common.repository.IPlaylistRepository {
+~ List<Playlist> getAllPlaylists()
+~ void updateOrInsertPlaylist(Playlist)
+~ void deletePlaylistById(int)
+~ Playlist getPlaylistById(int)
+~ Playlist getPlaylistByName(String)
+~ PlaylistEnum getPlaylistStatus(Playlist)
+~ Playlist getTemporaryPlaylistOfCurrentUser(int)
+}
+
+enum common.entities.PlaylistEnum {
++  PRIVATE
++  PUBLIC
+}
+
+class clientSide.views.PlaylistHomePage {
++ <<Create>> PlaylistHomePage(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void button1()
++ void button2()
+}
+
+class serverSide.CompositionRootServerSide {
+~ StockageService stockageService
+~ IPlaylistRepository playlistLocalRepository
+~ IUserRepository userLocalRepository
+~ ISongRepository songLocalRepository
+~ IArtistRepository artistLocalRepository
+~ IAudioRepository audioLocalRepository
++ BackPlaylistRepo backPlaylistRepo
++ BackUserRepo backUserRepo
++ BackSongRepo backSongRepo
++ BackArtistRepo backArtistRepo
++ BackAudioRepo backAudioRepo
++ <<Create>> CompositionRootServerSide()
++ {static} void main(String[])
++ void startApp(SocketServer,AudioSocketServer)
+}
+
+
+class serverSide.repoLocal.UserLocalRepository {
+- String filePath
+- StockageService stockageService
+- List<User> data
++ <<Create>> UserLocalRepository(String)
++ <<Create>> UserLocalRepository()
++ Optional<User> authenticate(String,String)
++ User getUserByPseudonym(String)
++ List<User> getAllUsers()
++ void updateOrInsertUser(User)
++ User getUserById(int)
+}
+
+
+class common.services.StockageService {
+~ String userHome
+~ String fileName
+- {static} ObjectMapper objectMapper
++ List<T> loadFromJson(String,TypeReference<List<T>>)
++ void saveToJson(String,List<T>)
++ void copyResourceToWritableLocation(String)
++ void copyMp3FilesFromResources()
+- boolean isRunningUnderTest()
+}
+
+
+class common.services.UniqueIdService {
++ <<Create>> UniqueIdService()
++ int setUniqueId()
+}
+
+class serverSide.repoLocal.ArtistLocalRepository {
+- String filePath
+- StockageService stockageService
+- List<Artist> data
++ <<Create>> ArtistLocalRepository(String)
++ <<Create>> ArtistLocalRepository()
++ List<Artist> getAllArtists()
++ void addArtist(Artist)
++ Artist getArtistById(int)
++ void updateOrInsertArtist(Artist)
++ Artist getArtistByName(String)
++ Artist getArtistBySongId(int)
+}
+
+
+interface clientSide.player.file_player.IMusicPlayer {
+~ void addSongEndObserver(Runnable)
+~ void playOrPause(String)
+~ void play(String)
+~ void pause()
+~ void resume(String)
+~ void stop()
+~ boolean isPlaying()
+~ boolean isPaused()
+}
+
+class serverSide.socket.SocketServer {
+- int Port
+- ObjectMapper mapper
+- BackPlaylistRepo backPlaylistRepo
+- BackUserRepo backUserRepo
+- BackSongRepo backSongRepo
+- BackArtistRepo backArtistRepo
++ <<Create>> SocketServer(BackUserRepo,BackPlaylistRepo,BackSongRepo,BackArtistRepo)
++ void setPort(int)
++ void socketServerMain()
+- void handleClient(Socket)
+}
+
+
+class clientSide.CompositionRootClientSide {
+~ Scanner scanner
++ Stack<Integer> menuPagesStack
+~ IPlaylistRepository frontPlaylistRepo
+~ IUserRepository frontUserRepo
+~ ISongRepository frontSongRepo
+~ IArtistRepository frontArtistRepo
+~ IAudioRepository frontAudioRepo
+~ SocketClient socketClient
+~ UserService userService
+~ ArtistService artistService
+~ SongService songService
+~ PlaylistFunctionalitiesService playlistFunctionalitiesService
+~ PlaylistReorderSongService playlistReorderSongService
+~ TemporaryPlaylistService temporaryPlaylistService
+~ PlaylistServices playlistServices
+~ PrintService printService
+~ SearchService searchService
+~ PasswordService passwordService
+~ UniqueIdService uniqueIdService
+~ IMusicPlayer musicPlayer
+~ IPlaylistPlayer spotifyPlayer
+~ ToolBoxView toolBoxView
+~ BasicPlayer basicPlayer
+~ PageService pageService
+~ ToolBoxService toolBoxService
++ <<Create>> CompositionRootClientSide()
++ {static} void main(String[])
++ void startApp()
+}
+
+
+class clientSide.services.SongService {
+- ISongRepository songRepository
++ <<Create>> SongService(ToolBoxService)
++ void setCurrentSongId(int)
++ int getCurrentSongId()
++ Song getSongById(int)
++ LinkedList<Song> getSongByTitle(String)
++ LinkedList<Song> getSongsByArtist(String)
++ LinkedList<Song> getSongsByGender(MusicGender)
+}
+
+
+class serverSide.repoBack.BackAudioRepo {
+- String AUDIO_FOLDER
+- IUserRepository userRepo
++ <<Create>> BackAudioRepo(IUserRepository)
++ byte[] handleGetAudioFile(DataInputStream)
+- {static} byte[] readAllBytes(File)
+}
+
+
+class serverSide.repoLocal.SongLocalRepository {
+- String filePath
+- StockageService stockageService
+- IArtistRepository artistLocalRepository
+- List<Song> data
++ <<Create>> SongLocalRepository(String,StockageService,IArtistRepository)
++ <<Create>> SongLocalRepository(StockageService,IArtistRepository)
++ ArrayList<Song> getAllSongs()
++ void addSong(Song)
++ Song getSongById(int)
++ LinkedList<Song> getSongsByTitle(String)
++ LinkedList<Song> getSongsByArtist(String)
++ LinkedList<Song> getSongsByGender(MusicGender)
+}
+
+
+interface common.repository.ISongRepository {
+~ ArrayList<Song> getAllSongs()
+~ void addSong(Song)
+~ Song getSongById(int)
+~ LinkedList<Song> getSongsByTitle(String)
+~ LinkedList<Song> getSongsByArtist(String)
+~ LinkedList<Song> getSongsByGender(MusicGender)
+}
+
+class clientSide.services.playlist.TemporaryPlaylistService {
+- UserService userService
++ <<Create>> TemporaryPlaylistService(UserService)
++ int getTemporaryPlaylistId(IPlaylistRepository)
++ void createTemporaryPlaylist(LinkedList<Integer>,PlaylistEnum,IPlaylistRepository)
++ void adjustTemporaryPlaylistToNewPlaylist(String,PlaylistEnum,IPlaylistRepository)
++ void addSongToPlaylistFromTemporaryPlaylist(int,int,IPlaylistRepository)
+}
+
+
+class clientSide.repoFront.FrontArtistRepo {
+- ObjectMapper mapper
+- SocketClient socketClient
++ <<Create>> FrontArtistRepo(SocketClient)
++ List<Artist> getAllArtists()
++ void addArtist(Artist)
++ Artist getArtistById(int)
++ void updateOrInsertArtist(Artist)
++ Artist getArtistByName(String)
++ Artist getArtistBySongId(int)
+- Artist getArtistFromServer(Map<String,Object>)
+}
+
+
+class clientSide.views.FriendSearch {
++ <<Create>> FriendSearch(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void displaySpecificContent()
+}
+
+class serverSide.repoLocal.PlaylistLocalRepository {
+- String filePath
+- StockageService stockageService
+- List<Playlist> data
++ <<Create>> PlaylistLocalRepository(String)
++ <<Create>> PlaylistLocalRepository()
++ List<Playlist> getAllPlaylists()
++ void updateOrInsertPlaylist(Playlist)
++ void deletePlaylistById(int)
++ Playlist getPlaylistById(int)
++ Playlist getPlaylistByName(String)
++ PlaylistEnum getPlaylistStatus(Playlist)
++ Playlist getTemporaryPlaylistOfCurrentUser(int)
+}
+
+
+class common.entities.Song {
+- String title
+- int artistId
+- int durationSeconds
+- MusicGender gender
+- int songId
+- String audioFileName
+- UniqueIdService uniqueIdService
++ <<Create>> Song()
++ <<Create>> Song(int,String,int,int,MusicGender,String)
++ <<Create>> Song(String,int,int,MusicGender,String)
++ String getTitle()
++ void setTitle(String)
++ int getArtistId()
++ void setArtistId(int)
++ int getDurationSeconds()
++ void setDurationSeconds(int)
++ MusicGender getGender()
++ void setGender(MusicGender)
++ int getSongId()
++ void setSongId(int)
++ String getAudioFileName()
++ void setAudioFileName(String)
+}
+
+
+class clientSide.services.PlaylistServices {
+- IPlaylistRepository playlistRepository
+- TemporaryPlaylistService temporaryPlaylistService
+- PlaylistFunctionalitiesService playlistFuncService
+- PlaylistReorderSongService playlistReorderSongService
+- ISongRepository songRepository
+- IUserRepository userRepository
++ <<Create>> PlaylistServices(ToolBoxService,PlaylistFunctionalitiesService,TemporaryPlaylistService,PlaylistReorderSongService)
++ int setDurationSeconds(int)
++ void setCurrentPlaylistId(int)
++ int getCurrentPlaylistId()
++ PlaylistEnum getPlaylistStatus()
++ int getAllSongsPlaylistId()
++ Playlist getPlaylistByName(String)
++ Playlist getPlaylistById(int)
++ List<Integer> getPublicPlaylists()
++ List<Integer> getUserPublicPlaylists(User)
++ int getCurrentFriendPlaylistId()
++ void setCurrentFriendPlaylistId(int)
++ void createNewPlaylist(String,PlaylistEnum)
++ void createAllSongPlaylist(User)
++ void deletePlaylist(int)
++ void renamePlayList(int,String)
++ boolean verifyPlaylistName(String,User)
++ void deleteSongFromPlaylist(int,int)
++ boolean isCurrentUserOwnerOfPlaylist(int)
++ int takeAndValidateInputChoice(int,PageService)
++ void playlistPageRouter(int,PageService)
++ int getTemporaryPlaylistId()
++ void createTemporaryPlaylist(LinkedList<Integer>,PlaylistEnum)
++ void adjustTemporaryPlaylistToNewPlaylist(String,PlaylistEnum)
++ void addSongToPlaylistFromTemporaryPlaylist(int,int)
++ void getAndAddSelectionOfPlaylistsToCurrentUserPlaylists(List<Integer>,LinkedList<Integer>,ToolBoxView)
++ void reorderSongsInPlaylist(int,Scanner)
+}
+
+
+class clientSide.views.Login {
++ <<Create>> Login(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void button0()
++ void button1()
++ void button2()
+}
+
+class clientSide.services.PrintHelper {
++ {static} String nbr0
++ {static} String nbr1
++ {static} String nbr2
++ {static} String nbr3
++ {static} String nbr4
++ {static} String nbr5
++ {static} String nbr6
++ {static} String nbr7
++ {static} String nbr8
++ {static} String nbr9
++ {static} String playPause
++ {static} String playBack
++ {static} String next
++ {static} String previous
++ {static} String shuffle
++ {static} String sequential
++ {static} String repeatOne
++ {static} String lock
++ {static} String premium
++ {static} String free
++ {static} String group
++ {static} String house
++ {static} String earth
++ {static} String search
++ {static} String lineBreak
++ {static} String eightMusicPlayer
++ {static} String nineHomepage
++ {static} String zeroBack
++ {static} String separator
++ {static} String backHomePageMusicPlayer
+~ {static} String PRINT_RESET
+~ {static} String PRINT_BLACK
+~ {static} String PRINT_RED
+~ {static} String PRINT_GREEN
+~ {static} String PRINT_YELLOW
+~ {static} String PRINT_BLUE
+~ {static} String PRINT_WHITE
+~ {static} String PRINT_GREY
+~ {static} String PRINT_BG_WHITE
+~ {static} String PRINT_BOLD
++ {static} void printLN()
++ {static} void printLNBgWhite(String)
++ {static} void printLNWhite(String)
++ {static} void printLNBlue(String)
++ {static} void printLNGreen(String)
++ {static} void printLNGrey(String)
++ {static} void printLNInfo(String)
++ {static} void printInvalidInputTryAgain()
++ {static} void printYourInput()
++ {static} void printInvalidInputTryAgainOrBack()
++ {static} void printInvalidInput()
++ {static} void printLNError(String)
++ {static} void printWhite(String)
++ {static} void printInfo(String)
+}
+
+
+class clientSide.socket.SocketClient {
+- String SERVER_ADDRESS
+- int ServerPort
+- ObjectMapper mapper
++ void setServerPort(int)
++ Map<String,Object> sendRequest(Map<String,Object>)
+}
+
+
+class clientSide.repoFront.FrontPlaylistRepo {
+- ObjectMapper mapper
+- SocketClient socketClient
++ <<Create>> FrontPlaylistRepo(SocketClient)
++ Playlist getPlaylistById(int)
++ Playlist getPlaylistByName(String)
++ List<Playlist> getAllPlaylists()
++ void deletePlaylistById(int)
++ void updateOrInsertPlaylist(Playlist)
++ PlaylistEnum getPlaylistStatus(Playlist)
++ Playlist getTemporaryPlaylistOfCurrentUser(int)
+- Playlist getPlaylistFromServer(Map<String,Object>)
+}
+
+
+interface common.repository.IUserRepository {
+~ Optional<User> authenticate(String,String)
+~ User getUserByPseudonym(String)
+~ List<User> getAllUsers()
+~ void updateOrInsertUser(User)
+~ User getUserById(int)
+}
+
+class clientSide.views.Search {
++ <<Create>> Search(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void button1()
++ void button2()
++ void button3()
++ void button4()
+}
+
+class clientSide.views.SearchGender {
++ <<Create>> SearchGender(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void button1()
++ void button2()
++ void button3()
++ void button4()
++ void button5()
++ void button6()
++ void button7()
++ void button8()
+}
+
+class clientSide.views.FriendsPlaylistPage {
++ <<Create>> FriendsPlaylistPage(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void displaySpecificContent()
++ void button1()
++ void button2()
+}
+
+class common.entities.User {
+- int userId
+- String pseudonym
+- String email
+- String password
+- byte[] salt
+- PlanEnum planEnum
+- List<Integer> playlists
+- List<Integer> friends
+- UniqueIdService uniqueIdService
++ <<Create>> User()
++ <<Create>> User(String,String,String,PlanEnum)
++ <<Create>> User(String,String,String,byte[],PlanEnum,List<Integer>,List<Integer>)
++ <<Create>> User(int,String,String,String,byte[],PlanEnum,List<Integer>,List<Integer>)
++ void setPlanEnum(PlanEnum)
++ int getUserId()
++ void setUserId(int)
++ String getPseudonym()
++ void setPseudonym(String)
++ String getEmail()
++ void setEmail(String)
++ String getPassword()
++ void setPassword(String)
++ byte[] getSalt()
++ void setSalt(byte[])
++ PlanEnum getPlanEnum()
++ List<Integer> getPlaylists()
++ void setPlaylists(List<Integer>)
++ List<Integer> getFriends()
++ void setFriends(List<Integer>)
+}
+
+
+interface clientSide.player.playlist_player.IState {
+~ Song getNextSong()
+~ Song getPreviousSong()
+~ String getStateName()
+}
+
+class clientSide.repoFront.FrontUserRepo {
+- ObjectMapper mapper
+- SocketClient socketClient
++ <<Create>> FrontUserRepo(SocketClient)
++ Optional<User> authenticate(String,String)
++ User getUserByPseudonym(String)
++ void updateOrInsertUser(User)
++ List<User> getAllUsers()
++ User getUserById(int)
+- User getUserFromServer(Map<String,Object>)
+}
+
+
+class clientSide.services.ArtistService {
+- IArtistRepository artistRepository
++ <<Create>> ArtistService(ToolBoxService)
++ String getArtistNameBySong(int)
+}
+
+
+class clientSide.services.playlist.PlaylistReorderSongService {
++ <<Create>> PlaylistReorderSongService()
++ void reorderSongsInPlaylist(int,PlaylistServices,Scanner,IPlaylistRepository)
+- LinkedList<Integer> collectNewOrderFromUser(Playlist,Scanner)
+- boolean isValidIndex(int,Playlist)
+- void completeWithRemainingSongs(Playlist,List<Integer>)
+}
+
+class clientSide.repoFront.FrontAudioRepo {
+- {static} String SERVER_ADDRESS
+- {static} int SERVER_PORT
++ InputStream getStream(String)
+}
+
+
+class clientSide.services.UserService {
+- IUserRepository userRepository
+- PasswordService passwordService
++ <<Create>> UserService(ToolBoxService,PasswordService)
++ void addUser(String,String,String,PlanEnum)
++ void addUser(int,String,String,String,PlanEnum)
++ boolean emailValidation(String)
++ void addOnePlaylistToCurrentUser(int)
++ void addFriend(int)
++ void deleteFriend(int)
++ void saveUser(User)
++ int getCurrentUserId()
++ void resetCookie()
++ User getUserByPseudonym(String)
++ List<Integer> getUsersByPseudonym(String)
++ User getUserById(int)
++ void setCurrentFriendId(int)
++ int getCurrentFriendId()
+}
+
+
+class clientSide.player.playlist_player.SequentialState {
+- PlaylistPlayer playlistPlayer
++ String stateName
++ <<Create>> SequentialState(PlaylistPlayer)
++ Song getNextSong()
++ Song getPreviousSong()
++ String getStateName()
+}
+
+
+class clientSide.player.file_player.MusicPlayer {
+- IAudioRepository audioRepository
+- boolean isPlaying
+- boolean isPaused
+- BasicPlayer basicPlayer
+- List<Runnable> songEndObservers
++ <<Create>> MusicPlayer(IAudioRepository,BasicPlayer)
++ void addSongEndObserver(Runnable)
++ void playOrPause(String)
++ void play(String)
++ void pause()
++ void resume(String)
++ void stop()
++ boolean isPlaying()
++ boolean isPaused()
++ void opened(Object,Map)
++ void progress(int,long,byte[],Map)
++ void stateUpdated(BasicPlayerEvent)
++ void setController(BasicController)
+}
+
+
+interface common.repository.IArtistRepository {
+~ List<Artist> getAllArtists()
+~ void addArtist(Artist)
+~ Artist getArtistById(int)
+~ void updateOrInsertArtist(Artist)
+~ Artist getArtistByName(String)
+~ Artist getArtistBySongId(int)
+}
+
+class clientSide.views.PlaylistPageShared {
++ <<Create>> PlaylistPageShared(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void displaySpecificContent()
++ void button1()
+}
+
+class clientSide.views.SongPlayer {
++ <<Create>> SongPlayer(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void displaySpecificContent()
++ void button1()
++ void button2()
++ void button3()
++ void button4()
++ void button5()
++ void button8()
+~ void loop()
+}
+
+class clientSide.views.FriendsHomePage {
++ <<Create>> FriendsHomePage(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void button1()
++ void button2()
+}
+
+class clientSide.repoFront.FrontSongRepo {
+- ObjectMapper mapper
+- SocketClient socketClient
++ <<Create>> FrontSongRepo(SocketClient)
++ ArrayList<Song> getAllSongs()
++ void addSong(Song)
++ Song getSongById(int)
++ LinkedList<Song> getSongsByTitle(String)
++ LinkedList<Song> getSongsByArtist(String)
++ LinkedList<Song> getSongsByGender(MusicGender)
+- LinkedList<Song> getResponse(Map<String,Object>)
+- Song getSongFromServer(Map<String,Object>)
+}
+
+
+class clientSide.views.PlaylistChoseList {
++ <<Create>> PlaylistChoseList(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void displaySpecificContent()
++ void validateInput()
++ void button8()
++ void button9()
+}
+
+class clientSide.views.FriendPlaylists {
++ <<Create>> FriendPlaylists(PageService,IPlaylistPlayer,ToolBoxView,int)
++ void displaySpecificContent()
++ void validateInput()
+}
+
+interface clientSide.player.playlist_player.IPlaylistPlayer {
+~ void playOrPause(int)
+~ void play(int,int)
+~ void playback()
+~ void next()
+~ void previous()
+~ void setShuffleMode()
+~ void setRepeatMode()
+~ void setSequentialMode()
+~ int getCurrentPlaylistId()
+~ int getCurrentSongId()
+~ void stop()
+~ boolean isPlaying()
+~ boolean isPaused()
+~ String getCurrentState()
+~ void setCurrentSong(Song)
+}
+
+
+'CLIENT SIDE'
+
+clientSide.views.PlaylistPageOpen --> clientSide.services.PageService
+clientSide.views.PlaylistPageOpen --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.PlaylistPageOpen --> clientSide.services.ToolBoxView
+
+clientSide.views.HomePage --> clientSide.services.PageService
+clientSide.views.HomePage --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.HomePage --> clientSide.services.ToolBoxView
+
+clientSide.views.TemplateInversePage --> clientSide.services.PageService
+clientSide.views.TemplateInversePage --> clientSide.player.playlist_player.IPlaylistPlayer
+
+clientSide.services.ToolBoxView --> clientSide.services.PlaylistServices
+clientSide.services.ToolBoxView --> clientSide.services.UserService
+clientSide.services.ToolBoxView --> clientSide.services.SongService
+clientSide.services.ToolBoxView --> clientSide.services.ArtistService
+clientSide.services.ToolBoxView --> clientSide.services.PrintService
+clientSide.services.ToolBoxView --> clientSide.services.SearchService
+clientSide.services.ToolBoxView --> clientSide.services.PasswordService
+clientSide.services.ToolBoxView --> common.services.UniqueIdService
+
+clientSide.services.PrintService --> clientSide.services.SongService
+clientSide.services.PrintService --> clientSide.services.ArtistService
+clientSide.services.PrintService --> clientSide.services.PlaylistServices
+clientSide.services.PrintService --> clientSide.services.UserService
+
+clientSide.player.playlist_player.PlaylistPlayer --> clientSide.player.file_player.IMusicPlayer
+clientSide.player.playlist_player.PlaylistPlayer --> clientSide.services.SongService
+clientSide.player.playlist_player.PlaylistPlayer --> clientSide.services.PlaylistServices
+clientSide.player.playlist_player.PlaylistPlayer --> clientSide.services.ArtistService
+
+clientSide.services.SearchService --> clientSide.services.SongService
+clientSide.services.SearchService --> clientSide.services.PrintService
+clientSide.services.SearchService --> clientSide.services.UserService
+
+clientSide.services.playlist.PlaylistFunctionalitiesService --> clientSide.services.UserService
+clientSide.services.playlist.PlaylistFunctionalitiesService --> clientSide.services.SongService
+
+clientSide.services.ToolBoxService --> common.repository.IUserRepository
+clientSide.services.ToolBoxService --> common.repository.IPlaylistRepository
+clientSide.services.ToolBoxService --> common.repository.ISongRepository
+clientSide.services.ToolBoxService --> common.repository.IArtistRepository
+clientSide.services.ToolBoxService --> common.repository.IAudioRepository
+
+clientSide.views.FriendOptions --> clientSide.services.PageService
+clientSide.views.FriendOptions --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.FriendOptions --> clientSide.services.ToolBoxView
+
+clientSide.views.FriendsDisplayFriends --> clientSide.services.PageService
+clientSide.views.FriendsDisplayFriends --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.FriendsDisplayFriends --> clientSide.services.ToolBoxView
+
+clientSide.services.PasswordService --> common.repository.IUserRepository
+
+clientSide.player.playlist_player.RepeatState --> clientSide.player.playlist_player.PlaylistPlayer
+
+clientSide.services.PageService --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.services.PageService --> clientSide.services.ToolBoxView
+clientSide.services.PageService --> clientSide.services.UserService
+clientSide.services.PageService --> clientSide.views.Login
+clientSide.services.PageService --> clientSide.views.CreateAccount
+clientSide.services.PageService --> clientSide.views.HomePage
+clientSide.services.PageService --> clientSide.views.PlaylistHomePage
+clientSide.services.PageService --> clientSide.views.PlaylistChoseList
+clientSide.services.PageService --> clientSide.views.PlaylistPageShared
+clientSide.services.PageService --> clientSide.views.PlaylistPageOpen
+clientSide.services.PageService --> clientSide.views.PlaylistCreation
+clientSide.services.PageService --> clientSide.views.PlaylistDeletion
+clientSide.services.PageService --> clientSide.views.Search
+clientSide.services.PageService --> clientSide.views.ActionFoundedSongs
+clientSide.services.PageService --> clientSide.views.SearchGender
+clientSide.services.PageService --> clientSide.views.FriendsPlaylistPage
+clientSide.services.PageService --> clientSide.views.FriendsDisplayFriends
+clientSide.services.PageService --> clientSide.views.FriendsHomePage
+clientSide.services.PageService --> clientSide.views.FriendSearch
+clientSide.services.PageService --> clientSide.views.FriendPlaylists
+clientSide.services.PageService --> clientSide.views.FriendOptions
+clientSide.services.PageService --> clientSide.views.SongPlayer
+
+clientSide.views.PlaylistCreation --> clientSide.services.PageService
+clientSide.views.PlaylistCreation --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.PlaylistCreation --> clientSide.services.ToolBoxView
+
+clientSide.player.playlist_player.ShuffleState --> clientSide.player.playlist_player.PlaylistPlayer
+
+clientSide.views.TemplateSimplePage --> clientSide.services.PageService
+clientSide.views.TemplateSimplePage --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.TemplateSimplePage --> clientSide.services.ToolBoxView
+
+clientSide.views.CreateAccount --> clientSide.services.PageService
+clientSide.views.CreateAccount --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.CreateAccount --> clientSide.services.ToolBoxView
+
+clientSide.views.PlaylistDeletion --> clientSide.services.PageService
+clientSide.views.PlaylistDeletion --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.PlaylistDeletion --> clientSide.services.ToolBoxView
+
+clientSide.views.ActionFoundedSongs --> clientSide.services.PageService
+clientSide.views.ActionFoundedSongs --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.ActionFoundedSongs --> clientSide.services.ToolBoxView
+
+clientSide.views.PlaylistHomePage --> clientSide.services.PageService
+clientSide.views.PlaylistHomePage --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.PlaylistHomePage --> clientSide.services.ToolBoxView
+
+clientSide.views.FriendSearch --> clientSide.services.PageService
+clientSide.views.FriendSearch --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.FriendSearch --> clientSide.services.ToolBoxView
+
+clientSide.views.Login --> clientSide.services.PageService
+clientSide.views.Login --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.Login --> clientSide.services.ToolBoxView
+
+clientSide.views.Search --> clientSide.services.PageService
+clientSide.views.Search --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.Search --> clientSide.services.ToolBoxView
+
+clientSide.views.SearchGender --> clientSide.services.PageService
+clientSide.views.SearchGender --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.SearchGender --> clientSide.services.ToolBoxView
+
+clientSide.views.FriendsPlaylistPage --> clientSide.services.PageService
+clientSide.views.FriendsPlaylistPage --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.FriendsPlaylistPage --> clientSide.services.ToolBoxView
+
+clientSide.player.playlist_player.SequentialState --> clientSide.player.playlist_player.PlaylistPlayer
+
+clientSide.player.file_player.MusicPlayer --> common.repository.IAudioRepository
+clientSide.player.file_player.MusicPlayer --> BasicPlayer
+
+clientSide.views.PlaylistPageShared --> clientSide.services.PageService
+clientSide.views.PlaylistPageShared --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.PlaylistPageShared --> clientSide.services.ToolBoxView
+
+clientSide.views.SongPlayer --> clientSide.services.PageService
+clientSide.views.SongPlayer --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.SongPlayer --> clientSide.services.ToolBoxView
+
+clientSide.views.FriendsHomePage --> clientSide.services.PageService
+clientSide.views.FriendsHomePage --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.FriendsHomePage --> clientSide.services.ToolBoxView
+
+clientSide.views.PlaylistChoseList --> clientSide.services.PageService
+clientSide.views.PlaylistChoseList --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.PlaylistChoseList --> clientSide.services.ToolBoxView
+
+clientSide.views.FriendPlaylists --> clientSide.services.PageService
+clientSide.views.FriendPlaylists --> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.views.FriendPlaylists --> clientSide.services.ToolBoxView
+
+clientSide.views.PlaylistPageOpen --|> clientSide.views.TemplateSimplePage
+clientSide.views.HomePage --|> clientSide.views.TemplateSimplePage
+clientSide.views.TemplateInversePage --|> clientSide.views.TemplateSimplePage
+clientSide.views.FriendOptions --|> clientSide.views.TemplateSimplePage
+clientSide.views.FriendsDisplayFriends --|> clientSide.views.TemplateSimplePage
+clientSide.views.PlaylistCreation --|> clientSide.views.TemplateInversePage
+clientSide.views.CreateAccount --|> clientSide.views.TemplateInversePage
+clientSide.views.PlaylistDeletion --|> clientSide.views.TemplateSimplePage
+clientSide.views.ActionFoundedSongs --|> clientSide.views.TemplateSimplePage
+clientSide.views.PlaylistHomePage --|> clientSide.views.TemplateSimplePage
+clientSide.views.FriendSearch --|> clientSide.views.TemplateSimplePage
+clientSide.views.Login --|> clientSide.views.TemplateSimplePage
+clientSide.views.Search --|> clientSide.views.TemplateSimplePage
+clientSide.views.SearchGender --|> clientSide.views.TemplateSimplePage
+clientSide.views.FriendsPlaylistPage --|> clientSide.views.TemplateSimplePage
+clientSide.views.PlaylistPageShared --|> clientSide.views.TemplateSimplePage
+clientSide.views.SongPlayer --|> clientSide.views.TemplateSimplePage
+clientSide.views.FriendsHomePage --|> clientSide.views.TemplateSimplePage
+clientSide.views.PlaylistChoseList --|> clientSide.views.TemplateSimplePage
+clientSide.views.FriendPlaylists --|> clientSide.views.TemplateSimplePage
+
+clientSide.player.playlist_player.PlaylistPlayer --|> clientSide.player.playlist_player.IPlaylistPlayer
+clientSide.player.playlist_player.RepeatState --|> clientSide.player.playlist_player.IState
+clientSide.player.playlist_player.ShuffleState --|> clientSide.player.playlist_player.IState
+clientSide.player.playlist_player.SequentialState --|> clientSide.player.playlist_player.IState
+
+clientSide.views.TemplateSimplePage --|> clientSide.views.InterfaceMenu
+
+clientSide.repoFront.FrontArtistRepo --|> common.repository.IArtistRepository
+clientSide.repoFront.FrontPlaylistRepo --|> common.repository.IPlaylistRepository
+clientSide.repoFront.FrontUserRepo --|> common.repository.IUserRepository
+clientSide.repoFront.FrontAudioRepo --|> common.repository.IAudioRepository
+clientSide.repoFront.FrontSongRepo --|> common.repository.ISongRepository
+
+clientSide.player.file_player.MusicPlayer --|> clientSide.player.file_player.IMusicPlayer
+clientSide.player.file_player.MusicPlayer --|> clientSide.player.file_player.BasicPlayerListener
+
+
+'SERVER SIDE'
+
+serverSide.socket.AudioSocketServer --> serverSide.repoBack.BackAudioRepo
+serverSide.socket.AudioSocketServer --> common.services.StockageService
+
+serverSide.repoBack.BackSongRepo --> common.repository.IUserRepository
+serverSide.repoBack.BackSongRepo --> common.repository.ISongRepository
+serverSide.repoBack.BackPlaylistRepo --> common.repository.IPlaylistRepository
+serverSide.repoBack.BackPlaylistRepo --> common.repository.IUserRepository
+serverSide.repoBack.BackArtistRepo --> common.repository.IArtistRepository
+serverSide.repoBack.BackArtistRepo --> common.repository.IUserRepository
+serverSide.repoBack.BackUserRepo --> common.repository.IUserRepository
+
+serverSide.repoLocal.AudioLocalRepository --> common.services.StockageService
+serverSide.repoLocal.UserLocalRepository --> common.services.StockageService
+serverSide.repoLocal.ArtistLocalRepository --> common.services.StockageService
+serverSide.repoLocal.SongLocalRepository --> common.services.StockageService
+serverSide.repoLocal.SongLocalRepository --> common.repository.IArtistRepository
+
+serverSide.socket.SocketServer --> serverSide.repoBack.BackPlaylistRepo
+serverSide.socket.SocketServer --> serverSide.repoBack.BackUserRepo
+serverSide.socket.SocketServer --> serverSide.repoBack.BackSongRepo
+serverSide.socket.SocketServer --> serverSide.repoBack.BackArtistRepo
+
+serverSide.repoLocal.AudioLocalRepository --|> common.repository.IAudioRepository
+serverSide.repoLocal.UserLocalRepository --|> common.repository.IUserRepository
+serverSide.repoLocal.ArtistLocalRepository --|> common.repository.IArtistRepository
+serverSide.repoLocal.SongLocalRepository --|> common.repository.ISongRepository
+serverSide.repoLocal.PlaylistLocalRepository --|> common.repository.IPlaylistRepository
+
+
+'COMMON'
+common.entities.MusicGender --> (nothing)
+common.entities.Artist --> common.services.UniqueIdService
+common.entities.Playlist --> common.services.UniqueIdService
+common.entities.User --> common.services.UniqueIdService
+common.entities.Song --> common.services.UniqueIdService
+common.services.StockageService --> (nothing)
+common.services.UniqueIdService --> (nothing)
+
+@enduml
