@@ -1,6 +1,6 @@
 package clientSide.services;
 
-public class IconService {
+public class MenuService {
 
     public String nbr0() { return "0."; }
     public String nbr1() { return "1."; }

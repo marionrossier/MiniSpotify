@@ -1,6 +1,6 @@
 package clientSide.views;
 
-import clientSide.services.IconService;
+import clientSide.services.MenuService;
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 import clientSide.services.ToolBoxView;
@@ -21,7 +21,7 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
     boolean isFree = true;
     public ToolBoxView toolBoxView;
 
-    protected IconService icon = new IconService();
+    protected MenuService icon = new MenuService();
 
     public TemplateSimplePage(PageService pageService, IPlaylistPlayer spotifyPlayer) {
         this.pageService = pageService;

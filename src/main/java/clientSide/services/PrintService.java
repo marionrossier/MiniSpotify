@@ -8,7 +8,7 @@ import static clientSide.services.PrintHelper.*;
 
 public class PrintService {
 
-    private final IconService icon = new IconService();
+    private final MenuService icon = new MenuService();
     private final UserService userService;
     private final PlaylistServices playlistService;
     private final SongService songService;

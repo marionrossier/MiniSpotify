@@ -10,7 +10,7 @@ import static clientSide.services.PrintHelper.*;
 public class SearchService {
 
     Scanner scanner = new Scanner(System.in);
-    private final IconService icon = new IconService();
+    private final MenuService icon = new MenuService();
     private final SongService songService;
     private final PrintService printService;
     private final UserService userService;
