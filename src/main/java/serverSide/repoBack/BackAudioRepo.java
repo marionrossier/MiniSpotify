@@ -1,6 +1,6 @@
 package serverSide.repoBack;
 
-import common.*;
+import common.repository.*;
 import common.entities.User;
 
 import java.io.*;

@@ -1,10 +1,10 @@
 package clientSide.player.playlist_player;
 
-import common.*;
 import clientSide.services.*;
 import common.entities.Playlist;
 import common.entities.Song;
 import clientSide.player.file_player.*;
+import common.repository.IAudioRepository;
 
 import java.util.*;
 
@@ -17,7 +17,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     protected ArtistService artistService;
     protected SongService songService;
     protected IAudioRepository audioRepository;
-    private final IconService icon = new IconService();
+    private final MenuService icon = new MenuService();
 
     protected LinkedList<Integer> songIdHistory = new LinkedList<>();
     int currentHistoryIndex = -1;

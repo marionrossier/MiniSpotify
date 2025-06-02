@@ -1,6 +1,6 @@
 package serverSide;
 
-import common.*;
+import common.repository.*;
 import common.services.StockageService;
 import serverSide.repoBack.*;
 import serverSide.repoLocal.*;

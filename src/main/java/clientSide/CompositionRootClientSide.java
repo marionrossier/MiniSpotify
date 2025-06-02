@@ -2,11 +2,11 @@ package clientSide;
 
 import clientSide.repoFront.*;
 import clientSide.services.*;
-import common.*;
 import clientSide.player.file_player.*;
 import clientSide.player.playlist_player.*;
 import clientSide.socket.*;
 
+import common.repository.*;
 import common.services.UniqueIdService;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 

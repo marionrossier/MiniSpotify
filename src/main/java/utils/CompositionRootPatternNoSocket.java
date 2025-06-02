@@ -1,7 +1,7 @@
 package utils;
 
 import clientSide.services.*;
-import common.*;
+import common.repository.*;
 import common.services.StockageService;
 import common.services.UniqueIdService;
 import serverSide.repoLocal.*;

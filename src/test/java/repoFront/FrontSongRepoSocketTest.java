@@ -1,8 +1,8 @@
 package repoFront;
 
-import common.*;
 import common.entities.MusicGender;
 import common.entities.Song;
+import common.repository.ISongRepository;
 import utilsAndFakes.*;
 
 import java.util.ArrayList;

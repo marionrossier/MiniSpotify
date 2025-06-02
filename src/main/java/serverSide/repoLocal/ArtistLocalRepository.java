@@ -1,7 +1,7 @@
 package serverSide.repoLocal;
 
-import common.*;
 import common.entities.Artist;
+import common.repository.IArtistRepository;
 import common.services.StockageService;
 import com.fasterxml.jackson.core.type.TypeReference;
 

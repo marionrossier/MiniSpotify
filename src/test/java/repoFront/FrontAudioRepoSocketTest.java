@@ -1,7 +1,7 @@
 package repoFront;
 
 import clientSide.services.*;
-import common.*;
+import common.repository.IAudioRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

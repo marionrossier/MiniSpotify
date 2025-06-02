@@ -1,7 +1,7 @@
 package clientSide.player.file_player;
 
+import common.repository.IAudioRepository;
 import javazoom.jlgui.basicplayer.*;
-import common.*;
 
 import java.util.*;
 

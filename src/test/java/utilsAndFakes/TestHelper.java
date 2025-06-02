@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.net.Socket;
 
 import clientSide.services.*;
-import common.*;
 
 import common.entities.*;
+import common.repository.IArtistRepository;
+import common.repository.IPlaylistRepository;
 
 public class TestHelper {
 

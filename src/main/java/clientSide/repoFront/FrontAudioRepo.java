@@ -1,7 +1,7 @@
 package clientSide.repoFront;
 
 import clientSide.services.*;
-import common.*;
+import common.repository.IAudioRepository;
 
 import java.io.*;
 import java.net.Socket;

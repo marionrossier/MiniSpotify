@@ -1,9 +1,9 @@
 package clientSide.views;
 
+import clientSide.services.PageService;
 import clientSide.services.ToolBoxView;
 import common.entities.Playlist;
 import clientSide.player.playlist_player.IPlaylistPlayer;
-import clientSide.services.PageService;
 
 import static clientSide.services.PrintHelper.*;
 

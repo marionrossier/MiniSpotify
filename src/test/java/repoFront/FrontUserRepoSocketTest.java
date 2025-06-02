@@ -1,6 +1,6 @@
 package repoFront;
 
-import common.IUserRepository;
+import common.repository.IUserRepository;
 import common.entities.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
