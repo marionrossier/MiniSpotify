@@ -1,5 +1,9 @@
 package clientSide.services;
 
+import clientSide.services.entities.ArtistService;
+import clientSide.services.entities.PlaylistServices;
+import clientSide.services.entities.SongService;
+import clientSide.services.entities.UserService;
 import common.entities.*;
 
 import java.util.List;

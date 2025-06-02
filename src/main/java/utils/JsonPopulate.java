@@ -1,6 +1,7 @@
 package utils;
 
 import clientSide.services.*;
+import clientSide.services.entities.UserService;
 import common.entities.*;
 import common.repository.ISongRepository;
 import common.services.StockageService;

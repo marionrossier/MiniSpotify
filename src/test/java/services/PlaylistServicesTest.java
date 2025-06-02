@@ -1,6 +1,8 @@
 package services;
 
 import clientSide.services.*;
+import clientSide.services.entities.PlaylistServices;
+import clientSide.services.entities.playlist.PlaylistReorderSongService;
 import common.entities.*;
 import utilsAndFakes.TestHelper;
 import org.junit.jupiter.api.AfterEach;
@@ -60,7 +62,7 @@ class PlaylistServicesTest{
         dependencyProvider.playlistService = new PlaylistServices(
                 dependencyProvider.toolBoxService,
                 dependencyProvider.playlistFunctionalitiesService,
-                dependencyProvider.temporaryPlaylistService);
+                dependencyProvider.temporaryPlaylistService, dependencyProvider.playlistReorderSongService);
     }
 
     @AfterEach
@@ -134,8 +136,11 @@ class PlaylistServicesTest{
         String input = "2\n1\n3\nx\n";
         Scanner testScanner = new Scanner(new ByteArrayInputStream(input.getBytes()));
 
-        PlaylistReorderSongService reorderService = new PlaylistReorderSongService(dependencyProvider.toolBoxService, testScanner);
-        reorderService.reorderSongsInPlaylist(playlist.getPlaylistId(), dependencyProvider.playlistService);
+        PlaylistServices playlistServices = new PlaylistServices(dependencyProvider.toolBoxService,
+                dependencyProvider.playlistFunctionalitiesService,
+                dependencyProvider.temporaryPlaylistService,
+                dependencyProvider.playlistReorderSongService);
+        playlistServices.reorderSongsInPlaylist(playlist.getPlaylistId(), testScanner);
 
         Playlist updated = dependencyProvider.playlistLocalRepository.getPlaylistById(playlist.getPlaylistId());
         assertEquals(List.of(2, 1, 3), updated.getPlaylistSongsListWithId());

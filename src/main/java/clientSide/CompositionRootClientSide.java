@@ -4,6 +4,13 @@ import clientSide.repoFront.*;
 import clientSide.services.*;
 import clientSide.player.file_player.*;
 import clientSide.player.playlist_player.*;
+import clientSide.services.entities.ArtistService;
+import clientSide.services.entities.PlaylistServices;
+import clientSide.services.entities.SongService;
+import clientSide.services.entities.UserService;
+import clientSide.services.entities.playlist.PlaylistFunctionalitiesService;
+import clientSide.services.entities.playlist.PlaylistReorderSongService;
+import clientSide.services.entities.playlist.TemporaryPlaylistService;
 import clientSide.socket.*;
 
 import common.repository.*;
@@ -79,20 +86,19 @@ public class CompositionRootClientSide {
         artistService = new ArtistService(toolBoxService);
         songService = new SongService(toolBoxService);
 
-        playlistReorderSongService = new PlaylistReorderSongService(toolBoxService, scanner);
-        temporaryPlaylistService = new TemporaryPlaylistService(toolBoxService, userService);
+        playlistReorderSongService = new PlaylistReorderSongService();
+        temporaryPlaylistService = new TemporaryPlaylistService(userService);
 
         musicPlayer = new MusicPlayer(frontAudioRepo, basicPlayer);
-        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(toolBoxService, userService,
+        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(userService,
                 songService);
-        playlistServices = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService);
+        playlistServices = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService, playlistReorderSongService);
         spotifyPlayer = new PlaylistPlayer(musicPlayer, frontAudioRepo, songService, playlistServices, artistService);
         printService = new PrintService(songService, artistService, playlistServices, userService);
         searchService = new SearchService(songService, printService, userService);
         uniqueIdService = new UniqueIdService();
         toolBoxView = new ToolBoxView(playlistServices, userService, songService, artistService,
-                printService, searchService, passwordService, playlistReorderSongService,
-                temporaryPlaylistService, uniqueIdService);
+                printService, searchService, passwordService, uniqueIdService);
         pageService = new PageService(spotifyPlayer, toolBoxView, userService, menuPagesStack);
     }
 

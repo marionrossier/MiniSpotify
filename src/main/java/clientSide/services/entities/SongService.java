@@ -1,5 +1,7 @@
-package clientSide.services;
+package clientSide.services.entities;
 
+import clientSide.services.Cookies;
+import clientSide.services.ToolBoxService;
 import common.entities.MusicGender;
 import common.entities.Song;
 import common.repository.ISongRepository;

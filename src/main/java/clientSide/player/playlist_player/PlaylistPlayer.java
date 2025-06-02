@@ -1,6 +1,8 @@
 package clientSide.player.playlist_player;
 
-import clientSide.services.*;
+import clientSide.services.entities.ArtistService;
+import clientSide.services.entities.PlaylistServices;
+import clientSide.services.entities.SongService;
 import common.entities.Playlist;
 import common.entities.Song;
 import clientSide.player.file_player.*;
