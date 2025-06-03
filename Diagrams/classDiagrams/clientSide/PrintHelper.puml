@@ -68,6 +68,5 @@ class clientSide/services.PrintHelper << (S, #FF7700) static >>{
 "clientSide/services.playlist.TemporaryPlaylistService" --> "clientSide/services.PrintHelper"
 "clientSide/views" --> "clientSide/services.PrintHelper"
 "clientSide/player/playlist_player.PlaylistPlayer" --> "clientSide/services.PrintHelper"
-"common/services.StockageService" --> "clientSide/services.PrintHelper"
 
 @enduml

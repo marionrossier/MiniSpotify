@@ -1,7 +1,7 @@
 package serverSide.repoLocal;
 
 import common.repository.IAudioRepository;
-import serverSide.StockageService;
+import serverSide.services.StockageService;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;

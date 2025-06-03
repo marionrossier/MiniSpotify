@@ -107,7 +107,7 @@ package "repoServerRepo"{
         class AudioLocalRepository {}
     }
 
-    package "repoServerRepo.common/services" {
+    package "repoServerRepo.serverSide/services" {
         class StockageService {}
     }
 
@@ -142,11 +142,11 @@ package "repoServerRepo"{
 "repoServerRepo.serverSide/repoLocal.ArtistLocalRepository" .u.|> "repoServerRepo.common/repository2.IArtistRepository"
 "repoServerRepo.serverSide/repoLocal.AudioLocalRepository" .u.|> "repoServerRepo.common/repository2.IAudioRepository"
 
-"repoServerRepo.serverSide/repoLocal.SongLocalRepository" -d-> "repoServerRepo.common/services.StockageService"
-"repoServerRepo.serverSide/repoLocal.PlaylistLocalRepository" -d-> "repoServerRepo.common/services.StockageService"
-"repoServerRepo.serverSide/repoLocal.UserLocalRepository" -d-> "repoServerRepo.common/services.StockageService"
-"repoServerRepo.serverSide/repoLocal.ArtistLocalRepository" -d-> "repoServerRepo.common/services.StockageService"
-"repoServerRepo.serverSide/repoLocal.AudioLocalRepository" -d-> "repoServerRepo.common/services.StockageService"
+"repoServerRepo.serverSide/repoLocal.SongLocalRepository" -d-> "repoServerRepo.serverSide/services.StockageService"
+"repoServerRepo.serverSide/repoLocal.PlaylistLocalRepository" -d-> "repoServerRepo.serverSide/services.StockageService"
+"repoServerRepo.serverSide/repoLocal.UserLocalRepository" -d-> "repoServerRepo.serverSide/services.StockageService"
+"repoServerRepo.serverSide/repoLocal.ArtistLocalRepository" -d-> "repoServerRepo.serverSide/services.StockageService"
+"repoServerRepo.serverSide/repoLocal.AudioLocalRepository" -d-> "repoServerRepo.serverSide/services.StockageService"
 
 "repoServerRepo.serverSide/socket.AudioSocketServer" -d-> "repoServerRepo.serverSide/repoBack.BackAudioRepo"
 
@@ -328,7 +328,6 @@ package Common{
     }
     interface repository.ISongRepository {}
     class services.UniqueIdService {}
-    class services.StockageService {}
     interface repository.IPlaylistRepository {}
     interface repository.IAudioRepository {}
     interface repository.IArtistRepository {}
@@ -340,8 +339,6 @@ Common.entities.Artist -d-> Common.services.UniqueIdService
 Common.entities.Playlist -d-> Common.services.UniqueIdService
 Common.entities.Song -d-> Common.services.UniqueIdService
 
-Common.services.StockageService -d-> ObjectMapper
-
 Common.repository.ISongRepository -d-> Common.entities.Song
 Common.repository.IUserRepository -d-> Common.entities.User
 Common.repository.IPlaylistRepository -d-> Common.entities.Playlist
@@ -350,7 +347,5 @@ Common.repository.IArtistRepository -d-> Common.entities.Artist
 Common.entities.Song -l-> Common.entities.MusicGender
 Common.entities.Playlist -l-> Common.entities.PlaylistEnum
 Common.entities.User -l-> Common.entities.PlanEnum
-
-Common.services.StockageService -[hidden]r-> Common.services.UniqueIdService
 
 @enduml

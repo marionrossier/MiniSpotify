@@ -3,6 +3,7 @@ package serverSide;
 import common.repository.*;
 import serverSide.repoBack.*;
 import serverSide.repoLocal.*;
+import serverSide.services.StockageService;
 import serverSide.socket.*;
 
 public class CompositionRootServerSide {

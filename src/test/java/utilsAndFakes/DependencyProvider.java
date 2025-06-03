@@ -13,7 +13,7 @@ import clientSide.services.playlist.TemporaryPlaylistService;
 import clientSide.socket.*;
 import common.entities.*;
 import common.repository.*;
-import serverSide.StockageService;
+import serverSide.services.StockageService;
 import common.services.UniqueIdService;
 import serverSide.repoBack.*;
 import serverSide.repoLocal.*;

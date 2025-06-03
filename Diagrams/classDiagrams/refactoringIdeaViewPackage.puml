@@ -1,0 +1,48 @@
+@startuml
+
+interface InterfacePageView {
+  + displayTitle()
+  + displayContent()
+  + displaySpecificContent()
+}
+
+abstract AbstractController {
+  + handleDisplay()
+  + handleInput()
+  + handleButton(int buttonId)
+}
+
+class SimplePageView {
+  - int id
+  - String pageTitle
+  - String pageContent
+  + SimplePageView(String title, String content)
+  + displayTitle()
+  + displayContent()
+  + displaySpecificContent()
+}
+
+class SimplePageController {
+  - SimplePageView view
+  - PlaylistPlayer spotifyPlayer
+  - Scanner scanner
+  - PageService pageService
+  + SimplePageController(SimplePageView, PlaylistPlayer, PageService)
+  + handleDisplay()
+  + handleInput()
+  + handleButton(int buttonId)
+}
+
+class PlaylistCreationController {
+  - String playlistName
+  + PlaylistCreationController(SimplePageView, PlaylistPlayer, PageService, ToolBoxView)
+  + handleInput()
+  + validateInput()
+}
+
+InterfacePageView <|.. SimplePageView
+AbstractController <|-- SimplePageController
+SimplePageController <-- PlaylistCreationController
+SimplePageController -l-> SimplePageView
+
+@enduml

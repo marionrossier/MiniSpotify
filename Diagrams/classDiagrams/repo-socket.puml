@@ -279,7 +279,7 @@ package "serverSide/repoLocal" {
     }
 }
 
-package "common/services" {
+package "serverSide/services" {
     class StockageService {
         ~ String userHome
         ~ String fileName
@@ -321,11 +321,11 @@ package "common/services" {
 "serverSide/repoLocal.ArtistLocalRepository" -u-|> "common/repository2.IArtistRepository"
 "serverSide/repoLocal.AudioLocalRepository" -u-|> "common/repository2.IAudioRepository"
 
-"serverSide/repoLocal.SongLocalRepository" -d-> "common/services.StockageService"
-"serverSide/repoLocal.PlaylistLocalRepository" -d-> "common/services.StockageService"
-"serverSide/repoLocal.UserLocalRepository" -d-> "common/services.StockageService"
-"serverSide/repoLocal.ArtistLocalRepository" -d-> "common/services.StockageService"
-"serverSide/repoLocal.AudioLocalRepository" -d-> "common/services.StockageService"
+"serverSide/repoLocal.SongLocalRepository" -d-> "serverSide/services.StockageService"
+"serverSide/repoLocal.PlaylistLocalRepository" -d-> "serverSide/services.StockageService"
+"serverSide/repoLocal.UserLocalRepository" -d-> "serverSide/services.StockageService"
+"serverSide/repoLocal.ArtistLocalRepository" -d-> "serverSide/services.StockageService"
+"serverSide/repoLocal.AudioLocalRepository" -d-> "serverSide/services.StockageService"
 
 "serverSide/socket.AudioSocketServer" -d-> "serverSide/repoBack.BackAudioRepo"
 

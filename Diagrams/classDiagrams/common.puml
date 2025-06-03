@@ -148,17 +148,6 @@ class services.UniqueIdService {
 + int setUniqueId()
 }
 
-class services.StockageService {
-~ String userHome
-~ String fileName
-- {static} ObjectMapper objectMapper
-+ List<T> loadFromJson(String,TypeReference<List<T>>)
-+ void saveToJson(String,List<T>)
-+ void copyResourceToWritableLocation(String)
-+ void copyMp3FilesFromResources()
-- boolean isRunningUnderTest()
-}
-
 interface repository.IPlaylistRepository {
 ~ List<Playlist> getAllPlaylists()
 ~ void updateOrInsertPlaylist(Playlist)
@@ -188,8 +177,6 @@ entities.Artist -d-> services.UniqueIdService
 entities.Playlist -d-> services.UniqueIdService
 entities.Song -d-> services.UniqueIdService
 
-services.StockageService -l-> ObjectMapper
-
 repository.ISongRepository -d-> entities.Song
 repository.IUserRepository -d-> entities.User
 repository.IPlaylistRepository -d-> entities.Playlist
@@ -199,5 +186,4 @@ entities.Song -l-> entities.MusicGender
 entities.Playlist -l-> entities.PlaylistEnum
 entities.User -l-> entities.PlanEnum
 
-services.StockageService -[hidden]r-> services.UniqueIdService
 @enduml

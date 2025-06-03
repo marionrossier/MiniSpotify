@@ -4,7 +4,7 @@ import clientSide.services.*;
 import clientSide.services.UserService;
 import common.entities.*;
 import common.repository.ISongRepository;
-import serverSide.StockageService;
+import serverSide.services.StockageService;
 import serverSide.repoLocal.*;
 
 import java.io.File;
