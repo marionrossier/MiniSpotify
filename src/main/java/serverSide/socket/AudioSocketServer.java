@@ -1,6 +1,6 @@
 package serverSide.socket;
 
-import common.services.StockageService;
+import serverSide.StockageService;
 import serverSide.repoBack.*;
 
 import java.io.*;

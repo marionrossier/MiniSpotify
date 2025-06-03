@@ -2,7 +2,7 @@ package serverSide.repoLocal;
 
 import common.entities.Artist;
 import common.repository.IArtistRepository;
-import common.services.StockageService;
+import serverSide.StockageService;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.ArrayList;

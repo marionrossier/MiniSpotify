@@ -9,7 +9,7 @@ import clientSide.services.playlist.PlaylistFunctionalitiesService;
 import clientSide.services.playlist.PlaylistReorderSongService;
 import clientSide.services.playlist.TemporaryPlaylistService;
 import common.repository.*;
-import common.services.StockageService;
+import serverSide.StockageService;
 import common.services.UniqueIdService;
 import serverSide.repoLocal.*;
 import clientSide.player.file_player.*;

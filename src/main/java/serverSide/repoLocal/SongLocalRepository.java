@@ -4,7 +4,7 @@ import common.entities.MusicGender;
 import common.entities.Song;
 import common.repository.IArtistRepository;
 import common.repository.ISongRepository;
-import common.services.StockageService;
+import serverSide.StockageService;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.ArrayList;
