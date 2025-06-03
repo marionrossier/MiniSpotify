@@ -10,7 +10,6 @@ import static clientSide.services.PrintHelper.*;
 public class SearchService {
 
     Scanner scanner = new Scanner(System.in);
-    private final IconService icon = new IconService();
     private final SongService songService;
     private final PrintService printService;
     private final UserService userService;
@@ -48,7 +47,9 @@ public class SearchService {
             pageService.goBack(pageId);
             return;
         }
-        printService.printSongFound(foundedSongs, input);
+        printLNWhite("Songs found with information : " + input);
+        printService.printSongList (foundedSongs);
+
         LinkedList<Integer> chosenSongs = chooseFoundedSongs(foundedSongs, pageService);
 
         playlistServices.createTemporaryPlaylist(chosenSongs, playlistServices.getPlaylistStatus());
@@ -110,8 +111,8 @@ public class SearchService {
 
     public LinkedList<Integer> chooseFoundedSongs(List<Integer> foundedSongs, PageService pageService){
         LinkedList<Integer> selectedSongsIndex = new LinkedList<>();
-        printLNWhite("Choose your songs by entering their number and press \"enter\" between each song." + icon.lineBreak+
-                "End selection with an \"x\"." + icon.lineBreak);
+        printLNWhite("Choose your songs by entering their number and press \"enter\" between each song. \n" +
+                "End selection with an \"x\".\n");
         printYourInput();
 
         loopIntInputValidation(pageService, selectedSongsIndex, foundedSongs.size());

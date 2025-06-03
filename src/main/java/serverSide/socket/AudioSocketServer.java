@@ -1,6 +1,6 @@
 package serverSide.socket;
 
-import common.services.StockageService;
+import serverSide.services.StockageService;
 import serverSide.repoBack.*;
 
 import java.io.*;
@@ -27,7 +27,6 @@ public class AudioSocketServer {
 
     public AudioSocketServer(BackAudioRepo backAudioRepo){
         this.backAudioRepo = backAudioRepo;
-        stockageService.copyMp3FilesFromResources(); // mp3 initialization
     }
 
     private void handleAudioRequest(Socket socket) {

@@ -1,5 +1,6 @@
 package clientSide.views;
 
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
@@ -16,16 +17,16 @@ public class Search extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Search Page";
-        this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak + icon.separator + icon.lineBreak +
-                icon.nbr1() + "Search by song title" + icon.lineBreak +
-                icon.nbr2() + "Search by artist" + icon.lineBreak +
-                icon.nbr3() + "Search by song gender" + icon.lineBreak +
-                icon.nbr4() + "Search by public playlist";
+        this.pageContent = PrintHelper.backHomePageMusicPlayer + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
+                PrintHelper.nbr1 + "Search by song title" + PrintHelper.lineBreak +
+                PrintHelper.nbr2 + "Search by artist" + PrintHelper.lineBreak +
+                PrintHelper.nbr3 + "Search by song gender" + PrintHelper.lineBreak +
+                PrintHelper.nbr4 + "Search by public playlist";
     }
 
     @Override
     public void button1() {
-        printWhite(icon.lineBreak + icon.search() + "Enter the title of the song : ");
+        printWhite(PrintHelper.lineBreak + PrintHelper.search + "Enter the title of the song : ");
         String songTitle = scanner.nextLine();
         printLN();
 
@@ -35,7 +36,7 @@ public class Search extends TemplateSimplePage {
 
     @Override
     public void button2() {
-        printWhite(icon.lineBreak + icon.search() + "Enter the name of the artist : " + icon.lineBreak);
+        printWhite(PrintHelper.lineBreak + PrintHelper.search + "Enter the name of the artist : " + PrintHelper.lineBreak);
         String artistName = scanner.nextLine();
         printLN();
 
@@ -51,8 +52,8 @@ public class Search extends TemplateSimplePage {
     @Override
     public void button4(){
         printLN();
-        printLNWhite("Select your playlist to add by entering their number and press \"enter\" between each playlist." + icon.lineBreak +
-                "End selection with an \"x\"." + icon.lineBreak);
+        printLNWhite("Select your playlist to add by entering their number and press \"enter\" between each playlist." + PrintHelper.lineBreak +
+                "End selection with an \"x\"." + PrintHelper.lineBreak);
 
         List<Integer> playlist = toolBoxView.getPlaylistServ().getPublicPlaylists();
         toolBoxView.getPrintServ().printPlaylist(playlist);

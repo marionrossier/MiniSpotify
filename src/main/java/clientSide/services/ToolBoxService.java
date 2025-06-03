@@ -1,6 +1,6 @@
 package clientSide.services;
 
-import common.*;
+import common.repository.*;
 
 public class ToolBoxService {
 

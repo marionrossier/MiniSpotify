@@ -1,7 +1,7 @@
 package repoFront;
 
-import common.*;
 import common.entities.Playlist;
+import common.repository.IPlaylistRepository;
 import utilsAndFakes.*;
 
 import java.io.IOException;

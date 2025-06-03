@@ -2,11 +2,18 @@ package clientSide;
 
 import clientSide.repoFront.*;
 import clientSide.services.*;
-import common.*;
 import clientSide.player.file_player.*;
 import clientSide.player.playlist_player.*;
+import clientSide.services.ArtistService;
+import clientSide.services.PlaylistServices;
+import clientSide.services.SongService;
+import clientSide.services.UserService;
+import clientSide.services.playlist.PlaylistFunctionalitiesService;
+import clientSide.services.playlist.PlaylistReorderSongService;
+import clientSide.services.playlist.TemporaryPlaylistService;
 import clientSide.socket.*;
 
+import common.repository.*;
 import common.services.UniqueIdService;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 
@@ -79,20 +86,19 @@ public class CompositionRootClientSide {
         artistService = new ArtistService(toolBoxService);
         songService = new SongService(toolBoxService);
 
-        playlistReorderSongService = new PlaylistReorderSongService(toolBoxService, scanner);
-        temporaryPlaylistService = new TemporaryPlaylistService(toolBoxService, userService);
+        playlistReorderSongService = new PlaylistReorderSongService();
+        temporaryPlaylistService = new TemporaryPlaylistService(userService);
 
         musicPlayer = new MusicPlayer(frontAudioRepo, basicPlayer);
-        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(toolBoxService, userService,
+        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(userService,
                 songService);
-        playlistServices = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService);
-        spotifyPlayer = new PlaylistPlayer(musicPlayer, frontAudioRepo, songService, playlistServices, artistService);
+        playlistServices = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService, playlistReorderSongService);
+        spotifyPlayer = new PlaylistPlayer(musicPlayer, songService, playlistServices, artistService);
         printService = new PrintService(songService, artistService, playlistServices, userService);
         searchService = new SearchService(songService, printService, userService);
         uniqueIdService = new UniqueIdService();
         toolBoxView = new ToolBoxView(playlistServices, userService, songService, artistService,
-                printService, searchService, passwordService, playlistReorderSongService,
-                temporaryPlaylistService, uniqueIdService);
+                printService, searchService, passwordService, uniqueIdService);
         pageService = new PageService(spotifyPlayer, toolBoxView, userService, menuPagesStack);
     }
 

@@ -1,9 +1,10 @@
 package serverSide.repoLocal;
 
-import common.*;
 import common.entities.MusicGender;
 import common.entities.Song;
-import common.services.StockageService;
+import common.repository.IArtistRepository;
+import common.repository.ISongRepository;
+import serverSide.services.StockageService;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.ArrayList;

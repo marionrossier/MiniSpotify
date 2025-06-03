@@ -1,9 +1,10 @@
 package clientSide.views;
 
+import clientSide.services.PageService;
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 import common.entities.Playlist;
 import clientSide.player.playlist_player.IPlaylistPlayer;
-import clientSide.services.PageService;
 
 import static clientSide.services.PrintHelper.*;
 
@@ -14,8 +15,8 @@ public class PlaylistPageShared extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Shared Playlist Page : ";
-        this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak + icon.separator + icon.lineBreak +
-                icon.nbr1() + "Delete the playlist";
+        this.pageContent = PrintHelper.backHomePageMusicPlayer + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
+                PrintHelper.nbr1 + "Delete the playlist";
     }
 
     @Override

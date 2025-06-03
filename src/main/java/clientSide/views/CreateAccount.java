@@ -1,5 +1,6 @@
 package clientSide.views;
 
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 import common.entities.PlanEnum;
 import clientSide.player.playlist_player.IPlaylistPlayer;
@@ -19,9 +20,9 @@ public class CreateAccount extends TemplateInversePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Create Account Page";
-        this.pageContent = icon.zeroBack + icon.lineBreak + icon.separator + icon.lineBreak +
-                icon.nbr1() + "FREE " + icon.free() + icon.lineBreak +
-                icon.nbr2() + "PREMIUM " + icon.premium();
+        this.pageContent = PrintHelper.zeroBack + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
+                PrintHelper.nbr1 + "FREE " + PrintHelper.free + PrintHelper.lineBreak +
+                PrintHelper.nbr2 + "PREMIUM " + PrintHelper.premium;
         toolBoxView.getUserServ().resetCookie();
     }
 
@@ -37,7 +38,7 @@ public class CreateAccount extends TemplateInversePage {
             printInfo("Enter a valid email address, like name@email.com :");
             email = pageService.gotAnInputGoBackIf0(scanner.nextLine());
         }
-        printLNWhite(icon.lineBreak + "Choose your plan : ");
+        printLNWhite(PrintHelper.lineBreak + "Choose your plan : ");
     }
 
     @Override

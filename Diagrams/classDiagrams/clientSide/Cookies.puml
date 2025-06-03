@@ -1,0 +1,51 @@
+@startuml
+left to right direction
+class clientSide.services.Cookies << (S, #FF7700) static >>{
+- {static} Cookies instance
+- int userId
+- String userPseudonym
+- String userPassword
+- int currentFriendId
+- int currentFriendPlaylistId
+- int currentPlaylistId
+- int currentSongId
+- <<Create>> Cookies(int,String,String)
++ {static} void initializeInstance(int,String,String)
++ {static} void setCurrentPlaylistId(int)
++ {static} void setCurrentSongId(int)
++ {static} void resetCookies()
++ {static} Cookies getInstance()
++ int getUserId()
++ String getUserPseudonym()
++ String getUserPassword()
++ int getCurrentPlaylistId()
++ int getCurrentSongId()
++ String toString()
++ int getCurrentFriendId()
++ void setCurrentFriendId(int)
++ int getCurrentFriendPlaylistId()
++ void setCurrentFriendPlaylistId(int)
+}
+
+
+class clientSide.services.UserService {
+}
+
+class clientSide.services.PlaylistServices {
+}
+
+class clientSide.services.SongService {
+}
+
+
+clientSide.repoFront.FrontArtistRepo --> clientSide.services.Cookies
+clientSide.repoFront.FrontUserRepo --> clientSide.services.Cookies
+clientSide.repoFront.FrontAudioRepo --> clientSide.services.Cookies
+clientSide.repoFront.FrontPlaylistRepo --> clientSide.services.Cookies
+clientSide.repoFront.FrontSongRepo --> clientSide.services.Cookies
+clientSide.services.PlaylistServices --> clientSide.services.Cookies
+clientSide.services.SongService --> clientSide.services.Cookies
+clientSide.services.UserService --> clientSide.services.Cookies
+clientSide.views.Login --> clientSide.services.Cookies
+
+@enduml

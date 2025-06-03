@@ -1,4 +1,4 @@
-package common;
+package common.repository;
 
 import common.entities.Playlist;
 import common.entities.PlaylistEnum;

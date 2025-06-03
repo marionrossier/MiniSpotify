@@ -1,7 +1,7 @@
 package repoFront;
 
-import common.*;
 import common.entities.Artist;
+import common.repository.IArtistRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

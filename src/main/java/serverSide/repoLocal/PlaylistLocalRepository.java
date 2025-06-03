@@ -1,9 +1,9 @@
 package serverSide.repoLocal;
 
-import common.*;
 import common.entities.Playlist;
 import common.entities.PlaylistEnum;
-import common.services.StockageService;
+import common.repository.IPlaylistRepository;
+import serverSide.services.StockageService;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.ArrayList;

@@ -1,0 +1,226 @@
+@startuml
+
+class clientSide/player.playlist_player.PlaylistPlayer {
+- IMusicPlayer musicPlayer
+# PlaylistServices playlistServices
+# ArtistService artistService
+# SongService songService
+# LinkedList<Integer> songIdHistory
+~ int currentHistoryIndex
+# Song currentSong
+# Playlist currentPlaylist
+- int lastPlayedPlaylistId
+- IState currentState
+- IState sequentialState
+- IState shuffleState
+- IState repeatState
++ <<Create>> PlaylistPlayer(IMusicPlayer,SongService,
+PlaylistServices,ArtistService)
++ void setSequentialMode()
++ void setShuffleMode()
++ void setRepeatMode()
++ int getCurrentPlaylistId()
++ int getCurrentSongId()
++ void playOrPause(int)
++ void play(int,int)
++ void playback()
++ void next()
++ void previous()
++ void stop()
++ boolean isPlaying()
++ boolean isPaused()
++ String getCurrentState()
++ void printCurrentSong()
++ void setCurrentSong(Song)
+}
+
+class clientSide/player.playlist_player.RepeatState {
+- PlaylistPlayer playlistPlayer
++ String stateName
++ <<Create>> RepeatState(PlaylistPlayer)
++ Song getNextSong()
++ Song getPreviousSong()
++ String getStateName()
+}
+
+class clientSide/player.playlist_player.ShuffleState {
+- PlaylistPlayer playlistPlayer
++ String stateName
++ <<Create>> ShuffleState(PlaylistPlayer)
++ Song getNextSong()
++ Song getPreviousSong()
++ String getStateName()
+}
+
+class clientSide/player.playlist_player.SequentialState {
+- PlaylistPlayer playlistPlayer
++ String stateName
++ <<Create>> SequentialState(PlaylistPlayer)
++ Song getNextSong()
++ Song getPreviousSong()
++ String getStateName()
+}
+
+interface clientSide/player.playlist_player.IPlaylistPlayer {
+~ void playOrPause(int)
+~ void play(int,int)
+~ void playback()
+~ void next()
+~ void previous()
+~ void setShuffleMode()
+~ void setRepeatMode()
+~ void setSequentialMode()
+~ int getCurrentPlaylistId()
+~ int getCurrentSongId()
+~ void stop()
+~ boolean isPlaying()
+~ boolean isPaused()
+~ String getCurrentState()
+~ void setCurrentSong(Song)
+}
+
+interface clientSide/player.playlist_player.IState {
+~ Song getNextSong()
+~ Song getPreviousSong()
+~ String getStateName()
+}
+
+interface clientSide/player.file_player.IMusicPlayer {
+~ void addSongEndObserver(Runnable)
+~ void playOrPause(String)
+~ void play(String)
+~ void pause()
+~ void resume(String)
+~ void stop()
+~ boolean isPlaying()
+~ boolean isPaused()
+}
+
+class clientSide/player.file_player.MusicPlayer {
+- IAudioRepository audioRepository
+- boolean isPlaying
+- boolean isPaused
+- BasicPlayer basicPlayer
+- List<Runnable> songEndObservers
++ <<Create>> MusicPlayer(IAudioRepository,BasicPlayer)
++ void addSongEndObserver(Runnable)
++ void playOrPause(String)
++ void play(String)
++ void pause()
++ void resume(String)
++ void stop()
++ boolean isPlaying()
++ boolean isPaused()
++ void opened(Object,Map)
++ void progress(int,long,byte[],Map)
++ void stateUpdated(BasicPlayerEvent)
++ void setController(BasicController)
+}
+
+interface common/repository.IAudioRepository {
+~ InputStream getStream(String)
+}
+
+class clientSide/services.SongService {
+- ISongRepository songRepository
++ <<Create>> SongService(ToolBoxService)
++ void setCurrentSongId(int)
++ int getCurrentSongId()
++ Song getSongById(int)
++ LinkedList<Song> getSongByTitle(String)
++ LinkedList<Song> getSongsByArtist(String)
++ LinkedList<Song> getSongsByGender(MusicGender)
+}
+
+class clientSide/services.PlaylistServices {
+- IPlaylistRepository playlistRepository
+- TemporaryPlaylistService temporaryPlaylistService
+- PlaylistFunctionalitiesService playlistFuncService
+- PlaylistReorderSongService playlistReorderSongService
+- ISongRepository songRepository
++ <<Create>> PlaylistServices(ToolBoxService,PlaylistFunctionalitiesService,
+TemporaryPlaylistService, PlaylistReorderSongService)
++ int setDurationSeconds(int)
++ void setCurrentPlaylistId(int)
++ int getCurrentPlaylistId()
++ PlaylistEnum getPlaylistStatus()
++ int getAllSongsPlaylistId()
++ Playlist getPlaylistByName(String)
++ Playlist getPlaylistById(int)
++ List<Integer> getPublicPlaylists()
++ List<Integer> getUserPublicPlaylists(User)
++ int getCurrentFriendPlaylistId()
++ void setCurrentFriendPlaylistId(int)
++ void createNewPlaylist(String,PlaylistEnum)
++ void createAllSongPlaylist(User)
++ void deletePlaylist(int)
++ void renamePlayList(int,String)
++ boolean verifyPlaylistName(String,User)
++ void deleteSongFromPlaylist(int,int)
++ boolean isCurrentUserOwnerOfPlaylist(int)
++ int takeAndValidateInputChoice(int,PageService)
++ void playlistPageRouter(int,PageService)
++ int getTemporaryPlaylistId()
++ void createTemporaryPlaylist(LinkedList<Integer>,PlaylistEnum)
++ void adjustTemporaryPlaylistToNewPlaylist(String,PlaylistEnum)
++ void addSongToPlaylistFromTemporaryPlaylist(int,int)
++ void getAndAddSelectionOfPlaylistsToCurrentUserPlaylists
+(List<Integer>,LinkedList<Integer>,ToolBoxView)
++ void reorderSongsInPlaylist(int,PlaylistServices,Scanner, IPlaylistRepository)
+}
+
+class clientSide/services.ArtistService {
+- IArtistRepository artistRepository
++ <<Create>> ArtistService(ToolBoxService)
++ String getArtistNameBySong(int)
+}
+
+
+package javazoom/jlgui/basicplayer {
+
+    interface BasicPlayerListener {
+        + void opened(Object, Map)
+        + void progress(int, long, byte[], Map)
+        + void stateUpdated(BasicPlayerEvent)
+        + void setController(BasicController)
+    }
+    class BasicPlayer {
+        + void open(InputStream inputStream) throws BasicPlayerException
+        + void open(File file) throws BasicPlayerException
+        + void open(URL url) throws BasicPlayerException
+        + long seek(long bytes) throws BasicPlayerException
+        + void play() throws BasicPlayerException
+        + void stop() throws BasicPlayerException
+        + void pause() throws BasicPlayerException
+        + void resume() throws BasicPlayerException
+        + void setPan(double pan) throws BasicPlayerException
+        + void setGain(double gain) throws BasicPlayerException
+    }
+}
+
+
+' Relations d'implémentation et dépendances orientées à droite
+"clientSide/player.playlist_player.IPlaylistPlayer" -l-|> "clientSide/player.playlist_player.PlaylistPlayer"
+"clientSide/player.playlist_player.IState" -u-|> "clientSide/player.playlist_player.RepeatState"
+"clientSide/player.playlist_player.IState" -u-|> "clientSide/player.playlist_player.SequentialState"
+"clientSide/player.playlist_player.IState" -u-|> "clientSide/player.playlist_player.ShuffleState"
+
+"clientSide/player.file_player.IMusicPlayer" -u-|> "clientSide/player.file_player.MusicPlayer"
+
+"clientSide/player.playlist_player.PlaylistPlayer" -u-> "clientSide/player.file_player.IMusicPlayer"
+"clientSide/player.playlist_player.PlaylistPlayer" --> "clientSide/services.SongService"
+"clientSide/player.playlist_player.PlaylistPlayer" -l-> "clientSide/services.PlaylistServices"
+"clientSide/player.playlist_player.PlaylistPlayer" --> "clientSide/services.ArtistService"
+
+"clientSide/player.playlist_player.RepeatState" -u-> "clientSide/player.playlist_player.PlaylistPlayer"
+"clientSide/player.playlist_player.SequentialState" -u-> "clientSide/player.playlist_player.PlaylistPlayer"
+"clientSide/player.playlist_player.ShuffleState" -u-> "clientSide/player.playlist_player.PlaylistPlayer"
+
+"clientSide/player.file_player.MusicPlayer" -u-> "common/repository.IAudioRepository"
+"javazoom/jlgui/basicplayer.BasicPlayerListener" <|.. "clientSide/player.file_player.MusicPlayer"
+"clientSide/player.file_player.MusicPlayer" -l-> "javazoom/jlgui/basicplayer.BasicPlayer"
+
+"clientSide/services.SongService" -[hidden]u-> "clientSide/services.PlaylistServices"
+"clientSide/services.PlaylistServices" -[hidden]u-> "clientSide/services.ArtistService"
+
+@enduml

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import clientSide.services.*;
 import clientSide.socket.*;
-import common.*;
 import common.entities.User;
+import common.repository.IUserRepository;
 
 import java.util.*;
 

@@ -2,6 +2,7 @@ package clientSide.views;
 
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 
 import java.util.List;
@@ -15,8 +16,8 @@ public class FriendSearch extends TemplateSimplePage {
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Search Friend Page";
-        this.pageContent = icon.zeroBack + icon.nineHomepage + icon.lineBreak +
-                icon.separator + icon.lineBreak +
+        this.pageContent = PrintHelper.zeroBack + PrintHelper.nineHomepage + PrintHelper.lineBreak +
+                PrintHelper.separator + PrintHelper.lineBreak +
                 "What is your friend pseudonym ?";
     }
 

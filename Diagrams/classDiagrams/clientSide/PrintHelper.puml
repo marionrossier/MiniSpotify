@@ -1,0 +1,72 @@
+@startuml
+left to right direction
+class clientSide/services.PrintHelper << (S, #FF7700) static >>{
++ {static} String nbr0
++ {static} String nbr1
++ {static} String nbr2
++ {static} String nbr3
++ {static} String nbr4
++ {static} String nbr5
++ {static} String nbr6
++ {static} String nbr7
++ {static} String nbr8
++ {static} String nbr9
++ {static} String playPause
++ {static} String playBack
++ {static} String next
++ {static} String previous
++ {static} String shuffle
++ {static} String sequential
++ {static} String repeatOne
++ {static} String lock
++ {static} String premium
++ {static} String free
++ {static} String group
++ {static} String house
++ {static} String earth
++ {static} String search
++ {static} String lineBreak
++ {static} String eightMusicPlayer
++ {static} String nineHomepage
++ {static} String zeroBack
++ {static} String separator
++ {static} String backHomePageMusicPlayer
+~ {static} String PRINT_RESET
+~ {static} String PRINT_BLACK
+~ {static} String PRINT_RED
+~ {static} String PRINT_GREEN
+~ {static} String PRINT_YELLOW
+~ {static} String PRINT_BLUE
+~ {static} String PRINT_WHITE
+~ {static} String PRINT_GREY
+~ {static} String PRINT_BG_WHITE
+~ {static} String PRINT_BOLD
++ {static} void printLN()
++ {static} void printLNBgWhite(String)
++ {static} void printLNWhite(String)
++ {static} void printLNBlue(String)
++ {static} void printLNGreen(String)
++ {static} void printLNGrey(String)
++ {static} void printLNInfo(String)
++ {static} void printInvalidInputTryAgain()
++ {static} void printYourInput()
++ {static} void printInvalidInputTryAgainOrBack()
++ {static} void printInvalidInput()
++ {static} void printLNError(String)
++ {static} void printWhite(String)
++ {static} void printInfo(String)
+}
+
+"clientSide/services.PrintService" --> "clientSide/services.PrintHelper"
+"clientSide/services.PasswordService" --> "clientSide/services.PrintHelper"
+"clientSide/services.PageService" --> "clientSide/services.PrintHelper"
+"clientSide/services.SearchService" --> "clientSide/services.PrintHelper"
+"clientSide/services.PlaylistServices" --> "clientSide/services.PrintHelper"
+"clientSide/services.UserService" --> "clientSide/services.PrintHelper"
+"clientSide/services.playlist.PlaylistFunctionalitiesService" --> "clientSide/services.PrintHelper"
+"clientSide/services.playlist.PlaylistReorderSongService" --> "clientSide/services.PrintHelper"
+"clientSide/services.playlist.TemporaryPlaylistService" --> "clientSide/services.PrintHelper"
+"clientSide/views" --> "clientSide/services.PrintHelper"
+"clientSide/player/playlist_player.PlaylistPlayer" --> "clientSide/services.PrintHelper"
+
+@enduml

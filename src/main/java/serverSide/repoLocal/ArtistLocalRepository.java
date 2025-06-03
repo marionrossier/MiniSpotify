@@ -1,8 +1,8 @@
 package serverSide.repoLocal;
 
-import common.*;
 import common.entities.Artist;
-import common.services.StockageService;
+import common.repository.IArtistRepository;
+import serverSide.services.StockageService;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.ArrayList;

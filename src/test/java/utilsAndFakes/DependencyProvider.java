@@ -2,11 +2,18 @@ package utilsAndFakes;
 
 import clientSide.repoFront.*;
 import clientSide.services.*;
-import common.*;
 import clientSide.player.playlist_player.*;
+import clientSide.services.ArtistService;
+import clientSide.services.PlaylistServices;
+import clientSide.services.SongService;
+import clientSide.services.UserService;
+import clientSide.services.playlist.PlaylistFunctionalitiesService;
+import clientSide.services.playlist.PlaylistReorderSongService;
+import clientSide.services.playlist.TemporaryPlaylistService;
 import clientSide.socket.*;
 import common.entities.*;
-import common.services.StockageService;
+import common.repository.*;
+import serverSide.services.StockageService;
 import common.services.UniqueIdService;
 import serverSide.repoBack.*;
 import serverSide.repoLocal.*;
@@ -47,7 +54,7 @@ public class DependencyProvider {
     protected ArtistService artistService;
     protected PrintService printService;
     protected SearchService searchService;
-    protected PlaylistReorderSongService playlistReorderSongService;
+    public PlaylistReorderSongService playlistReorderSongService;
     protected UniqueIdService uniqueIdService;
     public SongService songService;
 
@@ -102,23 +109,23 @@ public class DependencyProvider {
                 artistLocalRepository, audioLocalRepository);
 
         userService = new UserService(toolBoxService,passwordService);
-        temporaryPlaylistService = new TemporaryPlaylistService(toolBoxService,userService);
+        temporaryPlaylistService = new TemporaryPlaylistService(userService);
         songService = new SongService(toolBoxService);
-        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(toolBoxService, userService, songService);
-        playlistService = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService);
+        playlistFunctionalitiesService = new PlaylistFunctionalitiesService(userService, songService);
+        playlistService = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService, playlistReorderSongService);
         artistService = new ArtistService(toolBoxService);
         printService = new PrintService(songService, artistService, playlistService, userService);
         searchService = new SearchService(songService, printService, userService);
-        playlistReorderSongService = new PlaylistReorderSongService(toolBoxService, scanner);
+        playlistReorderSongService = new PlaylistReorderSongService();
         uniqueIdService = new UniqueIdService();
         songService = new SongService(toolBoxService);
 
         fakeMusicPlayer = new FakeMusicPlayer();
         playlistPlayer = new PlaylistPlayer(
-                fakeMusicPlayer, audioLocalRepository, songService, playlistService, artistService);
+                fakeMusicPlayer, songService, playlistService, artistService);
 
         toolBoxView = new ToolBoxView(playlistService, userService, songService, artistService, printService,
-                searchService, passwordService, playlistReorderSongService, temporaryPlaylistService, uniqueIdService);
+                searchService, passwordService, uniqueIdService);
 
         pageService = new PageService(playlistPlayer, toolBoxView, userService, menuPagesStack);
 

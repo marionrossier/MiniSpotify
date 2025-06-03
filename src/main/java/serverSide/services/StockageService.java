@@ -1,4 +1,4 @@
-package common.services;
+package serverSide.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
-
-import static clientSide.services.PrintHelper.printLNError;
 
 public class StockageService {
 
@@ -32,7 +30,7 @@ public class StockageService {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), data);
         } catch (IOException e) {
-            printLNError("Error during the saving action for : " + e.getMessage());
+            System.err.println("Error during the saving action for : " + e.getMessage());
         }
     }
 
@@ -72,7 +70,7 @@ public class StockageService {
                     .getResourceAsStream("songsfiles/index.txt");
 
             if (indexStream == null) {
-                printLNError("⚠ index.txt not found in songs/ folder inside resources.");
+                System.err.println("⚠ index.txt not found in songs/ folder inside resources.");
                 return;
             }
 
@@ -83,7 +81,7 @@ public class StockageService {
                         .getResourceAsStream("songsfiles/" + fileName);
 
                 if (mp3Stream == null) {
-                    printLNError("Missing file in JAR: " + fileName);
+                    System.err.println("Missing file in JAR: " + fileName);
                     continue;
                 }
 

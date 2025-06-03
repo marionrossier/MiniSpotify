@@ -1,11 +1,9 @@
 package clientSide.views;
 
 import clientSide.services.ToolBoxView;
-import common.entities.Artist;
 import common.entities.Playlist;
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.*;
-import common.entities.Song;
 
 import static clientSide.services.PrintHelper.*;
 
@@ -17,12 +15,12 @@ public class SongPlayer extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Song Player Page";
         this.pageContent =
-                        icon.backHomePageMusicPlayer + icon.lineBreak +
-                        icon.separator + icon.lineBreak +
-                        icon.nbr1() + icon.sequential() + " / " + icon.shuffle() + " / " + icon.repeatOne() + icon.lineBreak +
-                                icon.nbr2() + icon.playPause() + icon.lineBreak +
-                                icon.nbr3()+ icon.previous() + "\t" +
-                                icon.nbr4() + " " + icon.next() + "\t " + icon.nbr5() + icon.playBack();
+                        PrintHelper.backHomePageMusicPlayer + PrintHelper.lineBreak +
+                        PrintHelper.separator + PrintHelper.lineBreak +
+                        PrintHelper.nbr1 + PrintHelper.sequential + " / " + PrintHelper.shuffle + " / " + PrintHelper.repeatOne + PrintHelper.lineBreak +
+                                PrintHelper.nbr2 + PrintHelper.playPause + PrintHelper.lineBreak +
+                                PrintHelper.nbr3+ PrintHelper.previous + "\t" +
+                                PrintHelper.nbr4 + " " + PrintHelper.next + "\t " + PrintHelper.nbr5 + PrintHelper.playBack;
     }
 
     @Override

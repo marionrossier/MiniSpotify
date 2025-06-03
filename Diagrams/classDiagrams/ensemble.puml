@@ -1,0 +1,351 @@
+@startuml
+
+'VIEWS'
+interface clientSide.views.InterfaceMenu {}
+abstract class clientSide.views.TemplateSimplePage {}
+abstract class clientSide.views.TemplateInversePage {}
+class clientSide.views.ViewsInversed {}
+class clientSide.views.ViewsSimple {}
+
+clientSide.views.ViewsInversed -u-|> clientSide.views.TemplateInversePage
+clientSide.views.ViewsSimple -u-|> clientSide.views.TemplateSimplePage
+clientSide.views.TemplateInversePage -u-|> clientSide.views.TemplateSimplePage
+clientSide.views.TemplateSimplePage .u.|> clientSide.views.InterfaceMenu
+clientSide.services.PageService -u-> clientSide.views
+
+'PLAYER'
+class clientSide.player.file_player.MusicPlayer {}
+interface clientSide.player.playlist_player.IPlaylistPlayer {}
+interface clientSide.player.playlist_player.IState {}
+interface clientSide.player.file_player.IMusicPlayer {}
+class clientSide.player.playlist_player.PlaylistPlayer {}
+class clientSide.player.playlist_player.SequentialState {}
+class clientSide.player.playlist_player.RepeatState {}
+class clientSide.player.playlist_player.ShuffleState {}
+
+"clientSide.player.playlist_player.IPlaylistPlayer" -l-|> "clientSide.player.playlist_player.PlaylistPlayer"
+"clientSide.player.playlist_player.IState" -u-|> "clientSide.player.playlist_player.RepeatState"
+"clientSide.player.playlist_player.IState" -u-|> "clientSide.player.playlist_player.SequentialState"
+"clientSide.player.playlist_player.IState" -u-|> "clientSide.player.playlist_player.ShuffleState"
+
+"clientSide.player.file_player.IMusicPlayer" -u-|> "clientSide.player.file_player.MusicPlayer"
+
+"clientSide.player.playlist_player.PlaylistPlayer" -u-> "clientSide.player.file_player.IMusicPlayer"
+"clientSide.player.playlist_player.PlaylistPlayer" --> "clientSide.services.SongService"
+"clientSide.player.playlist_player.PlaylistPlayer" -l-> "clientSide.services.PlaylistServices"
+"clientSide.player.playlist_player.PlaylistPlayer" --> "clientSide.services.ArtistService"
+
+"clientSide.player.playlist_player.RepeatState" -u-> "clientSide.player.playlist_player.PlaylistPlayer"
+"clientSide.player.playlist_player.SequentialState" -u-> "clientSide.player.playlist_player.PlaylistPlayer"
+"clientSide.player.playlist_player.ShuffleState" -u-> "clientSide.player.playlist_player.PlaylistPlayer"
+
+"clientSide.player.file_player.MusicPlayer" -u-> "common.repository.IAudioRepository"
+"javazoom.jlgui.basicplayer.BasicPlayerListener" <|.. "clientSide.player.file_player.MusicPlayer"
+"clientSide.player.file_player.MusicPlayer" -l-> "javazoom.jlgui.basicplayer.BasicPlayer"
+
+"clientSide.services.SongService" -[hidden]u-> "clientSide.services.PlaylistServices"
+"clientSide.services.PlaylistServices" -[hidden]u-> "clientSide.services.ArtistService"
+
+
+'REPO SERVER REPO'
+package "repoServerRepo"{
+    package "repoServerRepo.common/repository" {
+        interface IPlaylistRepository {}
+        interface IAudioRepository {}
+        interface IArtistRepository {}
+        interface ISongRepository {}
+        interface IUserRepository {}
+    }
+
+    package "repoServerRepo.clientSide/repoFront" {
+        class FrontAudioRepo {}
+        class FrontArtistRepo {}
+        class FrontUserRepo {}
+        class FrontPlaylistRepo {}
+        class FrontSongRepo {}
+    }
+
+    package "repoServerRepo.clientSide/socket" {
+        class SocketClient {}
+    }
+
+    package "repoServerRepo.serverSide/socket" {
+        class AudioSocketServer {}
+
+        class SocketServer {}
+    }
+
+    package "repoServerRepo.serverSide/repoBack" {
+        class BackAudioRepo {}
+        class BackUserRepo {}
+        class BackSongRepo {}
+        class BackPlaylistRepo {}
+        class BackArtistRepo {}
+    }
+
+    package "repoServerRepo.common/repository" {
+        interface IUserRepository {}
+        interface ISongRepository {}
+        interface IPlaylistRepository {}
+        interface IAudioRepository {}
+        interface IArtistRepository {}
+    }
+
+    package "repoServerRepo.common/repository2" {
+            interface IUserRepository {}
+            interface ISongRepository {}
+            interface IPlaylistRepository {}
+            interface IAudioRepository {}
+            interface IArtistRepository {}
+        }
+
+    package "repoServerRepo.serverSide/repoLocal" {
+        class SongLocalRepository {}
+        class PlaylistLocalRepository {}
+        class UserLocalRepository {}
+        class ArtistLocalRepository {}
+        class AudioLocalRepository {}
+    }
+
+    package "repoServerRepo.serverSide/services" {
+        class StockageService {}
+    }
+
+}
+
+' --- Dépendances (avec orientation vers le bas)
+"repoServerRepo.clientSide/repoFront.FrontPlaylistRepo" .u.|> "repoServerRepo.common/repository.IPlaylistRepository"
+"repoServerRepo.clientSide/repoFront.FrontAudioRepo" .u.|> "repoServerRepo.common/repository.IAudioRepository"
+"repoServerRepo.clientSide/repoFront.FrontArtistRepo" .u.|> "repoServerRepo.common/repository.IArtistRepository"
+"repoServerRepo.clientSide/repoFront.FrontSongRepo" .u.|> "repoServerRepo.common/repository.ISongRepository"
+"repoServerRepo.clientSide/repoFront.FrontUserRepo" .u.|> "repoServerRepo.common/repository.IUserRepository"
+
+"repoServerRepo.clientSide/repoFront.FrontArtistRepo" -d-> "repoServerRepo.clientSide/socket.SocketClient"
+"repoServerRepo.clientSide/repoFront.FrontUserRepo" -d-> "repoServerRepo.clientSide/socket.SocketClient"
+"repoServerRepo.clientSide/repoFront.FrontPlaylistRepo" -d-> "repoServerRepo.clientSide/socket.SocketClient"
+"repoServerRepo.clientSide/repoFront.FrontSongRepo" -d-> "repoServerRepo.clientSide/socket.SocketClient"
+
+"repoServerRepo.serverSide/socket.SocketServer" -d-> "repoServerRepo.serverSide/repoBack.BackUserRepo"
+"repoServerRepo.serverSide/socket.SocketServer" -d-> "repoServerRepo.serverSide/repoBack.BackPlaylistRepo"
+"repoServerRepo.serverSide/socket.SocketServer" -d-> "repoServerRepo.serverSide/repoBack.BackSongRepo"
+"repoServerRepo.serverSide/socket.SocketServer" -d-> "repoServerRepo.serverSide/repoBack.BackArtistRepo"
+
+"repoServerRepo.serverSide/repoBack.BackAudioRepo" -d-> "repoServerRepo.common/repository2.IAudioRepository"
+"repoServerRepo.serverSide/repoBack.BackUserRepo" -d-> "repoServerRepo.common/repository2.IUserRepository"
+"repoServerRepo.serverSide/repoBack.BackSongRepo" -d-> "repoServerRepo.common/repository2.ISongRepository"
+"repoServerRepo.serverSide/repoBack.BackPlaylistRepo" -d-> "repoServerRepo.common/repository2.IPlaylistRepository"
+"repoServerRepo.serverSide/repoBack.BackArtistRepo" -d-> "repoServerRepo.common/repository2.IArtistRepository"
+
+"repoServerRepo.serverSide/repoLocal.SongLocalRepository" .u.|> "repoServerRepo.common/repository2.ISongRepository"
+"repoServerRepo.serverSide/repoLocal.PlaylistLocalRepository" .u.|> "repoServerRepo.common/repository2.IPlaylistRepository"
+"repoServerRepo.serverSide/repoLocal.UserLocalRepository" .u.|> "repoServerRepo.common/repository2.IUserRepository"
+"repoServerRepo.serverSide/repoLocal.ArtistLocalRepository" .u.|> "repoServerRepo.common/repository2.IArtistRepository"
+"repoServerRepo.serverSide/repoLocal.AudioLocalRepository" .u.|> "repoServerRepo.common/repository2.IAudioRepository"
+
+"repoServerRepo.serverSide/repoLocal.SongLocalRepository" -d-> "repoServerRepo.serverSide/services.StockageService"
+"repoServerRepo.serverSide/repoLocal.PlaylistLocalRepository" -d-> "repoServerRepo.serverSide/services.StockageService"
+"repoServerRepo.serverSide/repoLocal.UserLocalRepository" -d-> "repoServerRepo.serverSide/services.StockageService"
+"repoServerRepo.serverSide/repoLocal.ArtistLocalRepository" -d-> "repoServerRepo.serverSide/services.StockageService"
+"repoServerRepo.serverSide/repoLocal.AudioLocalRepository" -d-> "repoServerRepo.serverSide/services.StockageService"
+
+"repoServerRepo.serverSide/socket.AudioSocketServer" -d-> "repoServerRepo.serverSide/repoBack.BackAudioRepo"
+
+"repoServerRepo.clientSide/services.ToolBoxServices" -[hidden]d-> "repoServerRepo.common/repository.ISongRepository"
+"repoServerRepo.clientSide/services.PassWordService" -[hidden]d-> "repoServerRepo.common/repository.ISongRepository"
+"repoServerRepo.clientSide/services" -d-> "repoServerRepo.common/repository"
+"repoServerRepo.clientSide/services" -u-> "repoServerRepo.clientSide/views.Views"
+
+"repoServerRepo.clientSide/socket.SocketClient" .d. "repoServerRepo.serverSide/socket.SocketServer"
+"repoServerRepo.clientSide/repoFront.FrontAudioRepo" .d. "repoServerRepo.serverSide/socket.AudioSocketServer"
+"repoServerRepo.clientSide/socket.SocketClient" .[hidden]d. "repoServerRepo.serverSide/socket.AudioSocketServer"
+"repoServerRepo.clientSide/repoFront.FrontAudioRepo" -[hidden]d-> "repoServerRepo.clientSide/socket.SocketClient"
+
+
+'TOOLBOXSERVICE'
+
+package "ToolBoxService"{
+    class ToolBoxService.clientSide.services.SongService {}
+    class "ToolBoxService.clientSide.services.ArtistService" {}
+    class "ToolBoxService.clientSide.services.PlaylistServices" {}
+    class ToolBoxService.clientSide.services.UserService {}
+    class "ToolBoxService.clientSide.services.ToolBoxService" {}
+
+    interface "ToolBoxService.common.repository.IUserRepository" {}
+    interface "ToolBoxService.common.repository.ISongRepository" {}
+    interface ToolBoxService.common.repository.IPlaylistRepository {}
+    interface ToolBoxService.common.repository.IAudioRepository {}
+    interface ToolBoxService.common.repository.IArtistRepository {}
+}
+
+' --- Dépendances générées ---
+"ToolBoxService.clientSide.services.SongService" -u-> "ToolBoxService.clientSide.services.ToolBoxService"
+"ToolBoxService.clientSide.services.ArtistService" -u-> "ToolBoxService.clientSide.services.ToolBoxService"
+"ToolBoxService.clientSide.services.PlaylistServices" -u-> "ToolBoxService.clientSide.services.ToolBoxService"
+"ToolBoxService.clientSide.services.UserService" -u-> "ToolBoxService.clientSide.services.ToolBoxService"
+
+"ToolBoxService.clientSide.services.ToolBoxService" -u-> "ToolBoxService.common.repository.IPlaylistRepository"
+"ToolBoxService.clientSide.services.ToolBoxService" -u-> "ToolBoxService.common.repository.IUserRepository"
+"ToolBoxService.clientSide.services.ToolBoxService" -u-> "ToolBoxService.common.repository.ISongRepository"
+"ToolBoxService.clientSide.services.ToolBoxService" -u-> "ToolBoxService.common.repository.IArtistRepository"
+"ToolBoxService.clientSide.services.ToolBoxService" -u-> "ToolBoxService.common.repository.IAudioRepository"
+
+
+'TOOLBOX VIEW'
+
+package ToolBoxView {
+    class ToolBoxView.clientSide.services.SongService {}
+    class ToolBoxView.clientSide.services.ToolBoxView {}
+    class ToolBoxView.clientSide.services.PrintService {}
+    class ToolBoxView.clientSide.services.ArtistService {}
+    class ToolBoxView.clientSide.services.PlaylistServices {}
+    class ToolBoxView.clientSide.services.SearchService {}
+    class ToolBoxView.clientSide.services.UserService {}
+    class ToolBoxView.clientSide.services.PasswordService {}
+    class ToolBoxView.clientSide.services.PageService {}
+
+    class ToolBoxView.common.services.UniqueIdService {}
+}
+
+
+' --- Dépendances générées ---
+ToolBoxView.clientSide.services.ToolBoxView -u-> ToolBoxView.clientSide.services.PlaylistServices
+ToolBoxView.clientSide.services.ToolBoxView -u-> ToolBoxView.clientSide.services.SongService
+ToolBoxView.clientSide.services.ToolBoxView -u-> ToolBoxView.clientSide.services.SearchService
+ToolBoxView.clientSide.services.ToolBoxView -u-> ToolBoxView.clientSide.services.UserService
+ToolBoxView.clientSide.services.ToolBoxView -u-> ToolBoxView.clientSide.services.PrintService
+ToolBoxView.clientSide.services.ToolBoxView -u-> ToolBoxView.clientSide.services.PasswordService
+ToolBoxView.clientSide.services.ToolBoxView -u-> ToolBoxView.clientSide.services.ArtistService
+
+ToolBoxView.clientSide.services.ToolBoxView -d-> "ToolBoxView.common.services.UniqueIdService"
+ToolBoxView.clientSide.services.PageService -l-> ToolBoxView.clientSide.services.ToolBoxView
+
+
+'SERVICES'
+
+package Services {
+    class Services.clientSide.services.SongService {}
+    class "Services.clientSide.services.playlist.PlaylistFunctionalitiesService" {}
+    class "Services.clientSide.services.playlist.PlaylistReorderSongService" {}
+    class "Services.clientSide.services.PrintService" {}
+    class "Services.clientSide.services.ArtistService" {}
+    class "Services.clientSide.services.PlaylistServices" {}
+    class Services.clientSide.services.SearchService {}
+    class Services.clientSide.services.UserService {}
+    class "Services.clientSide.services.ToolBoxService" {}
+    class "Services.clientSide.services.playlist.TemporaryPlaylistService" {}
+    class "Services.clientSide.services.PasswordService" {}
+    class Services.clientSide.services.PageService {}
+    
+    interface Services.common.repository.IRepositories {}
+    class Services.clientSide.views.ViewsClasses {}
+    class Services.clientSide.services.ToolBoxView {}
+
+    class Services.clientSide.services.Cookies << (S, #FF7700) static >>{}
+
+    class Services.clientSide.services.PrintHelper << (S, #FF7700) static >>{}
+
+
+}
+
+
+' --- Dépendances générées ---
+
+"Services.clientSide.services.SongService" -u-> "Services.clientSide.services.ToolBoxService"
+
+"Services.clientSide.services.playlist.PlaylistFunctionalitiesService" -r-> "Services.clientSide.services.UserService"
+"Services.clientSide.services.playlist.PlaylistFunctionalitiesService" -u-> "Services.clientSide.services.SongService"
+
+"Services.clientSide.services.PrintService" -u-> "Services.clientSide.services.SongService"
+"Services.clientSide.services.PrintService" -u-> "Services.clientSide.services.ArtistService"
+"Services.clientSide.services.PrintService" -u-> "Services.clientSide.services.PlaylistServices"
+"Services.clientSide.services.PrintService" -u-> "Services.clientSide.services.UserService"
+
+"Services.clientSide.services.ArtistService" -u-> "Services.clientSide.services.ToolBoxService"
+
+"Services.clientSide.services.PlaylistServices" -u-> "Services.clientSide.services.ToolBoxService"
+"Services.clientSide.services.PlaylistServices" ---> "Services.clientSide.services.playlist.PlaylistFunctionalitiesService"
+"Services.clientSide.services.PlaylistServices" ---> "Services.clientSide.services.playlist.TemporaryPlaylistService"
+"Services.clientSide.services.PlaylistServices" -l--> "Services.clientSide.services.playlist.PlaylistReorderSongService"
+
+"Services.clientSide.services.playlist.TemporaryPlaylistService" -[hidden]d-> "Services.clientSide.services.playlist.PlaylistReorderSongService"
+"Services.clientSide.services.playlist.PlaylistReorderSongService" -[hidden]d-> "Services.clientSide.services.playlist.PlaylistFunctionalitiesService"
+
+
+"Services.clientSide.services.SearchService" -u-> "Services.clientSide.services.SongService"
+"Services.clientSide.services.SearchService" -u-> "Services.clientSide.services.PrintService"
+"Services.clientSide.services.SearchService" -u--> "Services.clientSide.services.UserService"
+
+"Services.clientSide.services.UserService" -u-> "Services.clientSide.services.ToolBoxService"
+"Services.clientSide.services.UserService" -u-> "Services.clientSide.services.PasswordService"
+
+"Services.clientSide.services.playlist.TemporaryPlaylistService" -u-> "Services.clientSide.services.UserService"
+
+"Services.clientSide.services.PasswordService" -u-> "Services.common.repository.IRepositories"
+
+"Services.clientSide.services.ToolBoxService" -u-> "Services.common.repository.IRepositories"
+
+"Services.clientSide.services.PageService" -u-> "Services.clientSide.services.UserService"
+
+"Services.clientSide.services.ToolBoxView" -u-> "Services.clientSide.services.PlaylistServices"
+"Services.clientSide.services.ToolBoxView" -u-> "Services.clientSide.services.SongService"
+"Services.clientSide.services.ToolBoxView" -u-> "Services.clientSide.services.SearchService"
+"Services.clientSide.services.ToolBoxView" -u-> "Services.clientSide.services.UserService"
+"Services.clientSide.services.ToolBoxView" -u-> "Services.clientSide.services.PrintService"
+"Services.clientSide.services.ToolBoxView" -u-> "Services.clientSide.services.PasswordService"
+"Services.clientSide.services.ToolBoxView" -u-> "Services.clientSide.services.ArtistService"
+
+"Services.clientSide.views.ViewsClasses" -u-> "Services.clientSide.services.ToolBoxView"
+"Services.clientSide.services.ToolBoxView" -u-> "Services.common.services.UniqueIdService"
+"Services.clientSide.services.PageService" -u-> "Services.clientSide.services.ToolBoxView"
+
+
+'COMMON'
+
+package Common{
+    class entities.User {}
+    enum entities.MusicGender {
+    +  SOUL_RNB
+    +  POP
+    +  HIP_HOP
+    +  ROCK
+    +  FRENCH_VARIETY
+    +  ELECTRO
+    +  DISCO
+    +  REGGAE
+    +  NULL
+    }
+    class entities.Artist {}
+    class entities.Playlist {}
+    interface repository.IUserRepository {}
+    class entities.Song {}
+    enum entities.PlanEnum {
+    +  FREE
+    +  PREMIUM
+    }
+    enum entities.PlaylistEnum {
+    +  PRIVATE
+    +  PUBLIC
+    }
+    interface repository.ISongRepository {}
+    class services.UniqueIdService {}
+    interface repository.IPlaylistRepository {}
+    interface repository.IAudioRepository {}
+    interface repository.IArtistRepository {}
+}
+
+'--- Dépendances basées sur les <<Create>> ---
+Common.entities.User -d-> Common.services.UniqueIdService
+Common.entities.Artist -d-> Common.services.UniqueIdService
+Common.entities.Playlist -d-> Common.services.UniqueIdService
+Common.entities.Song -d-> Common.services.UniqueIdService
+
+Common.repository.ISongRepository -d-> Common.entities.Song
+Common.repository.IUserRepository -d-> Common.entities.User
+Common.repository.IPlaylistRepository -d-> Common.entities.Playlist
+Common.repository.IArtistRepository -d-> Common.entities.Artist
+
+Common.entities.Song -l-> Common.entities.MusicGender
+Common.entities.Playlist -l-> Common.entities.PlaylistEnum
+Common.entities.User -l-> Common.entities.PlanEnum
+
+@enduml

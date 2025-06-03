@@ -8,7 +8,6 @@ import static clientSide.services.PrintHelper.*;
 
 public class PrintService {
 
-    private final IconService icon = new IconService();
     private final UserService userService;
     private final PlaylistServices playlistService;
     private final SongService songService;
@@ -22,11 +21,6 @@ public class PrintService {
         this.songService = songService;
         this.userService = userService;
         this.playlistService = playlistServices;
-    }
-
-    public void printSongFound (List<Integer> songs, String info){
-        printLNWhite("Songs found with information : " + info);
-        printSongList (songs);
     }
 
     public void printSongList (List<Integer> songs){
@@ -69,7 +63,7 @@ public class PrintService {
                     printLNGrey(i + ". " +
                             playlist.getName() + " - " +
                             printPlaylistStatus(playlist.getStatus()) +
-                            (isUserOwner ? icon.house() : ""));
+                            (isUserOwner ? PrintHelper.house : ""));
                     i++;
                 }
             }
@@ -82,9 +76,9 @@ public class PrintService {
     private String printPlaylistStatus(PlaylistEnum status) {
 
         if (status == PlaylistEnum.PUBLIC){
-            return icon.earth();
+            return PrintHelper.earth;
         }
-        return icon.lock();
+        return PrintHelper.lock;
     }
 
     public boolean printUserFriends(int userId){
@@ -141,7 +135,7 @@ public class PrintService {
                     printLNGrey(i + ". " +
                             playlist.getName() + " - " +
                             printPlaylistStatus(playlist.getStatus()) +
-                            (isUserOwner ? icon.house() : ""));
+                            (isUserOwner ? PrintHelper.house : ""));
                     i++;
                 }
                 printLN();

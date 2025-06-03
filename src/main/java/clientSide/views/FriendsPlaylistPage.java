@@ -2,6 +2,7 @@ package clientSide.views;
 
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 
 import static clientSide.services.PrintHelper.*;
@@ -13,9 +14,9 @@ public class FriendsPlaylistPage extends TemplateSimplePage {
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Friend Playlist Page";
-        this.pageContent = icon.backHomePageMusicPlayer + icon.lineBreak +  icon.separator + icon.lineBreak +
-                icon.nbr1() + "Listen to playlist" + icon.lineBreak+
-                icon.nbr2() + "Add playlist to own playlist";
+        this.pageContent = PrintHelper.backHomePageMusicPlayer + PrintHelper.lineBreak +  PrintHelper.separator + PrintHelper.lineBreak +
+                PrintHelper.nbr1 + "Listen to playlist" + PrintHelper.lineBreak+
+                PrintHelper.nbr2 + "Add playlist to own playlist";
     }
 
     @Override

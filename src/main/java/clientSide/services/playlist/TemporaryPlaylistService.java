@@ -1,8 +1,9 @@
-package clientSide.services;
+package clientSide.services.playlist;
 
+import clientSide.services.UserService;
 import common.entities.Playlist;
 import common.entities.PlaylistEnum;
-import common.*;
+import common.repository.IPlaylistRepository;
 
 import java.util.LinkedList;
 
@@ -10,15 +11,13 @@ import static clientSide.services.PrintHelper.*;
 
 public class TemporaryPlaylistService {
 
-    private final IPlaylistRepository playlistRepository;
     private final UserService userService;
 
-    public TemporaryPlaylistService(ToolBoxService toolBoxService, UserService userService){
-        this.playlistRepository = toolBoxService.playlistRepository;
+    public TemporaryPlaylistService(UserService userService){
         this.userService = userService;
     }
 
-    public int getTemporaryPlaylistId() {
+    public int getTemporaryPlaylistId(IPlaylistRepository playlistRepository) {
         Playlist playlist = playlistRepository.getPlaylistByName("temporaryPlaylist");
         if (playlist == null) {
             return new Playlist("temporaryPlaylist", PlaylistEnum.PRIVATE).getPlaylistId();
@@ -26,7 +25,7 @@ public class TemporaryPlaylistService {
         return playlist.getPlaylistId();
     }
 
-    public void createTemporaryPlaylist(LinkedList<Integer> chosenSongs, PlaylistEnum status) {
+    public void createTemporaryPlaylist(LinkedList<Integer> chosenSongs, PlaylistEnum status, IPlaylistRepository playlistRepository) {
         if (chosenSongs==null){
             return;
         }
@@ -45,7 +44,7 @@ public class TemporaryPlaylistService {
         playlistRepository.updateOrInsertPlaylist(temporaryPlaylist);
     }
 
-    public void adjustTemporaryPlaylistToNewPlaylist(String playlistName, PlaylistEnum status) {
+    public void adjustTemporaryPlaylistToNewPlaylist(String playlistName, PlaylistEnum status, IPlaylistRepository playlistRepository) {
         int currentUserId = userService.getCurrentUserId();
         Playlist newPlaylist = playlistRepository.getTemporaryPlaylistOfCurrentUser(currentUserId);
         if (newPlaylist != null) {
@@ -58,7 +57,7 @@ public class TemporaryPlaylistService {
         }
     }
 
-    public void addSongToPlaylistFromTemporaryPlaylist(int temporaryPlaylistId, int finalPlaylistId) {
+    public void addSongToPlaylistFromTemporaryPlaylist(int temporaryPlaylistId, int finalPlaylistId, IPlaylistRepository playlistRepository) {
         Playlist temporaryPlaylist = playlistRepository.getPlaylistById(temporaryPlaylistId);
         Playlist targetPlaylist = playlistRepository.getPlaylistById(finalPlaylistId);
 

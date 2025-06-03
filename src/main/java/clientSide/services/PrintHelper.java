@@ -2,6 +2,45 @@ package clientSide.services;
 
 public class PrintHelper {
 
+    public static final String nbr0 = "0.";
+    public static final String nbr1 = "1.";
+    public static final String nbr2 = "2.";
+    public static final String nbr3 = "3.";
+    public static final String nbr4 = "4.";
+    public static final String nbr5 = "5.";
+    public static final String nbr6 = "6.";
+    public static final String nbr7 = "7.";
+    public static final String nbr8 = "8.";
+    public static final String nbr9 = "9.";
+
+    public static final String playPause = "[PLAY/PAUSE]";
+    public static final String playBack = "[|<<]";
+    public static final String next = "[>>]";
+    public static final String previous = "[<<]";
+    public static final String shuffle = "[SHUFFLE]";
+    public static final String sequential = "[LOOP]";
+    public static final String repeatOne = "[REPEAT]";
+
+    public static final String lock = "[Owned]";
+    public static final String premium = "[PREMIUM]";
+    public static final String free = "[FREE]";
+    public static final String group = "[FRIENDS]";
+    public static final String house = "[SAVED]";
+    public static final String earth = "[OPEN]";
+    public static final String search = "[SEARCH]";
+
+    public static final String lineBreak = "\n";
+
+    public static final String eightMusicPlayer = nbr8 + "[PLAYER]";
+    public static final String nineHomepage     = nbr9 + "[HOME]";
+    public static final String zeroBack         = nbr0 + "[BACK]";
+
+    public static final String separator = "--------------------------------------------";
+    public static final String backHomePageMusicPlayer = zeroBack + " | " + eightMusicPlayer + " | " + nineHomepage;
+
+
+
+
     static final String PRINT_RESET = "\u001B[0m";
 
     static final String PRINT_BLACK = "\u001B[30m";

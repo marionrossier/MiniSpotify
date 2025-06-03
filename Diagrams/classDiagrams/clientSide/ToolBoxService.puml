@@ -1,0 +1,141 @@
+@startuml
+
+class clientSide/services.SongService {
+- ISongRepository songRepository
++ <<Create>> SongService(ToolBoxService)
++ void setCurrentSongId(int)
++ int getCurrentSongId()
++ Song getSongById(int)
++ LinkedList<Song> getSongByTitle(String)
++ LinkedList<Song> getSongsByArtist(String)
++ LinkedList<Song> getSongsByGender(MusicGender)
+}
+
+class "clientSide/services.ArtistService" {
+- IArtistRepository artistRepository
++ <<Create>> ArtistService(ToolBoxService)
++ String getArtistNameBySong(int)
+}
+
+class "clientSide/services.PlaylistServices" {
+- IPlaylistRepository playlistRepository
+- TemporaryPlaylistService temporaryPlaylistService
+- PlaylistFunctionalitiesService playlistFuncService
+- PlaylistReorderSongService playlistReorderSongService
+- ISongRepository songRepository
++ <<Create>> PlaylistServices(ToolBoxService,PlaylistFunctionalitiesService,
+TemporaryPlaylistService, PlaylistReorderSongService)
++ int setDurationSeconds(int)
++ void setCurrentPlaylistId(int)
++ int getCurrentPlaylistId()
++ PlaylistEnum getPlaylistStatus()
++ int getAllSongsPlaylistId()
++ Playlist getPlaylistByName(String)
++ Playlist getPlaylistById(int)
++ List<Integer> getPublicPlaylists()
++ List<Integer> getUserPublicPlaylists(User)
++ int getCurrentFriendPlaylistId()
++ void setCurrentFriendPlaylistId(int)
++ void createNewPlaylist(String,PlaylistEnum)
++ void createAllSongPlaylist(User)
++ void deletePlaylist(int)
++ void renamePlayList(int,String)
++ boolean verifyPlaylistName(String,User)
++ void deleteSongFromPlaylist(int,int)
++ boolean isCurrentUserOwnerOfPlaylist(int)
++ int takeAndValidateInputChoice(int,PageService)
++ void playlistPageRouter(int,PageService)
++ int getTemporaryPlaylistId()
++ void createTemporaryPlaylist(LinkedList<Integer>,PlaylistEnum)
++ void adjustTemporaryPlaylistToNewPlaylist(String,PlaylistEnum)
++ void addSongToPlaylistFromTemporaryPlaylist(int,int)
++ void getAndAddSelectionOfPlaylistsToCurrentUserPlaylists
+(List<Integer>,LinkedList<Integer>,ToolBoxView)
++ void reorderSongsInPlaylist(int,PlaylistServices,Scanner, IPlaylistRepository)
+}
+
+class clientSide/services.UserService {
+- IUserRepository userRepository
+- PasswordService passwordService
++ <<Create>> UserService(ToolBoxService,PasswordService)
++ void addUser(String,String,String,PlanEnum)
++ void addUser(int,String,String,String,PlanEnum)
++ boolean emailValidation(String)
++ void addOnePlaylistToCurrentUser(int)
++ void addFriend(int)
++ void deleteFriend(int)
++ void saveUser(User)
++ int getCurrentUserId()
++ void resetCookie()
++ User getUserByPseudonym(String)
++ List<Integer> getUsersByPseudonym(String)
++ User getUserById(int)
++ void setCurrentFriendId(int)
++ int getCurrentFriendId()
+}
+
+
+class "clientSide/services.ToolBoxService" {
++ IUserRepository userRepository
++ IPlaylistRepository playlistRepository
++ ISongRepository songRepository
++ IArtistRepository artistRepository
++ IAudioRepository audioRepository
++ <<Create>> ToolBoxService(IPlaylistRepository,IUserRepository,
+ISongRepository,IArtistRepository,IAudioRepository)
+}
+
+interface "common/repository.IUserRepository" {
+~ Optional<User> authenticate(String,String)
+~ User getUserByPseudonym(String)
+~ List<User> getAllUsers()
+~ void updateOrInsertUser(User)
+~ User getUserById(int)
+}
+
+interface "common/repository.ISongRepository" {
+~ ArrayList<Song> getAllSongs()
+~ void addSong(Song)
+~ Song getSongById(int)
+~ LinkedList<Song> getSongsByTitle(String)
+~ LinkedList<Song> getSongsByArtist(String)
+~ LinkedList<Song> getSongsByGender(MusicGender)
+}
+
+interface common/repository.IPlaylistRepository {
+~ List<Playlist> getAllPlaylists()
+~ void updateOrInsertPlaylist(Playlist)
+~ void deletePlaylistById(int)
+~ Playlist getPlaylistById(int)
+~ Playlist getPlaylistByName(String)
+~ PlaylistEnum getPlaylistStatus(Playlist)
+~ Playlist getTemporaryPlaylistOfCurrentUser(int)
+}
+
+interface common/repository.IAudioRepository {
+~ InputStream getStream(String)
+}
+
+interface common/repository.IArtistRepository {
+~ List<Artist> getAllArtists()
+~ void addArtist(Artist)
+~ Artist getArtistById(int)
+~ void updateOrInsertArtist(Artist)
+~ Artist getArtistByName(String)
+~ Artist getArtistBySongId(int)
+}
+
+
+' --- Dépendances générées ---
+"clientSide/services.SongService" -u-> "clientSide/services.ToolBoxService"
+"clientSide/services.ArtistService" -u-> "clientSide/services.ToolBoxService"
+"clientSide/services.PlaylistServices" -u-> "clientSide/services.ToolBoxService"
+"clientSide/services.UserService" -u-> "clientSide/services.ToolBoxService"
+
+"clientSide/services.ToolBoxService" -u-> "common/repository.IPlaylistRepository"
+"clientSide/services.ToolBoxService" -u-> "common/repository.IUserRepository"
+"clientSide/services.ToolBoxService" -u-> "common/repository.ISongRepository"
+"clientSide/services.ToolBoxService" -u-> "common/repository.IArtistRepository"
+"clientSide/services.ToolBoxService" -u-> "common/repository.IAudioRepository"
+
+@enduml

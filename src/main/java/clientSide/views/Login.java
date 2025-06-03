@@ -1,5 +1,6 @@
 package clientSide.views;
 
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 import common.entities.User;
 import clientSide.services.Cookies;
@@ -16,9 +17,9 @@ public class Login extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Login Page";
         this.pageContent =
-                icon.nbr0() + "End process" + icon.lineBreak +
-                icon.nbr1()+ "Sign in"+icon.lineBreak +
-                icon.nbr2()+ "Create an account";
+                PrintHelper.nbr0 + "End process" + PrintHelper.lineBreak +
+                PrintHelper.nbr1+ "Sign in"+PrintHelper.lineBreak +
+                PrintHelper.nbr2+ "Create an account";
         toolBoxView.getUserServ().resetCookie();
     }
 
@@ -41,7 +42,7 @@ public class Login extends TemplateSimplePage {
         if (toolBoxView.getPasswordServ().passwordCheck(pseudonym, password)){
             User user = toolBoxView.getUserServ().getUserByPseudonym(pseudonym);
             Cookies.initializeInstance(user.getUserId(), user.getPseudonym(), user.getPassword());
-            printLNGreen(icon.lineBreak + icon.ok() + "Login successful !");
+            printLNGreen(PrintHelper.lineBreak + "Login successful !");
             toolBoxView.getPlaylistServ().createAllSongPlaylist(user);
             pageService.homePage.displayAllPage();
         }

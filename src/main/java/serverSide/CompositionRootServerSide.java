@@ -1,9 +1,9 @@
 package serverSide;
 
-import common.*;
-import common.services.StockageService;
+import common.repository.*;
 import serverSide.repoBack.*;
 import serverSide.repoLocal.*;
+import serverSide.services.StockageService;
 import serverSide.socket.*;
 
 public class CompositionRootServerSide {

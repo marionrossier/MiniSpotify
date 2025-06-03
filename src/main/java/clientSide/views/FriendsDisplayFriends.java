@@ -2,6 +2,7 @@ package clientSide.views;
 
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 import common.entities.User;
 
@@ -17,7 +18,7 @@ public class FriendsDisplayFriends extends TemplateSimplePage {
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Display actual Friends Page";
-        this.pageContent = icon.zeroBack + icon.lineBreak + icon.separator;
+        this.pageContent = PrintHelper.zeroBack + PrintHelper.lineBreak + PrintHelper.separator;
     }
 
     @Override

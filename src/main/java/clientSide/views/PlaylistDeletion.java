@@ -2,6 +2,7 @@ package clientSide.views;
 
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 
 import static clientSide.services.PrintHelper.*;
@@ -13,10 +14,10 @@ public class PlaylistDeletion extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Delete Playlist Page";
-        this.pageContent = icon.zeroBack + icon.lineBreak + icon.separator + icon.lineBreak +
-                "Are you sure you want to delete this playlist?" + icon.lineBreak +
-                icon.nbr1() + "YES" + icon.lineBreak +
-                icon.nbr2() + "NO";
+        this.pageContent = PrintHelper.zeroBack + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
+                "Are you sure you want to delete this playlist?" + PrintHelper.lineBreak +
+                PrintHelper.nbr1 + "YES" + PrintHelper.lineBreak +
+                PrintHelper.nbr2 + "NO";
     }
 
     @Override

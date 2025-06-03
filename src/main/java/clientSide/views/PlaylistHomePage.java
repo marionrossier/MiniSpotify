@@ -2,6 +2,7 @@ package clientSide.views;
 
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 
 public class PlaylistHomePage extends TemplateSimplePage {
@@ -12,9 +13,9 @@ public class PlaylistHomePage extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Home Page Playlist";
         this.pageContent =
-                icon.backHomePageMusicPlayer + icon.lineBreak + icon.separator + icon.lineBreak +
-                icon.nbr1() + "Choose your playlist" + icon.lineBreak +
-                icon.nbr2() + "Create a playlist";
+                PrintHelper.backHomePageMusicPlayer + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
+                PrintHelper.nbr1 + "Choose your playlist" + PrintHelper.lineBreak +
+                PrintHelper.nbr2 + "Create a playlist";
     }
 
     @Override

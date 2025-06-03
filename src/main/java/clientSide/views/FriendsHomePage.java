@@ -2,6 +2,7 @@ package clientSide.views;
 
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
+import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
 
 public class FriendsHomePage extends TemplateSimplePage {
@@ -12,9 +13,9 @@ public class FriendsHomePage extends TemplateSimplePage {
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Friends Home Page";
-        this.pageContent = icon.zeroBack + " | " + icon.nineHomepage + icon.lineBreak + icon.separator + icon.lineBreak +
-                icon.nbr1() + "Display friends" + icon.lineBreak +
-                icon.nbr2() + "Search friend";
+        this.pageContent = PrintHelper.zeroBack + " | " + PrintHelper.nineHomepage + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
+                PrintHelper.nbr1 + "Display friends" + PrintHelper.lineBreak +
+                PrintHelper.nbr2 + "Search friend";
     }
 
     @Override
@@ -26,5 +27,4 @@ public class FriendsHomePage extends TemplateSimplePage {
     public void button2() {
         pageService.friendSearch.displayAllPage();
     }
-
 }

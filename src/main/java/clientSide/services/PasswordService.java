@@ -1,7 +1,7 @@
 package clientSide.services;
 
 import common.entities.User;
-import common.*;
+import common.repository.IUserRepository;
 
 import java.util.*;
 

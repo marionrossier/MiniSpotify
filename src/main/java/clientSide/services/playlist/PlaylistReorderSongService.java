@@ -1,7 +1,8 @@
-package clientSide.services;
+package clientSide.services.playlist;
 
+import clientSide.services.PlaylistServices;
 import common.entities.Playlist;
-import common.*;
+import common.repository.IPlaylistRepository;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,17 +12,12 @@ import static clientSide.services.PrintHelper.*;
 
 public class PlaylistReorderSongService {
 
-    private final Scanner scanner;
-    private final IPlaylistRepository playlistRepository;
+    public PlaylistReorderSongService() {}
 
-    public PlaylistReorderSongService(ToolBoxService toolBoxService, Scanner scanner) {
-        this.playlistRepository = toolBoxService.playlistRepository;
-        this.scanner = scanner;
-    }
-
-    public void reorderSongsInPlaylist(int playlistId, PlaylistServices playlistServices) {
+    public void reorderSongsInPlaylist(int playlistId, PlaylistServices playlistServices,
+                                       Scanner scanner, IPlaylistRepository playlistRepository) {
         Playlist playlist = playlistServices.getPlaylistById(playlistId);
-        LinkedList<Integer> newOrder = collectNewOrderFromUser(playlist);
+        LinkedList<Integer> newOrder = collectNewOrderFromUser(playlist, scanner);
 
         completeWithRemainingSongs(playlist, newOrder);
         playlist.setListSongsId(newOrder);
@@ -31,9 +27,10 @@ public class PlaylistReorderSongService {
             printLNGreen("Playlist reordered successfully with remaining songs added at the end!");
         } else {
             printLNGreen("Playlist reordered successfully!");
-        }    }
+        }
+    }
 
-    private LinkedList<Integer> collectNewOrderFromUser(Playlist playlist) {
+    private LinkedList<Integer> collectNewOrderFromUser(Playlist playlist, Scanner scanner) {
         LinkedList<Integer> newOrder = new LinkedList<>();
         int songIndex;
 

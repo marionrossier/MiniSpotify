@@ -1,0 +1,44 @@
+@startuml
+
+entity User {
+  +userId : int
+  pseudonym : string
+  email : string
+  password : string
+  salt : string
+  planEnum : string
+}
+
+entity Playlist {
+  +playlistId : int
+  name : string
+  ownerId : int
+  status : string
+}
+
+entity Song {
+  +songId : int
+  title : string
+  artistId : int
+  durationSeconds : int
+  gender : string
+  audioFileName : string
+}
+
+entity Artist {
+  +artistId : int
+  artistName : string
+}
+
+entity PlaylistSong {
+  +playlistId : int
+  +songId : int
+}
+
+' Relations with cardinalities and labels
+User ||--o{ Playlist : "1 to 0..*" owns
+Playlist ||--o{ PlaylistSong : "1 to 0..*" has
+Song ||--o{ PlaylistSong : "1 to 0..*" appears_in
+Artist ||--o{ Song : "1 to 0..*" creates
+
+@enduml
