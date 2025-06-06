@@ -144,8 +144,9 @@ public class PageService {
         int actionFoundedSongs = this.actionFoundedSongs.pageId;
         int playlistCreation = this.playlistCreation.pageId;
         int searchGender = this.searchGender.pageId;
+        int search = this.search.pageId;
         int playlistDeletion = this.playlistDeletion.pageId;
-        int [] pageIdNotToAdd = new int[] {createAccount, actionFoundedSongs, playlistCreation, searchGender, playlistDeletion};
+        int [] pageIdNotToAdd = new int[] {createAccount, actionFoundedSongs, search, playlistCreation, searchGender, playlistDeletion};
 
         for (int id : pageIdNotToAdd) {
             if (id == pageId) {

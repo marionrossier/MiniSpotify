@@ -15,11 +15,11 @@ public class HomePage extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Home Page";
         this.pageContent =
-                PrintHelper.nbr0 + "[LOG OUT]" + " | " + PrintHelper.eightMusicPlayer + PrintHelper.lineBreak +
-                        PrintHelper.separator + PrintHelper.lineBreak +
-                PrintHelper.nbr1 + "Playlists" + PrintHelper.lineBreak +
-                PrintHelper.nbr2 + "Search song or playlist" + PrintHelper.lineBreak +
-                PrintHelper.nbr3 + "Friends" + PrintHelper.premium;
+                PrintHelper.b0 + "[LOG OUT]" + " | " + PrintHelper.eightMusicPlayer + "\n" +
+                        PrintHelper.separator + "\n" +
+                PrintHelper.b1 + "Playlists" + "\n" +
+                PrintHelper.b2 + "Search song or playlist" + "\n" +
+                PrintHelper.b3 + "Friends" + PrintHelper.PREMIUM;
     }
 
     @Override

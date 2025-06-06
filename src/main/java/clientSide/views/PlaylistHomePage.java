@@ -13,9 +13,9 @@ public class PlaylistHomePage extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Home Page Playlist";
         this.pageContent =
-                PrintHelper.backHomePageMusicPlayer + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
-                PrintHelper.nbr1 + "Choose your playlist" + PrintHelper.lineBreak +
-                PrintHelper.nbr2 + "Create a playlist";
+                PrintHelper.backHomePageMusicPlayer + "\n" + PrintHelper.separator + "\n" +
+                PrintHelper.b1 + "Choose your playlist" + "\n" +
+                PrintHelper.b2 + "Create a playlist";
     }
 
     @Override

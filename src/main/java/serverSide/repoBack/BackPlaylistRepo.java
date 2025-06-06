@@ -5,6 +5,7 @@ import common.repository.*;
 import common.entities.Playlist;
 import common.entities.User;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -78,13 +79,16 @@ public class BackPlaylistRepo {
                 }
 
                 case "getTemporaryPlaylistOfCurrentUser" -> {
-                    int userId = Integer.parseInt((String) request.get("userId")); // ou autre
+                    int userId = user.getUserId();
                     Playlist temp = playlistRepo.getTemporaryPlaylistOfCurrentUser(userId);
-                    return mapper.writeValueAsString(Map.of(
-                            "status", "OK",
-                            "playlist", temp // peut être null → c'est OK
-                    ));
+
+                    Map<String, Object> response = new HashMap<>();
+                    response.put("status", "OK");
+                    response.put("playlist", temp); // ici c'est OK si temp == null
+
+                    return mapper.writeValueAsString(response);
                 }
+
 
 
                 default -> {

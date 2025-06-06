@@ -57,12 +57,12 @@ public class SocketServer {
             String responseJson = switch (command) {
                 // Playlist
                 case "getPlaylistById", "getPlaylistByName", "getAllPlaylists",
-                     "deletePlaylistById", "savePlaylist", "getPlaylistStatus", "getTemporaryPlaylistOfCurrentUser"
+                     "deletePlaylistById", "updateOrInsertPlaylist", "getPlaylistStatus", "getTemporaryPlaylistOfCurrentUser"
                         -> backPlaylistRepo.handleRequest(request);
 
                 // Artist
                 case "getAllArtists", "getArtistById", "getArtistByName",
-                     "getArtistBySongId", "addArtist", "saveArtist"
+                     "getArtistBySongId", "addArtist", "updateOrInsertArtist"
                         -> backArtistRepo.handleRequest(request);
 
                 // Song 🎶
@@ -71,7 +71,7 @@ public class SocketServer {
                         -> backSongRepo.handleRequest(request);
 
                 // 👤 User
-                case "getAllUsers", "getUserById", "getUserByPseudonym", "saveUser"
+                case "getAllUsers", "getUserById", "getUserByPseudonym", "updateOrInsertUser"
                         -> backUserRepo.handleRequest(request);
 
                 default -> "{\"status\": \"ERROR\", \"message\": \"Unknown command at server switch\"}";

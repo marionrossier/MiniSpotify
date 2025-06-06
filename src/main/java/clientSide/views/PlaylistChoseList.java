@@ -12,7 +12,7 @@ public class PlaylistChoseList extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Chose Your Playlist Page";
-        this.pageContent = PrintHelper.zeroBack + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
+        this.pageContent = PrintHelper.zeroBack + "\n" + PrintHelper.separator + "\n"  +
                 "Chose your Playlist below";
     }
 

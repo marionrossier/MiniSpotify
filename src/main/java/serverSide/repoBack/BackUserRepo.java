@@ -23,7 +23,7 @@ public class BackUserRepo {
             String password = (String) request.get("password");
 
             Optional<User> optUser = userRepo.authenticate(username, password);
-            if (optUser.isEmpty() && !(command.equals("getUserByPseudonym") || command.equals("saveUser"))) {
+            if (optUser.isEmpty() && !(command.equals("getUserByPseudonym") || command.equals("updateOrInsertUser"))) {
                 return "{\"status\": \"ERROR\", \"message\": \"Authentication failed\"}";
             }
 

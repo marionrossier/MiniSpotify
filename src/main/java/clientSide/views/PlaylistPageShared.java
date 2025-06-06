@@ -15,20 +15,18 @@ public class PlaylistPageShared extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Shared Playlist Page : ";
-        this.pageContent = PrintHelper.backHomePageMusicPlayer + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
-                PrintHelper.nbr1 + "Delete the playlist";
+        this.pageContent = PrintHelper.backHomePageMusicPlayer + "\n" + PrintHelper.separator + "\n" +
+                PrintHelper.b1 + "Delete the playlist";
     }
 
     @Override
     public void displaySpecificContent(){
-        printLN();
         Playlist playlist = toolBoxView.getPlaylistServ().getPlaylistById(toolBoxView.getPlaylistServ().getCurrentPlaylistId());
         if (playlist == null){
             pageService.playlistHomePage.displayAllPage();
         }
         else {
         printLNBlue("Playlist name : " + playlist.getName());
-        printLN();
         toolBoxView.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId());
         }
     }

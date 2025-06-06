@@ -30,7 +30,6 @@ public class PlaylistFunctionalitiesService {
         int playlistId = playlistServices.getPlaylistByName(playlistName).getPlaylistId();
         playlistServices.setCurrentPlaylistId(playlistId);
         printLN();
-        printLNGreen("Playlist created successfully !");
     }
 
     public void createAllSongPlaylist (User user, PlaylistServices playlistServices, IUserRepository userRepository){
@@ -59,6 +58,7 @@ public class PlaylistFunctionalitiesService {
         if (playlistOwner == user.getUserId()){
             playlistRepository.deletePlaylistById(playlistId);
             removePlaylistFromUser(playlistId, userRepository);
+            printLN();
             printLNGreen("Playlist deleted !");
         }
         else {
@@ -66,6 +66,7 @@ public class PlaylistFunctionalitiesService {
                 printLNInfo("You cannot delete the AllSongs playlist.");
             }
             removePlaylistFromUser(playlistId, userRepository);
+            printLN();
             printLNGreen("Playlist removed from your list.");
         }
     }

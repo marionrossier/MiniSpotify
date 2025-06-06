@@ -64,7 +64,6 @@ public class UserService {
         }
         playlists.add(playlistId);
         saveUser(user);
-        printLNGreen("Playlist has been added.");
     }
 
     public void addFriend(int friendId) {

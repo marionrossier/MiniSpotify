@@ -17,9 +17,9 @@ public class Login extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Login Page";
         this.pageContent =
-                PrintHelper.nbr0 + "End process" + PrintHelper.lineBreak +
-                PrintHelper.nbr1+ "Sign in"+PrintHelper.lineBreak +
-                PrintHelper.nbr2+ "Create an account";
+                PrintHelper.b0 + "End process" + "\n" +
+                PrintHelper.b1 + "Sign in"+"\n" +
+                PrintHelper.b2 + "Create an account";
         toolBoxView.getUserServ().resetCookie();
     }
 
@@ -42,7 +42,7 @@ public class Login extends TemplateSimplePage {
         if (toolBoxView.getPasswordServ().passwordCheck(pseudonym, password)){
             User user = toolBoxView.getUserServ().getUserByPseudonym(pseudonym);
             Cookies.initializeInstance(user.getUserId(), user.getPseudonym(), user.getPassword());
-            printLNGreen(PrintHelper.lineBreak + "Login successful !");
+            printLNGreen("\n" + "Login successful !");
             toolBoxView.getPlaylistServ().createAllSongPlaylist(user);
             pageService.homePage.displayAllPage();
         }
