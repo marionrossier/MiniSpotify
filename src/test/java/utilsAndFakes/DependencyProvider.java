@@ -122,7 +122,7 @@ public class DependencyProvider {
 
         fakeMusicPlayer = new FakeMusicPlayer();
         playlistPlayer = new PlaylistPlayer(
-                fakeMusicPlayer, songService, playlistService, artistService);
+                fakeMusicPlayer, songService, playlistService, artistService, printService);
 
         toolBoxView = new ToolBoxView(playlistService, userService, songService, artistService, printService,
                 searchService, passwordService, uniqueIdService);
@@ -170,7 +170,7 @@ public class DependencyProvider {
     public void populateLocalSong(){
         Song song = new Song(1108071776, "Rehab",
                 artistLocalRepository.getArtistByName("Amy Winehouse").getArtistId() ,
-                214, MusicGender.SOUL_RNB,
+                "Back to black" , 214, MusicGender.SOUL_RNB,
                 "Rehab - Amy Winehouse - Back to Black - 2006 - Soul _ R&B - 0334.mp3");
 
         songLocalRepository.addSong(song);

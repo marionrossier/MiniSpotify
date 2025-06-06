@@ -45,7 +45,8 @@ public class TestHelper {
         song.setSongId(id);
         song.setTitle(title);
         song.setAudioFileName(fileName);
-        song.setArtistId(960571432);// Default artist ID for testing
+        song.setArtistId(960571432);
+        song.setGender(MusicGender.POP);
         return song;
     }
 
@@ -61,6 +62,7 @@ public class TestHelper {
         song.setSongId(id);
         song.setTitle(title);
         song.setDurationSeconds(180);
+        song.setGender(MusicGender.POP);
         return song;
     }
 

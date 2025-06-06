@@ -93,8 +93,8 @@ public class CompositionRootClientSide {
         playlistFunctionalitiesService = new PlaylistFunctionalitiesService(userService,
                 songService);
         playlistServices = new PlaylistServices(toolBoxService, playlistFunctionalitiesService, temporaryPlaylistService, playlistReorderSongService);
-        spotifyPlayer = new PlaylistPlayer(musicPlayer, songService, playlistServices, artistService);
         printService = new PrintService(songService, artistService, playlistServices, userService);
+        spotifyPlayer = new PlaylistPlayer(musicPlayer, songService, playlistServices, artistService, printService);
         searchService = new SearchService(songService, printService, userService);
         uniqueIdService = new UniqueIdService();
         toolBoxView = new ToolBoxView(playlistServices, userService, songService, artistService,
