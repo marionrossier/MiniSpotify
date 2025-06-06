@@ -17,7 +17,7 @@ public class FriendPlaylists extends TemplateSimplePage {
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Friend playlist Page";
-        this.pageContent = PrintHelper.zeroBack + PrintHelper.separator + PrintHelper.lineBreak;
+        this.pageContent = PrintHelper.zeroBack + "\n" + PrintHelper.separator ;
     }
 
     @Override
