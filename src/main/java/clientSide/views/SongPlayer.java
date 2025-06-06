@@ -4,6 +4,7 @@ import clientSide.services.ToolBoxView;
 import common.entities.Playlist;
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.*;
+import common.entities.Song;
 
 import static clientSide.services.PrintHelper.*;
 
@@ -26,11 +27,10 @@ public class SongPlayer extends TemplateSimplePage {
     @Override
     public void displaySpecificContent(){
         Playlist playlist = toolBoxView.getPlaylistServ().getPlaylistById(toolBoxView.getPlaylistServ().getCurrentPlaylistId());
-        printLNBlue(
-                "Current Playlist : " + playlist.getName() +
-                ", duration " + (toolBoxView.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())/60) + " minutes " +
-                        toolBoxView.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())%60 +
-                " seconds, size : " + playlist.getPlaylistSongsListWithId().size() + " songs." + "\n");
+        Song song = toolBoxView.getSongServ().getSongById(toolBoxView.getSongServ().getCurrentSongId());
+        printLNBlue(toolBoxView.getPrintServ().printPlaylist(playlist));
+        printLNBlue("Next " + toolBoxView.getPrintServ().printSong(song));
+        toolBoxView.getPrintServ().printSong(song);
     }
 
     @Override

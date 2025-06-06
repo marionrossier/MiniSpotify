@@ -55,8 +55,8 @@ public class Search extends TemplateSimplePage {
         printLNWhite("Select your playlist to add by entering their number and press \"enter\" between each playlist." + "\n" +
                 "End selection with an \"x\"." + "\n");
 
-        List<Integer> playlists = toolBoxView.getPlaylistServ().getPublicPlaylists();
-        toolBoxView.getPrintServ().printPlaylist(playlists);
+        List<Integer> playlists = toolBoxView.getPlaylistServ().getPublicPlaylists(toolBoxView.getUserServ().getCurrentUserId());
+        toolBoxView.getPrintServ().printPlaylists(playlists);
 
         printYourInput();
 

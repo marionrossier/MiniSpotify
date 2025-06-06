@@ -26,7 +26,7 @@ public class PlaylistPageShared extends TemplateSimplePage {
             pageService.playlistHomePage.displayAllPage();
         }
         else {
-        printLNBlue("Playlist name : " + playlist.getName());
+        printLNBlue(toolBoxView.getPrintServ().printPlaylist(playlist));
         toolBoxView.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId());
         }
     }

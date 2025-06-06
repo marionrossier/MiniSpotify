@@ -27,17 +27,21 @@ public class PrintService {
         int i = 1;
         for (Integer song : songs) {
             Song songData = songService.getSongById(song);
-            printLNGrey(i + ". " + songData.getTitle()
-                    + " - " + artistService.getArtistNameBySong(song)
-                    + ", album : " + songData.getAlbum()
-                    + ", duration of " + getStringDuration(songData.getDurationSeconds())
-                    + ", gender : " + songData.getGender().getDisplayName());
+            printLNGrey(printSong(songData));
             i++;
         }
         printLN();
     }
 
-    public void printPlaylist(List<Integer> playlistsId) {
+    public String printSong (Song song){
+        return "Song : " + song.getTitle()
+                + " - " + artistService.getArtistNameBySong(song.getSongId())
+                + ", album : " + song.getAlbum()
+                + ", duration of " + getStringDuration(song.getDurationSeconds())
+                + ", gender : " + song.getGender().getDisplayName();
+    }
+
+    public void printPlaylists(List<Integer> playlistsId) {
         if (playlistsId == null || playlistsId.isEmpty()) {
             printLNInfo("No playlist available.");
             return;
@@ -47,14 +51,21 @@ public class PrintService {
         for (Integer playlistId : playlistsId) {
             Playlist playlist = playlistService.getPlaylistById(playlistId);
             if (playlist != null) {
-                String owner = userService.getUserById(playlist.getOwnerId()).getPseudonym();
-                printLNGrey(i + ". " + playlist.getName() + ", " +
-                        playlist.getPlaylistSongsListWithId().size() + " songs, duration of "
-                        + getPlaylistDuration(playlist) + " || OWNER : " + owner);
+                printPlaylist(playlist);
                 i++;
             }
         }
         printLN();
+    }
+
+    public String printPlaylist (Playlist playlist){
+        String owner = userService.getUserById(playlist.getOwnerId()).getPseudonym();
+        return "Playlist : " + playlist.getName() +
+                ", duration of " + getStringDuration(
+                playlistService.setDurationSeconds(playlist.getPlaylistId())) +
+                ", " + playlist.getPlaylistSongsListWithId().size() + " songs."
+                + " || OWNER : " + owner
+                + ", status : " + printPlaylistStatus(playlist.getStatus());
     }
 
     public void printUserPlaylists(int userId){
@@ -66,14 +77,7 @@ public class PrintService {
                 Playlist playlist = playlistService.getPlaylistById(playlistId);
 
                 if (playlist != null) {
-                    boolean isUserOwner = playlist.getOwnerId() == currentUser.getUserId();
-                    printLNGrey(i + ". " +
-                            playlist.getName() + ", " +
-                            playlist.getPlaylistSongsListWithId().size() + " songs, duration of "
-                            + getPlaylistDuration(playlist)
-                            + " - " + printPlaylistStatus(playlist.getStatus()) +
-                            (isUserOwner ? " || OWNER : YOU!" :
-                                    " || OWNER : " + userService.getUserById(playlist.getOwnerId()).getPseudonym()));
+                    printLNGrey(i + ". " + printPlaylist(playlist));
                     i++;
                 }
             }
@@ -144,10 +148,7 @@ public class PrintService {
             if (playlist != null
                     && playlist.getStatus() == PlaylistEnum.PUBLIC
                     && playlist.getOwnerId() == user.getUserId()) {
-                printLNGrey(i + ". " +
-                        playlist.getName() + ", " +
-                        playlist.getPlaylistSongsListWithId().size() + " songs, duration : "
-                        + getPlaylistDuration(playlist));
+                printLNGrey(i + ". " + printPlaylist(playlist));
                 i++;
                 hasPublicPlaylist = true;
             }
@@ -173,7 +174,7 @@ public class PrintService {
         return getStringDuration(duration);
     }
 
-    private String getStringDuration(int duration){
+    public String getStringDuration(int duration){
         int durationMinutes = duration / 60;
         int durationSeconds = duration % 60;
         int durationHours = durationMinutes / 60;

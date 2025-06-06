@@ -97,7 +97,6 @@ public class PrintHelper {
         System.out.println(PRINT_RED + message + PRINT_RESET);
     }
 
-
     public static void printWhite(String message) {
         System.out.print(PRINT_WHITE + message + PRINT_RESET);
     }

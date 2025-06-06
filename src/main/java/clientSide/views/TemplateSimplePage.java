@@ -43,6 +43,12 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
     public final void displayTitle(String pageTitle){
         printLN();
         printLN();
+        printLN();
+        printLN();
+        printLN();
+        printLN();
+        printLN();
+        printLN();
         printLNBgWhite(">>>>>> "+ pageTitle +" <<<<<<<");
         printLN();
     }

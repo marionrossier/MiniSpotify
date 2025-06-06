@@ -28,7 +28,7 @@ public class SocketServer {
 
             while (true) {
                 Socket socket = serverSocket.accept();
-//                System.out.println("📡 Client connected");
+                System.out.println("📡 New connection from " + socket.getInetAddress().getHostAddress() + ":" + socket.getPort());
 
                 new Thread(() -> handleClient(socket)).start();
             }
