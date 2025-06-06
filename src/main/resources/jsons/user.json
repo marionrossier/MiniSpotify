@@ -1,7 +1,7 @@
 [ {
   "userId" : 232928320,
   "pseudonym" : "marion",
-  "email" : "marion",
+  "email" : "marion@email.com",
   "password" : "Tsj7xHid8Ws+8gbsgEaGVMY7Q6nE6Hliy3yX0p5GKGQ=",
   "salt" : "SFRj5denLtO2rt8eS7DWZA==",
   "planEnum" : "FREE",
@@ -10,7 +10,7 @@
 }, {
   "userId" : 1726370281,
   "pseudonym" : "florent",
-  "email" : "florent",
+  "email" : "florent@email.com",
   "password" : "atLQiW5mXaoUY7yGgLmSk3I1uHFIZNd2D5GvmhlCPbk=",
   "salt" : "W6S23v07hEA3al52dDka9g==",
   "planEnum" : "PREMIUM",
@@ -18,8 +18,8 @@
   "friends" : [ ]
 }, {
   "userId" : 1,
-  "pseudonym" : "admin",
-  "email" : "admin",
+  "pseudonym" : "Spotify",
+  "email" : "admin@spotify.com",
   "password" : "+7gcQVVUglA56V4owOMX9/Nov0nA3BnRpWdioOJCL1g=",
   "salt" : "cJ3uMmkG9LddloUSxaL2JQ==",
   "planEnum" : "PREMIUM",

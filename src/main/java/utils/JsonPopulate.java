@@ -211,9 +211,9 @@ public class JsonPopulate {
 
     public static void addUser (UserService userService ){
 
-        userService.addUser(232928320,"marion", "marion","marion", PlanEnum.FREE);
-        userService.addUser(1726370281, "florent", "florent","florent",PlanEnum.PREMIUM);
-        userService.addUser(1,"admin", "admin", "admin", PlanEnum.PREMIUM);
+        userService.addUser(232928320,"marion", "marion@email.com","marion", PlanEnum.FREE);
+        userService.addUser(1726370281, "florent", "florent@email.com","florent",PlanEnum.PREMIUM);
+        userService.addUser(1,"Spotify", "admin@spotify.com", "admin", PlanEnum.PREMIUM);
 
     }
 
