@@ -103,6 +103,7 @@ class entities.Song {
 - int artistId
 - int durationSeconds
 - MusicGender gender
+- String album
 - int songId
 - String audioFileName
 - UniqueIdService uniqueIdService
@@ -121,6 +122,8 @@ class entities.Song {
 + void setSongId(int)
 + String getAudioFileName()
 + void setAudioFileName(String)
++ String getAlbum()
++ void setAlbum(String)
 }
 
 

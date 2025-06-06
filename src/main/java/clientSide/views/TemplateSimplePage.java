@@ -45,10 +45,6 @@ public abstract class TemplateSimplePage implements InterfaceMenu {
         printLN();
         printLN();
         printLN();
-        printLN();
-        printLN();
-        printLN();
-        printLN();
         printLNBgWhite(">>>>>> "+ pageTitle +" <<<<<<<");
         printLN();
     }

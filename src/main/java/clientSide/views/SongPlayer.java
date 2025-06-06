@@ -29,6 +29,7 @@ public class SongPlayer extends TemplateSimplePage {
         Playlist playlist = toolBoxView.getPlaylistServ().getPlaylistById(toolBoxView.getPlaylistServ().getCurrentPlaylistId());
         Song song = toolBoxView.getSongServ().getSongById(toolBoxView.getSongServ().getCurrentSongId());
         printLNBlue(toolBoxView.getPrintServ().printPlaylist(playlist));
+        toolBoxView.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId());
         printLNBlue("Next " + toolBoxView.getPrintServ().printSong(song));
         toolBoxView.getPrintServ().printSong(song);
     }

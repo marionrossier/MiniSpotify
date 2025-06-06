@@ -5,6 +5,7 @@ class clientSide/player.playlist_player.PlaylistPlayer {
 # PlaylistServices playlistServices
 # ArtistService artistService
 # SongService songService
+# PrintService printService
 # LinkedList<Integer> songIdHistory
 ~ int currentHistoryIndex
 # Song currentSong
@@ -15,7 +16,7 @@ class clientSide/player.playlist_player.PlaylistPlayer {
 - IState shuffleState
 - IState repeatState
 + <<Create>> PlaylistPlayer(IMusicPlayer,SongService,
-PlaylistServices,ArtistService)
+PlaylistServices,ArtistService, PrintService)
 + void setSequentialMode()
 + void setShuffleMode()
 + void setRepeatMode()
@@ -169,6 +170,24 @@ TemporaryPlaylistService, PlaylistReorderSongService)
 + void reorderSongsInPlaylist(int,PlaylistServices,Scanner, IPlaylistRepository)
 }
 
+class "clientSide/services.PrintService" {
+- UserService userService
+- PlaylistServices playlistService
+- SongService songService
+- ArtistService artistService
++ <<Create>> PrintService(SongService,ArtistService,PlaylistServices,UserService)
++ void printSongList(List<Integer>)
++ void printPlaylist(List<Integer>)
++ String printSong (Song)
++ String printPlaylist (Playlist)
++ String getStringDuration(int)
++ void printUserPlaylists(int)
+- String printPlaylistStatus(PlaylistEnum)
++ boolean printUserFriends(int)
++ void printUsers(List<Integer>)
++ void printUserPublicPlaylists(int)
+}
+
 class clientSide/services.ArtistService {
 - IArtistRepository artistRepository
 + <<Create>> ArtistService(ToolBoxService)
@@ -210,7 +229,8 @@ package javazoom/jlgui/basicplayer {
 "clientSide/player.playlist_player.PlaylistPlayer" -u-> "clientSide/player.file_player.IMusicPlayer"
 "clientSide/player.playlist_player.PlaylistPlayer" --> "clientSide/services.SongService"
 "clientSide/player.playlist_player.PlaylistPlayer" -l-> "clientSide/services.PlaylistServices"
-"clientSide/player.playlist_player.PlaylistPlayer" --> "clientSide/services.ArtistService"
+"clientSide/player.playlist_player.PlaylistPlayer" -u-> "clientSide/services.ArtistService"
+"clientSide/player.playlist_player.PlaylistPlayer" -u-> "clientSide/services.PrintService"
 
 "clientSide/player.playlist_player.RepeatState" -u-> "clientSide/player.playlist_player.PlaylistPlayer"
 "clientSide/player.playlist_player.SequentialState" -u-> "clientSide/player.playlist_player.PlaylistPlayer"
@@ -220,6 +240,7 @@ package javazoom/jlgui/basicplayer {
 "javazoom/jlgui/basicplayer.BasicPlayerListener" <|.. "clientSide/player.file_player.MusicPlayer"
 "clientSide/player.file_player.MusicPlayer" -l-> "javazoom/jlgui/basicplayer.BasicPlayer"
 
+"clientSide/services.PrintService" -[hidden]-> "clientSide/services.ArtistService"
 "clientSide/services.SongService" -[hidden]u-> "clientSide/services.PlaylistServices"
 "clientSide/services.PlaylistServices" -[hidden]u-> "clientSide/services.ArtistService"
 

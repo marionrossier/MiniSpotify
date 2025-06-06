@@ -23,7 +23,7 @@ public class PlaylistCreation extends TemplateInversePage {
     }
     @Override
     public void displaySpecificContent() {
-        printLNWhite("Enter the name of the playlist : ");
+        printWhite("Enter the name of the playlist : ");
         playlistNameVerification();
     }
 

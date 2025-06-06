@@ -29,18 +29,31 @@ public class ActionFoundedSongs extends TemplateSimplePage {
 
     @Override
     public void button2() {
+        int userId = toolBoxView.getUserServ().getCurrentUserId();
+        List<Integer> playlistIds = toolBoxView.getUserServ().getUserById(userId).getPlaylists();
+
+        List<Integer> ownedPlaylistIds = new java.util.ArrayList<>();
+        for (Integer id : playlistIds) {
+            if (toolBoxView.getPlaylistServ().isCurrentUserOwnerOfPlaylist(id)) {
+                ownedPlaylistIds.add(id);
+            }
+        }
+        int totalPlaylist = ownedPlaylistIds.size();
+
+        if (totalPlaylist == 0)
+        {
+            printLNInfo("You do not have any editable playlist actually. Select 3 to create one.");
+            handelInvalidIndex();
+            return;
+        }
+
         printLN();
         printLNWhite("Your Playlists : ");
         toolBoxView.getPrintServ().printUserPlaylists(toolBoxView.getUserServ().getCurrentUserId());
 
         printYourInput();
 
-        int userId = toolBoxView.getUserServ().getCurrentUserId();
-        List<Integer> playlistIds = toolBoxView.getUserServ().getUserById(userId).getPlaylists();
-        int totalPlaylist = playlistIds.size();
-
         int chosenIndex = toolBoxView.getPlaylistServ().takeAndValidateInputChoice(totalPlaylist, pageService);
-
         int chosenPlaylistId = playlistIds.get(chosenIndex - 1);
         toolBoxView.getPlaylistServ().setCurrentPlaylistId(chosenPlaylistId);
 

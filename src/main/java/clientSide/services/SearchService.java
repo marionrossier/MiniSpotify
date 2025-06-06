@@ -144,6 +144,12 @@ public class SearchService {
             if (input.equals("0")){
                 pageService.goBack(pageService.getMenuPages().peek());
             }
+            if (selectedSongsIndex.contains(Integer.parseInt(input) - 1)) {
+                printLNInfo("This song is already choosen. Select an other one or x to close selection.");
+                printYourInput();
+                continue;
+            }
+
             try {
                 int songIndex = Integer.parseInt(input) - 1;
                 if (songIndex >= 0 && songIndex < size) {

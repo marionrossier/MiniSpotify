@@ -22,6 +22,7 @@ entity Song {
   artistId : int
   durationSeconds : int
   gender : string
+  album : string
   audioFileName : string
 }
 

@@ -27,7 +27,7 @@ public class PrintService {
         int i = 1;
         for (Integer song : songs) {
             Song songData = songService.getSongById(song);
-            printLNGrey(printSong(songData));
+            printLNGrey(i +". " + printSong(songData));
             i++;
         }
         printLN();
@@ -51,7 +51,7 @@ public class PrintService {
         for (Integer playlistId : playlistsId) {
             Playlist playlist = playlistService.getPlaylistById(playlistId);
             if (playlist != null) {
-                printPlaylist(playlist);
+                printLNGrey(printPlaylist(playlist));
                 i++;
             }
         }

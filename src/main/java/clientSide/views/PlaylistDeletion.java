@@ -23,6 +23,7 @@ public class PlaylistDeletion extends TemplateSimplePage {
     @Override
     public void button1() {
         toolBoxView.getPlaylistServ().deletePlaylist(toolBoxView.getPlaylistServ().getCurrentPlaylistId());
+        pageService.getMenuPages().pop(); //pour retirer le playlistHomePage de la playlist supprimée.
         pageService.playlistHomePage.displayAllPage();
     }
 

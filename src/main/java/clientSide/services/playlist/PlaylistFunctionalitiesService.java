@@ -64,6 +64,7 @@ public class PlaylistFunctionalitiesService {
         else {
             if (playlist.getName().equals("AllSongs")){
                 printLNInfo("You cannot delete the AllSongs playlist.");
+                return;
             }
             removePlaylistFromUser(playlistId, userRepository);
             printLN();
