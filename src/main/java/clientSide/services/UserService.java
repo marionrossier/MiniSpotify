@@ -105,12 +105,17 @@ public class UserService {
     public List<Integer> getUsersByPseudonym(String pseudonym){
         List<Integer> userIds = new ArrayList<>();
         List<User> allUsers = userRepository.getAllUsers();
+        int currentUserId = getCurrentUserId();
         if (pseudonym == null || pseudonym.isEmpty()) {
             return userIds;
         }
         for (User user : allUsers) {
-            if (user.getPseudonym() != null && user.getPseudonym().toLowerCase().contains(pseudonym.toLowerCase())) {
-                userIds.add(user.getUserId());
+            int userId = user.getUserId();
+            if (user.getPseudonym() != null
+                    && user.getPseudonym().toLowerCase().contains(pseudonym.toLowerCase())
+                    && userId != 1
+                    && userId != currentUserId) {
+                userIds.add(userId);
             }
         }
         return userIds;

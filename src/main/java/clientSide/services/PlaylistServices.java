@@ -69,13 +69,22 @@ public class PlaylistServices {
         return playlistRepository.getPlaylistById(id);
     }
 
-    public List<Integer> getPublicPlaylists() {
-        List<Playlist> allPlaylists = playlistRepository.getAllPlaylists();
-        List<Integer> publicPlaylistIds = new ArrayList<>();
+    public List<Integer> getPublicPlaylists(int currentUserId) {
+        User user = userRepository.getUserById(currentUserId);
 
-        for (Playlist playlist : allPlaylists){
-            if (playlist.getStatus().equals(PlaylistEnum.PUBLIC)){
-                publicPlaylistIds.add(playlist.getPlaylistId());
+        List<Integer> friendIds = user.getFriends();
+        friendIds.add(1);
+
+        List<Integer> publicPlaylistIds = new ArrayList<>();
+        for (Integer friendId : friendIds) {
+            User friend = userRepository.getUserById(friendId);
+            if (friend != null) {
+                for (Integer playlistId : friend.getPlaylists()) {
+                    Playlist playlist = playlistRepository.getPlaylistById(playlistId);
+                    if (playlist != null && playlist.getStatus() == PlaylistEnum.PUBLIC) {
+                        publicPlaylistIds.add(playlistId);
+                    }
+                }
             }
         }
         return publicPlaylistIds;
