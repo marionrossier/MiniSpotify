@@ -17,16 +17,16 @@ public class Search extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Search Page";
-        this.pageContent = PrintHelper.backHomePageMusicPlayer + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
-                PrintHelper.nbr1 + "Search by song title" + PrintHelper.lineBreak +
-                PrintHelper.nbr2 + "Search by artist" + PrintHelper.lineBreak +
-                PrintHelper.nbr3 + "Search by song gender" + PrintHelper.lineBreak +
-                PrintHelper.nbr4 + "Search by public playlist";
+        this.pageContent = PrintHelper.backHomePageMusicPlayer + "\n" + PrintHelper.separator + "\n" +
+                PrintHelper.b1 + "Search by song title" + "\n" +
+                PrintHelper.b2 + "Search by artist" + "\n" +
+                PrintHelper.b3 + "Search by song gender" + "\n" +
+                PrintHelper.b4 + "Search by public playlist";
     }
 
     @Override
     public void button1() {
-        printWhite(PrintHelper.lineBreak + PrintHelper.search + "Enter the title of the song : ");
+        printWhite("\n" + "Enter the title of the song : ");
         String songTitle = scanner.nextLine();
         printLN();
 
@@ -36,7 +36,7 @@ public class Search extends TemplateSimplePage {
 
     @Override
     public void button2() {
-        printWhite(PrintHelper.lineBreak + PrintHelper.search + "Enter the name of the artist : " + PrintHelper.lineBreak);
+        printWhite("\n" + "Enter the name of the artist : ");
         String artistName = scanner.nextLine();
         printLN();
 
@@ -52,16 +52,16 @@ public class Search extends TemplateSimplePage {
     @Override
     public void button4(){
         printLN();
-        printLNWhite("Select your playlist to add by entering their number and press \"enter\" between each playlist." + PrintHelper.lineBreak +
-                "End selection with an \"x\"." + PrintHelper.lineBreak);
+        printLNWhite("Select your playlist to add by entering their number and press \"enter\" between each playlist." + "\n" +
+                "End selection with an \"x\"." + "\n");
 
-        List<Integer> playlist = toolBoxView.getPlaylistServ().getPublicPlaylists();
-        toolBoxView.getPrintServ().printPlaylist(playlist);
+        List<Integer> playlists = toolBoxView.getPlaylistServ().getPublicPlaylists();
+        toolBoxView.getPrintServ().printPlaylist(playlists);
 
         printYourInput();
 
-        LinkedList<Integer> chosenPlaylists = toolBoxView.getSearchServ().chooseFoundedPlaylist(playlist, pageService);
-        toolBoxView.getPlaylistServ().getAndAddSelectionOfPlaylistsToCurrentUserPlaylists(playlist, chosenPlaylists, toolBoxView);
+        LinkedList<Integer> chosenPlaylists = toolBoxView.getSearchServ().chooseFoundedPlaylist(playlists, pageService);
+        toolBoxView.getPlaylistServ().getAndAddSelectionOfPlaylistsToCurrentUserPlaylists(playlists, chosenPlaylists, toolBoxView);
         pageService.playlistHomePage.displayAllPage();
     }
 }
