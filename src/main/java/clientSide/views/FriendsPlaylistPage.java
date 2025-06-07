@@ -14,15 +14,14 @@ public class FriendsPlaylistPage extends TemplateSimplePage {
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Friend Playlist Page";
-        this.pageContent = PrintHelper.backHomePageMusicPlayer + PrintHelper.lineBreak +  PrintHelper.separator + PrintHelper.lineBreak +
-                PrintHelper.nbr1 + "Listen to playlist" + PrintHelper.lineBreak+
-                PrintHelper.nbr2 + "Add playlist to own playlist";
+        this.pageContent = PrintHelper.backHomePageMusicPlayer + "\n" +  PrintHelper.separator + "\n" +
+                PrintHelper.b1 + "Listen to playlist" + "\n"+
+                PrintHelper.b2 + "Add playlist to own playlist";
     }
 
     @Override
     public void displaySpecificContent(){
         int playlistId = toolBoxView.getPlaylistServ().getCurrentFriendPlaylistId();
-        printLN();
         printLNBlue("Current playlist : " + toolBoxView.getPlaylistServ().getPlaylistById(playlistId).getName());
         printLNBlue("Song list : ");
         toolBoxView.getPrintServ().printSongList(toolBoxView.getPlaylistServ().getPlaylistById(playlistId).getPlaylistSongsListWithId());

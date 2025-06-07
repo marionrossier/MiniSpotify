@@ -13,9 +13,9 @@ public class FriendsHomePage extends TemplateSimplePage {
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Friends Home Page";
-        this.pageContent = PrintHelper.zeroBack + " | " + PrintHelper.nineHomepage + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
-                PrintHelper.nbr1 + "Display friends" + PrintHelper.lineBreak +
-                PrintHelper.nbr2 + "Search friend";
+        this.pageContent = PrintHelper.backHomePageMusicPlayer + "\n" + PrintHelper.separator + "\n" +
+                PrintHelper.b1 + "Display friends" + "\n" +
+                PrintHelper.b2 + "Search friend";
     }
 
     @Override

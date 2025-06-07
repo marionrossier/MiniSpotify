@@ -2,16 +2,16 @@ package clientSide.services;
 
 public class PrintHelper {
 
-    public static final String nbr0 = "0.";
-    public static final String nbr1 = "1.";
-    public static final String nbr2 = "2.";
-    public static final String nbr3 = "3.";
-    public static final String nbr4 = "4.";
-    public static final String nbr5 = "5.";
-    public static final String nbr6 = "6.";
-    public static final String nbr7 = "7.";
-    public static final String nbr8 = "8.";
-    public static final String nbr9 = "9.";
+    public static final String b0 = "0.";
+    public static final String b1 = "1.";
+    public static final String b2 = "2.";
+    public static final String b3 = "3.";
+    public static final String b4 = "4.";
+    public static final String b5 = "5.";
+    public static final String b6 = "6.";
+    public static final String b7 = "7.";
+    public static final String b8 = "8.";
+    public static final String b9 = "9.";
 
     public static final String playPause = "[PLAY/PAUSE]";
     public static final String playBack = "[|<<]";
@@ -21,19 +21,14 @@ public class PrintHelper {
     public static final String sequential = "[LOOP]";
     public static final String repeatOne = "[REPEAT]";
 
-    public static final String lock = "[Owned]";
-    public static final String premium = "[PREMIUM]";
-    public static final String free = "[FREE]";
-    public static final String group = "[FRIENDS]";
-    public static final String house = "[SAVED]";
-    public static final String earth = "[OPEN]";
-    public static final String search = "[SEARCH]";
+    public static final String PRIVATE = "[PRIVATE]";
+    public static final String PREMIUM = "[PREMIUM]";
+    public static final String FREE = "[FREE]";
+    public static final String PUBLIC = "[PUBLIC]";
 
-    public static final String lineBreak = "\n";
-
-    public static final String eightMusicPlayer = nbr8 + "[PLAYER]";
-    public static final String nineHomepage     = nbr9 + "[HOME]";
-    public static final String zeroBack         = nbr0 + "[BACK]";
+    public static final String eightMusicPlayer = b8 + "[PLAYER]";
+    public static final String nineHomepage     = b9 + "[HOME]";
+    public static final String zeroBack         = b0 + "[BACK]";
 
     public static final String separator = "--------------------------------------------";
     public static final String backHomePageMusicPlayer = zeroBack + " | " + eightMusicPlayer + " | " + nineHomepage;
@@ -101,7 +96,6 @@ public class PrintHelper {
     public static void printLNError(String message) {
         System.out.println(PRINT_RED + message + PRINT_RESET);
     }
-
 
     public static void printWhite(String message) {
         System.out.print(PRINT_WHITE + message + PRINT_RESET);

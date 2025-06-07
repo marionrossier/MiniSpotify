@@ -14,14 +14,14 @@ public class AudioSocketServer {
     private final StockageService stockageService = new StockageService();
 
     public void audioSocketMain() {
-        System.out.println("🎵 AudioSocketServer started on port " + PORT);
+        System.out.println("AudioSocketServer started on port " + PORT);
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 new Thread(() -> handleAudioRequest(clientSocket)).start();
             }
         } catch (IOException e) {
-            System.err.println("❌ Server error: " + e.getMessage());
+            System.err.println("Server error: " + e.getMessage());
         }
     }
 
@@ -49,7 +49,7 @@ public class AudioSocketServer {
             out.write(bytes);
 
         } catch (IOException e) {
-            System.err.println("❌ Audio handler error: " + e.getMessage());
+            System.err.println("Audio handler error: " + e.getMessage());
         }
     }
 }

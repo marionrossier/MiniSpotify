@@ -1,16 +1,16 @@
 @startuml
 left to right direction
 class clientSide/services.PrintHelper << (S, #FF7700) static >>{
-+ {static} String nbr0
-+ {static} String nbr1
-+ {static} String nbr2
-+ {static} String nbr3
-+ {static} String nbr4
-+ {static} String nbr5
-+ {static} String nbr6
-+ {static} String nbr7
-+ {static} String nbr8
-+ {static} String nbr9
++ {static} String b0
++ {static} String b1
++ {static} String b2
++ {static} String b3
++ {static} String b4
++ {static} String b5
++ {static} String b6
++ {static} String b7
++ {static} String b8
++ {static} String b9
 + {static} String playPause
 + {static} String playBack
 + {static} String next
@@ -18,14 +18,10 @@ class clientSide/services.PrintHelper << (S, #FF7700) static >>{
 + {static} String shuffle
 + {static} String sequential
 + {static} String repeatOne
-+ {static} String lock
-+ {static} String premium
-+ {static} String free
-+ {static} String group
-+ {static} String house
-+ {static} String earth
-+ {static} String search
-+ {static} String lineBreak
++ {static} String PRIVATE
++ {static} String PREMIUM
++ {static} String FREE
++ {static} String PUBLIC
 + {static} String eightMusicPlayer
 + {static} String nineHomepage
 + {static} String zeroBack
@@ -68,5 +64,4 @@ class clientSide/services.PrintHelper << (S, #FF7700) static >>{
 "clientSide/services.playlist.TemporaryPlaylistService" --> "clientSide/services.PrintHelper"
 "clientSide/views" --> "clientSide/services.PrintHelper"
 "clientSide/player/playlist_player.PlaylistPlayer" --> "clientSide/services.PrintHelper"
-
 @enduml

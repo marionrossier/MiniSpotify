@@ -20,9 +20,9 @@ public class CreateAccount extends TemplateInversePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Create Account Page";
-        this.pageContent = PrintHelper.zeroBack + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
-                PrintHelper.nbr1 + "FREE " + PrintHelper.free + PrintHelper.lineBreak +
-                PrintHelper.nbr2 + "PREMIUM " + PrintHelper.premium;
+        this.pageContent = PrintHelper.zeroBack + "\n" + PrintHelper.separator + "\n" +
+                PrintHelper.b1 + "FREE " + PrintHelper.FREE + "\n" +
+                PrintHelper.b2 + "PREMIUM " + PrintHelper.PREMIUM;
         toolBoxView.getUserServ().resetCookie();
     }
 
@@ -38,7 +38,7 @@ public class CreateAccount extends TemplateInversePage {
             printInfo("Enter a valid email address, like name@email.com :");
             email = pageService.gotAnInputGoBackIf0(scanner.nextLine());
         }
-        printLNWhite(PrintHelper.lineBreak + "Choose your plan : ");
+        printLNWhite("\n" + "Choose your plan : ");
     }
 
     @Override

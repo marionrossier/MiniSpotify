@@ -4,6 +4,7 @@ import clientSide.services.ToolBoxView;
 import common.entities.Playlist;
 import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.*;
+import common.entities.Song;
 
 import static clientSide.services.PrintHelper.*;
 
@@ -15,22 +16,22 @@ public class SongPlayer extends TemplateSimplePage {
         this.pageId = pageId;
         this.pageTitle = "Song Player Page";
         this.pageContent =
-                        PrintHelper.backHomePageMusicPlayer + PrintHelper.lineBreak +
-                        PrintHelper.separator + PrintHelper.lineBreak +
-                        PrintHelper.nbr1 + PrintHelper.sequential + " / " + PrintHelper.shuffle + " / " + PrintHelper.repeatOne + PrintHelper.lineBreak +
-                                PrintHelper.nbr2 + PrintHelper.playPause + PrintHelper.lineBreak +
-                                PrintHelper.nbr3+ PrintHelper.previous + "\t" +
-                                PrintHelper.nbr4 + " " + PrintHelper.next + "\t " + PrintHelper.nbr5 + PrintHelper.playBack;
+                        PrintHelper.backHomePageMusicPlayer + "\n" +
+                        PrintHelper.separator + "\n" +
+                        PrintHelper.b1 + PrintHelper.sequential + " / " + PrintHelper.shuffle + " / " + PrintHelper.repeatOne + "\n" +
+                                PrintHelper.b2 + PrintHelper.playPause + "\n" +
+                                PrintHelper.b3 + PrintHelper.previous + "\t" +
+                                PrintHelper.b4 + " " + PrintHelper.next + "\t " + PrintHelper.b5 + PrintHelper.playBack;
     }
 
     @Override
     public void displaySpecificContent(){
         Playlist playlist = toolBoxView.getPlaylistServ().getPlaylistById(toolBoxView.getPlaylistServ().getCurrentPlaylistId());
-        printLNBlue(
-                "Current Playlist : " + playlist.getName() +
-                ", duration " + (toolBoxView.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())/60) + " minutes " +
-                        toolBoxView.getPlaylistServ().setDurationSeconds(playlist.getPlaylistId())%60 +
-                " seconds, size : " + playlist.getPlaylistSongsListWithId().size() + " songs.");
+        Song song = toolBoxView.getSongServ().getSongById(toolBoxView.getSongServ().getCurrentSongId());
+        printLNBlue(toolBoxView.getPrintServ().printPlaylist(playlist));
+        toolBoxView.getPrintServ().printSongList(playlist.getPlaylistSongsListWithId());
+        printLNBlue("Next " + toolBoxView.getPrintServ().printSong(song));
+        toolBoxView.getPrintServ().printSong(song);
     }
 
     @Override

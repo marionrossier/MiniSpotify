@@ -22,13 +22,6 @@ public class BackArtistRepo {
     public String handleRequest(Map<String, Object> request) {
         try {
             String command = (String) request.get("command");
-            String username = (String) request.get("userPseudonym");
-            String passwordHash = (String) request.get("password");
-
-            Optional<User> optUser = userRepo.authenticate(username, passwordHash);
-            if (optUser.isEmpty()) {
-                return "{\"status\": \"ERROR\", \"message\": \"Authentication failed\"}";
-            }
 
             switch (command) {
                 case "getAllArtists" -> {

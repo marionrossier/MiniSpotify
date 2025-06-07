@@ -4,6 +4,8 @@ import clientSide.player.playlist_player.IPlaylistPlayer;
 import clientSide.services.PageService;
 import clientSide.services.PrintHelper;
 import clientSide.services.ToolBoxView;
+import java.util.List;
+
 import static clientSide.services.PrintHelper.*;
 
 public class ActionFoundedSongs extends TemplateSimplePage {
@@ -13,11 +15,11 @@ public class ActionFoundedSongs extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Chose your action for the selected songs";
-        this.pageContent = PrintHelper.zeroBack + " |  " + PrintHelper.nineHomepage + PrintHelper.lineBreak +
-                PrintHelper.separator + PrintHelper.lineBreak +
-                    PrintHelper.nbr1 + "Add to current playlist" + PrintHelper.lineBreak +
-                    PrintHelper.nbr2 + "Add to an other playlist" +PrintHelper.lineBreak +
-                    PrintHelper.nbr3 + "Create a new playlist";
+        this.pageContent = PrintHelper.zeroBack + " |  " + PrintHelper.nineHomepage + "\n" +
+                PrintHelper.separator + "\n" +
+                    PrintHelper.b1 + "Add to current playlist" + "\n" +
+                    PrintHelper.b2 + "Add to an other playlist" +"\n" +
+                    PrintHelper.b3 + "Create a new playlist";
     }
 
     @Override
@@ -27,17 +29,34 @@ public class ActionFoundedSongs extends TemplateSimplePage {
 
     @Override
     public void button2() {
+        int userId = toolBoxView.getUserServ().getCurrentUserId();
+        List<Integer> playlistIds = toolBoxView.getUserServ().getUserById(userId).getPlaylists();
+
+        List<Integer> ownedPlaylistIds = new java.util.ArrayList<>();
+        for (Integer id : playlistIds) {
+            if (toolBoxView.getPlaylistServ().isCurrentUserOwnerOfPlaylist(id)) {
+                ownedPlaylistIds.add(id);
+            }
+        }
+        int totalPlaylist = ownedPlaylistIds.size();
+
+        if (totalPlaylist == 0)
+        {
+            printLNInfo("You do not have any editable playlist actually. Select 3 to create one.");
+            handelInvalidIndex();
+            return;
+        }
+
         printLN();
         printLNWhite("Your Playlists : ");
-        toolBoxView.getPrintServ().printUserPlaylists(toolBoxView.getUserServ().getCurrentUserId());
+        toolBoxView.getPrintServ().printPlaylists(ownedPlaylistIds);
 
         printYourInput();
 
-        int userId = toolBoxView.getUserServ().getCurrentUserId();
-        int totalPlaylist = toolBoxView.getUserServ().getUserById(userId).getPlaylists().size();
+        int chosenIndex = toolBoxView.getPlaylistServ().takeAndValidateInputChoice(totalPlaylist, pageService);
+        int chosenPlaylistId = playlistIds.get(chosenIndex - 1);
+        toolBoxView.getPlaylistServ().setCurrentPlaylistId(chosenPlaylistId);
 
-        int chosenPlaylist = toolBoxView.getPlaylistServ().takeAndValidateInputChoice(totalPlaylist, pageService);
-        toolBoxView.getPlaylistServ().setCurrentPlaylistId(chosenPlaylist);
         verificationAndThenAction();
     }
 

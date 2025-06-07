@@ -18,9 +18,12 @@ public class TemporaryPlaylistService {
     }
 
     public int getTemporaryPlaylistId(IPlaylistRepository playlistRepository) {
-        Playlist playlist = playlistRepository.getPlaylistByName("temporaryPlaylist");
+        int currentUserId = userService.getCurrentUserId();
+        Playlist playlist = playlistRepository.getTemporaryPlaylistOfCurrentUser(currentUserId);
         if (playlist == null) {
-            return new Playlist("temporaryPlaylist", PlaylistEnum.PRIVATE).getPlaylistId();
+            playlist = new Playlist("temporaryPlaylist", PlaylistEnum.PRIVATE);
+            playlist.setOwnerId(userService.getCurrentUserId());
+            return playlist.getPlaylistId();
         }
         return playlist.getPlaylistId();
     }

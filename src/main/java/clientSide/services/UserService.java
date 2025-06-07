@@ -11,48 +11,42 @@ import static clientSide.services.PrintHelper.*;
 
 public class UserService {
     private final IUserRepository userRepository;
-    private final PasswordService passwordService;
+    private final PasswordGenerator passwordGenerator;
 
-    public UserService(ToolBoxService toolBoxService, PasswordService passwordService){
+    public UserService(ToolBoxService toolBoxService, PasswordGenerator passwordGenerator) {
         this.userRepository = toolBoxService.userRepository;
-        this.passwordService = passwordService;
+        this.passwordGenerator = passwordGenerator;
     }
 
     public void addUser(String pseudonym, String email, String password, PlanEnum plan) {
-        byte[] salt = passwordService.generateSalt();
-        String hashedPassword = passwordService.hashPassword(password, salt);
+        byte[] salt = passwordGenerator.generateSalt();
+        String hashedPassword = passwordGenerator.hashPassword(password, salt);
 
-        User existingUser = getUserByPseudonym(pseudonym);
-        if (existingUser != null) {
-            printLNInfo("The pseudonym \""+pseudonym+ "\" already exists.");
-        }
-        else {
+        try {
             User newUser = new User(pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
             saveUser(newUser);
             printLNGreen("Account created successfully !");
+        } catch (RuntimeException e) {
+            printLNInfo("❌ Failed to create account: " + e.getMessage());
         }
     }
 
     public void addUser(int id, String pseudonym, String email, String password, PlanEnum plan) {
-        byte[] salt = passwordService.generateSalt();
-        String hashedPassword = passwordService.hashPassword(password, salt);
+        byte[] salt = passwordGenerator.generateSalt();
+        String hashedPassword = passwordGenerator.hashPassword(password, salt);
 
-        User existingUser = getUserByPseudonym(pseudonym);
-        if (existingUser != null) {
-            printLNInfo("The pseudonym \""+pseudonym+ "\" already exists.");
-        }
-        else {
+        try {
             User newUser = new User(id, pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
             saveUser(newUser);
+            printLNGreen("Account created successfully !");
+        } catch (RuntimeException e) {
+            printLNInfo("❌ Failed to create account: " + e.getMessage());
         }
     }
 
     public boolean emailValidation(String email) {
         String emailRegex = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
-        if (email != null && email.matches(emailRegex)) {
-            return true;
-        }
-        return false;
+        return email != null && email.matches(emailRegex);
     }
 
     public void addOnePlaylistToCurrentUser(int playlistId) {
@@ -64,7 +58,6 @@ public class UserService {
         }
         playlists.add(playlistId);
         saveUser(user);
-        printLNGreen("Playlist has been added.");
     }
 
     public void addFriend(int friendId) {
@@ -73,9 +66,8 @@ public class UserService {
         if (!friends.contains(friendId)) {
             friends.add(friendId);
             saveUser(user);
-            printLNGreen("Friend add to your friend list.");
-        }
-        else {
+            printLNGreen("Friend added to your friend list.");
+        } else {
             printLNInfo("You're already friends !");
         }
     }
@@ -87,15 +79,15 @@ public class UserService {
         saveUser(user);
     }
 
-    public void saveUser (User user){
+    public void saveUser(User user) {
         userRepository.updateOrInsertUser(user);
     }
 
-    public int getCurrentUserId(){
+    public int getCurrentUserId() {
         return Cookies.getInstance().getUserId();
     }
 
-    public void resetCookie (){
+    public void resetCookie() {
         Cookies.resetCookies();
     }
 
@@ -103,15 +95,20 @@ public class UserService {
         return userRepository.getUserByPseudonym(pseudonym);
     }
 
-    public List<Integer> getUsersByPseudonym(String pseudonym){
+    public List<Integer> getUsersByPseudonym(String pseudonym) {
         List<Integer> userIds = new ArrayList<>();
         List<User> allUsers = userRepository.getAllUsers();
+        int currentUserId = getCurrentUserId();
         if (pseudonym == null || pseudonym.isEmpty()) {
             return userIds;
         }
         for (User user : allUsers) {
-            if (user.getPseudonym() != null && user.getPseudonym().toLowerCase().contains(pseudonym.toLowerCase())) {
-                userIds.add(user.getUserId());
+            int userId = user.getUserId();
+            if (user.getPseudonym() != null
+                    && user.getPseudonym().toLowerCase().contains(pseudonym.toLowerCase())
+                    && userId != 1
+                    && userId != currentUserId) {
+                userIds.add(userId);
             }
         }
         return userIds;
@@ -121,11 +118,11 @@ public class UserService {
         return userRepository.getUserById(userId);
     }
 
-    public void setCurrentFriendId (int friendId){
+    public void setCurrentFriendId(int friendId) {
         Cookies.getInstance().setCurrentFriendId(friendId);
     }
 
-    public int getCurrentFriendId (){
+    public int getCurrentFriendId() {
         return Cookies.getInstance().getCurrentFriendId();
     }
 }

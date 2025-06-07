@@ -7,18 +7,20 @@ public class Song {
     private int artistId;
     private int durationSeconds;
     private MusicGender gender;
+    private String album;
     private int songId;
     private String audioFileName;
     private final UniqueIdService uniqueIdService = new UniqueIdService();
 
     public Song (){}
 
-    public Song(int id, String title, int artistId, int durationSeconds, MusicGender gender,
+    public Song(int id, String title, int artistId, String album, int durationSeconds, MusicGender gender,
                 String audioFileName) {
         this.songId = id;
         this.title = title;
         this.durationSeconds = durationSeconds;
         this.gender = gender;
+        this.album = album;
         this.audioFileName = audioFileName;
         this.artistId = artistId;
     }
@@ -79,5 +81,13 @@ public class Song {
 
     public void setAudioFileName(String audioFileName) {
         this.audioFileName = audioFileName;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
     }
 }

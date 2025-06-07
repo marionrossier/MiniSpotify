@@ -12,15 +12,15 @@ public class SearchGender extends TemplateSimplePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Select your desired gender";
-        this.pageContent = PrintHelper.zeroBack + PrintHelper.lineBreak + PrintHelper.separator + PrintHelper.lineBreak +
-                PrintHelper.nbr1 + "Soul RnB" + PrintHelper.lineBreak +
-                PrintHelper.nbr2 + "Pop" + PrintHelper.lineBreak +
-                PrintHelper.nbr3 + "Hip Hop" + PrintHelper.lineBreak +
-                PrintHelper.nbr4 + "Rock" + PrintHelper.lineBreak +
-                PrintHelper.nbr5 + "French Variety" + PrintHelper.lineBreak +
-                PrintHelper.nbr6 + "Electro" + PrintHelper.lineBreak +
-                PrintHelper.nbr7 + "Disco" + PrintHelper.lineBreak +
-                PrintHelper.nbr8 + "Reggae" + PrintHelper.lineBreak;
+        this.pageContent = PrintHelper.zeroBack + "\n" + PrintHelper.separator + "\n" +
+                PrintHelper.b1 + "Soul RnB" + "\n" +
+                PrintHelper.b2 + "Pop" + "\n" +
+                PrintHelper.b3 + "Hip Hop" + "\n" +
+                PrintHelper.b4 + "Rock" + "\n" +
+                PrintHelper.b5 + "French Variety" + "\n" +
+                PrintHelper.b6 + "Electro" + "\n" +
+                PrintHelper.b7 + "Disco" + "\n" +
+                PrintHelper.b8 + "Reggae" + "\n";
     }
 
     @Override

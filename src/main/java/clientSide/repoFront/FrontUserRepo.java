@@ -1,9 +1,8 @@
 package clientSide.repoFront;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import clientSide.services.*;
-import clientSide.socket.*;
+import clientSide.services.Cookies;
+import clientSide.socket.SocketClient;
 import common.entities.User;
 import common.repository.IUserRepository;
 
@@ -19,26 +18,26 @@ public class FrontUserRepo implements IUserRepository {
 
     @Override
     public Optional<User> authenticate(String pseudonym, String hashedPassword) {
-
         try {
+            // 🔥 Utilise la vraie commande login
             Map<String, Object> response = socketClient.sendRequest(Map.of(
-                    "command", "getUserByPseudonym",
+                    "command", "login",
                     "userPseudonym", pseudonym,
-                    "password", hashedPassword,
-                    "pseudonym", pseudonym
+                    "password", hashedPassword
             ));
-            if (!response.get("status").equals("OK")) return Optional.empty();
-            Object userObj = response.get("user");
-            String json = mapper.writeValueAsString(userObj);
-            User user = mapper.readValue(json, User.class);
-            if (user != null && user.getPassword().equals(hashedPassword)) {
-                return Optional.of(user);
+
+            if (!"OK".equals(response.get("status"))) {
+                return Optional.empty();
             }
-            return Optional.empty();
+
+            // Ensuite, une fois connecté, récupère le user
+            return Optional.ofNullable(getUserByPseudonym(pseudonym));
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
 
     @Override
     public User getUserByPseudonym(String pseudonym) {
@@ -51,11 +50,24 @@ public class FrontUserRepo implements IUserRepository {
     @Override
     public void updateOrInsertUser(User user) {
         try {
-            Map<String, Object> request = Map.of(
-                    "command", "updateOrInsertUser",
-                    "user", mapper.convertValue(user, Map.class)
-            );
-            socketClient.sendRequest(request);
+            Map<String, Object> userMap = mapper.convertValue(user, Map.class);
+
+            Map<String, Object> request = new HashMap<>();
+            request.put("command", "updateOrInsertUser");
+            request.put("user", userMap);
+
+            // 🆕 Ajouter identifiants utilisateur pour prouver qu’on est authentifié
+            if (Cookies.getInstance().getUserPseudonym() != null && Cookies.getInstance().getUserPassword() != null) {
+                request.put("userPseudonym", Cookies.getInstance().getUserPseudonym());
+                request.put("password", Cookies.getInstance().getUserPassword());
+            }
+
+            Map<String, Object> response = socketClient.sendRequest(request);
+
+            if (!"OK".equals(response.get("status"))) {
+                throw new RuntimeException((String) response.get("message"));
+            }
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -94,7 +106,7 @@ public class FrontUserRepo implements IUserRepository {
     private User getUserFromServer(Map<String, Object> request) {
         try {
             Map<String, Object> response = socketClient.sendRequest(request);
-            if (!response.get("status").equals("OK")){
+            if (!"OK".equals(response.get("status"))) {
                 System.out.println(response);
                 return null;
             }

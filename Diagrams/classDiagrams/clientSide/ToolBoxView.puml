@@ -31,16 +31,18 @@ PrintService,SearchService,PasswordService,UniqueIdService)
 + PasswordService getPasswordServ()
 }
 
-class clientSide.services.PrintService {
+class "clientSide.services.PrintService" {
 - UserService userService
 - PlaylistServices playlistService
 - SongService songService
 - ArtistService artistService
 + <<Create>> PrintService(SongService,ArtistService,
 PlaylistServices,UserService)
-+ void printSongFound(List<Integer>,String)
 + void printSongList(List<Integer>)
 + void printPlaylist(List<Integer>)
++ String printSong (Song)
++ String printPlaylist (Playlist)
++ String getStringDuration(int)
 + void printUserPlaylists(int)
 - String printPlaylistStatus(PlaylistEnum)
 + boolean printUserFriends(int)
@@ -181,7 +183,7 @@ class common/services.UniqueIdService {
 
 
 ' --- Dépendances générées ---
-clientSide.services.ToolBoxView -u-> clientSide.services.PlaylistServices
+clientSide.services.ToolBoxView -l-> clientSide.services.PlaylistServices
 clientSide.services.ToolBoxView -u-> clientSide.services.SongService
 clientSide.services.ToolBoxView -u-> clientSide.services.SearchService
 clientSide.services.ToolBoxView -u-> clientSide.services.UserService

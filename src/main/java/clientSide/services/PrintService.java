@@ -26,14 +26,22 @@ public class PrintService {
     public void printSongList (List<Integer> songs){
         int i = 1;
         for (Integer song : songs) {
-            printLNGrey(i + ". " + songService.getSongById(song).getTitle()+ " - " +
-                            artistService.getArtistNameBySong(song));
+            Song songData = songService.getSongById(song);
+            printLNGrey(i +". " + printSong(songData));
             i++;
         }
         printLN();
     }
 
-    public void printPlaylist(List<Integer> playlistsId) {
+    public String printSong (Song song){
+        return "Song : " + song.getTitle()
+                + " - " + artistService.getArtistNameBySong(song.getSongId())
+                + ", album : " + song.getAlbum()
+                + ", duration of " + getStringDuration(song.getDurationSeconds())
+                + ", gender : " + song.getGender().getDisplayName();
+    }
+
+    public void printPlaylists(List<Integer> playlistsId) {
         if (playlistsId == null || playlistsId.isEmpty()) {
             printLNInfo("No playlist available.");
             return;
@@ -43,11 +51,21 @@ public class PrintService {
         for (Integer playlistId : playlistsId) {
             Playlist playlist = playlistService.getPlaylistById(playlistId);
             if (playlist != null) {
-                printLNGrey(i + ". " + playlist.getName());
+                printLNGrey(i + ". " + printPlaylist(playlist));
                 i++;
             }
         }
         printLN();
+    }
+
+    public String printPlaylist (Playlist playlist){
+        String owner = userService.getUserById(playlist.getOwnerId()).getPseudonym();
+        return "Playlist : " + playlist.getName() +
+                ", duration of " + getStringDuration(
+                playlistService.setDurationSeconds(playlist.getPlaylistId())) +
+                ", " + playlist.getPlaylistSongsListWithId().size() + " songs."
+                + " || OWNER : " + owner
+                + ", status : " + printPlaylistStatus(playlist.getStatus());
     }
 
     public void printUserPlaylists(int userId){
@@ -59,11 +77,7 @@ public class PrintService {
                 Playlist playlist = playlistService.getPlaylistById(playlistId);
 
                 if (playlist != null) {
-                    boolean isUserOwner = playlist.getOwnerId() == currentUser.getUserId();
-                    printLNGrey(i + ". " +
-                            playlist.getName() + " - " +
-                            printPlaylistStatus(playlist.getStatus()) +
-                            (isUserOwner ? PrintHelper.house : ""));
+                    printLNGrey(i + ". " + printPlaylist(playlist));
                     i++;
                 }
             }
@@ -76,9 +90,9 @@ public class PrintService {
     private String printPlaylistStatus(PlaylistEnum status) {
 
         if (status == PlaylistEnum.PUBLIC){
-            return PrintHelper.earth;
+            return PrintHelper.PUBLIC;
         }
-        return PrintHelper.lock;
+        return PrintHelper.PRIVATE;
     }
 
     public boolean printUserFriends(int userId){
@@ -121,28 +135,51 @@ public class PrintService {
     }
 
     public void printUserPublicPlaylists(int friendId) {
-        int i = 1;
         User user = userService.getUserById(friendId);
+        if (user == null || user.getPlaylists() == null) {
+            printLNInfo("No public playlists available.");
+            return;
+        }
 
-        if (user != null && user.getPlaylists() != null) {
-            for (int playlistId : userService.getUserById(friendId).getPlaylists()) {
-                Playlist playlist = playlistService.getPlaylistById(playlistId);
-
-                if ((playlist != null)
-                        && (playlist.getStatus().equals(PlaylistEnum.PUBLIC))
-                        && (playlist.getOwnerId() == user.getUserId())) {
-                    boolean isUserOwner = playlist.getOwnerId() == user.getUserId();
-                    printLNGrey(i + ". " +
-                            playlist.getName() + " - " +
-                            printPlaylistStatus(playlist.getStatus()) +
-                            (isUserOwner ? PrintHelper.house : ""));
-                    i++;
-                }
-                printLN();
+        int i = 1;
+        boolean hasPublicPlaylist = false;
+        for (int playlistId : user.getPlaylists()) {
+            Playlist playlist = playlistService.getPlaylistById(playlistId);
+            if (playlist != null
+                    && playlist.getStatus() == PlaylistEnum.PUBLIC
+                    && playlist.getOwnerId() == user.getUserId()) {
+                printLNGrey(i + ". " + printPlaylist(playlist));
+                i++;
+                hasPublicPlaylist = true;
             }
         }
-        else {
+        if (!hasPublicPlaylist) {
             printLNInfo("No public playlists available.");
         }
+        printLN();
+    }
+
+    private String getPlaylistDuration(Playlist playlist) {
+        int duration = 0;
+        List<Integer> songIds = playlist.getPlaylistSongsListWithId();
+        if (songIds != null) {
+            for (int songId : songIds) {
+                Song song = songService.getSongById(songId);
+                if (song != null) {
+                    duration += song.getDurationSeconds();
+                }
+            }
+        }
+
+        return getStringDuration(duration);
+    }
+
+    public String getStringDuration(int duration){
+        int durationMinutes = duration / 60;
+        int durationSeconds = duration % 60;
+        int durationHours = durationMinutes / 60;
+        durationMinutes = durationMinutes % 60;
+
+        return String.format("%02d:%02d:%02d", durationHours, durationMinutes, durationSeconds);
     }
 }

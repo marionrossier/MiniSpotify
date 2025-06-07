@@ -17,13 +17,13 @@ public class PlaylistCreation extends TemplateInversePage {
         this.toolBoxView = toolBoxView;
         this.pageId = pageId;
         this.pageTitle = "Create Playlist Page";
-        this.pageContent = "You're playlist will be : " + PrintHelper.lineBreak +
-                PrintHelper.nbr1 + "Private" + PrintHelper.lineBreak +
-                PrintHelper.nbr2 + "Public";
+        this.pageContent = "You're playlist will be : " + "\n" +
+                PrintHelper.b1 + "Private" + "\n" +
+                PrintHelper.b2 + "Public";
     }
     @Override
     public void displaySpecificContent() {
-        printLNWhite("Enter the name of the playlist : ");
+        printWhite("Enter the name of the playlist : ");
         playlistNameVerification();
     }
 

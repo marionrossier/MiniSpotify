@@ -2,6 +2,7 @@ package clientSide.player.playlist_player;
 
 import clientSide.services.ArtistService;
 import clientSide.services.PlaylistServices;
+import clientSide.services.PrintService;
 import clientSide.services.SongService;
 import common.entities.Playlist;
 import common.entities.Song;
@@ -16,6 +17,7 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     private final IMusicPlayer musicPlayer;
     protected PlaylistServices playlistServices;
     protected ArtistService artistService;
+    protected PrintService printService;
     protected SongService songService;
 
     protected LinkedList<Integer> songIdHistory = new LinkedList<>();
@@ -33,11 +35,13 @@ public class PlaylistPlayer implements IPlaylistPlayer {
     private final IState repeatState;
 
     public PlaylistPlayer(IMusicPlayer musicPlayer, SongService songService,
-                          PlaylistServices playlistServices, ArtistService artistService) {
+                          PlaylistServices playlistServices, ArtistService artistService,
+                          PrintService printService) {
         this.musicPlayer = musicPlayer;
         this.songService = songService;
         this.playlistServices = playlistServices;
         this.artistService = artistService;
+        this.printService = printService;
 
         this.sequentialState = new SequentialState(this);
         this.shuffleState = new ShuffleState(this);
@@ -98,7 +102,12 @@ public class PlaylistPlayer implements IPlaylistPlayer {
         lastPlayedPlaylistId = currentPlaylist.getPlaylistId();
 
         musicPlayer.playOrPause(this.currentSong.getAudioFileName());
-        printCurrentSong();
+        if (isPlaying()){
+            printCurrentSong();
+        }
+        if (isPaused()){
+            printLNWhite("Song paused.");
+        }
     }
 
     @Override
@@ -152,10 +161,8 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     public void printCurrentSong(){
         int currentSongId = this.getCurrentSongId();
-        String songTitle = songService.getSongById(currentSongId).getTitle();
-
-        printLNBlue("Current song : " + songTitle + " - " +
-                artistService.getArtistNameBySong(currentSongId) + ". ");
+        Song song = songService.getSongById(currentSongId);
+        printLNBlue("Current " + printService.printSong(song));
     }
 
     public void setCurrentSong(Song currentSong) {

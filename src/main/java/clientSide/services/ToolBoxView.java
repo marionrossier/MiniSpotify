@@ -9,13 +9,15 @@ public class ToolBoxView {
     final SearchService searchServ;
     final UserService userServ;
     final PrintService printServ;
-    final PasswordService passwordServ;
+    final PasswordGenerator passwordServ;
     final ArtistService artistServ;
     final UniqueIdService uniqueIdServ;
+    final AuthentificationService authentificationServ;
 
     public ToolBoxView(PlaylistServices playlistServices, UserService userService, SongService songService,
                        ArtistService artistServ, PrintService printService, SearchService searchServ,
-                       PasswordService passwordService, UniqueIdService uniqueIdService) {
+                       PasswordGenerator passwordGenerator, UniqueIdService uniqueIdService,
+                       AuthentificationService authentificationService) {
 
         this.playlistServ = playlistServices;
         this.userServ = userService;
@@ -23,8 +25,9 @@ public class ToolBoxView {
         this.artistServ = artistServ;
         this.printServ = printService;
         this.searchServ = searchServ;
-        this.passwordServ = passwordService;
+        this.passwordServ = passwordGenerator;
         this.uniqueIdServ = uniqueIdService;
+        this.authentificationServ = authentificationService;
     }
 
     public PlaylistServices getPlaylistServ() {
@@ -51,7 +54,7 @@ public class ToolBoxView {
         return artistServ;
     }
 
-    public PasswordService getPasswordServ() {
-        return passwordServ;
+    public AuthentificationService getAuthentificationService() {
+        return authentificationServ;
     }
 }
