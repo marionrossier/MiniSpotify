@@ -51,7 +51,7 @@ public class PrintService {
         for (Integer playlistId : playlistsId) {
             Playlist playlist = playlistService.getPlaylistById(playlistId);
             if (playlist != null) {
-                printLNGrey(printPlaylist(playlist));
+                printLNGrey(i + ". " + printPlaylist(playlist));
                 i++;
             }
         }

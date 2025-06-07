@@ -39,7 +39,7 @@ public class Login extends TemplateSimplePage {
         String password = pageService.gotAnInputGoBackIf0(scanner.nextLine());
 
         //Check the password...
-        if (toolBoxView.getPasswordServ().passwordCheck(pseudonym, password)){
+        if (toolBoxView.getAuthentificationService().login(pseudonym, password)){
             User user = toolBoxView.getUserServ().getUserByPseudonym(pseudonym);
             Cookies.initializeInstance(user.getUserId(), user.getPseudonym(), user.getPassword());
             printLNGreen("\n" + "Login successful !");

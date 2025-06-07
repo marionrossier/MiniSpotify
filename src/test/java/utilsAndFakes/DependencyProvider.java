@@ -13,6 +13,7 @@ import clientSide.services.playlist.TemporaryPlaylistService;
 import clientSide.socket.*;
 import common.entities.*;
 import common.repository.*;
+import serverSide.services.PasswordVerifier;
 import serverSide.services.StockageService;
 import common.services.UniqueIdService;
 import serverSide.repoBack.*;
@@ -50,13 +51,16 @@ public class DependencyProvider {
     public PlaylistFunctionalitiesService playlistFunctionalitiesService;
     public TemporaryPlaylistService temporaryPlaylistService;
     public UserService userService;
-    public PasswordService passwordService;
+    public PasswordGenerator passwordGenerator;
     protected ArtistService artistService;
     protected PrintService printService;
     protected SearchService searchService;
     public PlaylistReorderSongService playlistReorderSongService;
     protected UniqueIdService uniqueIdService;
     public SongService songService;
+    public PasswordVerifier passwordVerifier;
+    public AuthentificationService authentificationService;
+    public LocalPasswordVerifier localPasswordVerifier;
 
     protected ToolBoxView toolBoxView;
 
@@ -68,7 +72,7 @@ public class DependencyProvider {
     public Stack<Integer> menuPagesStack;
 
     //SOCKETS
-    protected SocketClient socketClient;
+    public SocketClient socketClient;
 
     public final IUserRepository frontUserRepo;
     public final IPlaylistRepository frontPlaylistRepo;
@@ -104,11 +108,14 @@ public class DependencyProvider {
                 stockageService, artistLocalRepository);
 
         audioLocalRepository = new AudioLocalRepository();
-        passwordService = new PasswordService(userLocalRepository);
+        passwordGenerator = new PasswordGenerator();
+        passwordVerifier = new PasswordVerifier();
+        localPasswordVerifier = new LocalPasswordVerifier(userLocalRepository, passwordGenerator);
+
         toolBoxService = new ToolBoxService(playlistLocalRepository, userLocalRepository, songLocalRepository,
                 artistLocalRepository, audioLocalRepository);
 
-        userService = new UserService(toolBoxService,passwordService);
+        userService = new UserService(toolBoxService, passwordGenerator);
         temporaryPlaylistService = new TemporaryPlaylistService(userService);
         songService = new SongService(toolBoxService);
         playlistFunctionalitiesService = new PlaylistFunctionalitiesService(userService, songService);
@@ -124,15 +131,16 @@ public class DependencyProvider {
         playlistPlayer = new PlaylistPlayer(
                 fakeMusicPlayer, songService, playlistService, artistService, printService);
 
-        toolBoxView = new ToolBoxView(playlistService, userService, songService, artistService, printService,
-                searchService, passwordService, uniqueIdService);
+        socketClient = new SocketClient();
+        socketClient.setServerPort(serverPort);
 
+        authentificationService = new AuthentificationService(socketClient);
+        toolBoxView = new ToolBoxView(playlistService, userService, songService, artistService, printService,
+                searchService, passwordGenerator, uniqueIdService, authentificationService);
         pageService = new PageService(playlistPlayer, toolBoxView, userService, menuPagesStack);
 
 
         //SOCKETS
-        socketClient = new SocketClient();
-        socketClient.setServerPort(serverPort);
         frontUserRepo = new FrontUserRepo(socketClient);
         frontPlaylistRepo = new FrontPlaylistRepo(socketClient);
         frontSongRepo = new FrontSongRepo(socketClient);
@@ -141,7 +149,7 @@ public class DependencyProvider {
 
         backAudioRepo = new BackAudioRepo(userLocalRepository);
         backPlaylistRepo = new BackPlaylistRepo(playlistLocalRepository, userLocalRepository);
-        backUserRepo = new BackUserRepo(userLocalRepository);
+        backUserRepo = new BackUserRepo(userLocalRepository, passwordVerifier);
         backArtistRepo = new BackArtistRepo(artistLocalRepository, userLocalRepository);
         backSongRepo = new BackSongRepo(songLocalRepository, userLocalRepository);
 
@@ -150,15 +158,20 @@ public class DependencyProvider {
     }
 
     public void populateLocalUsers() {
-        User marion = new User("marion", "marion@example.com", "hash", PlanEnum.FREE);
+        User marion = new User("marion", "marion@example.com", "", PlanEnum.FREE);
         marion.setUserId(232928320);
+        marion.setSalt(passwordGenerator.generateSalt()); // <--- ajouter ça
+        marion.setPassword(passwordGenerator.hashPassword("hash", marion.getSalt())); // <--- après
 
-        User florent = new User("florent", "florent@example.com", "hash", PlanEnum.FREE);
+        User florent = new User("florent", "florent@example.com", "", PlanEnum.FREE);
         florent.setUserId(1726370281);
+        florent.setSalt(passwordGenerator.generateSalt()); // <--- ajouter ça aussi
+        florent.setPassword(passwordGenerator.hashPassword("hash", florent.getSalt())); // <---
 
         userLocalRepository.updateOrInsertUser(marion);
         userLocalRepository.updateOrInsertUser(florent);
     }
+
 
     public void populateLocalArtist(){
         LinkedList<Integer> amy = new LinkedList<>(Arrays.asList(1108071776,342105258,625427469,661206135, 1, 2, 3));

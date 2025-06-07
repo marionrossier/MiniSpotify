@@ -38,12 +38,12 @@ public class JsonPopulate {
                 stockageService, artistLocalRepository);
 
         AudioLocalRepository audioLocalRepository = new AudioLocalRepository();
-        PasswordService passwordService = new PasswordService(userLocalRepository);
+        PasswordGenerator passwordGenerator = new PasswordGenerator();
 
         ToolBoxService toolBoxService = new ToolBoxService(playlistLocalRepository, userLocalRepository,
                 songLocalRepository, artistLocalRepository, audioLocalRepository);
 
-        UserService userService = new UserService(toolBoxService, passwordService);
+        UserService userService = new UserService(toolBoxService, passwordGenerator);
 
         JsonPopulate.addUser(userService);
         addArtist(artistLocalRepository);

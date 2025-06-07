@@ -48,7 +48,7 @@ public class UserServiceTest{
         dependencyProvider.userService.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
 
         // Act
-        boolean result = dependencyProvider.passwordService.verifyUserAuthentification("TestUser", "CorrectPassword");
+        boolean result = dependencyProvider.localPasswordVerifier.verifyUserAuthentification("TestUser", "CorrectPassword");
 
         // Assert
         assertTrue(result);
@@ -60,7 +60,7 @@ public class UserServiceTest{
         dependencyProvider.userService.addUser("TestUser", "test@test.com", "CorrectPassword", PlanEnum.FREE);
 
         // Act
-        boolean result = dependencyProvider.passwordService.verifyUserAuthentification("TestUser", "WrongPassword");
+        boolean result = dependencyProvider.localPasswordVerifier.verifyUserAuthentification("TestUser", "WrongPassword");
 
         // Assert
         assertFalse(result);

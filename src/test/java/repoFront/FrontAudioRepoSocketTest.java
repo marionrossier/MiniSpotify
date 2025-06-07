@@ -43,12 +43,12 @@ public class FrontAudioRepoSocketTest {
             audioServerThread.setDaemon(true);
             audioServerThread.start();
             try {
-                Thread.sleep(1000); // attendre le démarrage
+                Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
         }
-        audioRepo = dependencyProvider.frontAudioRepo;
+        audioRepo = dependencyProvider.audioLocalRepository;
     }
 
     @AfterEach

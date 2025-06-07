@@ -24,14 +24,8 @@ public class BackPlaylistRepo {
         try {
             String command = (String) request.get("command");
             String username = (String) request.get("userPseudonym");
-            String passwordHash = (String) request.get("password");
 
-            Optional<User> optUser = userRepo.authenticate(username, passwordHash);
-            if (optUser.isEmpty()) {
-                return "{\"status\": \"ERROR\", \"message\": \"Authentication failed\"}";
-            }
-
-            User user = optUser.get();
+            User user = userRepo.getUserByPseudonym(username);
 
             switch (command) {
                 case "getPlaylistById" -> {
@@ -88,8 +82,6 @@ public class BackPlaylistRepo {
 
                     return mapper.writeValueAsString(response);
                 }
-
-
 
                 default -> {
                     return "{\"status\": \"ERROR\", \"message\": \"Unknown command\"}";

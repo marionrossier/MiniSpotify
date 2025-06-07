@@ -3,6 +3,7 @@ package serverSide;
 import common.repository.*;
 import serverSide.repoBack.*;
 import serverSide.repoLocal.*;
+import serverSide.services.PasswordVerifier;
 import serverSide.services.StockageService;
 import serverSide.socket.*;
 
@@ -18,7 +19,8 @@ public class CompositionRootServerSide {
     }
 
     //Json-Mp3
-    StockageService stockageService;
+    final StockageService stockageService;
+    final PasswordVerifier passwordVerifier;
 
     //Repositories
     final IPlaylistRepository playlistLocalRepository;
@@ -36,6 +38,7 @@ public class CompositionRootServerSide {
     public CompositionRootServerSide(){
         //Json-Mp3
         stockageService = new StockageService();
+        passwordVerifier = new PasswordVerifier();
 
         //Repositories
         playlistLocalRepository = new PlaylistLocalRepository();
@@ -45,7 +48,7 @@ public class CompositionRootServerSide {
         audioLocalRepository = new AudioLocalRepository();
 
         backPlaylistRepo = new BackPlaylistRepo(playlistLocalRepository, userLocalRepository);
-        backUserRepo = new BackUserRepo(userLocalRepository);
+        backUserRepo = new BackUserRepo(userLocalRepository, passwordVerifier);
         backArtistRepo = new BackArtistRepo(artistLocalRepository, userLocalRepository);
         backSongRepo = new BackSongRepo(songLocalRepository, userLocalRepository);
         backAudioRepo = new BackAudioRepo(userLocalRepository);

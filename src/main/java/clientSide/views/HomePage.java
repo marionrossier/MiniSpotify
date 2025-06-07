@@ -24,11 +24,12 @@ public class HomePage extends TemplateSimplePage {
 
     @Override
     public void button0() {
+        toolBoxView.getAuthentificationService().logout();
+
         printLNInfo("Logging you out ...");
         spotifyPlayer.stop();
 
         toolBoxView.getUserServ().resetCookie();
-
         pageService.login.displayAllPage();
     }
 

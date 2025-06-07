@@ -3,6 +3,7 @@ package serverSide.repoBack;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import common.repository.*;
 import common.entities.User;
+import serverSide.services.PasswordVerifier;
 
 import java.util.List;
 import java.util.Map;
@@ -11,21 +12,16 @@ import java.util.Optional;
 public class BackUserRepo {
     private final ObjectMapper mapper = new ObjectMapper();
     private final IUserRepository userRepo;
+    private final PasswordVerifier passwordVerifier;
 
-    public BackUserRepo(IUserRepository userRepo) {
+    public BackUserRepo(IUserRepository userRepo, PasswordVerifier passwordVerifier) {
         this.userRepo = userRepo;
+        this.passwordVerifier = passwordVerifier;
     }
 
     public String handleRequest(Map<String, Object> request) {
         try {
             String command = (String) request.get("command");
-            String username = (String) request.get("userPseudonym");
-            String password = (String) request.get("password");
-
-            Optional<User> optUser = userRepo.authenticate(username, password);
-            if (optUser.isEmpty() && !(command.equals("getUserByPseudonym") || command.equals("updateOrInsertUser"))) {
-                return "{\"status\": \"ERROR\", \"message\": \"Authentication failed\"}";
-            }
 
             switch (command) {
                 case "getAllUsers" -> {
@@ -55,9 +51,20 @@ public class BackUserRepo {
                     @SuppressWarnings("unchecked")
                     Map<String, Object> userMap = (Map<String, Object>) request.get("user");
                     User user = mapper.convertValue(userMap, User.class);
-                    userRepo.updateOrInsertUser(user);
+
+                    // 🔥 VERIFIER SI LE USER EXISTE
+                    User existingUser = userRepo.getUserByPseudonym(user.getPseudonym());
+                    if (existingUser != null) {
+                        // USER EXISTE => FAIRE UN UPDATE
+                        user.setUserId(existingUser.getUserId()); // Garde l'ID existant
+                        userRepo.updateOrInsertUser(user); // Update
+                    } else {
+                        // USER N'EXISTE PAS => INSERT
+                        userRepo.updateOrInsertUser(user);
+                    }
                     return "{\"status\": \"OK\"}";
                 }
+
                 default -> {
                     return "{\"status\": \"ERROR\", \"message\": \"Unknown command (user)\"}";
                 }
@@ -67,5 +74,17 @@ public class BackUserRepo {
             e.printStackTrace();
             return "{\"status\": \"ERROR\", \"message\": \"Internal server error\"}";
         }
+    }
+
+    public boolean authenticate(String pseudonym, String password) {
+        User user = userRepo.getUserByPseudonym(pseudonym);  // <-- simple récupération
+        if (user == null) {
+            return false;
+        }
+        return passwordVerifier.verifyPassword(password, user);  // <-- vrai contrôle avec salt + hash
+    }
+
+    public User getUserByPseudonym(String pseudonym) {
+        return userRepo.getUserByPseudonym(pseudonym);
     }
 }

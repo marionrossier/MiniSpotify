@@ -106,5 +106,14 @@ public class TestHelper {
             }
         }
         Cookies.initializeInstance(232928320, "marion", "hash");
+
+        try {
+            dependencyProvider.socketClient.connect();
+            dependencyProvider.authentificationService.login("marion", "hash");
+        } catch (IOException e) {
+            throw new RuntimeException("❌ Impossible de connecter socketClient dans le test.", e);
+        }
     }
+
+
 }

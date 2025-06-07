@@ -17,6 +17,7 @@ import common.repository.*;
 import common.services.UniqueIdService;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -51,7 +52,8 @@ public class CompositionRootClientSide {
 
     final PrintService printService;
     final SearchService searchService;
-    final PasswordService passwordService;
+    final PasswordGenerator passwordGenerator;
+    final AuthentificationService authentificationService;
     final UniqueIdService uniqueIdService;
 
     final IMusicPlayer musicPlayer;
@@ -80,9 +82,10 @@ public class CompositionRootClientSide {
                 frontArtistRepo, frontAudioRepo);
 
         //Services
-        passwordService = new PasswordService(frontUserRepo);
+        passwordGenerator = new PasswordGenerator();
+        authentificationService = new AuthentificationService(socketClient);
 
-        userService = new UserService(toolBoxService, passwordService);
+        userService = new UserService(toolBoxService, passwordGenerator);
         artistService = new ArtistService(toolBoxService);
         songService = new SongService(toolBoxService);
 
@@ -98,11 +101,18 @@ public class CompositionRootClientSide {
         searchService = new SearchService(songService, printService, userService);
         uniqueIdService = new UniqueIdService();
         toolBoxView = new ToolBoxView(playlistServices, userService, songService, artistService,
-                printService, searchService, passwordService, uniqueIdService);
+                printService, searchService, passwordGenerator, uniqueIdService, authentificationService);
         pageService = new PageService(spotifyPlayer, toolBoxView, userService, menuPagesStack);
     }
 
     public void startApp(){
-        this.pageService.startLogin();
+        try {
+            socketClient.connect(); // 🟢 Ajouter cette ligne avant tout
+            this.pageService.startLogin();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("❌ Impossible de se connecter au serveur. Fin de l'application.");
+            System.exit(1); // Ou autre gestion d'erreur
+        }
     }
 }

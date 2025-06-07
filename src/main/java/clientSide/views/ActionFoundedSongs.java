@@ -49,7 +49,7 @@ public class ActionFoundedSongs extends TemplateSimplePage {
 
         printLN();
         printLNWhite("Your Playlists : ");
-        toolBoxView.getPrintServ().printUserPlaylists(toolBoxView.getUserServ().getCurrentUserId());
+        toolBoxView.getPrintServ().printPlaylists(ownedPlaylistIds);
 
         printYourInput();
 

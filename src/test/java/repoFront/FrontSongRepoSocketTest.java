@@ -25,6 +25,8 @@ class FrontSongRepoSocketTest {
         testHelper = new TestHelper(45004);
         dependencyProvider = testHelper.dependencyProvider;
         songRepo = dependencyProvider.frontSongRepo;
+
+        // 🟢 D'abord, populons avant de lancer le serveur !
         dependencyProvider.populateLocalUsers();
         dependencyProvider.populateLocalArtist();
         dependencyProvider.populateLocalSong();
@@ -35,6 +37,7 @@ class FrontSongRepoSocketTest {
     @AfterEach
     void tearDown() {
         dependencyProvider.cleanUp();
+        dependencyProvider.socketClient.close(); // 🧹 Ferme la socket
     }
 
     @Test
