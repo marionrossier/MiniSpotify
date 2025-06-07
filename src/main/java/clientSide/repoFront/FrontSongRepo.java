@@ -3,8 +3,7 @@ package clientSide.repoFront;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import clientSide.services.*;
-import clientSide.socket.*;
+import clientSide.socket.SocketClient;
 import common.entities.MusicGender;
 import common.entities.Song;
 import common.repository.ISongRepository;
@@ -23,9 +22,7 @@ public class FrontSongRepo implements ISongRepository {
     public ArrayList<Song> getAllSongs() {
         try {
             Map<String, Object> response = socketClient.sendRequest(Map.of(
-                    "command", "getAllSongs",
-                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword()
+                    "command", "getAllSongs"
             ));
 
             if (!"OK".equals(response.get("status"))) return null;
@@ -40,14 +37,11 @@ public class FrontSongRepo implements ISongRepository {
         }
     }
 
-
     @Override
     public void addSong(Song song) {
         try {
             Map<String, Object> request = Map.of(
                     "command", "addSong",
-                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword(),
                     "song", mapper.convertValue(song, Map.class)
             );
             socketClient.sendRequest(request);
@@ -60,8 +54,6 @@ public class FrontSongRepo implements ISongRepository {
     public Song getSongById(int songId) {
         return getSongFromServer(Map.of(
                 "command", "getSongById",
-                "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                "password", Cookies.getInstance().getUserPassword(),
                 "songId", songId
         ));
     }
@@ -71,8 +63,6 @@ public class FrontSongRepo implements ISongRepository {
         try {
             Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getSongsByTitle",
-                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword(),
                     "title", title
             ));
 
@@ -88,8 +78,6 @@ public class FrontSongRepo implements ISongRepository {
         try {
             Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getSongsByArtist",
-                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword(),
                     "artistName", artistName
             ));
 
@@ -105,8 +93,6 @@ public class FrontSongRepo implements ISongRepository {
         try {
             Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getSongsByGender",
-                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword(),
                     "gender", gender.toString()
             ));
 

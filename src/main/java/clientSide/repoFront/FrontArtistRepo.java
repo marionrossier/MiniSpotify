@@ -2,8 +2,7 @@ package clientSide.repoFront;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import clientSide.services.*;
-import clientSide.socket.*;
+import clientSide.socket.SocketClient;
 import common.entities.Artist;
 import common.repository.IArtistRepository;
 
@@ -24,9 +23,7 @@ public class FrontArtistRepo implements IArtistRepository {
     public List<Artist> getAllArtists() {
         try {
             Map<String, Object> response = socketClient.sendRequest(Map.of(
-                    "command", "getAllArtists",
-                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword()
+                    "command", "getAllArtists"
             ));
 
             if (!"OK".equals(response.get("status"))) return null;
@@ -44,8 +41,6 @@ public class FrontArtistRepo implements IArtistRepository {
         try {
             Map<String, Object> request = Map.of(
                     "command", "addArtist",
-                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword(),
                     "artist", mapper.convertValue(artist, Map.class)
             );
             socketClient.sendRequest(request);
@@ -58,8 +53,6 @@ public class FrontArtistRepo implements IArtistRepository {
     public Artist getArtistById(int artistId) {
         return getArtistFromServer(Map.of(
                 "command", "getArtistById",
-                "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                "password", Cookies.getInstance().getUserPassword(),
                 "artistId", artistId
         ));
     }
@@ -69,8 +62,6 @@ public class FrontArtistRepo implements IArtistRepository {
         try {
             Map<String, Object> request = Map.of(
                     "command", "updateOrInsertArtist",
-                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword(),
                     "artist", mapper.convertValue(artist, Map.class)
             );
             socketClient.sendRequest(request);
@@ -83,8 +74,6 @@ public class FrontArtistRepo implements IArtistRepository {
     public Artist getArtistByName(String name) {
         return getArtistFromServer(Map.of(
                 "command", "getArtistByName",
-                "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                "password", Cookies.getInstance().getUserPassword(),
                 "artistName", name
         ));
     }
@@ -93,8 +82,6 @@ public class FrontArtistRepo implements IArtistRepository {
     public Artist getArtistBySongId(int songId) {
         return getArtistFromServer(Map.of(
                 "command", "getArtistBySongId",
-                "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                "password", Cookies.getInstance().getUserPassword(),
                 "songId", songId
         ));
     }

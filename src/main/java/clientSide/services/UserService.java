@@ -27,21 +27,16 @@ public class UserService {
             saveUser(newUser);
             printLNGreen("Account created successfully !");
         } catch (RuntimeException e) {
-            printLNInfo("❌ Failed to create account: " + e.getMessage());
+            printLNInfo("Failed to create account: " + e.getMessage());
         }
     }
 
+    //For populate
     public void addUser(int id, String pseudonym, String email, String password, PlanEnum plan) {
         byte[] salt = passwordGenerator.generateSalt();
         String hashedPassword = passwordGenerator.hashPassword(password, salt);
-
-        try {
-            User newUser = new User(id, pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
-            saveUser(newUser);
-            printLNGreen("Account created successfully !");
-        } catch (RuntimeException e) {
-            printLNInfo("❌ Failed to create account: " + e.getMessage());
-        }
+        User newUser = new User(id, pseudonym, email, hashedPassword, salt, plan, new ArrayList<>(), new ArrayList<>());
+        saveUser(newUser);
     }
 
     public boolean emailValidation(String email) {
