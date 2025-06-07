@@ -49,7 +49,7 @@ public class CompositionRootServerSide {
 
         backPlaylistRepo = new BackPlaylistRepo(playlistLocalRepository, userLocalRepository);
         backUserRepo = new BackUserRepo(userLocalRepository, passwordVerifier);
-        backArtistRepo = new BackArtistRepo(artistLocalRepository, userLocalRepository);
+        backArtistRepo = new BackArtistRepo(artistLocalRepository);
         backSongRepo = new BackSongRepo(songLocalRepository, userLocalRepository);
         backAudioRepo = new BackAudioRepo(userLocalRepository);
     }

@@ -150,7 +150,7 @@ public class DependencyProvider {
         backAudioRepo = new BackAudioRepo(userLocalRepository);
         backPlaylistRepo = new BackPlaylistRepo(playlistLocalRepository, userLocalRepository);
         backUserRepo = new BackUserRepo(userLocalRepository, passwordVerifier);
-        backArtistRepo = new BackArtistRepo(artistLocalRepository, userLocalRepository);
+        backArtistRepo = new BackArtistRepo(artistLocalRepository);
         backSongRepo = new BackSongRepo(songLocalRepository, userLocalRepository);
 
         audioSocketServer = new AudioSocketServer(backAudioRepo);

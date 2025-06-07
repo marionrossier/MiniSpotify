@@ -16,10 +16,18 @@ public class FrontUserRepo implements IUserRepository {
         this.socketClient = socketClient;
     }
 
+    // Helper pour ajouter l'auth seulement si connecté
+    private Map<String, Object> withAuth(Map<String, Object> request) {
+        if (Cookies.getInstance().getUserPseudonym() != null && Cookies.getInstance().getUserPassword() != null) {
+            request.put("userPseudonym", Cookies.getInstance().getUserPseudonym());
+            request.put("password", Cookies.getInstance().getUserPassword());
+        }
+        return request;
+    }
+
     @Override
     public Optional<User> authenticate(String pseudonym, String hashedPassword) {
         try {
-            // 🔥 Utilise la vraie commande login
             Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "login",
                     "userPseudonym", pseudonym,
@@ -30,14 +38,11 @@ public class FrontUserRepo implements IUserRepository {
                 return Optional.empty();
             }
 
-            // Ensuite, une fois connecté, récupère le user
             return Optional.ofNullable(getUserByPseudonym(pseudonym));
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-
 
     @Override
     public User getUserByPseudonym(String pseudonym) {
@@ -56,17 +61,7 @@ public class FrontUserRepo implements IUserRepository {
             request.put("command", "updateOrInsertUser");
             request.put("user", userMap);
 
-            // 🆕 Ajouter identifiants utilisateur pour prouver qu’on est authentifié
-            if (Cookies.getInstance().getUserPseudonym() != null && Cookies.getInstance().getUserPassword() != null) {
-                request.put("userPseudonym", Cookies.getInstance().getUserPseudonym());
-                request.put("password", Cookies.getInstance().getUserPassword());
-            }
-
-            Map<String, Object> response = socketClient.sendRequest(request);
-
-            if (!"OK".equals(response.get("status"))) {
-                throw new RuntimeException((String) response.get("message"));
-            }
+            socketClient.sendRequest(request); // Pas d'auth pour créer un compte
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -76,11 +71,10 @@ public class FrontUserRepo implements IUserRepository {
     @Override
     public List<User> getAllUsers() {
         try {
-            Map<String, Object> response = socketClient.sendRequest(Map.of(
-                    "command", "getAllUsers",
-                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword()
-            ));
+            Map<String, Object> request = new HashMap<>();
+            request.put("command", "getAllUsers");
+
+            Map<String, Object> response = socketClient.sendRequest(withAuth(request));
 
             if (!"OK".equals(response.get("status"))) return null;
 
@@ -95,12 +89,11 @@ public class FrontUserRepo implements IUserRepository {
 
     @Override
     public User getUserById(int userId) {
-        return getUserFromServer(Map.of(
-                "command", "getUserById",
-                "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                "password", Cookies.getInstance().getUserPassword(),
-                "userId", userId
-        ));
+        Map<String, Object> request = new HashMap<>();
+        request.put("command", "getUserById");
+        request.put("userId", userId);
+
+        return getUserFromServer(withAuth(request));
     }
 
     private User getUserFromServer(Map<String, Object> request) {

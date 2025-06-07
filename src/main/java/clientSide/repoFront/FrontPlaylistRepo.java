@@ -26,7 +26,6 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
         return getPlaylistFromServer(Map.of(
                 "command", "getPlaylistById",
                 "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                "password", Cookies.getInstance().getUserPassword(),
                 "playlistId", playlistId
         ));
     }
@@ -36,7 +35,6 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
         return getPlaylistFromServer(Map.of(
                 "command", "getPlaylistByName",
                 "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                "password", Cookies.getInstance().getUserPassword(),
                 "name", name
         ));
     }
@@ -46,8 +44,7 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
         try {
             Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getAllPlaylists",
-                    "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword()
+                    "userPseudonym", Cookies.getInstance().getUserPseudonym()
             ));
 
             if (!"OK".equals(response.get("status"))) return null;
@@ -65,7 +62,6 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
         socketClient.sendRequest(Map.of(
                 "command", "deletePlaylistById",
                 "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                "password", Cookies.getInstance().getUserPassword(),
                 "playlistId", playlistId
         ));
     }
@@ -76,7 +72,6 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
             Map<String, Object> request = Map.of(
                     "command", "updateOrInsertPlaylist",
                     "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword(),
                     "playlist", mapper.convertValue(playlist, Map.class)
             );
             socketClient.sendRequest(request);
@@ -91,7 +86,6 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
             Map<String, Object> response = socketClient.sendRequest(Map.of(
                     "command", "getPlaylistStatus",
                     "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                    "password", Cookies.getInstance().getUserPassword(),
                     "playlist", mapper.convertValue(playlist, Map.class)
             ));
             return PlaylistEnum.valueOf((String) response.get("playlistStatus"));
@@ -104,8 +98,7 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
     public Playlist getTemporaryPlaylistOfCurrentUser(int currentUserId) {
         return getPlaylistFromServer(Map.of(
                 "command", "getTemporaryPlaylistOfCurrentUser",
-                "userPseudonym", Cookies.getInstance().getUserPseudonym(),
-                "password", Cookies.getInstance().getUserPassword()
+                "userPseudonym", Cookies.getInstance().getUserPseudonym()
         ));
     }
 
@@ -123,5 +116,4 @@ public class FrontPlaylistRepo implements IPlaylistRepository {
             throw new RuntimeException(e);
         }
     }
-
 }

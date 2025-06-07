@@ -159,6 +159,10 @@ public class PageService {
 
     public void goBack(int pageId) {
         int lastPageId;
+        if (pageId == login.pageId) {
+            getPageById(login.pageId).displayAllPage();
+            return;
+        }
         do {
             lastPageId = getMenuPages().pop();
         } while (pageId == lastPageId && pageId != homePage.pageId && !getMenuPages().isEmpty());
