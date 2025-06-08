@@ -1,5 +1,4 @@
 @startuml
-left to right direction
 class clientSide.services.Cookies << (S, #FF7700) static >>{
 - {static} Cookies instance
 - int userId

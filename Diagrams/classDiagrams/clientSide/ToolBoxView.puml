@@ -17,18 +17,28 @@ class clientSide.services.ToolBoxView {
 ~ SearchService searchServ
 ~ UserService userServ
 ~ PrintService printServ
-~ PasswordService passwordServ
+~ PasswordGenerator passwordServ
 ~ ArtistService artistServ
 ~ UniqueIdService uniqueIdServ
+~ AuthentificationService authentificationServ
 + <<Create>> ToolBoxView(PlaylistServices,UserService,SongService,ArtistService,
-PrintService,SearchService,PasswordService,UniqueIdService)
+PrintService,SearchService,PasswordGenerator,UniqueIdService, AuthentificationService)
 + PlaylistServices getPlaylistServ()
 + SearchService getSearchServ()
 + UserService getUserServ()
 + PrintService getPrintServ()
 + SongService getSongServ()
 + ArtistService getArtistServ()
-+ PasswordService getPasswordServ()
++ PasswordGenerator getPasswordServ()
++ AuthentificationService getAuthentificationService()
+}
+
+class clientSide.services.AuthentificationService {
+    - socketClient : SocketClient
+    --
+    + AuthentificationService(socketClient: SocketClient)
+    + login(pseudonym: String, password: String) : boolean
+    + logout() : void
 }
 
 class "clientSide.services.PrintService" {
@@ -111,8 +121,8 @@ class clientSide.services.SearchService {
 
 class clientSide.services.UserService {
 - IUserRepository userRepository
-- PasswordService passwordService
-+ <<Create>> UserService(ToolBoxService,PasswordService)
+- PasswordGenerator passwordGenerator
++ <<Create>> UserService(ToolBoxService,PasswordGenerator)
 + void addUser(String,String,String,PlanEnum)
 + void addUser(int,String,String,String,PlanEnum)
 + boolean emailValidation(String)
@@ -129,13 +139,11 @@ class clientSide.services.UserService {
 + int getCurrentFriendId()
 }
 
-class clientSide.services.PasswordService {
+class clientSide.services.PasswordGenerator {
 - IUserRepository userRepository
-+ <<Create>> PasswordService(IUserRepository)
++ <<Create>> PasswordGenerator(IUserRepository)
 + byte[] generateSalt()
 + String hashPassword(String,byte[])
-+ boolean verifyUserAuthentification(String,String)
-+ boolean passwordCheck(String,String)
 }
 
 class clientSide.services.PageService {
@@ -188,8 +196,9 @@ clientSide.services.ToolBoxView -u-> clientSide.services.SongService
 clientSide.services.ToolBoxView -u-> clientSide.services.SearchService
 clientSide.services.ToolBoxView -u-> clientSide.services.UserService
 clientSide.services.ToolBoxView -u-> clientSide.services.PrintService
-clientSide.services.ToolBoxView -u-> clientSide.services.PasswordService
+clientSide.services.ToolBoxView -u-> clientSide.services.PasswordGenerator
 clientSide.services.ToolBoxView -u-> clientSide.services.ArtistService
+clientSide.services.ToolBoxView -l-> clientSide.services.AuthentificationService
 
 clientSide.services.ToolBoxView -d-> "common/services.UniqueIdService"
 clientSide.services.PageService -l-> clientSide.services.ToolBoxView
