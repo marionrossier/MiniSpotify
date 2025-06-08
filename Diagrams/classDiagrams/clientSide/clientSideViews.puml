@@ -33,18 +33,18 @@ class clientSide.services.ToolBoxView {
 ~ SearchService searchServ
 ~ UserService userServ
 ~ PrintService printServ
-~ PasswordService passwordServ
+~ PasswordGenerator passwordServ
 ~ ArtistService artistServ
 ~ UniqueIdService uniqueIdServ
 + <<Create>> ToolBoxView(PlaylistServices,UserService,SongService,ArtistService,
-PrintService,SearchService,PasswordService,UniqueIdService)
+PrintService,SearchService,PasswordGenerator,UniqueIdService)
 + PlaylistServices getPlaylistServ()
 + SearchService getSearchServ()
 + UserService getUserServ()
 + PrintService getPrintServ()
 + SongService getSongServ()
 + ArtistService getArtistServ()
-+ PasswordService getPasswordServ()
++ PasswordGenerator getPasswordServ()
 }
 
 

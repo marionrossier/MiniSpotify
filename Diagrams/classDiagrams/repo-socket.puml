@@ -70,6 +70,7 @@ package "clientSide/repoFront" {
         + void updateOrInsertUser(User)
         + List<User> getAllUsers()
         + User getUserById(int)
+        - Map<String, Object> withAuth(Map<String, Object> request)
     }
 
     class FrontPlaylistRepo {
@@ -101,10 +102,15 @@ package "clientSide/repoFront" {
 package "clientSide/socket" {
     class SocketClient {
         - String SERVER_ADDRESS
-        - int ServerPort
+        - int serverPort
+        - Socket socket
+        - BufferedWriter out
+        - BufferedReader in
         - ObjectMapper mapper
         + void setServerPort(int)
+        + void connect()
         + Map<String, Object> sendRequest(Map<String, Object>)
+        + void close()
     }
 }
 
@@ -124,7 +130,8 @@ package "serverSide/socket" {
         - BackUserRepo backUserRepo
         - BackSongRepo backSongRepo
         - BackArtistRepo backArtistRepo
-        + <<Create>> SocketServer(BackUserRepo, BackPlaylistRepo, BackSongRepo, BackArtistRepo)
+        + <<Create>> SocketServer(BackUserRepo, BackPlaylistRepo,
+        BackSongRepo, BackArtistRepo)
         + void setPort(int)
         + void socketServerMain()
     }
@@ -164,8 +171,7 @@ package "serverSide/repoBack" {
     class BackArtistRepo {
         - ObjectMapper mapper
         - IArtistRepository artistRepo
-        - IUserRepository userRepo
-        + <<Create>> BackArtistRepo(IArtistRepository, IUserRepository)
+        + <<Create>> BackArtistRepo(IArtistRepository)
         + String handleRequest(Map<String, Object>)
     }
 }
@@ -289,6 +295,10 @@ package "serverSide/services" {
         + void copyResourceToWritableLocation(String)
         + void copyMp3FilesFromResources()
     }
+    class PasswordVerifier {
+        + verifyPassword(passwordInput: String, user: User) : boolean
+        + hashPassword(password: String, salt: byte[]) : String
+    }
 }
 
 
@@ -313,7 +323,9 @@ package "serverSide/services" {
 "serverSide/repoBack.BackUserRepo" -d-> "common/repository2.IUserRepository"
 "serverSide/repoBack.BackSongRepo" -d-> "common/repository2.ISongRepository"
 "serverSide/repoBack.BackPlaylistRepo" -d-> "common/repository2.IPlaylistRepository"
+"serverSide/repoBack.BackPlaylistRepo" -d-> "common/repository2.IUserRepository"
 "serverSide/repoBack.BackArtistRepo" -d-> "common/repository2.IArtistRepository"
+"serverSide/repoBack.BackUserRepo" -d-> "serverSide/services.PasswordVerifier"
 
 "serverSide/repoLocal.SongLocalRepository" -u-|> "common/repository2.ISongRepository"
 "serverSide/repoLocal.PlaylistLocalRepository" -u-|> "common/repository2.IPlaylistRepository"
@@ -334,8 +346,10 @@ package "serverSide/services" {
 "clientSide/services" -d-> "common/repository"
 "clientSide/services" -u-> "clientSide/views.Views"
 
+"clientSide/services.AuthentificationService" -u-> "clientSide/socket.SocketClient"
 "clientSide/socket.SocketClient" ..d.. "serverSide/socket.SocketServer"
 "clientSide/repoFront.FrontAudioRepo" ..d.. "serverSide/socket.AudioSocketServer"
+
 "clientSide/socket.SocketClient" ..[hidden]d.. "serverSide/socket.AudioSocketServer"
 "clientSide/repoFront.FrontAudioRepo" -[hidden]d-> "clientSide/socket.SocketClient"
 

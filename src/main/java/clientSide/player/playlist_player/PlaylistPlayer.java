@@ -121,12 +121,22 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     @Override
     public void playback() {
+        if (this.currentSong==null){
+            int songId = songService.getCurrentSongId();
+            this.currentSong = songService.getSongById(songId);
+        }
+
         printCurrentSong();
         musicPlayer.play(this.currentSong.getAudioFileName());
     }
 
     @Override
     public void next() {
+        if (this.currentSong==null){
+            int songId = songService.getCurrentSongId();
+            this.currentSong = songService.getSongById(songId);
+        }
+
         this.currentSong = currentState.getNextSong();
         songService.setCurrentSongId(this.currentSong.getSongId());
         printCurrentSong();
@@ -135,6 +145,11 @@ public class PlaylistPlayer implements IPlaylistPlayer {
 
     @Override
     public void previous() {
+        if (this.currentSong==null){
+            int songId = songService.getCurrentSongId();
+            this.currentSong = songService.getSongById(songId);
+        }
+
         this.currentSong = currentState.getPreviousSong();
         songService.setCurrentSongId(this.currentSong.getSongId());
         printCurrentSong();

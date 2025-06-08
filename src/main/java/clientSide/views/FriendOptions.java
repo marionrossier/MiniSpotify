@@ -17,7 +17,7 @@ public class FriendOptions extends TemplateSimplePage {
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Manage your friend Page";
-        this.pageContent = PrintHelper.zeroBack + "\n" + PrintHelper.separator + "\n" +
+        this.pageContent = backHomePageMusicPlayer + "\n" + PrintHelper.separator + "\n" +
                 PrintHelper.b1 + "Friend Playlist.s" + "\n" +
                 PrintHelper.b2 + "Delete friend from your list";
     }

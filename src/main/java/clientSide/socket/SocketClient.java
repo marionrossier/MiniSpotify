@@ -48,4 +48,8 @@ public class SocketClient {
             e.printStackTrace();
         }
     }
+    public boolean isConnected() {
+        return socket != null && !socket.isClosed() && socket.isConnected();
+    }
+
 }

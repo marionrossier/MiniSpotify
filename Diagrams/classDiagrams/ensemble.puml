@@ -134,6 +134,7 @@ package "repoServerRepo"{
 "repoServerRepo.serverSide/repoBack.BackUserRepo" -d-> "repoServerRepo.common/repository2.IUserRepository"
 "repoServerRepo.serverSide/repoBack.BackSongRepo" -d-> "repoServerRepo.common/repository2.ISongRepository"
 "repoServerRepo.serverSide/repoBack.BackPlaylistRepo" -d-> "repoServerRepo.common/repository2.IPlaylistRepository"
+"repoServerRepo.serverSide/repoBack.BackPlaylistRepo" -d-> "repoServerRepo.common/repository2.IUserRepository"
 "repoServerRepo.serverSide/repoBack.BackArtistRepo" -d-> "repoServerRepo.common/repository2.IArtistRepository"
 
 "repoServerRepo.serverSide/repoLocal.SongLocalRepository" .u.|> "repoServerRepo.common/repository2.ISongRepository"
@@ -200,9 +201,9 @@ package ToolBoxView {
     class ToolBoxView.clientSide.services.PlaylistServices {}
     class ToolBoxView.clientSide.services.SearchService {}
     class ToolBoxView.clientSide.services.UserService {}
-    class ToolBoxView.clientSide.services.PasswordService {}
+    class ToolBoxView.clientSide.services.PasswordGenerator {}
     class ToolBoxView.clientSide.services.PageService {}
-
+    class ToolBoxView.clientSide.services.AuthentificationService {}
     class ToolBoxView.common.services.UniqueIdService {}
 }
 
@@ -213,8 +214,9 @@ ToolBoxView.clientSide.services.ToolBoxView -u-> ToolBoxView.clientSide.services
 ToolBoxView.clientSide.services.ToolBoxView -u-> ToolBoxView.clientSide.services.SearchService
 ToolBoxView.clientSide.services.ToolBoxView -u-> ToolBoxView.clientSide.services.UserService
 ToolBoxView.clientSide.services.ToolBoxView -u-> ToolBoxView.clientSide.services.PrintService
-ToolBoxView.clientSide.services.ToolBoxView -u-> ToolBoxView.clientSide.services.PasswordService
+ToolBoxView.clientSide.services.ToolBoxView -u-> ToolBoxView.clientSide.services.PasswordGenerator
 ToolBoxView.clientSide.services.ToolBoxView -u-> ToolBoxView.clientSide.services.ArtistService
+ToolBoxView.clientSide.services.ToolBoxView  -u-> ToolBoxView.clientSide.services.AuthentificationService
 
 ToolBoxView.clientSide.services.ToolBoxView -d-> "ToolBoxView.common.services.UniqueIdService"
 ToolBoxView.clientSide.services.PageService -l-> ToolBoxView.clientSide.services.ToolBoxView
@@ -233,7 +235,7 @@ package Services {
     class Services.clientSide.services.UserService {}
     class "Services.clientSide.services.ToolBoxService" {}
     class "Services.clientSide.services.playlist.TemporaryPlaylistService" {}
-    class "Services.clientSide.services.PasswordService" {}
+    class "Services.clientSide.services.PasswordGenerator" {}
     class Services.clientSide.services.PageService {}
     
     interface Services.common.repository.IRepositories {}
@@ -276,11 +278,11 @@ package Services {
 "Services.clientSide.services.SearchService" -u--> "Services.clientSide.services.UserService"
 
 "Services.clientSide.services.UserService" -u-> "Services.clientSide.services.ToolBoxService"
-"Services.clientSide.services.UserService" -u-> "Services.clientSide.services.PasswordService"
+"Services.clientSide.services.UserService" -u-> "Services.clientSide.services.PasswordGenerator"
 
 "Services.clientSide.services.playlist.TemporaryPlaylistService" -u-> "Services.clientSide.services.UserService"
 
-"Services.clientSide.services.PasswordService" -u-> "Services.common.repository.IRepositories"
+"Services.clientSide.services.PasswordGenerator" -u-> "Services.common.repository.IRepositories"
 
 "Services.clientSide.services.ToolBoxService" -u-> "Services.common.repository.IRepositories"
 
@@ -291,7 +293,7 @@ package Services {
 "Services.clientSide.services.ToolBoxView" -u-> "Services.clientSide.services.SearchService"
 "Services.clientSide.services.ToolBoxView" -u-> "Services.clientSide.services.UserService"
 "Services.clientSide.services.ToolBoxView" -u-> "Services.clientSide.services.PrintService"
-"Services.clientSide.services.ToolBoxView" -u-> "Services.clientSide.services.PasswordService"
+"Services.clientSide.services.ToolBoxView" -u-> "Services.clientSide.services.PasswordGenerator"
 "Services.clientSide.services.ToolBoxView" -u-> "Services.clientSide.services.ArtistService"
 
 "Services.clientSide.views.ViewsClasses" -u-> "Services.clientSide.services.ToolBoxView"

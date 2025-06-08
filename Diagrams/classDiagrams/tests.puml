@@ -129,7 +129,7 @@ class utilsAndFakes.DependencyProvider {
 + PlaylistFunctionalitiesService playlistFunctionalitiesService
 + TemporaryPlaylistService temporaryPlaylistService
 + UserService userService
-+ PasswordService passwordService
++ PasswordGenerator passwordGenerator
 # ArtistService artistService
 # PrintService printService
 # SearchService searchService

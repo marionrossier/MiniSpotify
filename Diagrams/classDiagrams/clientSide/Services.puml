@@ -1,4 +1,43 @@
 @startuml
+interface "common/repository.IUserRepository" {
+~ Optional<User> authenticate(String,String)
+~ User getUserByPseudonym(String)
+~ List<User> getAllUsers()
+~ void updateOrInsertUser(User)
+~ User getUserById(int)
+}
+
+interface "common/repository.ISongRepository" {
+~ ArrayList<Song> getAllSongs()
+~ void addSong(Song)
+~ Song getSongById(int)
+~ LinkedList<Song> getSongsByTitle(String)
+~ LinkedList<Song> getSongsByArtist(String)
+~ LinkedList<Song> getSongsByGender(MusicGender)
+}
+
+interface common/repository.IPlaylistRepository {
+~ List<Playlist> getAllPlaylists()
+~ void updateOrInsertPlaylist(Playlist)
+~ void deletePlaylistById(int)
+~ Playlist getPlaylistById(int)
+~ Playlist getPlaylistByName(String)
+~ PlaylistEnum getPlaylistStatus(Playlist)
+~ Playlist getTemporaryPlaylistOfCurrentUser(int)
+}
+
+interface common/repository.IAudioRepository {
+~ InputStream getStream(String)
+}
+
+interface common/repository.IArtistRepository {
+~ List<Artist> getAllArtists()
+~ void addArtist(Artist)
+~ Artist getArtistById(int)
+~ void updateOrInsertArtist(Artist)
+~ Artist getArtistByName(String)
+~ Artist getArtistBySongId(int)
+}
 
 class clientSide/services.SongService {
 - ISongRepository songRepository
@@ -26,6 +65,14 @@ class "clientSide/services.playlist.PlaylistFunctionalitiesService" {
 + int takeAndValidateInputChoice(int,PageService)
 + void playlistPageRouter(int,PlaylistServices,PageService,
 IPlaylistRepository)
+}
+
+class "clientSide/services.AuthentificationService" {
+    - socketClient : SocketClient
+    --
+    + AuthentificationService(socketClient: SocketClient)
+    + login(pseudonym: String, password: String) : boolean
+    + logout() : void
 }
 
 class "clientSide/services.playlist.PlaylistReorderSongService" {
@@ -117,8 +164,8 @@ class clientSide/services.SearchService {
 
 class clientSide/services.UserService {
 - IUserRepository userRepository
-- PasswordService passwordService
-+ <<Create>> UserService(ToolBoxService,PasswordService)
+- PasswordGenerator passwordGenerator
++ <<Create>> UserService(ToolBoxService,PasswordGenerator)
 + void addUser(String,String,String,PlanEnum)
 + void addUser(int,String,String,String,PlanEnum)
 + boolean emailValidation(String)
@@ -150,13 +197,11 @@ IPlaylistRepository)
 IPlaylistRepository)
 }
 
-class "clientSide/services.PasswordService" {
+class "clientSide/services.PasswordGenerator" {
 - IUserRepository userRepository
-+ <<Create>> PasswordService(IUserRepository)
++ <<Create>> PasswordGenerator(IUserRepository)
 + byte[] generateSalt()
 + String hashPassword(String,byte[])
-+ boolean verifyUserAuthentification(String,String)
-+ boolean passwordCheck(String,String)
 }
 
 class clientSide/services.PageService {
@@ -198,13 +243,14 @@ Stack<Integer>)
 + void pageIsPremium(boolean)
 }
 
-interface common/repository.IRepositories {}
 class clientSide/views.ViewsClasses {}
 class clientSide/services.ToolBoxView {
 }
 
 
 ' --- Dépendances générées ---
+
+"clientSide/services.AuthentificationService" -u-> "clientSide/socket.SocketClient"
 
 "clientSide/services.SongService" -u-> "clientSide/services.ToolBoxService"
 
@@ -213,7 +259,7 @@ class clientSide/services.ToolBoxView {
 
 "clientSide/services.PrintService" -u-> "clientSide/services.SongService"
 "clientSide/services.PrintService" -u-> "clientSide/services.ArtistService"
-"clientSide/services.PrintService" -u-> "clientSide/services.PlaylistServices"
+"clientSide/services.PrintService" -r-> "clientSide/services.PlaylistServices"
 "clientSide/services.PrintService" -u-> "clientSide/services.UserService"
 
 "clientSide/services.ArtistService" -u-> "clientSide/services.ToolBoxService"
@@ -228,13 +274,16 @@ class clientSide/services.ToolBoxView {
 "clientSide/services.SearchService" -u--> "clientSide/services.UserService"
 
 "clientSide/services.UserService" -u-> "clientSide/services.ToolBoxService"
-"clientSide/services.UserService" -u-> "clientSide/services.PasswordService"
+"clientSide/services.UserService" -u-> "clientSide/services.PasswordGenerator"
 
 "clientSide/services.playlist.TemporaryPlaylistService" -u-> "clientSide/services.UserService"
 
-"clientSide/services.PasswordService" -u-> "common/repository.IRepositories"
+"clientSide/services.ToolBoxService" -u-> "common/repository.IUserRepository"
+"clientSide/services.ToolBoxService" -u-> "common/repository.ISongRepository"
+"clientSide/services.ToolBoxService" -u-> "common/repository.IPlaylistRepository"
+"clientSide/services.ToolBoxService" -u-> "common/repository.IAudioRepository"
+"clientSide/services.ToolBoxService" -u-> "common/repository.IArtistRepository"
 
-"clientSide/services.ToolBoxService" -u-> "common/repository.IRepositories"
 
 "clientSide/services.PageService" -u-> "clientSide/services.UserService"
 
@@ -243,11 +292,12 @@ class clientSide/services.ToolBoxView {
 "clientSide/services.ToolBoxView" -u-> "clientSide/services.SearchService"
 "clientSide/services.ToolBoxView" -u-> "clientSide/services.UserService"
 "clientSide/services.ToolBoxView" -u-> "clientSide/services.PrintService"
-"clientSide/services.ToolBoxView" -u-> "clientSide/services.PasswordService"
+"clientSide/services.ToolBoxView" -u-> "clientSide/services.PasswordGenerator"
 "clientSide/services.ToolBoxView" -u-> "clientSide/services.ArtistService"
+"clientSide/services.ToolBoxView" -u-> "clientSide/services.AuthentificationService"
 
 "clientSide/views.ViewsClasses" -u-> "clientSide/services.ToolBoxView"
-"clientSide/services.ToolBoxView" -u-> "common/services.UniqueIdService"
+"clientSide/services.ToolBoxView" -l-> "common/services.UniqueIdService"
 "clientSide/services.PageService" -u-> "clientSide/services.ToolBoxView"
 
 @enduml

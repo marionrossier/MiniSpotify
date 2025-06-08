@@ -54,7 +54,6 @@ class clientSide/services.PrintHelper << (S, #FF7700) static >>{
 }
 
 "clientSide/services.PrintService" --> "clientSide/services.PrintHelper"
-"clientSide/services.PasswordService" --> "clientSide/services.PrintHelper"
 "clientSide/services.PageService" --> "clientSide/services.PrintHelper"
 "clientSide/services.SearchService" --> "clientSide/services.PrintHelper"
 "clientSide/services.PlaylistServices" --> "clientSide/services.PrintHelper"

@@ -56,8 +56,8 @@ TemporaryPlaylistService, PlaylistReorderSongService)
 
 class clientSide/services.UserService {
 - IUserRepository userRepository
-- PasswordService passwordService
-+ <<Create>> UserService(ToolBoxService,PasswordService)
+- PasswordGenerator passwordGenerator
++ <<Create>> UserService(ToolBoxService,PasswordGenerator)
 + void addUser(String,String,String,PlanEnum)
 + void addUser(int,String,String,String,PlanEnum)
 + boolean emailValidation(String)
