@@ -41,8 +41,8 @@ public class FriendsDisplayFriends extends TemplateSimplePage {
 
         while(Integer.parseInt(friendIndex)>friends.size()){
             printInvalidInputTryAgain();
-            friendIndex = pageService.gotAnInputGoBackIf0(scanner.nextLine());
             printYourInput();
+            friendIndex = pageService.gotAnInputGoBackIf0(scanner.nextLine());
         }
         int friendId = friends.get(Integer.parseInt(friendIndex)-1);
 

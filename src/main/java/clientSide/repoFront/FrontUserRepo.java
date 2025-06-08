@@ -61,12 +61,19 @@ public class FrontUserRepo implements IUserRepository {
             request.put("command", "updateOrInsertUser");
             request.put("user", userMap);
 
-            socketClient.sendRequest(request); // Pas d'auth pour créer un compte
+            if (!socketClient.isConnected()) {   // ⬅️ Ajout : connecte SEULEMENT si pas déjà connecté
+                socketClient.connect();
+            }
+
+            socketClient.sendRequest(request);   // ⬅️ Envoie la requête
+
+            // ⛔ PAS DE close() ici : sinon tu fermes ton socket actif !!!
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
 
     @Override
     public List<User> getAllUsers() {

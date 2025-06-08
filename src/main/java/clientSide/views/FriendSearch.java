@@ -16,7 +16,7 @@ public class FriendSearch extends TemplateSimplePage {
         this.pageId = pageId;
         this.isFree = false;
         this.pageTitle = "Search Friend Page";
-        this.pageContent = PrintHelper.zeroBack + PrintHelper.nineHomepage + "\n" +
+        this.pageContent = PrintHelper.zeroBack + "\n" +
                 PrintHelper.separator + "\n" +
                 "What is your friend pseudonym ?";
     }
